@@ -36,17 +36,17 @@ with st.form("airway_form"):
     # Patient Information
     st.markdown(box_section("Patient Information"), unsafe_allow_html=True)
     
-    # Combined date and time input
-    datetime_input = st.text_input("Enter Date and Time (YYYY-MM-DD HH:MM)", 
-                                    value=datetime.now().strftime("%Y-%m-%d %H:%M"),
-                                    placeholder="2024-10-06 14:30")  # Example format
+    cols = st.columns(2)  # Create two columns
 
-    weight = st.number_input("Enter Patient Weight (in kg)", min_value=0.0, format="%.2f")
+    with cols[0]:
+        date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
+        age = st.number_input("Enter Patient Age", min_value=0, value=0)
+        weight = st.number_input("Enter Patient Weight", min_value=0.0, format="%.2f")
 
-    # Age input with a value and unit selection
-    age_value = st.number_input("Enter Patient Age", min_value=0, value=0)
-    age_unit = st.selectbox("Select Age Unit", ["Days", "Months", "Years"])
-
+    with cols[1]:
+        time = st.time_input("Select Time", value=datetime.now().time())
+        weight_unit = st.selectbox("Select Weight Unit", ["kg", "lbs"])
+        
     # Input for who completed the form
     completed_by = st.text_input("Who completed the form?")
 
@@ -124,38 +124,32 @@ with st.form("airway_form"):
 
     # Process submission
     if submit:
-        # Validate datetime input
-        try:
-            datetime_obj = datetime.strptime(datetime_input, "%Y-%m-%d %H:%M")
-        except ValueError:
-            st.error("Please enter a valid date and time format: YYYY-MM-DD HH:MM")
-        else:
-            # Store form data into a dictionary to replace placeholders
-            form_data = {
-                "datetime": datetime_obj.strftime("%Y-%m-%d %H:%M"),
-                "weight": weight,
-                "age": f"{age_value} {age_unit}",
-                "completed_by": completed_by,
-                "completion_options": ", ".join([key.replace('_', ' ').capitalize() for key, value in completion_options.items() if value]),  # Format checked options
-                **assessment_answers,  # Include all assessment answers
-                "who_intubate": ", ".join(who_intubate),  # Convert list to string
-                "who_bag_mask": ", ".join(who_bag_mask),  # Convert list to string
-                "ett_size": ett_size,
-                "device": device,
-                "blade": blade,
-                "medications": medications,
-                "apneic_oxygenation": apneic_oxygenation,
-                "other_details": other_details,
-                "intubation_timing": intubation_timing,
-            }
-            
-            # Path to the provided Word template
-            template_path = 'AirwayBundleChecklist_7-2020.docx'
+        # Store form data into a dictionary to replace placeholders
+        form_data = {
+            "date": date,
+            "time": time,
+            "weight": f"{weight} {weight_unit}",
+            "age": age,
+            "completed_by": completed_by,
+            "completion_options": ", ".join([key.replace('_', ' ').capitalize() for key, value in completion_options.items() if value]),  # Format checked options
+            **assessment_answers,  # Include all assessment answers
+            "who_intubate": ", ".join(who_intubate),  # Convert list to string
+            "who_bag_mask": ", ".join(who_bag_mask),  # Convert list to string
+            "ett_size": ett_size,
+            "device": device,
+            "blade": blade,
+            "medications": medications,
+            "apneic_oxygenation": apneic_oxygenation,
+            "other_details": other_details,
+            "intubation_timing": intubation_timing,
+        }
+        
+        # Path to the provided Word template
+        template_path = 'AirwayBundleChecklist_7-2020.docx'
 
-            # Fill the Word template with form data
-            filled_doc = fill_word_template(template_path, form_data)
-            
-            # Provide download link for the filled Word document
-            st.success("Form submitted successfully!")
-            st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
-
+        # Fill the Word template with form data
+        filled_doc = fill_word_template(template_path, form_data)
+        
+        # Provide download link for the filled Word document
+        st.success("Form submitted successfully!")
+        st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
