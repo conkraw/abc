@@ -31,115 +31,114 @@ def box_section(title):
     </div>
     """
 
-# Patient Information
-st.markdown(box_section("Patient Information"), unsafe_allow_html=True)
-cols = st.columns(2)  # Create two columns
+# Create a form
+with st.form("airway_form"):
+    # Patient Information
+    st.markdown(box_section("Patient Information"), unsafe_allow_html=True)
+    cols = st.columns(2)  # Create two columns
 
-with cols[0]:
-    date = st.date_input("Select Date", value=datetime.today())
-    weight = st.number_input("Enter Patient Weight (in kg)", min_value=0.0, format="%.2f")
-
-with cols[1]:
-    time = st.time_input("Select Time", value=datetime.now().time())
-    age = st.number_input("Enter Patient Age (in years)", min_value=0, max_value=120)
-
-# Input for who completed the form
-completed_by = st.text_input("Who completed the form?")
-
-# Front page completion options
-st.markdown(box_section("Front Page Completion"), unsafe_allow_html=True)
-cols = st.columns(3)  # Create three columns
-
-with cols[0]:
-    on_admission = st.checkbox("On admission")
-    during_rounds = st.checkbox("During rounds")
-
-with cols[1]:
-    after_rounds = st.checkbox("After rounds")
-    just_prior_intubation = st.checkbox("Just prior to intubation")
-
-with cols[2]:
-    after_intubation = st.checkbox("After intubation")
-    prior_to_extubation = st.checkbox("Prior to extubation")
-
-# Collect completion options in a list
-completion_options = {
-    "on_admission": on_admission,
-    "during_rounds": during_rounds,
-    "after_rounds": after_rounds,
-    "just_prior_intubation": just_prior_intubation,
-    "after_intubation": after_intubation,
-    "prior_to_extubation": prior_to_extubation,
-}
-
-# Assessment section
-st.markdown(box_section("Assessment for Anticipated Airway Management"), unsafe_allow_html=True)
-assessment_questions = [
-    "History of difficult airway?",
-    "Physical assessment (small mouth, large tongue, etc.)?",
-    "High risk for rapid desaturation during intubation?",
-    "Increased ICP/pulmonary hypertension?",
-    "Unstable hemodynamics?"
-]
-
-# Collect responses for assessment questions
-assessment_answers = {}
-for question in assessment_questions:
-    cols = st.columns([2, 1, 1])  # Create three columns: Yes, No
     with cols[0]:
-        response = st.radio(question, ['Yes', 'No'], key=question)  # Yes/No options directly for the question
-    assessment_answers[question] = response  # Store response
+        date = st.date_input("Select Date", value=datetime.today())
+        weight = st.number_input("Enter Patient Weight (in kg)", min_value=0.0, format="%.2f")
 
-# Intubation plan section
-st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
-who_intubate = st.selectbox("Who will intubate?", ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other'])
-who_bag_mask = st.selectbox("Who will bag-mask?", ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'])
-ett_size = st.selectbox("ETT Size", ['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'])
-device = st.selectbox("Device", ['Laryngoscope', 'LMA', 'Glidescope', 'Other'])
-blade = st.selectbox("Blade", ['Mac', 'Miller', 'Wis-Hipple'])
-medications = st.text_input("Meds (e.g., Atropine, Fentanyl, etc.)")
-apneic_oxygenation = st.radio("Apneic Oxygenation", ['Yes', 'No'])
-other_details = st.text_input("Other details?")
+    with cols[1]:
+        time = st.time_input("Select Time", value=datetime.now().time())
+        age = st.number_input("Enter Patient Age (in years)", min_value=0, max_value=120)
 
-# Timing of Intubation section
-st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
-intubation_timing = st.text_input("Describe timing of airway management")
+    # Input for who completed the form
+    completed_by = st.text_input("Who completed the form?")
 
-# Submit button
-submit = st.form_submit_button("Submit")
+    # Front page completion options
+    st.markdown(box_section("Front Page Completion"), unsafe_allow_html=True)
+    cols = st.columns(3)  # Create three columns
 
-# Process submission
-if submit:
-    # Store form data into a dictionary to replace placeholders
-    form_data = {
-        "date": date,
-        "time": time,
-        "weight": weight,
-        "age": age,
-        "completed_by": completed_by,
-        "completion_options": ", ".join([key.replace('_', ' ').capitalize() for key, value in completion_options.items() if value]),  # Format checked options
-        **assessment_answers,  # Include all assessment answers
-        "who_intubate": who_intubate,
-        "who_bag_mask": who_bag_mask,
-        "ett_size": ett_size,
-        "device": device,
-        "blade": blade,
-        "medications": medications,
-        "apneic_oxygenation": apneic_oxygenation,
-        "other_details": other_details,
-        "intubation_timing": intubation_timing,
+    with cols[0]:
+        on_admission = st.checkbox("On admission")
+        during_rounds = st.checkbox("During rounds")
+
+    with cols[1]:
+        after_rounds = st.checkbox("After rounds")
+        just_prior_intubation = st.checkbox("Just prior to intubation")
+
+    with cols[2]:
+        after_intubation = st.checkbox("After intubation")
+        prior_to_extubation = st.checkbox("Prior to extubation")
+
+    # Collect completion options in a list
+    completion_options = {
+        "on_admission": on_admission,
+        "during_rounds": during_rounds,
+        "after_rounds": after_rounds,
+        "just_prior_intubation": just_prior_intubation,
+        "after_intubation": after_intubation,
+        "prior_to_extubation": prior_to_extubation,
     }
-    
-    # Path to the provided Word template
-    template_path = 'AirwayBundleChecklist_7-2020.docx'
 
-    # Fill the Word template with form data
-    filled_doc = fill_word_template(template_path, form_data)
-    
-    # Provide download link for the filled Word document
-    st.success("Form submitted successfully!")
-    st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+    # Assessment section
+    st.markdown(box_section("Assessment for Anticipated Airway Management"), unsafe_allow_html=True)
+    assessment_questions = [
+        "History of difficult airway?",
+        "Physical assessment (small mouth, large tongue, etc.)?",
+        "High risk for rapid desaturation during intubation?",
+        "Increased ICP/pulmonary hypertension?",
+        "Unstable hemodynamics?"
+    ]
 
+    # Collect responses for assessment questions
+    assessment_answers = {}
+    for question in assessment_questions:
+        response = st.radio(question, ['Yes', 'No'], key=question)  # Yes/No options directly for the question
+        assessment_answers[question] = response  # Store response
+
+    # Intubation plan section
+    st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
+    who_intubate = st.selectbox("Who will intubate?", ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other'])
+    who_bag_mask = st.selectbox("Who will bag-mask?", ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'])
+    ett_size = st.selectbox("ETT Size", ['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'])
+    device = st.selectbox("Device", ['Laryngoscope', 'LMA', 'Glidescope', 'Other'])
+    blade = st.selectbox("Blade", ['Mac', 'Miller', 'Wis-Hipple'])
+    medications = st.text_input("Meds (e.g., Atropine, Fentanyl, etc.)")
+    apneic_oxygenation = st.radio("Apneic Oxygenation", ['Yes', 'No'])
+    other_details = st.text_input("Other details?")
+
+    # Timing of Intubation section
+    st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
+    intubation_timing = st.text_input("Describe timing of airway management")
+
+    # Submit button
+    submit = st.form_submit_button("Submit")
+
+    # Process submission
+    if submit:
+        # Store form data into a dictionary to replace placeholders
+        form_data = {
+            "date": date,
+            "time": time,
+            "weight": weight,
+            "age": age,
+            "completed_by": completed_by,
+            "completion_options": ", ".join([key.replace('_', ' ').capitalize() for key, value in completion_options.items() if value]),  # Format checked options
+            **assessment_answers,  # Include all assessment answers
+            "who_intubate": who_intubate,
+            "who_bag_mask": who_bag_mask,
+            "ett_size": ett_size,
+            "device": device,
+            "blade": blade,
+            "medications": medications,
+            "apneic_oxygenation": apneic_oxygenation,
+            "other_details": other_details,
+            "intubation_timing": intubation_timing,
+        }
+        
+        # Path to the provided Word template
+        template_path = 'AirwayBundleChecklist_7-2020.docx'
+
+        # Fill the Word template with form data
+        filled_doc = fill_word_template(template_path, form_data)
+        
+        # Provide download link for the filled Word document
+        st.success("Form submitted successfully!")
+        st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
 
 
 
