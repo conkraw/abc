@@ -1,8 +1,8 @@
 import streamlit as st
 from docx import Document
 from io import BytesIO
+from datetime import datetime
 from docx.shared import Pt
-#from docx2pdf import convert  # Optional for PDF conversion
 
 # Function to fill the Word template with form inputs
 def fill_word_template(template_path, data):
@@ -25,6 +25,13 @@ def fill_word_template(template_path, data):
 st.title("Airway Bundle Checklist")
 
 with st.form("airway_form"):
+    # Patient Information
+    st.subheader("Patient Information")
+    date = st.date_input("Select Date", value=datetime.today())
+    time = st.time_input("Select Time", value=datetime.now().time())
+    weight = st.number_input("Enter Patient Weight (in kg)", min_value=0.0, format="%.2f")
+    age = st.number_input("Enter Patient Age (in years)", min_value=0, max_value=120)
+
     st.subheader("Assessment for Anticipated Airway Management")
     difficult_airway = st.radio("History of difficult airway?", ('Yes', 'No'))
     physical_assessment = st.radio("Physical assessment (small mouth, large tongue, etc.)?", ('Yes', 'No'))
@@ -52,6 +59,10 @@ with st.form("airway_form"):
 if submit:
     # Store form data into a dictionary to replace placeholders
     form_data = {
+        "date": date,
+        "time": time,
+        "weight": weight,
+        "age": age,
         "difficult_airway": difficult_airway,
         "physical_assessment": physical_assessment,
         "high_risk_desaturation": high_risk_desaturation,
@@ -67,8 +78,6 @@ if submit:
         "apneic_oxygenation": apneic_oxygenation,
         "other_details": other_details,
         "intubation_timing": intubation_timing,
-        "date": date,
-        "time": time,
     }
     
     # Path to the provided Word template
@@ -80,7 +89,4 @@ if submit:
     # Provide download link for the filled Word document
     st.success("Form submitted successfully!")
     st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
-    
-    # Optionally convert to PDF and provide PDF download link (requires docx2pdf or similar)
-    # pdf = convert(filled_doc)
-    # st.download_button("Download PDF Document", data=pdf, file_name="Filled_Airway_Bundle_Checklist.pdf")
+
