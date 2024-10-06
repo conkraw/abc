@@ -69,7 +69,17 @@ with st.form("airway_form"):
 
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
-        age = st.number_input("Enter Patient Age", min_value=0, value=0)
+        
+        # Replace number input with dropdown for age
+        age_options = [
+            "Premature", "Newborn", "1 month old", "2 months old", "3 months old", "4 months old", "5 months old", 
+            "6 months old", "7 months old", "8 months old", "9 months old", "10 months old", "11 months old", 
+            "12 months old", "1 year old", "2 years old", "3 years old", "4 years old", "5 years old", 
+            "6 years old", "7 years old", "8 years old", "9 years old", "10 years old", "11 years old", 
+            "12 years old", "13 years old", "14 years old", "15 years old", "16 years old", "17 years old", 
+            "18 years old"
+        ]
+        age = st.selectbox("Select Patient Age", age_options)
         
 
     with cols[1]:
@@ -80,16 +90,32 @@ with st.form("airway_form"):
     if 'ett_type' not in st.session_state:
         st.session_state.ett_type = ""
 
+    # Extract age in months or years for ETT size calculation
+    age_value, age_unit = "", ""
+    if age:
+        if "month" in age:
+            age_value = int(age.split()[0])
+            age_unit = "Months"
+        elif "year" in age:
+            age_value = int(age.split()[0])
+            age_unit = "Years"
+        elif age == "Premature":
+            age_value = 0
+            age_unit = "Days"
+        elif age == "Newborn":
+            age_value = 0
+            age_unit = "Days"
+
     # Change ETT Type based on age input
-    if age > 0 and (age_unit in ["Months", "Years"] or (age_unit == "Weeks" and age > 104)):
+    if age_value > 0 and (age_unit in ["Months", "Years"] or (age_unit == "Days" and age_value > 30)):
         st.session_state.ett_type = "Cuffed"
     else:
         st.session_state.ett_type = "Uncuffed"
 
     # Calculate ETT Size based on age and unit
     ett_size = ""
-    if age > 0:
-        ett_size = calculate_ett_size(age, age_unit)
+    if age_value > 0:
+        ett_size = calculate_ett_size(age_value, age_unit)
 
     # Intubation plan section
     st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
@@ -132,7 +158,7 @@ with st.form("airway_form"):
             "date": date,
             "time": time,
             "weight": weight,
-            "age": f"{age} {age_unit}",
+            "age": age,
             "ett_type": st.session_state.ett_type,
             "who_intubate": ", ".join(who_intubate),
             "who_bag_mask": ", ".join(who_bag_mask),
@@ -149,4 +175,3 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
-
