@@ -43,7 +43,11 @@ with st.form("airway_form"):
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
-        age = st.number_input("Enter Patient Age (in years)", min_value=0, max_value=120)
+        
+        # Age inputs: days, months, years
+        age_years = st.number_input("Enter Patient Age (years)", min_value=0, max_value=120, value=0)
+        age_months = st.number_input("Enter Patient Age (months)", min_value=0, max_value=11, value=0)
+        age_days = st.number_input("Enter Patient Age (days)", min_value=0, max_value=30, value=0)
 
     # Input for who completed the form
     completed_by = st.text_input("Who completed the form?")
@@ -127,7 +131,7 @@ with st.form("airway_form"):
             "date": date,
             "time": time,
             "weight": weight,
-            "age": age,
+            "age": f"{age_years} years, {age_months} months, {age_days} days",
             "completed_by": completed_by,
             "completion_options": ", ".join([key.replace('_', ' ').capitalize() for key, value in completion_options.items() if value]),  # Format checked options
             **assessment_answers,  # Include all assessment answers
@@ -151,6 +155,5 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
-
 
 
