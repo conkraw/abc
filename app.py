@@ -20,16 +20,28 @@ def fill_word_template(template_path, data):
     
     return buffer
 
-# Function to determine ETT size based on age and unit
+# Revised function to determine ETT size based on age and unit
 def calculate_ett_size(age, age_unit):
     if age_unit == "Days":
         return '3.0' if age <= 30 else '3.5'
     elif age_unit == "Weeks":
         return '3.5' if age <= 6 else '4.0'
     elif age_unit == "Months":
-        return '4.0' if age <= 12 else '4.5'
+        if age <= 12:
+            return '4.0'
+        elif age <= 24:
+            return '4.5'
+        elif age <= 36:
+            return '5.0'
+        else:
+            return '5.5'  # For ages greater than 36 months
     elif age_unit == "Years":
-        return '4.5' if age <= 2 else '5.0' if age <= 10 else '6.0'
+        if age <= 2:
+            return '4.5'
+        elif age <= 10:
+            return '5.0'
+        else:
+            return '6.0'
     return ''  # Default if no valid input
 
 # Streamlit form for the Airway Bundle Checklist
