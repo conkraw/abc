@@ -1,33 +1,25 @@
 import streamlit as st
 from docx import Document
+from io import BytesIO
+from docx.shared import Pt
+from docx2pdf import convert  # Optional for PDF conversion
 
-# Function to create a Word document from form input
-def create_word_document(data):
-    doc = Document()
-    doc.add_heading('Airway Bundle Checklist', 0)
+# Function to fill the Word template with form inputs
+def fill_word_template(template_path, data):
+    doc = Document(template_path)
 
-    doc.add_heading('Assessment for Anticipated Airway Management', level=1)
-    doc.add_paragraph(f'Difficult Airway History: {data["difficult_airway"]}')
-    doc.add_paragraph(f'Physical (small mouth, short neck, etc.): {data["physical_assessment"]}')
-    doc.add_paragraph(f'High risk for rapid desaturation: {data["high_risk_desaturation"]}')
-    doc.add_paragraph(f'Increased ICP/pulmonary hypertension: {data["increased_icp"]}')
-    doc.add_paragraph(f'Unstable hemodynamics: {data["unstable_hemodynamics"]}')
-    doc.add_paragraph(f'Other risk factors: {data["other_risks"]}')
+    # Replace placeholders in the document with form data
+    for paragraph in doc.paragraphs:
+        for key, value in data.items():
+            if f'{{{{{key}}}}}' in paragraph.text:  # Looks for {{key}} in the template
+                paragraph.text = paragraph.text.replace(f'{{{{{key}}}}}', str(value))
 
-    doc.add_heading('Intubation Plan', level=1)
-    doc.add_paragraph(f'Who will intubate: {data["who_intubate"]}')
-    doc.add_paragraph(f'Who will bag-mask: {data["who_bag_mask"]}')
-    doc.add_paragraph(f'ETT Size: {data["ett_size"]}')
-    doc.add_paragraph(f'Device: {data["device"]}')
-    doc.add_paragraph(f'Blade: {data["blade"]}')
-    doc.add_paragraph(f'Meds: {data["medications"]}')
-    doc.add_paragraph(f'Apneic Oxygenation: {data["apneic_oxygenation"]}')
-    doc.add_paragraph(f'Other: {data["other_details"]}')
-
-    doc.add_heading('Timing of Intubation', level=1)
-    doc.add_paragraph(f'Timing of intubation: {data["intubation_timing"]}')
-    return doc
-
+    # Save the updated document in memory
+    buffer = BytesIO()
+    doc.save(buffer)
+    buffer.seek(0)
+    
+    return buffer
 
 # Streamlit form for the Airway Bundle Checklist
 st.title("Airway Bundle Checklist")
@@ -54,10 +46,28 @@ with st.form("airway_form"):
     st.subheader("Timing of Intubation")
     intubation_timing = st.text_input("Describe timing of airway management")
 
+    st.subheader("Pre-Intubation TIME OUT")
+    date = st.date_input("Date")
+    time = st.time_input("Time")
+    right_patient = st.checkbox("Right Patient: Confirm 2 identifiers and allergy status")
+    right_plan = st.checkbox("Right Plan: Review and revise the plan")
+    right_prep = st.checkbox("Right Prep: Patient positioned correctly, IV working, etc.")
+    right_equipment = st.checkbox("Right Equipment: SOAP (Suction, Oxygen, etc.) ready")
+    right_monitoring = st.checkbox("Right Monitoring: BP cycling, pulse ox in place")
+    right_rescue_plan = st.checkbox("Right Rescue Plan: Difficult Airway Cart, etc.")
+    right_attitude = st.checkbox("Right Attitude: State out loud if any concerns")
+
+    st.subheader("Post-Procedure TIME OUT")
+    feedback_well = st.text_input("What did we do well?")
+    feedback_improve = st.text_input("What can we improve upon?")
+    difficult_ventilate = st.radio("Was the patient difficult to ventilate?", ['Yes', 'No'])
+    difficult_intubate = st.radio("Was the patient difficult to intubate?", ['Yes', 'No'])
+
     submit = st.form_submit_button("Submit")
 
 # Process submission
 if submit:
+    # Store form data into a dictionary to replace placeholders
     form_data = {
         "difficult_airway": difficult_airway,
         "physical_assessment": physical_assessment,
@@ -74,13 +84,31 @@ if submit:
         "apneic_oxygenation": apneic_oxygenation,
         "other_details": other_details,
         "intubation_timing": intubation_timing,
+        "date": date,
+        "time": time,
+        "right_patient": "Yes" if right_patient else "No",
+        "right_plan": "Yes" if right_plan else "No",
+        "right_prep": "Yes" if right_prep else "No",
+        "right_equipment": "Yes" if right_equipment else "No",
+        "right_monitoring": "Yes" if right_monitoring else "No",
+        "right_rescue_plan": "Yes" if right_rescue_plan else "No",
+        "right_attitude": "Yes" if right_attitude else "No",
+        "feedback_well": feedback_well,
+        "feedback_improve": feedback_improve,
+        "difficult_ventilate": difficult_ventilate,
+        "difficult_intubate": difficult_intubate,
     }
     
-    # Create Word document
-    doc = create_word_document(form_data)
-    doc_name = "Airway_Bundle_Checklist_Filled.docx"
-    doc.save(doc_name)
+    # Path to the provided Word template
+    template_path = '/mnt/data/AirwayBundleChecklist_7-2020.doc'
+
+    # Fill the Word template with form data
+    filled_doc = fill_word_template(template_path, form_data)
     
-    # Provide download link for the Word document
+    # Provide download link for the filled Word document
     st.success("Form submitted successfully!")
-    st.download_button("Download Word Document", open(doc_name, 'rb'), file_name=doc_name)
+    st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+    
+    # Optionally convert to PDF and provide PDF download link (requires docx2pdf or similar)
+    # pdf = convert(filled_doc)
+    # st.download_button("Download PDF Document", data=pdf, file_name="Filled_Airway_Bundle_Checklist.pdf")
