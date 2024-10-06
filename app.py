@@ -129,20 +129,23 @@ with st.form("airway_form"):
     # Create a layout for intubation method
     intubation_method = st.selectbox("How will we intubate? (Method)", ["Oral", "Nasal"])
     
+    # ETT Type selection (default to blank)
+    ett_type = st.selectbox("ETT Type", ["", "Cuffed", "Uncuffed"])
+    
     # Create a layout for ETT Type and ETT Size
     cols = st.columns(2)  # Create two columns
     
     with cols[0]:
-        ett_type = st.selectbox("ETT Type", ["Cuffed", "Uncuffed"])
+        # Adjust ETT Type based on age input
+        if age > 0 and age_unit in ["Months", "Years"]:
+            ett_type = "Cuffed"
     
-    with cols[1]:
         # ETT Size Selection
         ett_options = ['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
         
         # Determine the default index based on the calculated ETT size
         default_ett_size = str(ett_size) if ett_size is not None else '4.0'  # Set a default if no size is calculated
         ett_size = st.selectbox("ETT Size", ett_options, index=ett_options.index(default_ett_size))
-
 
     device = st.selectbox("Device", ['Laryngoscope', 'LMA', 'Glidescope', 'Other'])
     blade = st.selectbox("Blade", ['Mac', 'Miller', 'Wis-Hipple'])
