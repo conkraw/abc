@@ -45,24 +45,7 @@ with st.form("airway_form"):
 
     st.subheader("Timing of Intubation")
     intubation_timing = st.text_input("Describe timing of airway management")
-
-    st.subheader("Pre-Intubation TIME OUT")
-    date = st.date_input("Date")
-    time = st.time_input("Time")
-    right_patient = st.checkbox("Right Patient: Confirm 2 identifiers and allergy status")
-    right_plan = st.checkbox("Right Plan: Review and revise the plan")
-    right_prep = st.checkbox("Right Prep: Patient positioned correctly, IV working, etc.")
-    right_equipment = st.checkbox("Right Equipment: SOAP (Suction, Oxygen, etc.) ready")
-    right_monitoring = st.checkbox("Right Monitoring: BP cycling, pulse ox in place")
-    right_rescue_plan = st.checkbox("Right Rescue Plan: Difficult Airway Cart, etc.")
-    right_attitude = st.checkbox("Right Attitude: State out loud if any concerns")
-
-    st.subheader("Post-Procedure TIME OUT")
-    feedback_well = st.text_input("What did we do well?")
-    feedback_improve = st.text_input("What can we improve upon?")
-    difficult_ventilate = st.radio("Was the patient difficult to ventilate?", ['Yes', 'No'])
-    difficult_intubate = st.radio("Was the patient difficult to intubate?", ['Yes', 'No'])
-
+    
     submit = st.form_submit_button("Submit")
 
 # Process submission
@@ -86,17 +69,6 @@ if submit:
         "intubation_timing": intubation_timing,
         "date": date,
         "time": time,
-        "right_patient": "Yes" if right_patient else "No",
-        "right_plan": "Yes" if right_plan else "No",
-        "right_prep": "Yes" if right_prep else "No",
-        "right_equipment": "Yes" if right_equipment else "No",
-        "right_monitoring": "Yes" if right_monitoring else "No",
-        "right_rescue_plan": "Yes" if right_rescue_plan else "No",
-        "right_attitude": "Yes" if right_attitude else "No",
-        "feedback_well": feedback_well,
-        "feedback_improve": feedback_improve,
-        "difficult_ventilate": difficult_ventilate,
-        "difficult_intubate": difficult_intubate,
     }
     
     # Path to the provided Word template
