@@ -91,9 +91,9 @@ with st.form("airway_form"):
     for question in assessment_questions:
         cols = st.columns([3, 1])  # Create two columns: 3 parts for question, 1 part for Yes/No dropdown
         with cols[0]:
-            st.text_input("Question", value=question, disabled=True)  # Display question
+            st.text_input("", value=question, disabled=True)  # Display question
         with cols[1]:
-            answer = st.selectbox("Response", ['Yes', 'No'], key=f"{question}_response")  # Yes/No dropdown
+            answer = st.selectbox("", ['','Yes', 'No'], key=f"{question}_response")  # Yes/No dropdown
             assessment_answers[question] = answer
 
     # Intubation plan section
