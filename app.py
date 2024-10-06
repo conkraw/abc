@@ -49,6 +49,18 @@ def calculate_ett_size(age, age_unit):
             return '6.0'
     return ''  # Default if no valid input
 
+# Function to validate if the input is a valid integer or decimal number
+def validate_weight(weight_str):
+    try:
+        # Check if it's a valid float number or integer
+        if weight_str:
+            float(weight_str)  # Check if the value is a number (float or int)
+            return True
+        else:
+            return False
+    except ValueError:
+        return False
+
 # Streamlit form for the Airway Bundle Checklist
 st.title("Airway Bundle Checklist")
 
@@ -85,8 +97,12 @@ with st.form("airway_form"):
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
         
-        # Ensure weight is an integer (allow no decimal points)
-        weight = st.number_input("Enter Patient Weight (Kilograms)", min_value=0, step=1, format="%d")
+        # Weight input with text input validation
+        weight_str = st.text_input("Enter Patient Weight (Kilograms)", value="")
+        
+        # Validate the weight input
+        if weight_str and not validate_weight(weight_str):
+            st.error("Please enter a valid number for the weight (e.g., 12.5 or 12).")
 
     # Initialize ETT Type based on age
     if 'ett_type' not in st.session_state:
@@ -159,7 +175,7 @@ with st.form("airway_form"):
         form_data = {
             "date": date,
             "time": time,
-            "weight": weight,
+            "weight": weight_str,  # Save the weight as the string (allowing decimal numbers if entered)
             "age": age,
             "ett_type": st.session_state.ett_type,
             "who_intubate": ", ".join(who_intubate),
@@ -177,5 +193,6 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+
 
 
