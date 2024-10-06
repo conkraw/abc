@@ -127,9 +127,12 @@ with st.form("airway_form"):
     who_bag_mask = st.multiselect("Who will bag-mask?", 
                                    ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'])
     
-    # Display calculated ETT size
-    if ett_size is not None:
-        st.write(f"**Calculated Cuffed ETT Size:** {ett_size} mm")
+    ett_options = ['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
+
+    # Determine the default index based on the calculated ETT size
+    default_ett_size = str(ett_size) if ett_size is not None else '4.0'  # Set a default if no size is calculated
+    ett_size = st.selectbox("ETT Size", ett_options, index=ett_options.index(default_ett_size))
+
 
     device = st.selectbox("Device", ['Laryngoscope', 'LMA', 'Glidescope', 'Other'])
     blade = st.selectbox("Blade", ['Mac', 'Miller', 'Wis-Hipple'])
