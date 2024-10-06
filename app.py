@@ -90,6 +90,7 @@ with st.form("airway_form"):
         cols = st.columns([4, 1, 1])  # Three columns: 4 parts for question, 1 part for Yes, 1 part for No
         with cols[0]:
             st.markdown("")  # Empty markdown for spacing
+            st.markdown("")
             st.markdown(question)  # Display question
         with cols[1]:
             yes = st.radio("", ['Yes'], key=f"{question}_yes")  # Yes option
