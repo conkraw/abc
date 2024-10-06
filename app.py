@@ -91,7 +91,8 @@ with st.form("airway_form"):
         with cols[0]:
             st.markdown(question)  # Display question
         with cols[1]:
-            response = st.radio("", ['Yes', 'No'], key=question)  # Yes/No options in the second column
+            response = st.radio("", ['Yes', 'No'], key=question, horizontal=True)  # Yes/No options horizontally
+            st.markdown("")  # Add an empty markdown to avoid layout issues
         assessment_answers[question] = response  # Store response
 
     # Intubation plan section
