@@ -20,6 +20,18 @@ def fill_word_template(template_path, data):
     
     return buffer
 
+# Function to determine ETT size based on age and unit
+def calculate_ett_size(age, age_unit):
+    if age_unit == "Days":
+        return '3.0' if age <= 30 else '3.5'
+    elif age_unit == "Weeks":
+        return '3.5' if age <= 6 else '4.0'
+    elif age_unit == "Months":
+        return '4.0' if age <= 12 else '4.5'
+    elif age_unit == "Years":
+        return '4.5' if age <= 2 else '5.0' if age <= 10 else '6.0'
+    return '4.0'  # Default if no valid input
+
 # Streamlit form for the Airway Bundle Checklist
 st.title("Airway Bundle Checklist")
 
@@ -57,6 +69,9 @@ with st.form("airway_form"):
     else:
         st.session_state.ett_type = ""
 
+    # Calculate default ETT Size based on age and unit
+    default_ett_size = calculate_ett_size(age, age_unit)
+
     # Intubation plan section
     st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
 
@@ -80,8 +95,6 @@ with st.form("airway_form"):
         # ETT Size Selection
         ett_options = ['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
         
-        # Set default ETT size to 4.0 or selected size if age is set
-        default_ett_size = '4.0'  
         ett_size = st.selectbox("ETT Size", ett_options, index=ett_options.index(default_ett_size))
 
     # Timing of Intubation section
@@ -115,6 +128,5 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
-
 
 
