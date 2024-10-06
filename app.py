@@ -91,7 +91,8 @@ with st.form("airway_form"):
     for question in assessment_questions:
         cols = st.columns([3, 1])  # Create two columns: 3 parts for question, 1 part for Yes/No dropdown
         with cols[0]:
-            st.markdown(f"**{question}**")  # Bold the question for prominence
+            st.text_input("Question", value=question, key=question, disabled=True, 
+                          placeholder="Question")  # Display question prominently
         with cols[1]:
             answer = st.selectbox("Response", ['Yes', 'No'], key=f"{question}_response")  # Yes/No dropdown
             assessment_answers[question] = answer
