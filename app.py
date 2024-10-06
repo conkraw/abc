@@ -87,16 +87,17 @@ with st.form("airway_form"):
     # Collect responses for assessment questions
     assessment_answers = {}
     for question in assessment_questions:
-        cols = st.columns([3, 1, 1])  # Three columns: 3 parts for question, 1 part for Yes, 1 part for No
+        cols = st.columns([4, 1, 1])  # Three columns: 4 parts for question, 1 part for Yes, 1 part for No
         with cols[0]:
+            st.markdown("")  # Empty markdown for spacing
             st.markdown(question)  # Display question
         with cols[1]:
-            response = st.radio("", ['Yes'], key=question)  # Yes option
+            yes = st.radio("", ['Yes'], key=f"{question}_yes")  # Yes option
         with cols[2]:
-            response_no = st.radio("", ['No'], key=f"{question}_no")  # No option
+            no = st.radio("", ['No'], key=f"{question}_no")  # No option
         
         # Store response
-        assessment_answers[question] = 'Yes' if response else 'No'
+        assessment_answers[question] = 'Yes' if yes else 'No'
 
     # Intubation plan section
     st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
@@ -147,6 +148,4 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
-
-
 
