@@ -72,12 +72,12 @@ with st.form("airway_form"):
         
         # Replace number input with dropdown for age
         age_options = [
-            "Premature", "Newborn", "1 month old", "2 months old", "3 months old", "4 months old", "5 months old", 
-            "6 months old", "7 months old", "8 months old", "9 months old", "10 months old", "11 months old", 
-            "12 months old", "1 year old", "2 years old", "3 years old", "4 years old", "5 years old", 
-            "6 years old", "7 years old", "8 years old", "9 years old", "10 years old", "11 years old", 
-            "12 years old", "13 years old", "14 years old", "15 years old", "16 years old", "17 years old", 
-            "18 years old"
+            "Premature", "Newborn", "1 month old", "2 month old", "3 month old", "4 month old", "5 month old", 
+            "6 month old", "7 month old", "8 month old", "9 month old", "10 month old", "11 month old", 
+            "12 month old", "1 year old", "2 year old", "3 year old", "4 year old", "5 year old", 
+            "6 year old", "7 year old", "8 year old", "9 year old", "10 year old", "11 year old", 
+            "12 year old", "13 year old", "14 year old", "15 year old", "16 year old", "17 year old", 
+            "18 year old"
         ]
         age = st.selectbox("Select Patient Age", age_options)
         
