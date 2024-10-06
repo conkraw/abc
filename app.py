@@ -2,7 +2,6 @@ import streamlit as st
 from docx import Document
 from io import BytesIO
 from datetime import datetime
-from docx.shared import Pt
 
 # Function to fill the Word template with form inputs
 def fill_word_template(template_path, data):
@@ -29,6 +28,7 @@ def box_section(title):
     return f"""
     <div style="border: 1px solid #0072B8; border-radius: 5px; padding: 10px; margin-bottom: 20px;">
         <h4 style="margin: 0; color: #0072B8;">{title}</h4>
+    </div>
     """
 
 # Patient Information
@@ -74,12 +74,21 @@ completion_options = {
 
 # Assessment section
 st.markdown(box_section("Assessment for Anticipated Airway Management"), unsafe_allow_html=True)
-difficult_airway = st.radio("History of difficult airway?", ('Yes', 'No'))
-physical_assessment = st.radio("Physical assessment (small mouth, large tongue, etc.)?", ('Yes', 'No'))
-high_risk_desaturation = st.radio("High risk for rapid desaturation during intubation?", ('Yes', 'No'))
-increased_icp = st.radio("Increased ICP/pulmonary hypertension?", ('Yes', 'No'))
-unstable_hemodynamics = st.radio("Unstable hemodynamics?", ('Yes', 'No'))
-other_risks = st.text_input("Other risk factors?")
+assessment_questions = [
+    "History of difficult airway?",
+    "Physical assessment (small mouth, large tongue, etc.)?",
+    "High risk for rapid desaturation during intubation?",
+    "Increased ICP/pulmonary hypertension?",
+    "Unstable hemodynamics?"
+]
+
+# Collect responses for assessment questions
+assessment_answers = {}
+for question in assessment_questions:
+    yes, no = st.radio(question, ('Yes', 'No'), key=question)
+
+    # Store responses
+    assessment_answers[question] = yes
 
 # Intubation plan section
 st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
@@ -109,12 +118,7 @@ if submit:
         "age": age,
         "completed_by": completed_by,
         "completion_options": ", ".join([key.replace('_', ' ').capitalize() for key, value in completion_options.items() if value]),  # Format checked options
-        "difficult_airway": difficult_airway,
-        "physical_assessment": physical_assessment,
-        "high_risk_desaturation": high_risk_desaturation,
-        "increased_icp": increased_icp,
-        "unstable_hemodynamics": unstable_hemodynamics,
-        "other_risks": other_risks,
+        **assessment_answers,  # Include all assessment answers
         "who_intubate": who_intubate,
         "who_bag_mask": who_bag_mask,
         "ett_size": ett_size,
