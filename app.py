@@ -126,9 +126,14 @@ with st.form("airway_form"):
     who_bag_mask = st.multiselect("Who will bag-mask?", 
                                    ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'])
 
-    # Questions above ETT size
-    intubation_method = st.radio("How will we intubate? (Method)", ["Oral", "Nasal"])
-    ett_type = st.radio("ETT Type", ["Cuffed", "Uncuffed"])
+    # Create a layout for intubation method and ETT type
+    cols = st.columns(2)  # Create two columns
+
+    with cols[0]:
+        intubation_method = st.selectbox("How will we intubate? (Method)", ["Oral", "Nasal"])
+
+    with cols[1]:
+        ett_type = st.selectbox("ETT Type", ["Cuffed", "Uncuffed"])
 
     # ETT Size Selection
     ett_options = ['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
