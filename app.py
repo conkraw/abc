@@ -100,7 +100,7 @@ if submit:
     }
     
     # Path to the provided Word template
-    template_path = 'AirwayBundleChecklist_7-2020.doc'
+    template_path = 'AirwayBundleChecklist_7-2020.docx'
 
     # Fill the Word template with form data
     filled_doc = fill_word_template(template_path, form_data)
