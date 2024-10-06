@@ -30,7 +30,7 @@ def calculate_ett_size(age, age_unit):
         return '4.0' if age <= 12 else '4.5'
     elif age_unit == "Years":
         return '4.5' if age <= 2 else '5.0' if age <= 10 else '6.0'
-    return '4.0'  # Default if no valid input
+    return ''  # Default if no valid input
 
 # Streamlit form for the Airway Bundle Checklist
 st.title("Airway Bundle Checklist")
@@ -69,8 +69,12 @@ with st.form("airway_form"):
     else:
         st.session_state.ett_type = ""
 
-    # Calculate default ETT Size based on age and unit
-    default_ett_size = calculate_ett_size(age, age_unit)
+    # Initialize ETT Size as blank
+    ett_size = ""
+
+    # Update ETT Size based on age and unit
+    if age > 0:
+        ett_size = calculate_ett_size(age, age_unit)
 
     # Intubation plan section
     st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
@@ -93,9 +97,11 @@ with st.form("airway_form"):
 
     with cols[1]:
         # ETT Size Selection
-        ett_options = ['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
+        ett_options = ['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
         
-        ett_size = st.selectbox("ETT Size", ett_options, index=ett_options.index(default_ett_size))
+        # Set index to 0 for blank or find the index of calculated size if applicable
+        default_index = 0 if ett_size == "" else ett_options.index(ett_size)
+        ett_size = st.selectbox("ETT Size", ett_options, index=default_index)
 
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
