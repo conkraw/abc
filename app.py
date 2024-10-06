@@ -93,7 +93,7 @@ with st.form("airway_form"):
         with cols[0]:
             st.markdown(f"**{question}**")  # Display question prominently
         with cols[1]:
-            answer = st.selectbox("Response", ['Yes', 'No'], key=f"{question}_response")  # Yes/No dropdown
+            answer = st.selectbox("", ['Yes', 'No'], key=f"{question}_response")  # Yes/No dropdown
             assessment_answers[question] = answer
 
     # Intubation plan section
