@@ -91,8 +91,7 @@ with st.form("airway_form"):
     for question in assessment_questions:
         cols = st.columns([3, 1])  # Create two columns: 3 parts for question, 1 part for Yes/No dropdown
         with cols[0]:
-            st.text_input("Question", value=question, key=question, disabled=False, 
-                          placeholder="Question")  # Display question prominently
+            st.markdown(f"**{question}**")  # Display question prominently
         with cols[1]:
             answer = st.selectbox("Response", ['Yes', 'No'], key=f"{question}_response")  # Yes/No dropdown
             assessment_answers[question] = answer
@@ -146,3 +145,4 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+
