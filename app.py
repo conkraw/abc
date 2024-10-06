@@ -38,12 +38,10 @@ with st.form("airway_form"):
     cols = st.columns(2)  # Create two columns
 
     with cols[0]:
-        date = st.date_input("Select Date", value=datetime.today())
+        datetime_input = st.datetime_input("Select Date and Time", value=datetime.now())
         weight = st.number_input("Enter Patient Weight (in kg)", min_value=0.0, format="%.2f")
 
     with cols[1]:
-        time = st.time_input("Select Time", value=datetime.now().time())
-        
         # Age input with a value and unit selection
         age_value = st.number_input("Enter Patient Age", min_value=0, value=0)
         age_unit = st.selectbox("Select Age Unit", ["Days", "Months", "Years"])
@@ -127,8 +125,7 @@ with st.form("airway_form"):
     if submit:
         # Store form data into a dictionary to replace placeholders
         form_data = {
-            "date": date,
-            "time": time,
+            "datetime": datetime_input.strftime("%Y-%m-%d %H:%M"),
             "weight": weight,
             "age": f"{age_value} {age_unit}",
             "completed_by": completed_by,
