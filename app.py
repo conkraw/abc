@@ -84,8 +84,9 @@ with st.form("airway_form"):
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
-        # Set format to show one decimal place
-        weight = st.number_input("Enter Patient Weight (Kilograms)", min_value=0.0, format="%.1f")
+        
+        # Ensure weight is an integer (allow no decimal points)
+        weight = st.number_input("Enter Patient Weight (Kilograms)", min_value=0, step=1, format="%d")
 
     # Initialize ETT Type based on age
     if 'ett_type' not in st.session_state:
@@ -176,4 +177,5 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+
 
