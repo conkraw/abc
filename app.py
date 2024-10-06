@@ -30,7 +30,7 @@ def calculate_ett_size(age, age_unit):
         elif age <= 104:  # Up to 2 years
             return '4.0'
         else:
-            return '4.5'  # Above 2 years, cuffed is common
+            return '5.0'  # Above 2 years, cuffed is common
     elif age_unit == "Months":
         if age <= 12:
             return '4.0'
@@ -84,7 +84,7 @@ with st.form("airway_form"):
     if age > 0 and (age_unit in ["Months", "Years"] or (age_unit == "Weeks" and age > 104)):
         st.session_state.ett_type = "Cuffed"
     else:
-        st.session_state.ett_type = ""
+        st.session_state.ett_type = "Uncuffed"  # Default to uncuffed if age is less than 2 years
 
     # Calculate ETT Size based on age and unit
     ett_size = ""
@@ -149,5 +149,4 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
-
 
