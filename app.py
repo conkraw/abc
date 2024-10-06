@@ -26,24 +26,6 @@ def create_word_document(data):
 
     doc.add_heading('Timing of Intubation', level=1)
     doc.add_paragraph(f'Timing of intubation: {data["intubation_timing"]}')
-
-    doc.add_heading('Pre-Intubation TIME OUT', level=1)
-    doc.add_paragraph(f'Date: {data["date"]}')
-    doc.add_paragraph(f'Time: {data["time"]}')
-    doc.add_paragraph(f'Right Patient: {data["right_patient"]}')
-    doc.add_paragraph(f'Right Plan: {data["right_plan"]}')
-    doc.add_paragraph(f'Right Prep: {data["right_prep"]}')
-    doc.add_paragraph(f'Right Equipment: {data["right_equipment"]}')
-    doc.add_paragraph(f'Right Monitoring: {data["right_monitoring"]}')
-    doc.add_paragraph(f'Right Rescue Plan: {data["right_rescue_plan"]}')
-    doc.add_paragraph(f'Right Attitude: {data["right_attitude"]}')
-
-    doc.add_heading('Post-Procedure TIME OUT', level=1)
-    doc.add_paragraph(f'Feedback (What we did well): {data["feedback_well"]}')
-    doc.add_paragraph(f'Feedback (Improvements): {data["feedback_improve"]}')
-    doc.add_paragraph(f'Was the patient difficult to ventilate? {data["difficult_ventilate"]}')
-    doc.add_paragraph(f'Was the patient difficult to intubate? {data["difficult_intubate"]}')
-
     return doc
 
 
