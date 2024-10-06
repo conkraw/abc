@@ -20,6 +20,19 @@ def fill_word_template(template_path, data):
     
     return buffer
 
+# Function to calculate cuffed ETT size based on age and units
+def calculate_ett_size(age, age_unit):
+    if age_unit == "Days":
+        # Cuffed ETT size formula for neonates (example: 3.0 mm for ≤ 28 days)
+        return 3.0 if age <= 28 else 3.5
+    elif age_unit == "Months":
+        # Cuffed ETT size for infants (example: 3.5 mm for < 12 months)
+        return 3.5 if age < 12 else 4.0
+    elif age_unit == "Years":
+        # Cuffed ETT size for children (commonly: age / 4 + 3.5)
+        return max(3.5, (age // 4) + 3.5)
+    return 0
+
 # Streamlit form for the Airway Bundle Checklist
 st.title("Airway Bundle Checklist")
 
@@ -46,6 +59,12 @@ with st.form("airway_form"):
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
         age_unit = st.selectbox("Select Age Unit", ["Days", "Months", "Years"])
+
+    # Calculate cuffed ETT size
+    if age > 0:
+        ett_size = calculate_ett_size(age, age_unit)
+    else:
+        ett_size = None
 
     # Input for who completed the form
     completed_by = st.text_input("Who completed the form?")
@@ -107,8 +126,11 @@ with st.form("airway_form"):
 
     who_bag_mask = st.multiselect("Who will bag-mask?", 
                                    ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'])
+    
+    # Display calculated ETT size
+    if ett_size is not None:
+        st.write(f"**Calculated Cuffed ETT Size:** {ett_size} mm")
 
-    ett_size = st.selectbox("ETT Size", ['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'])
     device = st.selectbox("Device", ['Laryngoscope', 'LMA', 'Glidescope', 'Other'])
     blade = st.selectbox("Blade", ['Mac', 'Miller', 'Wis-Hipple'])
     medications = st.text_input("Meds (e.g., Atropine, Fentanyl, etc.)")
@@ -135,7 +157,7 @@ with st.form("airway_form"):
             **assessment_answers,  # Include all assessment answers
             "who_intubate": ", ".join(who_intubate),  # Convert list to string
             "who_bag_mask": ", ".join(who_bag_mask),  # Convert list to string
-            "ett_size": ett_size,
+            "ett_size": ett_size,  # Include calculated ETT size
             "device": device,
             "blade": blade,
             "medications": medications,
@@ -153,4 +175,5 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+
 
