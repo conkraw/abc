@@ -35,6 +35,26 @@ with st.form("airway_form"):
      # Input for who completed the form
     completed_by = st.text_input("Who completed the form?")
 
+     # Front page completion options
+    st.subheader("Front Page Completion")
+    on_admission = st.checkbox("On admission")
+    during_rounds = st.checkbox("During rounds")
+    after_rounds = st.checkbox("After rounds")
+    just_prior_intubation = st.checkbox("Just prior to intubation")
+    after_intubation = st.checkbox("After intubation")
+    prior_to_extubation = st.checkbox("Prior to extubation")
+
+    # Collect completion options in a list
+    completion_options = {
+        "on_admission": on_admission,
+        "during_rounds": during_rounds,
+        "after_rounds": after_rounds,
+        "just_prior_intubation": just_prior_intubation,
+        "after_intubation": after_intubation,
+        "prior_to_extubation": prior_to_extubation,
+    }
+
+
     st.subheader("Assessment for Anticipated Airway Management")
     difficult_airway = st.radio("History of difficult airway?", ('Yes', 'No'))
     physical_assessment = st.radio("Physical assessment (small mouth, large tongue, etc.)?", ('Yes', 'No'))
