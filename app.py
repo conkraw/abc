@@ -89,6 +89,7 @@ with st.form("airway_form"):
     for question in assessment_questions:
         cols = st.columns([3, 1, 1])  # Three columns: 3 parts for question, 1 part for Yes, 1 part for No
         with cols[0]:
+            st.markdown("") 
             st.markdown(question)  # Display question
         with cols[1]:
             yes = st.checkbox("Yes", key=f"{question}_yes")  # Yes option
