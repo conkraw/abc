@@ -25,7 +25,12 @@ def calculate_ett_size(age, age_unit):
     if age_unit == "Days":
         return '3.0' if age <= 30 else '3.5'
     elif age_unit == "Weeks":
-        return '3.5' if age <= 6 else '4.0'
+        if age <= 6:
+            return '3.5'
+        elif age <= 104:  # Up to 2 years
+            return '4.0'
+        else:
+            return '4.5'  # Above 2 years, cuffed is common
     elif age_unit == "Months":
         if age <= 12:
             return '4.0'
@@ -76,15 +81,13 @@ with st.form("airway_form"):
         st.session_state.ett_type = ""
 
     # Change ETT Type based on age input
-    if age > 0 and age_unit in ["Months", "Years"]:
+    if age > 0 and (age_unit in ["Months", "Years"] or (age_unit == "Weeks" and age > 104)):
         st.session_state.ett_type = "Cuffed"
     else:
         st.session_state.ett_type = ""
 
-    # Initialize ETT Size as blank
+    # Calculate ETT Size based on age and unit
     ett_size = ""
-
-    # Update ETT Size based on age and unit
     if age > 0:
         ett_size = calculate_ett_size(age, age_unit)
 
