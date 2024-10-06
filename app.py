@@ -38,7 +38,10 @@ with st.form("airway_form"):
     cols = st.columns(2)  # Create two columns
 
     with cols[0]:
-        datetime_input = st.datetime_input("Select Date and Time", value=datetime.now())
+        date = st.date_input("Select Date", value=datetime.today())
+        time = st.time_input("Select Time", value=datetime.now().time())
+        datetime_input = datetime.combine(date, time)  # Combine date and time
+
         weight = st.number_input("Enter Patient Weight (in kg)", min_value=0.0, format="%.2f")
 
     with cols[1]:
