@@ -32,17 +32,24 @@ with st.form("airway_form"):
     weight = st.number_input("Enter Patient Weight (in kg)", min_value=0.0, format="%.2f")
     age = st.number_input("Enter Patient Age (in years)", min_value=0, max_value=120)
 
-     # Input for who completed the form
+    # Input for who completed the form
     completed_by = st.text_input("Who completed the form?")
 
-     # Front page completion options
+    # Front page completion options in horizontal layout
     st.subheader("Front Page Completion")
-    on_admission = st.checkbox("On admission")
-    during_rounds = st.checkbox("During rounds")
-    after_rounds = st.checkbox("After rounds")
-    just_prior_intubation = st.checkbox("Just prior to intubation")
-    after_intubation = st.checkbox("After intubation")
-    prior_to_extubation = st.checkbox("Prior to extubation")
+    cols = st.columns(3)  # Create three columns
+
+    with cols[0]:
+        on_admission = st.checkbox("On admission")
+        during_rounds = st.checkbox("During rounds")
+
+    with cols[1]:
+        after_rounds = st.checkbox("After rounds")
+        just_prior_intubation = st.checkbox("Just prior to intubation")
+
+    with cols[2]:
+        after_intubation = st.checkbox("After intubation")
+        prior_to_extubation = st.checkbox("Prior to extubation")
 
     # Collect completion options in a list
     completion_options = {
@@ -53,7 +60,6 @@ with st.form("airway_form"):
         "after_intubation": after_intubation,
         "prior_to_extubation": prior_to_extubation,
     }
-
 
     st.subheader("Assessment for Anticipated Airway Management")
     difficult_airway = st.radio("History of difficult airway?", ('Yes', 'No'))
@@ -86,6 +92,8 @@ if submit:
         "time": time,
         "weight": weight,
         "age": age,
+        "completed_by": completed_by,
+        "completion_options": ", ".join([key.replace('_', ' ').capitalize() for key, value in completion_options.items() if value]),  # Format checked options
         "difficult_airway": difficult_airway,
         "physical_assessment": physical_assessment,
         "high_risk_desaturation": high_risk_desaturation,
@@ -112,4 +120,5 @@ if submit:
     # Provide download link for the filled Word document
     st.success("Form submitted successfully!")
     st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+
 
