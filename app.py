@@ -118,29 +118,31 @@ with st.form("airway_form"):
 
     # Intubation plan section
     st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
-
+    
     # Multi-select for "Who will intubate?" and "Who will bag-mask?"
     who_intubate = st.multiselect("Who will intubate?", 
                                    ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other'])
-
+    
     who_bag_mask = st.multiselect("Who will bag-mask?", 
                                    ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'])
-
-    # Create a layout for intubation method and ETT type
+    
+    # Create a layout for intubation method
+    intubation_method = st.selectbox("How will we intubate? (Method)", ["Oral", "Nasal"])
+    
+    # Create a layout for ETT Type and ETT Size
     cols = st.columns(2)  # Create two columns
-
+    
     with cols[0]:
-        intubation_method = st.selectbox("How will we intubate? (Method)", ["Oral", "Nasal"])
-
-    with cols[1]:
         ett_type = st.selectbox("ETT Type", ["Cuffed", "Uncuffed"])
+    
+    with cols[1]:
+        # ETT Size Selection
+        ett_options = ['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
+        
+        # Determine the default index based on the calculated ETT size
+        default_ett_size = str(ett_size) if ett_size is not None else '4.0'  # Set a default if no size is calculated
+        ett_size = st.selectbox("ETT Size", ett_options, index=ett_options.index(default_ett_size))
 
-    # ETT Size Selection
-    ett_options = ['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
-
-    # Determine the default index based on the calculated ETT size
-    default_ett_size = str(ett_size) if ett_size is not None else '4.0'  # Set a default if no size is calculated
-    ett_size = st.selectbox("ETT Size", ett_options, index=ett_options.index(default_ett_size))
 
     device = st.selectbox("Device", ['Laryngoscope', 'LMA', 'Glidescope', 'Other'])
     blade = st.selectbox("Blade", ['Mac', 'Miller', 'Wis-Hipple'])
