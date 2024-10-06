@@ -93,7 +93,7 @@ with st.form("airway_form"):
 
     with cols[1]:
         # ETT Size Selection
-        ett_options = ['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
+        ett_options = ['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
         
         ett_size = st.selectbox("ETT Size", ett_options, index=ett_options.index(default_ett_size))
 
