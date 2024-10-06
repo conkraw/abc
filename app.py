@@ -76,6 +76,8 @@ with st.form("airway_form"):
 
     # Assessment section
     st.markdown(box_section("Assessment for Anticipated Airway Management"), unsafe_allow_html=True)
+    
+    # Create a table layout for assessment questions
     assessment_questions = [
         "History of difficult airway?",
         "Physical assessment (small mouth, large tongue, etc.)?",
