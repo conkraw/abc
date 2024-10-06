@@ -2,7 +2,7 @@ import streamlit as st
 from docx import Document
 from io import BytesIO
 from docx.shared import Pt
-from docx2pdf import convert  # Optional for PDF conversion
+#from docx2pdf import convert  # Optional for PDF conversion
 
 # Function to fill the Word template with form inputs
 def fill_word_template(template_path, data):
