@@ -10,7 +10,7 @@ def fill_word_template(template_path, data):
     # Replace placeholders in the document with form data
     for paragraph in doc.paragraphs:
         for key, value in data.items():
-            if f'{{{{{key}}}}}' in paragraph.text:  # Looks for {{key}} in the template
+            if f'{{{{{key}}}}}' in paragraph.text:
                 paragraph.text = paragraph.text.replace(f'{{{{{key}}}}}', str(value))
 
     # Save the updated document in memory
@@ -20,7 +20,7 @@ def fill_word_template(template_path, data):
     
     return buffer
 
-# Revised function to determine ETT size based on age and unit
+# Function to determine ETT size based on age and unit
 def calculate_ett_size(age, age_unit):
     if age_unit == "Days":
         return '3.0' if age <= 30 else '3.5'
@@ -30,7 +30,7 @@ def calculate_ett_size(age, age_unit):
         elif age <= 104:  # Up to 2 years
             return '4.0'
         else:
-            return '5.0'  # Above 2 years, cuffed is common
+            return '6.0'  # Above 2 years (cuffed)
     elif age_unit == "Months":
         if age <= 12:
             return '4.0'
@@ -65,7 +65,7 @@ with st.form("airway_form"):
     # Patient Information
     st.markdown(box_section("Patient Information"), unsafe_allow_html=True)
     
-    cols = st.columns(2)  # Create two columns
+    cols = st.columns(2)
 
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
@@ -84,7 +84,7 @@ with st.form("airway_form"):
     if age > 0 and (age_unit in ["Months", "Years"] or (age_unit == "Weeks" and age > 104)):
         st.session_state.ett_type = "Cuffed"
     else:
-        st.session_state.ett_type = "Uncuffed"  # Default to uncuffed if age is less than 2 years
+        st.session_state.ett_type = "Uncuffed"
 
     # Calculate ETT Size based on age and unit
     ett_size = ""
@@ -105,7 +105,7 @@ with st.form("airway_form"):
     intubation_method = st.selectbox("How will we intubate? (Method)", ["Oral", "Nasal"])
 
     # Create a layout for ETT Type and ETT Size
-    cols = st.columns(2)  # Create two columns
+    cols = st.columns(2)
 
     with cols[0]:
         ett_type = st.selectbox("ETT Type", ["", "Cuffed", "Uncuffed"], index=["", "Cuffed", "Uncuffed"].index(st.session_state.ett_type))
@@ -133,9 +133,9 @@ with st.form("airway_form"):
             "time": time,
             "weight": weight,
             "age": f"{age} {age_unit}",
-            "ett_type": st.session_state.ett_type,  # Get the updated ETT Type
-            "who_intubate": ", ".join(who_intubate),  # Convert list to string
-            "who_bag_mask": ", ".join(who_bag_mask),  # Convert list to string
+            "ett_type": st.session_state.ett_type,
+            "who_intubate": ", ".join(who_intubate),
+            "who_bag_mask": ", ".join(who_bag_mask),
             "ett_size": ett_size,
             "intubation_timing": intubation_timing,
         }
