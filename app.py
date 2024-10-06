@@ -85,13 +85,16 @@ assessment_questions = [
 # Collect responses for assessment questions
 assessment_answers = {}
 for question in assessment_questions:
-    cols = st.columns([4, 1, 1])  # Create three columns: question, Yes, No
+    cols = st.columns([3, 1, 1])  # Create three columns: question, Yes, No
     with cols[0]:
         st.markdown(question)
     with cols[1]:
-        assessment_answers[question] = st.radio("", ['Yes'], key=f"{question}_yes")  # Only Yes option
+        response = st.radio("", ['Yes'], key=f"{question}_yes")  # Yes option
     with cols[2]:
-        assessment_answers[question] = st.radio("", ['No'], key=f"{question}_no")  # Only No option
+        response = st.radio("", ['No'], key=f"{question}_no")  # No option
+    
+    # Store response based on selections
+    assessment_answers[question] = "Yes" if response == 'Yes' else "No"
 
 # Intubation plan section
 st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
