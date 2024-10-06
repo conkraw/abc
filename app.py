@@ -84,7 +84,8 @@ with st.form("airway_form"):
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
-        weight = st.number_input("Enter Patient Weight (Kilograms)", min_value=0.0, format="%.2f")
+        # Set format to show one decimal place
+        weight = st.number_input("Enter Patient Weight (Kilograms)", min_value=0.0, format="%.1f")
 
     # Initialize ETT Type based on age
     if 'ett_type' not in st.session_state:
