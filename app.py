@@ -92,6 +92,7 @@ with st.form("airway_form"):
         cols = st.columns([3, 1])  # Create two columns: 3 parts for question, 1 part for Yes/No dropdown
         with cols[0]:
             st.markdown("")
+            st.markdown("")
             st.markdown(f"**{question}**")  # Display question prominently
         with cols[1]:
             answer = st.selectbox("", ['Yes', 'No'], key=f"{question}_response")  # Yes/No dropdown
