@@ -77,7 +77,7 @@ with st.form("airway_form"):
     # Assessment section
     st.markdown(box_section("Assessment for Anticipated Airway Management"), unsafe_allow_html=True)
     
-    # Create a table layout for assessment questions
+    # Create a layout for assessment questions
     assessment_questions = [
         "History of difficult airway?",
         "Physical assessment (small mouth, large tongue, etc.)?",
@@ -89,16 +89,9 @@ with st.form("airway_form"):
     # Collect responses for assessment questions
     assessment_answers = {}
     for question in assessment_questions:
-        cols = st.columns([3, 1, 1])  # Three columns: 3 parts for question, 1 part for Yes, 1 part for No
-        with cols[0]:
-            st.markdown(question)  # Display question
-        with cols[1]:
-            yes = st.checkbox("Yes", key=f"{question}_yes")  # Yes option
-        with cols[2]:
-            no = st.checkbox("No", key=f"{question}_no")  # No option
-
-        # Store response
-        assessment_answers[question] = 'Yes' if yes else 'No' if no else 'Not answered'
+        question_text = st.text_input(f"{question}", key=f"{question}_text")
+        answer = st.selectbox(f"Response for {question}", ['Yes', 'No'], key=f"{question}_response")
+        assessment_answers[question] = answer
 
     # Intubation plan section
     st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
