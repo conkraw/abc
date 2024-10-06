@@ -47,13 +47,15 @@ with st.form("airway_form"):
         time = st.time_input("Select Time", value=datetime.now().time())
         age_unit = st.selectbox("Select Age Unit", ["Days", "Weeks", "Months", "Years"])
 
-    # ETT Type (default to blank)
+    # Initialize ETT Type based on age
     if 'ett_type' not in st.session_state:
         st.session_state.ett_type = ""
 
     # Change ETT Type based on age input
     if age > 0 and age_unit in ["Months", "Years"]:
         st.session_state.ett_type = "Cuffed"
+    else:
+        st.session_state.ett_type = ""
 
     # Intubation plan section
     st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
@@ -78,8 +80,8 @@ with st.form("airway_form"):
         # ETT Size Selection
         ett_options = ['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
         
-        # Determine the default index based on the calculated ETT size
-        default_ett_size = '4.0'  # Set a default size
+        # Set default ETT size to 4.0 or selected size if age is set
+        default_ett_size = '4.0'  
         ett_size = st.selectbox("ETT Size", ett_options, index=ett_options.index(default_ett_size))
 
     # Timing of Intubation section
