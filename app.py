@@ -87,7 +87,7 @@ with st.form("airway_form"):
     # Collect responses for assessment questions
     assessment_answers = {}
     for question in assessment_questions:
-        cols = st.columns([3, 1, 1])  # Three columns: 3 parts for question, 1 part for Yes, 1 part for No
+        cols = st.columns([1, 1, 1])  # Three columns: 3 parts for question, 1 part for Yes, 1 part for No
         with cols[0]:
             st.markdown(question)  # Display question
         with cols[1]:
