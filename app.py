@@ -74,10 +74,10 @@ with st.form("airway_form"):
         "prior_to_extubation": prior_to_extubation,
     }
 
-    # Assessment section
+    # Assessment section with table lines
     st.markdown(box_section("Assessment for Anticipated Airway Management"), unsafe_allow_html=True)
 
-    # Create a layout for assessment questions
+    # Create a table-like structure for assessment questions
     assessment_questions = [
         "History of difficult airway?",
         "Physical assessment (small mouth, large tongue, etc.)?",
@@ -88,20 +88,45 @@ with st.form("airway_form"):
 
     # Collect responses for assessment questions
     assessment_answers = {}
+    
+    # Create a table header
+    st.markdown(
+        """
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <th style="border: 1px solid #0072B8; padding: 8px; text-align: left;">Question</th>
+                <th style="border: 1px solid #0072B8; padding: 8px; text-align: left;">Response</th>
+            </tr>
+        """,
+        unsafe_allow_html=True
+    )
+
     for question in assessment_questions:
-        cols = st.columns([3, 1])  # Create two columns: 3 parts for question, 1 part for Yes/No dropdown
-        with cols[0]:
-            st.markdown("")
-            st.markdown("")
-            st.markdown(f"**{question}**")  # Display question prominently
-        with cols[1]:
-            answer = st.selectbox("", ['Yes', 'No'], key=f"{question}_response")  # Yes/No dropdown
-            assessment_answers[question] = answer
+        st.markdown(
+            f"""
+            <tr>
+                <td style="border: 1px solid #0072B8; padding: 8px;">{question}</td>
+                <td style="border: 1px solid #0072B8; padding: 8px;">
+                    {st.selectbox("", ['Yes', 'No'], key=f"{question}_response")}
+                </td>
+            </tr>
+            """,
+            unsafe_allow_html=True
+        )
+
+    # Close the table
+    st.markdown("</table>", unsafe_allow_html=True)
 
     # Intubation plan section
     st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
-    who_intubate = st.selectbox("Who will intubate?", ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other'])
-    who_bag_mask = st.selectbox("Who will bag-mask?", ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'])
+
+    # Use checkboxes for "Who will intubate" and "Who will bag-mask"
+    st.subheader("Who will intubate?")
+    intubators = st.multiselect("Select one or more:", ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other'])
+
+    st.subheader("Who will bag-mask?")
+    bag_maskers = st.multiselect("Select one or more:", ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'])
+
     ett_size = st.selectbox("ETT Size", ['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'])
     device = st.selectbox("Device", ['Laryngoscope', 'LMA', 'Glidescope', 'Other'])
     blade = st.selectbox("Blade", ['Mac', 'Miller', 'Wis-Hipple'])
@@ -127,8 +152,8 @@ with st.form("airway_form"):
             "completed_by": completed_by,
             "completion_options": ", ".join([key.replace('_', ' ').capitalize() for key, value in completion_options.items() if value]),  # Format checked options
             **assessment_answers,  # Include all assessment answers
-            "who_intubate": who_intubate,
-            "who_bag_mask": who_bag_mask,
+            "intubators": ", ".join(intubators),  # Convert list to string
+            "bag_maskers": ", ".join(bag_maskers),  # Convert list to string
             "ett_size": ett_size,
             "device": device,
             "blade": blade,
@@ -147,4 +172,5 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+
 
