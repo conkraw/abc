@@ -76,7 +76,7 @@ with st.form("airway_form"):
 
     # Assessment section
     st.markdown(box_section("Assessment for Anticipated Airway Management"), unsafe_allow_html=True)
-    
+
     # Create a layout for assessment questions
     assessment_questions = [
         "History of difficult airway?",
@@ -89,9 +89,12 @@ with st.form("airway_form"):
     # Collect responses for assessment questions
     assessment_answers = {}
     for question in assessment_questions:
-        question_text = st.text_input(f"{question}", key=f"{question}_text")
-        answer = st.selectbox(f"Response for {question}", ['Yes', 'No'], key=f"{question}_response")
-        assessment_answers[question] = answer
+        cols = st.columns([3, 1])  # Create two columns: 3 parts for question, 1 part for Yes/No dropdown
+        with cols[0]:
+            st.text_input("Question", value=question, disabled=True)  # Display question
+        with cols[1]:
+            answer = st.selectbox("Response", ['Yes', 'No'], key=f"{question}_response")  # Yes/No dropdown
+            assessment_answers[question] = answer
 
     # Intubation plan section
     st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
@@ -142,5 +145,4 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
-
 
