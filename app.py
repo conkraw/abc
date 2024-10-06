@@ -99,22 +99,12 @@ with st.form("airway_form"):
     # Intubation plan section
     st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
 
-    # Checkboxes for "Who will intubate" and "Who will bag-mask"
-    st.subheader("Who will intubate?")    
-    intubators = ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other']
-    intubator_selection = []
-    for intubator in intubators:
-        selected = st.checkbox(intubator)
-        if selected:
-            intubator_selection.append(intubator)
+    # Multi-select for "Who will intubate?" and "Who will bag-mask?"
+    who_intubate = st.multiselect("Who will intubate?", 
+                                   ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other'])
 
-    st.subheader("Who will bag-mask?")
-    bag_maskers = ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other']
-    bag_masker_selection = []
-    for bag_masker in bag_maskers:
-        selected = st.checkbox(bag_masker)
-        if selected:
-            bag_masker_selection.append(bag_masker)
+    who_bag_mask = st.multiselect("Who will bag-mask?", 
+                                   ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'])
 
     ett_size = st.selectbox("ETT Size", ['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'])
     device = st.selectbox("Device", ['Laryngoscope', 'LMA', 'Glidescope', 'Other'])
@@ -141,8 +131,8 @@ with st.form("airway_form"):
             "completed_by": completed_by,
             "completion_options": ", ".join([key.replace('_', ' ').capitalize() for key, value in completion_options.items() if value]),  # Format checked options
             **assessment_answers,  # Include all assessment answers
-            "who_intubate": ", ".join(intubator_selection),  # Convert list to string
-            "who_bag_mask": ", ".join(bag_masker_selection),  # Convert list to string
+            "who_intubate": ", ".join(who_intubate),  # Convert list to string
+            "who_bag_mask": ", ".join(who_bag_mask),  # Convert list to string
             "ett_size": ett_size,
             "device": device,
             "blade": blade,
@@ -161,5 +151,6 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+
 
 
