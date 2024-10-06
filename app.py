@@ -32,6 +32,9 @@ with st.form("airway_form"):
     weight = st.number_input("Enter Patient Weight (in kg)", min_value=0.0, format="%.2f")
     age = st.number_input("Enter Patient Age (in years)", min_value=0, max_value=120)
 
+     # Input for who completed the form
+    completed_by = st.text_input("Who completed the form?")
+
     st.subheader("Assessment for Anticipated Airway Management")
     difficult_airway = st.radio("History of difficult airway?", ('Yes', 'No'))
     physical_assessment = st.radio("Physical assessment (small mouth, large tongue, etc.)?", ('Yes', 'No'))
