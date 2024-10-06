@@ -41,7 +41,7 @@ with st.form("airway_form"):
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
         age = st.number_input("Enter Patient Age", min_value=0, value=0)
-        weight = st.number_input("Enter Patient Weight", min_value=0.0, format="%.2f")
+        weight = st.number_input("Enter Patient Weight (Kilograms)", min_value=0.0, format="%.2f")
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
