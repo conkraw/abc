@@ -44,10 +44,9 @@ with st.form("airway_form"):
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
         
-        # Age inputs: days, months, years
-        age_years = st.number_input("Enter Patient Age (years)", min_value=0, max_value=120, value=0)
-        age_months = st.number_input("Enter Patient Age (months)", min_value=0, max_value=11, value=0)
-        age_days = st.number_input("Enter Patient Age (days)", min_value=0, max_value=30, value=0)
+        # Age input with a value and unit selection
+        age_value = st.number_input("Enter Patient Age", min_value=0, value=0)
+        age_unit = st.selectbox("Select Age Unit", ["Days", "Months", "Years"])
 
     # Input for who completed the form
     completed_by = st.text_input("Who completed the form?")
@@ -131,7 +130,7 @@ with st.form("airway_form"):
             "date": date,
             "time": time,
             "weight": weight,
-            "age": f"{age_years} years, {age_months} months, {age_days} days",
+            "age": f"{age_value} {age_unit}",
             "completed_by": completed_by,
             "completion_options": ", ".join([key.replace('_', ' ').capitalize() for key, value in completion_options.items() if value]),  # Format checked options
             **assessment_answers,  # Include all assessment answers
