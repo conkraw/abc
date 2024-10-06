@@ -27,10 +27,15 @@ st.title("Airway Bundle Checklist")
 with st.form("airway_form"):
     # Patient Information
     st.subheader("Patient Information")
-    date = st.date_input("Select Date", value=datetime.today())
-    time = st.time_input("Select Time", value=datetime.now().time())
-    weight = st.number_input("Enter Patient Weight (in kg)", min_value=0.0, format="%.2f")
-    age = st.number_input("Enter Patient Age (in years)", min_value=0, max_value=120)
+    cols = st.columns(2)  # Create two columns
+
+    with cols[0]:
+        date = st.date_input("Select Date", value=datetime.today())
+        weight = st.number_input("Enter Patient Weight (in kg)", min_value=0.0, format="%.2f")
+
+    with cols[1]:
+        time = st.time_input("Select Time", value=datetime.now().time())
+        age = st.number_input("Enter Patient Age (in years)", min_value=0, max_value=120)
 
     # Input for who completed the form
     completed_by = st.text_input("Who completed the form?")
