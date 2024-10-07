@@ -220,7 +220,7 @@ with st.form("airway_form"):
         glidescope = st.checkbox("Glidescope", key="glidescope")
     
     with cols[1]:
-        other_device = st.text_input("Other (Specify)", key="other_device")
+        other_device = st.checkbox("Other (Specify)", key="other_device")
         
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
