@@ -332,10 +332,15 @@ with st.form("airway_form"):
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
         st.text_input("Apneic Oxygenation Details:", key="ao_details", disabled=False)
-        
+
+    other_planning = st.text_input("Other Intubation Planning Details:", key="other_planning")
+    
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
-    intubation_timing = st.text_input("Describe timing of airway management", key="intubation_timing")
+    who_intubate = st.multiselect("When will we intubate? (Describe timing of airway management):", 
+                                   ['Prior to procedure','Mental Status Changes','Hypoxemia Refractory to CPAP: SPO2 < ___%', 'Ventilation failure refractory to NIV', 'Loss of Airway Protection','Other],
+                                   key="when_intubate")
+
 
     # Submit button
     submit = st.form_submit_button("Submit")
