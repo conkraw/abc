@@ -214,8 +214,7 @@ with st.form("airway_form"):
     with cols[0]:
         laryngoscope = st.checkbox("Laryngoscope", key="laryngoscope")
         
-    with cols[1]:
-        laryngoscope_text = st.text_input("", key="laryngoscope_text")
+    
     
     # LMA
     with cols[2]:
