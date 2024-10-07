@@ -93,7 +93,6 @@ with st.form("airway_form"):
     
     with cols[1]:
         difficult_airway_history = st.selectbox(
-            'Yes or No',  # Added a label here
             ['YES', 'NO'],
             key="difficult_airway_history"
         )
