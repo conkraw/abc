@@ -238,10 +238,10 @@ with st.form("airway_form"):
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
-        st.text_input("Laryngoscope details", key="laryngoscope_details", disabled=True)
-        st.text_input("Glidescope details", key="glidescope_details", disabled=True)
-        st.text_input("LMA details", key="lma_details", disabled=True)
-        st.text_input("Other Device details", key="other_device_details", disabled=True)
+        st.text_input("Laryngoscope details", key="laryngoscope_details", disabled=False)
+        st.text_input("Glidescope details", key="glidescope_details", disabled=False)
+        st.text_input("LMA details", key="lma_details", disabled=False)
+        st.text_input("Other Device details", key="other_device_details", disabled=False)
 
     
         
