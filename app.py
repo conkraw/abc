@@ -338,18 +338,17 @@ with st.form("airway_form"):
 
     # Your existing markdown for the section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
-    
+
     # Multiselect for timing of intubation
     when_intubate = st.multiselect(
         "When will we intubate? (Describe timing of airway management):",
         ['Prior to procedure', 'Mental Status Changes', 'Hypoxemia Refractory to CPAP',
          'Ventilation failure refractory to NIV', 'Loss of Airway Protection', 'Other'],
-        key="when_intubate"
-    )
-    
+        key="when_intubate")
+
     # Check if "Hypoxemia Refractory to CPAP" is selected
     if "Hypoxemia Refractory to CPAP" in when_intubate:
-        # Display the text input for SPO2
+    # Display the text input for SPO2
         spo2_input = st.text_input("SPO2 Less Than?:", key="spo2_input")
 
 
