@@ -212,9 +212,11 @@ with st.form("airway_form"):
 
     st.write("Device:")
 
+    st.write("Device:")
+
     # Create columns layout
     cols = st.columns(2)
-    
+
     # First column: checkboxes for devices
     with cols[0]:
         laryngoscope = st.checkbox("Laryngoscope", key="laryngoscope")
@@ -222,17 +224,28 @@ with st.form("airway_form"):
         lma = st.checkbox("LMA", key="lma")
         other_device = st.checkbox("Other Device", key="other_device")
     
-    # Second column: text inputs for the devices
+    # Second column: text inputs for the devices (conditionally rendered)
     with cols[1]:
-        # Only show text inputs if the respective checkbox is checked
+        # Use st.empty() as a placeholder for conditional rendering
         if laryngoscope:
             laryngoscope_text = st.text_input(label="", key="laryngoscope_text")
+        else:
+            st.empty()  # Placeholder if the checkbox is unchecked
+    
         if glidescope:
             glidescope_text = st.text_input(label="", key="glidescope_text")
+        else:
+            st.empty()
+    
         if lma:
             lma_text = st.text_input(label="", key="lma_text")
+        else:
+            st.empty()
+    
         if other_device:
             other_device_text = st.text_input(label="", key="other_device_text")
+        else:
+            st.empty()
 
         
     # Timing of Intubation section
