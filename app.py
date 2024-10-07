@@ -78,6 +78,12 @@ def reset_input(default_value, key):
 
 st.title("Airway Bundle Checklist")
 
+def update_ett_size_based_on_age():
+    selected_age = st.session_state.get("age_select")
+    if selected_age:
+        # Set the ETT size based on the age selection
+        st.session_state['ett_size'] = age_to_ett_size_mapping.get(selected_age, '4.0')  # Default ETT size if age not found
+
 # Create a form
 with st.form("airway_form"):
     # Front Page Section
@@ -119,6 +125,9 @@ with st.form("airway_form"):
         #age = st.selectbox("Select Patient Age", age_options, key="age")
         age = st.selectbox("Select Patient Age", list(age_to_ett_size_mapping.keys()), key="age_select")
 
+        if st.session_state.get("age_select"):
+            update_ett_size_based_on_age()
+        
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
 
@@ -249,17 +258,6 @@ with st.form("airway_form"):
         ett_type = st.selectbox("ETT Type", ["", "Cuffed", "Uncuffed"], key="ett_type")
 
     with cols[1]:
-        # ETT Size Selection
-        #ett_options = ['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
-
-        #default_ett_size = age_to_ett_mapping.get(age, "")
-        
-        #ett_size = st.selectbox("Select ETT Size", ett_options, index=ett_options.index(default_ett_size) if default_ett_size in ett_options else 0, key="ett_size")
-
-        if 'ett_size' not in st.session_state:
-        # Set the default ETT size based on the initial patient age
-            st.session_state['ett_size'] = age_to_ett_size_mapping[age]
-
         ett_size = st.selectbox(
         "Select ETT Size",
         options=['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
@@ -269,17 +267,6 @@ with st.form("airway_form"):
         if ett_size != st.session_state['ett_size']:
             st.session_state['ett_size'] = ett_size
 
-# Ensure the ETT size updates dynamically as the age changes
-def update_ett_size_based_on_age():
-    # Update ETT size based on selected age
-    selected_age = st.session_state.get("age_select")
-    if selected_age:
-        st.session_state['ett_size'] = age_to_ett_size_mapping.get(selected_age, '4.0')  # Default ETT size if age is not found
-
-# Automatically rerun the script when the age changes
-    if st.session_state.get("age_select"):
-        update_ett_size_based_on_age()
-        
     st.write("Device:")
     
     cols = st.columns(3)
