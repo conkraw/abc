@@ -222,13 +222,13 @@ with st.form("airway_form"):
     # Column 2: Device dropdowns (Laryngoscope, Glidescope, LMA, Other)
     with cols[1]:
   
-        st.markdown("<h2 style='text-align: center; font-size: 9px;'>Laryngoscope</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align: center; font-size: 12px;'>Laryngoscope</h2>", unsafe_allow_html=True)
         st.markdown("")
-        st.markdown("<h2 style='text-align: center; font-size: 9px;'>Glidescope</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align: center; font-size: 12px;'>Glidescope</h2>", unsafe_allow_html=True)
         st.markdown("")
-        st.markdown("<h2 style='text-align: center; font-size: 9px;'>LMA</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align: center; font-size: 12px;'>LMA</h2>", unsafe_allow_html=True)
         st.markdown("")
-        st.markdown("<h2 style='text-align: center; font-size: 9px;'>Other Device</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align: center; font-size: 12px;'>Other Device</h2>", unsafe_allow_html=True)
 
 
         #st.text_input("Device #1", value="Laryngoscope", key="laryngoscope_textx", disabled=True)
