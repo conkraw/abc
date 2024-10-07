@@ -1,5 +1,4 @@
 import streamlit as st
-from datetime import datetime
 
 # Function to create a boxed section
 def box_section(title):
@@ -11,31 +10,29 @@ def box_section(title):
 
 st.title("Airway Bundle Checklist")
 
-# Create a form
-with st.form("airway_form"):
-    # Timing of Intubation Section
-    st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
+# Timing of Intubation Section
+st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
 
-    # Select for timing of intubation
-    when_intubate = st.selectbox(
-        "When will we intubate? (Describe timing of airway management):",
-        ['Select an option', 'Prior to procedure', 'Mental Status Changes', 
-         'Hypoxemia Refractory to CPAP', 'Ventilation failure refractory to NIV', 
-         'Loss of Airway Protection', 'Other'],
-        key="when_intubate"
-    )
+# Select for timing of intubation
+when_intubate = st.selectbox(
+    "When will we intubate? (Describe timing of airway management):",
+    ['Select an option', 'Prior to procedure', 'Mental Status Changes', 
+     'Hypoxemia Refractory to CPAP', 'Ventilation failure refractory to NIV', 
+     'Loss of Airway Protection', 'Other'],
+    key="when_intubate"
+)
 
-    # Check if "Hypoxemia Refractory to CPAP" is selected
-    if when_intubate == 'Hypoxemia Refractory to CPAP':
-        spo2_input = st.text_input("SPO2 Less Than?:", key="spo2_input")
+# Check if "Hypoxemia Refractory to CPAP" is selected
+if when_intubate == 'Hypoxemia Refractory to CPAP':
+    spo2_input = st.text_input("SPO2 Less Than?:", key="spo2_input")
 
-    # Submit button
-    submit = st.form_submit_button("Submit")
+# Submit button
+submit = st.button("Submit")
 
-    # Process submission
-    if submit:
-        st.success("Form submitted successfully!")
-        # Here, you would handle the form data as needed
+# Process submission
+if submit:
+    st.success("Form submitted successfully!")
+    # Here, you would handle the form data as needed
 
 # To run this app, use the command:
 # streamlit run app.py
