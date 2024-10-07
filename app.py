@@ -314,6 +314,25 @@ with st.form("airway_form"):
         st.text_input("Rocuronium Dosage:", key="roc_dosage", disabled=False)
         st.text_input("Vecuronium Dosage:", key="vec_dosage", disabled=False)
 
+    st.write("Apneic Oxygenation:")
+    
+    cols = st.columns(3)
+
+    # Column 1: Dropdowns for "X" or empty
+    with cols[0]:
+        # Dropdowns to choose if devices are selected or not (X = selected)
+        ao_selection = st.selectbox("Select Use", options=["", "Yes", "No"], key="dropdown_16")
+    
+    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
+    with cols[1]:
+        # These text inputs will reset to their default value if changed and the user moves away
+        ao_text = reset_input("Apneic Oxygenation", key="aox")
+    
+    # Column 3: Additional details for each device (uneditable placeholders)
+    with cols[2]:
+        # Text Inputs with uneditable placeholders (details of each device)
+        st.text_input("Apneic Oxygenation Details:", key="ao_details", disabled=False)
+        
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
     intubation_timing = st.text_input("Describe timing of airway management", key="intubation_timing")
