@@ -208,7 +208,7 @@ with st.form("airway_form"):
     st.write("Device:")
 
     # Create columns layout for the device selection with text inputs next to checkboxes
-    cols = st.columns([2, 1, 2, 1])  # Adjust column sizes to your preference
+    cols = st.columns([2, 2, 2, 2])  # Adjust column sizes to your preference
     
     # Laryngoscope
     with cols[0]:
