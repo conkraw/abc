@@ -86,8 +86,8 @@ with st.form("airway_form"):
 
     # Create a table-like layout with YES/NO dropdowns in the same row using st.columns
     st.write("### Difficult Airway:")
-    cols = st.columns([2, 1])  # Adjust column widths
-
+    
+    cols = st.columns([3, 1])  # Adjust column widths to better align text and dropdowns
     with cols[0]:
         st.write("History of difficult airway?")
     
@@ -98,8 +98,7 @@ with st.form("airway_form"):
             key="difficult_airway_history"
         )
 
-    cols = st.columns([2, 1])  # Reset columns for next question
-
+    cols = st.columns([3, 1])  # Reset columns for next question
     with cols[0]:
         st.write("Physical (e.g. small mouth, small jaw, large tongue, or short neck)?")
     
@@ -111,8 +110,8 @@ with st.form("airway_form"):
         )
 
     st.write("### At Risk For:")
-    cols = st.columns([2, 1])  # Reset columns for next question
-
+    
+    cols = st.columns([3, 1])  # Adjust column widths for better layout
     with cols[0]:
         st.write("High risk for rapid desaturation during intubation?")
     
@@ -123,8 +122,7 @@ with st.form("airway_form"):
             key="high_risk_desaturation"
         )
 
-    cols = st.columns([2, 1])
-
+    cols = st.columns([3, 1])
     with cols[0]:
         st.write("Increased ICP, pulmonary hypertension, need to avoid hypercarbia?")
     
@@ -135,8 +133,7 @@ with st.form("airway_form"):
             key="high_risk_ICP"
         )
 
-    cols = st.columns([2, 1])
-
+    cols = st.columns([3, 1])
     with cols[0]:
         st.write("Unstable hemodynamics (e.g., hypovolemia, potential need for fluid bolus, vasopressor, CPR)?")
     
@@ -147,8 +144,7 @@ with st.form("airway_form"):
             key="unstable_hemodynamics"
         )
 
-    cols = st.columns([2, 1])
-
+    cols = st.columns([3, 1])
     with cols[0]:
         st.write("Other risk factors?")
     
@@ -159,10 +155,9 @@ with st.form("airway_form"):
             key="other_risk_factors"
         )
 
-    cols = st.columns([2, 1])
-
+    cols = st.columns([3, 1])
     with cols[0]:
-        st.write("Is there an other risk factor?")
+        st.write("Is there another risk factor?")
     
     with cols[1]:
         other_risk_yes_no = st.selectbox(
