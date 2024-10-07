@@ -87,7 +87,7 @@ with st.form("airway_form"):
     # Create a table-like layout with YES/NO dropdowns in the same row using st.columns
     st.write("#### Difficult Airway:")
     
-    cols = st.columns([3, 1])  # Adjust column widths for better alignment
+    cols = st.columns([2, 1])  # Adjust column widths (make dropdown narrower)
     with cols[0]:
         st.markdown("")
         st.markdown("")
@@ -100,7 +100,7 @@ with st.form("airway_form"):
             key="difficult_airway_history"
         )
 
-    cols = st.columns([3, 1])  # Reset columns for next question
+    cols = st.columns([2, 1])  # Reset columns for next question
     with cols[0]:
         st.markdown("")
         st.markdown("")
@@ -115,7 +115,7 @@ with st.form("airway_form"):
 
     st.write("#### At Risk For:")
     
-    cols = st.columns([3, 1])  # Adjust column widths for better alignment
+    cols = st.columns([2, 1])  # Adjust column widths (make dropdown narrower)
     with cols[0]:
         st.markdown("")
         st.markdown("")
@@ -128,7 +128,7 @@ with st.form("airway_form"):
             key="high_risk_desaturation"
         )
 
-    cols = st.columns([3, 1])
+    cols = st.columns([2, 1])
     with cols[0]:
         st.markdown("")
         st.markdown("")
@@ -141,7 +141,7 @@ with st.form("airway_form"):
             key="high_risk_ICP"
         )
 
-    cols = st.columns([3, 1])
+    cols = st.columns([2, 1])
     with cols[0]:
         st.markdown("")
         st.markdown("")
@@ -154,7 +154,7 @@ with st.form("airway_form"):
             key="unstable_hemodynamics"
         )
 
-    cols = st.columns([3, 1])
+    cols = st.columns([2, 1])
     with cols[0]:
         st.markdown("")
         st.markdown("")
@@ -166,7 +166,7 @@ with st.form("airway_form"):
             key="other_risk_factors"
         )
 
-    cols = st.columns([3, 1])
+    cols = st.columns([2, 1])
     with cols[0]:
         st.markdown("")
         st.markdown("")
