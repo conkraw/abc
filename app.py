@@ -63,18 +63,17 @@ def box_section(title):
     """
 
 def reset_input(default_value, key):
-    # If the key does not exist in session state, initialize it
+    # If the key does not exist in session state, initialize it with the default value
     if key not in st.session_state:
-        st.session_state[key] = default_value
-    
-    # Display the text input with the current value
-    current_value = st.text_input("", key=key, value=st.session_state[key])
-    
-    # If the user changes the value, update the session state to the new value
+        st.session_state[key] = default_value  # Set the default value only once
+
+    # Display the text input without a default value, since it is already handled by session state
+    current_value = st.text_input("", key=key)
+
+    # If the current input differs from the session state, update the session state
     if current_value != st.session_state[key]:
         st.session_state[key] = current_value
-    
-    # Return the current value of the input field
+
     return current_value
 
 st.title("Airway Bundle Checklist")
