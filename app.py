@@ -221,7 +221,8 @@ with st.form("airway_form"):
     
     # Column 2: Device dropdowns (Laryngoscope, Glidescope, LMA, Other)
     with cols[1]:
-        st.text_input("Device #1", value="Laryngoscope", key="laryngoscope_textx", disabled=True)
+        #st.text_input("Device #1", value="Laryngoscope", key="laryngoscope_textx", disabled=True)
+        st.markdown("**Device #1: Laryngoscope**")
         st.text_input("Device #2", value="Glidescope", key="glidescope_textx", disabled=True)
         st.text_input("Device #3", value="LMA", key="lma_textx", disabled=True)
         st.text_input("Device #4", value="Other Device", key="other_device_textx", disabled=True)
@@ -232,9 +233,6 @@ with st.form("airway_form"):
         st.text_input("Glidescope details", key="glidescope_text")
         st.text_input("LMA details", key="lma_text")
         st.text_input("Other Device details", key="other_device_text")
-        
-
-
         
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
