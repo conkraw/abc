@@ -207,17 +207,14 @@ with st.form("airway_form"):
 
     st.write("Device:")
 
-    st.write("Device:")
-
     # Create columns layout
     cols = st.columns(2)
-    
-    # Laryngoscope
+
     with cols[0]:
-        laryngoscope = st.checkbox("", key="laryngoscope")
-        glidescope = st.checkbox("", key="glidescope")
-        lma = st.checkbox("", key="lma")
-        other_device = st.checkbox("", key="other_device")
+        laryngoscope = st.checkbox("Laryngoscope", key="laryngoscope")
+        glidescope = st.checkbox("Glidescope", key="glidescope")
+        lma = st.checkbox("LMA", key="lma")
+        other_device = st.checkbox("Other Device", key="other_device")
     
     #with cols[1]:
         
