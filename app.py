@@ -214,11 +214,10 @@ with st.form("airway_form"):
 
     st.write("Device:")
     
-    # Create columns layout for dropdowns, devices, and text inputs side by side
-    #cols = st.columns([1, 2, 3])  # Adjust column widths: 1 for the new dropdowns, 2 for devices, 3 for text inputs
+
 
 # Create columns layout
-    cols = st.columns(1,2,3)
+    cols = st.columns(3)
 
     # Column 1: Dropdowns for "X" or empty
     with cols[0]:
