@@ -222,6 +222,7 @@ with st.form("airway_form"):
     # Column 2: Device dropdowns (Laryngoscope, Glidescope, LMA, Other)
     with cols[1]:
         st.markdown("")
+        st.markdown("")
         st.markdown("**Laryngoscope**")
         #st.text_input("Device #1", value="Laryngoscope", key="laryngoscope_textx", disabled=True)
         #st.text_input("Device #2", value="Glidescope", key="glidescope_textx", disabled=True)
