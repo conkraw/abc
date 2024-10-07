@@ -205,25 +205,33 @@ with st.form("airway_form"):
         ett_options = ['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
         ett_size = st.selectbox("ETT Size", ett_options, key="ett_size")
     
+    import streamlit as st
+
     st.write("Device:")
     
-    # Create columns layout for dropdowns and text inputs side by side
-    cols = st.columns([2, 3])  # Adjust column widths (2 for dropdowns, 3 for text inputs)
+    # Create columns layout for dropdowns, devices, and text inputs side by side
+    cols = st.columns([1, 2, 3])  # Adjust column widths: 1 for the new dropdowns, 2 for devices, 3 for text inputs
     
-    # Column 1: Dropdowns
+    # Column 1: Dropdowns for "X" or empty
     with cols[0]:
-        laryngoscope = st.selectbox("Laryngoscope", options=["Laryngoscope"], key="laryngoscope")
-        glidescope = st.selectbox("Glidescope", options=["Glidescope"], key="glidescope")
-        lma = st.selectbox("LMA", options=["LMA"], key="lma")
-        other_device = st.selectbox("Other Device", options=["Other Device"], key="other_device")
+        st.selectbox("Select", options=["", "X"], key="dropdown_1")  # Dropdown for Laryngoscope
+        st.selectbox("Select", options=["", "X"], key="dropdown_2")  # Dropdown for Glidescope
+        st.selectbox("Select", options=["", "X"], key="dropdown_3")  # Dropdown for LMA
+        st.selectbox("Select", options=["", "X"], key="dropdown_4")  # Dropdown for Other Device
     
-    # Column 2: Text Inputs (aligned with dropdowns)
+    # Column 2: Device dropdowns (Laryngoscope, Glidescope, LMA, Other)
     with cols[1]:
-        st.text_input("Laryngoscope details", key="laryngoscope_text")
-        st.text_input("Glidescope details", key="glidescope_text")
-        st.text_input("LMA details", key="lma_text")
-        st.text_input("Other Device details", key="other_device_text")
-
+        laryngoscope = st.selectbox("Laryngoscope", options=["Select", "Option 1", "Option 2", "Option 3"], key="laryngoscope")
+        glidescope = st.selectbox("Glidescope", options=["Select", "Option 1", "Option 2", "Option 3"], key="glidescope")
+        lma = st.selectbox("LMA", options=["Select", "Option 1", "Option 2", "Option 3"], key="lma")
+        other_device = st.selectbox("Other Device", options=["Select", "Option 1", "Option 2", "Option 3"], key="other_device")
+    
+    # Column 3: Text Inputs with uneditable placeholders (Laryngoscope, Glidescope, etc.)
+    with cols[2]:
+        st.text_input("Laryngoscope details", value="Laryngoscope", key="laryngoscope_text", disabled=True)
+        st.text_input("Glidescope details", value="Glidescope", key="glidescope_text", disabled=True)
+        st.text_input("LMA details", value="LMA", key="lma_text", disabled=True)
+        st.text_input("Other Device details", value="Other Device", key="other_device_text", disabled=True)
 
 
         
