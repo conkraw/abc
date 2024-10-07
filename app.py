@@ -3,6 +3,40 @@ from docx import Document
 from io import BytesIO
 from datetime import datetime
 
+age_to_ett_mapping = {
+    "Premature":"3.0",
+    "Newborn": "3.5",
+    "1 month old": "3.5",
+    "2 month old": "3.5",
+    "3 month old": "3.5",
+    "4 month old": "3.5",
+    "5 month old": "3.5",
+    "6 month old": "4.0",
+    "7 month old": "4.0",
+    "8 month old": "4.0",
+    "9 month old": "4.0",
+    "10 month old": "4.0",
+    "11 month old": "4.0",
+    "1 year old": "4.5",
+    "2 year old": "4.5",
+    "3 year old": "4.5",
+    "4 year old": "5.0",
+    "5 year old": "5.0",
+    "6 year old": "5.0",
+    "7 year old": "6.0",
+    "8 year old": "6.0",
+    "9 year old": "6.0",
+    "10 year old": "6.0",
+    "11 year old": "6.5",
+    "12 year old": "6.5",
+    "13 year old": "6.5",
+    "14 year old": "6.5",
+    "15 year old": "6.5",
+    "16 year old": "7.0",
+    "17 year old": "7.0",
+    "18 year old": "7.0"
+}
+
 # Function to fill the Word template with form inputs
 def fill_word_template(template_path, data):
     doc = Document(template_path)
@@ -216,8 +250,10 @@ with st.form("airway_form"):
 
     with cols[1]:
         # ETT Size Selection
-        ett_options = ['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
-        ett_size = st.selectbox("ETT Size", ett_options, key="ett_size")
+        #ett_options = ['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
+        #ett_size = st.selectbox("ETT Size", ett_options, key="ett_size")
+        ett_size_right = age_to_ett_mapping.get(age, "")
+        ett_size = st.selectbox("Select ETT Size", options=[ett_size_right], key="ett_size", disabled=True)
 
     st.write("Device:")
     
