@@ -207,42 +207,32 @@ with st.form("airway_form"):
 
     st.write("Device:")
 
-    # Create columns layout for the device selection with text inputs next to checkboxes
-    cols = st.columns([2, 2, 2, 2])  # Adjust column sizes to your preference
+    # Create two columns layout for the device selection
+    cols = st.columns([1, 3])  # Adjust column sizes (1 for checkbox, 3 for text input)
     
-    # Laryngoscope
+    # First column for the first row (Laryngoscope and Glidescope)
     with cols[0]:
         laryngoscope = st.checkbox("Laryngoscope", key="laryngoscope")
         
-    
-    
-    # LMA
-    with cols[2]:
-        lma = st.checkbox("LMA", key="lma")
-        
-    with cols[3]:
-        lma_text = st.text_input("", key="lma_text")
-    
-    # Glidescope
-    with cols[0]:
-        st.markdown("")
         glidescope = st.checkbox("Glidescope", key="glidescope")
         
     with cols[1]:
-        st.markdown("")
-        st.markdown("")
-        st.markdown("")
-        glidescope_text = st.text_input("", key="glidescope_text")
+        laryngoscope_text = st.text_input("Specify Laryngoscope", key="laryngoscope_text")
+        glidescope_text = st.text_input("Specify Glidescope", key="glidescope_text")
     
-    # Other Device
-    with cols[2]:
+    
+    # Second row (LMA and Other Device)
+    cols2 = st.columns([1, 3])  # Re-define columns for the second row (LMA and Other)
+    
+    with cols2[0]:
+        lma = st.checkbox("LMA", key="lma")
+        
         other_device = st.checkbox("Other", key="other_device")
         
-    with cols[3]:
-        st.markdown("")
-        st.markdown("")
-        st.markdown("")
-        other_device_text = st.text_input("", key="other_device_text")
+    with cols2[1]:
+        lma_text = st.text_input("Specify LMA", key="lma_text")
+        other_device_text = st.text_input("Specify Other Device", key="other_device_text")
+
 
         
     # Timing of Intubation section
