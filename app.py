@@ -28,7 +28,7 @@ def box_section(title):
     </div>
     """
 
-def reset_input(key, default_value):
+def reset_input(default_value, key):
     # If the key does not exist in session state, initialize it
     if key not in st.session_state:
         st.session_state[key] = default_value
@@ -40,7 +40,7 @@ def reset_input(key, default_value):
     if current_value != st.session_state[key]:
         st.session_state[key] = current_value
     
-    # After user leaves the input, the value is reset to the default after a delay
+    # Return the current value of the input field
     return current_value
 
 st.title("Airway Bundle Checklist")
