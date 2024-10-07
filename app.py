@@ -85,7 +85,7 @@ with st.form("airway_form"):
     st.markdown(box_section("Intubation Risk Assessment"), unsafe_allow_html=True)
 
     # Create a table-like layout with YES/NO dropdowns in the same row using st.columns
-    st.write("### Difficult Airway:")
+    st.write("## Difficult Airway:")
     
     cols = st.columns([3, 1])  # Adjust column widths for better alignment
     with cols[0]:
@@ -113,7 +113,7 @@ with st.form("airway_form"):
             key="physical_risk"
         )
 
-    st.write("### At Risk For:")
+    st.write("## At Risk For:")
     
     cols = st.columns([3, 1])  # Adjust column widths for better alignment
     with cols[0]:
