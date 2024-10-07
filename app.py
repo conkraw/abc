@@ -225,9 +225,11 @@ with st.form("airway_form"):
     
     # Glidescope
     with cols[0]:
+        st.markdown("")
         glidescope = st.checkbox("Glidescope", key="glidescope")
         
     with cols[1]:
+        st.markdown("")
         glidescope_text = st.text_input("", key="glidescope_text")
     
     # Other Device
