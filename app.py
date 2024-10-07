@@ -221,11 +221,12 @@ with st.form("airway_form"):
     
     # Column 2: Device dropdowns (Laryngoscope, Glidescope, LMA, Other)
     with cols[1]:
+        st.markdown("")
+        st.markdown("**Laryngoscope**")
         #st.text_input("Device #1", value="Laryngoscope", key="laryngoscope_textx", disabled=True)
-        st.markdown("**Device #1: Laryngoscope**")
-        st.text_input("Device #2", value="Glidescope", key="glidescope_textx", disabled=True)
-        st.text_input("Device #3", value="LMA", key="lma_textx", disabled=True)
-        st.text_input("Device #4", value="Other Device", key="other_device_textx", disabled=True)
+        #st.text_input("Device #2", value="Glidescope", key="glidescope_textx", disabled=True)
+        #st.text_input("Device #3", value="LMA", key="lma_textx", disabled=True)
+        #st.text_input("Device #4", value="Other Device", key="other_device_textx", disabled=True)
     
     # Column 3: Text Inputs with uneditable placeholders (Laryngoscope, Glidescope, etc.)
     with cols[2]:
