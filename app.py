@@ -212,37 +212,48 @@ with st.form("airway_form"):
     # Create columns layout for dropdowns, devices, and text inputs side by side
     cols = st.columns([1, 2, 3])  # Adjust column widths: 1 for the new dropdowns, 2 for devices, 3 for text inputs
     
+    import streamlit as st
+
+# Define a function that resets the input field to the original value
+def reset_input(default_value, key):
+    # Check if the user input is different from the default value
+    current_value = st.text_input("", key=key, value=default_value)
+    return current_value
+
+# Create columns layout
+    cols = st.columns(3)
+
     # Column 1: Dropdowns for "X" or empty
     with cols[0]:
-        st.selectbox("Select", options=["", "X"], key="dropdown_1")  # Dropdown for Laryngoscope
-        st.selectbox("Select", options=["", "X"], key="dropdown_2")  # Dropdown for Glidescope
-        st.selectbox("Select", options=["", "X"], key="dropdown_3")  # Dropdown for LMA
-        st.selectbox("Select", options=["", "X"], key="dropdown_4")  # Dropdown for Other Device
-    
-    # Column 2: Device dropdowns (Laryngoscope, Glidescope, LMA, Other)
-    with cols[1]:
-        #st.text_input("Device #1", value="Laryngoscope", key="laryngoscope_textx", disabled=False)
-        #st.text_input("Device #2", value="Glidescope", key="glidescope_textx", disabled=False)
-        #st.text_input("Device #3", value="LMA", key="lma_textx", disabled=False)
-        #st.text_input("Device #4", value="Other Device", key="other_device_textx", disabled=False)
-        # Text Inputs that persist the values (use `key` to retain state across interactions)
-        device_1 = st.text_input("Device #1", value="Laryngoscope", key="laryngoscope_textx")
-        device_2 = st.text_input("Device #2", value="Glidescope", key="glidescope_textx")
-        device_3 = st.text_input("Device #3", value="LMA", key="lma_textx")
-        device_4 = st.text_input("Device #4", value="Other Device", key="other_device_textx")
+        st.markdown("### Device Selection")
         
-        # Display the values as an example
-        #st.write(f"Device #1: {device_1}")
-        #st.write(f"Device #2: {device_2}")
-        #st.write(f"Device #3: {device_3}")
-        #st.write(f"Device #4: {device_4}")
-
-    # Column 3: Text Inputs with uneditable placeholders (Laryngoscope, Glidescope, etc.)
+        # Dropdowns to choose if devices are selected or not (X = selected)
+        device_1_selection = st.selectbox("Select Laryngoscope", options=["", "X"], key="dropdown_1")
+        device_2_selection = st.selectbox("Select Glidescope", options=["", "X"], key="dropdown_2")
+        device_3_selection = st.selectbox("Select LMA", options=["", "X"], key="dropdown_3")
+        device_4_selection = st.selectbox("Select Other Device", options=["", "X"], key="dropdown_4")
+    
+    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
+    with cols[1]:
+        st.markdown("### Device Editable Text Inputs")
+        
+        # These text inputs will reset to their default value if changed and the user moves away
+        device_1_text = reset_input("Laryngoscope", key="laryngoscope_textx")
+        device_2_text = reset_input("Glidescope", key="glidescope_textx")
+        device_3_text = reset_input("LMA", key="lma_textx")
+        device_4_text = reset_input("Other Device", key="other_device_textx")
+    
+    # Column 3: Additional details for each device (uneditable placeholders)
     with cols[2]:
-        st.text_input("Laryngoscope details", key="laryngoscope_text")
-        st.text_input("Glidescope details", key="glidescope_text")
-        st.text_input("LMA details", key="lma_text")
-        st.text_input("Other Device details", key="other_device_text")
+        st.markdown("### Device Details")
+        
+        # Text Inputs with uneditable placeholders (details of each device)
+        st.text_input("Laryngoscope details", key="laryngoscope_details", disabled=True)
+        st.text_input("Glidescope details", key="glidescope_details", disabled=True)
+        st.text_input("LMA details", key="lma_details", disabled=True)
+        st.text_input("Other Device details", key="other_device_details", disabled=True)
+
+    
         
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
