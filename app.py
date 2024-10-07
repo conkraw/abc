@@ -20,9 +20,6 @@ def fill_word_template(template_path, data):
     
     return buffer
 
-# Streamlit form for the Airway Bundle Checklist
-st.title("Airway Bundle Checklist")
-
 # Function to create a boxed section
 def box_section(title):
     return f"""
@@ -30,6 +27,9 @@ def box_section(title):
         <h4 style="margin: 0; color: #0072B8;">{title}</h4>
     </div>
     """
+
+# Streamlit form for the Airway Bundle Checklist
+st.title("Airway Bundle Checklist")
 
 # Create a form
 with st.form("airway_form"):
@@ -50,7 +50,7 @@ with st.form("airway_form"):
          '4211', '4213', '4215', '4217', '4219', '4221', '4223']
     )
 
-    # Patient Information
+    # Patient Information Section
     st.markdown(box_section("Patient Information"), unsafe_allow_html=True)
     
     cols = st.columns(2)
@@ -84,42 +84,73 @@ with st.form("airway_form"):
 
     # Create a table-like layout with YES/NO dropdowns
     st.write("### Difficult Airway")
-    difficult_airway_history = st.selectbox(
-        "History of difficult airway?",
-        ['YES', 'NO']
-    )
+    cols = st.columns(2)
 
-    physical_risk = st.selectbox(
-        "Physical (e.g. small mouth, small jaw, large tongue, or short neck)?",
-        ['YES', 'NO']
-    )
+    with cols[0]:
+        st.write("History of difficult airway?")
+    
+    with cols[1]:
+        difficult_airway_history = st.selectbox(
+            "",
+            ['YES', 'NO']
+        )
+
+    with cols[0]:
+        st.write("Physical (e.g. small mouth, small jaw, large tongue, or short neck)?")
+    
+    with cols[1]:
+        physical_risk = st.selectbox(
+            "",
+            ['YES', 'NO']
+        )
 
     st.write("### At Risk For:")
+    cols = st.columns(2)
+
+    with cols[0]:
+        st.write("High risk for rapid desaturation during intubation?")
     
-    high_risk_desaturation = st.selectbox(
-        "High risk for rapid desaturation during intubation?",
-        ['YES', 'NO']
-    )
+    with cols[1]:
+        high_risk_desaturation = st.selectbox(
+            "",
+            ['YES', 'NO']
+        )
 
-    high_risk_ICP = st.selectbox(
-        "Increased ICP, pulmonary hypertension, need to avoid hypercarbia?",
-        ['YES', 'NO']
-    )
-
-    unstable_hemodynamics = st.selectbox(
-        "Unstable hemodynamics (e.g., hypovolemia, potential need for fluid bolus, vasopressor, CPR)?",
-        ['YES', 'NO']
-    )
-
-    other_risk_factors = st.text_input(
-        "Other risk factors? (Specify)",
-        ""
-    )
+    with cols[0]:
+        st.write("Increased ICP, pulmonary hypertension, need to avoid hypercarbia?")
     
-    other_risk_yes_no = st.selectbox(
-        "Is there an other risk factor?",
-        ['YES', 'NO']
-    )
+    with cols[1]:
+        high_risk_ICP = st.selectbox(
+            "",
+            ['YES', 'NO']
+        )
+
+    with cols[0]:
+        st.write("Unstable hemodynamics (e.g., hypovolemia, potential need for fluid bolus, vasopressor, CPR)?")
+    
+    with cols[1]:
+        unstable_hemodynamics = st.selectbox(
+            "",
+            ['YES', 'NO']
+        )
+
+    with cols[0]:
+        st.write("Other risk factors?")
+    
+    with cols[1]:
+        other_risk_factors = st.text_input(
+            "",
+            ""
+        )
+    
+    with cols[0]:
+        st.write("Is there an other risk factor?")
+    
+    with cols[1]:
+        other_risk_yes_no = st.selectbox(
+            "",
+            ['YES', 'NO']
+        )
 
     # Intubation plan section
     st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
@@ -198,5 +229,6 @@ def validate_weight(weight_str):
             return False
     except ValueError:
         return False
+
 
 
