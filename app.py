@@ -108,7 +108,7 @@ with st.form("airway_form"):
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
 
         # Replace number input with dropdown for age
-        age_options = [
+        age_options = ["",
             "Premature", "Newborn", "1 month old", "2 month old", "3 month old", "4 month old", "5 month old", 
             "6 month old", "7 month old", "8 month old", "9 month old", "10 month old", "11 month old", 
             "12 month old", "1 year old", "2 year old", "3 year old", "4 year old", "5 year old", 
