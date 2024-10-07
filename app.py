@@ -341,7 +341,10 @@ with st.form("airway_form"):
                                    ['Prior to procedure','Mental Status Changes','Hypoxemia Refractory to CPAP', 'Ventilation failure refractory to NIV', 'Loss of Airway Protection','Other'],
                                    key="when_intubate")
 
-
+    if "Hypoxemia Refractory to CPAP" in who_intubate:
+    # Display the text input for SPO2
+    spo2_input = st.text_input("SPO2 Less Than?:", key="spo2_input")
+    
     st.markdown(box_section("Backup"), unsafe_allow_html=True)
     advance_airway_provider = st.multiselect("Advance Airway Provider:", 
                                    ['Attending','Anesthesia','ENT','Fellow','Other'],
