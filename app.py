@@ -28,20 +28,20 @@ def box_section(title):
     </div>
     """
 
-def reset_input(default_value, key):
+def reset_input(key, default_value):
+    # If the key does not exist in session state, initialize it
     if key not in st.session_state:
         st.session_state[key] = default_value
     
-    # Display the text input and allow the user to edit it
+    # Display the text input with the current value
     current_value = st.text_input("", key=key, value=st.session_state[key])
     
-    # If the user has changed the value, reset it after moving away (real-time).
+    # If the user changes the value, update the session state to the new value
     if current_value != st.session_state[key]:
         st.session_state[key] = current_value
-        st.rerun()  # Trigger rerun to reset it in real-time
     
+    # After user leaves the input, the value is reset to the default after a delay
     return current_value
-
 
 st.title("Airway Bundle Checklist")
 
