@@ -207,32 +207,51 @@ with st.form("airway_form"):
 
     st.write("Device:")
 
-    # Create two columns layout for the device selection
-    cols = st.columns([1, 3])  # Adjust column sizes (1 for checkbox, 3 for text input)
-    
-    # First column for the first row (Laryngoscope and Glidescope)
-    with cols[0]:
-        laryngoscope = st.checkbox("Laryngoscope", key="laryngoscope")
-        
-        glidescope = st.checkbox("Glidescope", key="glidescope")
-        
-    with cols[1]:
-        laryngoscope_text = st.text_input("Specify Laryngoscope", key="laryngoscope_text")
-        glidescope_text = st.text_input("Specify Glidescope", key="glidescope_text")
-    
-    
-    # Second row (LMA and Other Device)
-    cols2 = st.columns([1, 3])  # Re-define columns for the second row (LMA and Other)
-    
-    with cols2[0]:
-        lma = st.checkbox("LMA", key="lma")
-        
-        other_device = st.checkbox("Other", key="other_device")
-        
-    with cols2[1]:
-        lma_text = st.text_input("Specify LMA", key="lma_text")
-        other_device_text = st.text_input("Specify Other Device", key="other_device_text")
+    st.write("Device:")
 
+    # Create columns layout
+    cols = st.columns([2, 2])  # Adjust column sizes to your preference
+    
+    # Laryngoscope
+    with cols[0]:
+        st.markdown("**Laryngoscope**")
+        laryngoscope = st.checkbox("", key="laryngoscope")
+    
+    with cols[1]:
+        if laryngoscope:
+            laryngoscope_text = st.text_input("", key="laryngoscope_text")
+    
+    
+    # Glidescope
+    with cols[0]:
+        st.markdown("**Glidescope**")
+        glidescope = st.checkbox("", key="glidescope")
+    
+    with cols[1]:
+        if glidescope:
+            glidescope_text = st.text_input("", key="glidescope_text")
+    
+    
+    # LMA
+    with cols[0]:
+        st.markdown("**LMA**")
+        lma = st.checkbox("", key="lma")
+    
+    with cols[1]:
+        if lma:
+            lma_text = st.text_input("", key="lma_text")
+    
+    
+    # Other Device
+    with cols[0]:
+        st.markdown("**Other Device (Specify)**")
+        other_device = st.checkbox("", key="other_device")
+    
+    with cols[1]:
+        if other_device:
+            other_device_text = st.text_input("", key="other_device_text")
+
+   
 
         
     # Timing of Intubation section
