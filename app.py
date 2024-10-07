@@ -3,7 +3,7 @@ from docx import Document
 from io import BytesIO
 from datetime import datetime
 
-age_to_ett_mapping = {
+age_to_ett_mapping = {"":"",
     "Premature":"3.0",
     "Newborn": "3.5",
     "1 month old": "3.5",
@@ -260,9 +260,9 @@ with st.form("airway_form"):
     with cols[1]:
         ett_size = st.selectbox(
         "Select ETT Size",
-        options=['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
+        options=['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
         key="ett_size",
-        index=['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
+        index=['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
     )
         if ett_size != st.session_state['ett_size']:
             st.session_state['ett_size'] = ett_size
