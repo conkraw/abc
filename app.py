@@ -342,6 +342,14 @@ with st.form("airway_form"):
                                    key="when_intubate")
 
 
+    st.markdown(box_section("Backup?"), unsafe_allow_html=True)
+    advance_airway_provider = st.multiselect("Advance Airway Provider:", 
+                                   ['Attending','Anesthesia','ENT','Fellow','Other'],
+                                   key="advance_airway_provider)
+
+    advance_airway_provider = st.multiselect("Difficult Airway Procedure:", 
+                                   ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other'],
+                                   key="difficult_airway)
     # Submit button
     submit = st.form_submit_button("Submit")
 
