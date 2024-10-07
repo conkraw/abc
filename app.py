@@ -92,7 +92,7 @@ with st.form("airway_form"):
         st.write("History of difficult airway?")
     
     with cols[1]:
-        difficult_airway_history = st.selectbox(
+        difficult_airway_history = st.selectbox("",
             ['YES', 'NO'],
             key="difficult_airway_history"
         )
