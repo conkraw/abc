@@ -13,17 +13,17 @@ st.title("Airway Bundle Checklist")
 # Timing of Intubation Section
 st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
 
-# Select for timing of intubation
-when_intubate = st.selectbox(
+# Multi-select for timing of intubation
+when_intubate = st.multiselect(
     "When will we intubate? (Describe timing of airway management):",
-    ['Select an option', 'Prior to procedure', 'Mental Status Changes', 
+    ['Prior to procedure', 'Mental Status Changes', 
      'Hypoxemia Refractory to CPAP', 'Ventilation failure refractory to NIV', 
      'Loss of Airway Protection', 'Other'],
     key="when_intubate"
 )
 
 # Check if "Hypoxemia Refractory to CPAP" is selected
-if when_intubate == 'Hypoxemia Refractory to CPAP':
+if "Hypoxemia Refractory to CPAP" in when_intubate:
     spo2_input = st.text_input("SPO2 Less Than?:", key="spo2_input")
 
 # Submit button
