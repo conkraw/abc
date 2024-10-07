@@ -273,8 +273,8 @@ with st.form("airway_form"):
         st.text_input("Mac details", key="mac_details", disabled=False)
         st.text_input("Miller details", key="miller_details", disabled=False)
         st.text_input("Wis-Hipple details", key="wis_hipple_details", disabled=False)
-
-      st.write("Medications:")
+    
+    st.write("Medications:")
     
     cols = st.columns(3)
 
