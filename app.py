@@ -274,7 +274,46 @@ with st.form("airway_form"):
         st.text_input("Miller details", key="miller_details", disabled=False)
         st.text_input("Wis-Hipple details", key="wis_hipple_details", disabled=False)
 
+      st.write("Medications:")
     
+    cols = st.columns(3)
+
+    # Column 1: Dropdowns for "X" or empty
+    with cols[0]:
+        # Dropdowns to choose if devices are selected or not (X = selected)
+        med_1_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_8")
+        med_2_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_9")
+        med_3_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_10")
+        med_4_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_11")
+        med_5_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_12")
+        med_6_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_13")
+        med_7_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_14")
+        med_8_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_15")
+    
+    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
+    with cols[1]:
+        # These text inputs will reset to their default value if changed and the user moves away
+        med_1_text = reset_input("Atropine", key="atropinex")
+        med_2_text = reset_input("Glycopyrrolate", key="glycox")
+        med_3_text = reset_input("Fentanyl", key="fentanylx")
+        med_4_text = reset_input("Midazolam", key="midazolamx")
+        med_5_text = reset_input("Ketamine", key="ketaminex")
+        med_6_text = reset_input("Propofol", key="propofolx")
+        med_7_text = reset_input("Rocuronium", key="rocx")
+        med_8_text = reset_input("Vecuronium", key="vecx")
+
+    # Column 3: Additional details for each device (uneditable placeholders)
+    with cols[2]:
+        # Text Inputs with uneditable placeholders (details of each device)
+        st.text_input("Atropine details", key="atropine_details", disabled=False)
+        st.text_input("Glycopyrrolate details", key="glyco_details", disabled=False)
+        st.text_input("Fentanyl details", key="fentanyl_details", disabled=False)
+        st.text_input("Midazolam details", key="midazolam_details", disabled=False)
+        st.text_input("Ketamine details", key="ketamine_details", disabled=False)
+        st.text_input("Propofol details", key="propofol_details", disabled=False)
+        st.text_input("Rocuronium details", key="roc_details", disabled=False)
+        st.text_input("Vecuronium details", key="vec_details", disabled=False)
+
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
     intubation_timing = st.text_input("Describe timing of airway management", key="intubation_timing")
