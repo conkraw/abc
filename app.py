@@ -268,14 +268,14 @@ if submit:
     # Now you can save, display, or process the filled_doc
 
 
-        # Path to the provided Word template
-        template_path = 'AirwayBundleChecklist_7-2020.docx'
+    # Path to the provided Word template
+    template_path = 'AirwayBundleChecklist_7-2020.docx'
 
-        # Fill the Word template with form data
-        filled_doc = fill_word_template(template_path, form_data)
+    # Fill the Word template with form data
+    filled_doc = fill_word_template(template_path, form_data)
         
-        # Provide download link for the filled Word document
-        st.success("Form submitted successfully!")
-        st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+    # Provide download link for the filled Word document
+    st.success("Form submitted successfully!")
+    st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
 
 
