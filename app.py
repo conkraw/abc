@@ -93,6 +93,7 @@ with st.form("airway_form"):
     
     with cols[1]:
         difficult_airway_history = st.selectbox(
+            label=None,  # Removed label
             options=['YES', 'NO'],
             key="difficult_airway_history"
         )
@@ -103,6 +104,7 @@ with st.form("airway_form"):
     
     with cols[1]:
         physical_risk = st.selectbox(
+            label=None,  # Removed label
             options=['YES', 'NO'],
             key="physical_risk"
         )
@@ -115,6 +117,7 @@ with st.form("airway_form"):
     
     with cols[1]:
         high_risk_desaturation = st.selectbox(
+            label=None,  # Removed label
             options=['YES', 'NO'],
             key="high_risk_desaturation"
         )
@@ -125,6 +128,7 @@ with st.form("airway_form"):
     
     with cols[1]:
         high_risk_ICP = st.selectbox(
+            label=None,  # Removed label
             options=['YES', 'NO'],
             key="high_risk_ICP"
         )
@@ -135,6 +139,7 @@ with st.form("airway_form"):
     
     with cols[1]:
         unstable_hemodynamics = st.selectbox(
+            label=None,  # Removed label
             options=['YES', 'NO'],
             key="unstable_hemodynamics"
         )
@@ -155,6 +160,7 @@ with st.form("airway_form"):
     
     with cols[1]:
         other_risk_yes_no = st.selectbox(
+            label=None,  # Removed label
             options=['YES', 'NO'],
             key="other_risk_yes_no"
         )
