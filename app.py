@@ -81,8 +81,7 @@ st.title("Airway Bundle Checklist")
 def update_ett_size_based_on_age():
     selected_age = st.session_state.get("age_select")
     if selected_age:
-        # Set the ETT size based on the age selection
-        st.session_state['ett_size'] = age_to_ett_size_mapping.get(selected_age, '4.0')  # Default ETT size if age not found
+        st.session_state['ett_size'] = age_to_ett_mapping.get(selected_age, '4.0')  # <-- Use age_to_ett_mapping instead!
 
 # Create a form
 with st.form("airway_form"):
