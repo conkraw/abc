@@ -221,8 +221,6 @@ with st.form("airway_form"):
 
     # Column 1: Dropdowns for "X" or empty
     with cols[0]:
-        st.markdown("### Device Selection")
-        
         # Dropdowns to choose if devices are selected or not (X = selected)
         device_1_selection = st.selectbox("Select Laryngoscope", options=["", "X"], key="dropdown_1")
         device_2_selection = st.selectbox("Select Glidescope", options=["", "X"], key="dropdown_2")
@@ -231,8 +229,6 @@ with st.form("airway_form"):
     
     # Column 2: Editable text inputs (reverts to the original value after the user moves away)
     with cols[1]:
-        st.markdown("### Device Editable Text Inputs")
-        
         # These text inputs will reset to their default value if changed and the user moves away
         device_1_text = reset_input("Laryngoscope", key="laryngoscope_textx")
         device_2_text = reset_input("Glidescope", key="glidescope_textx")
@@ -241,8 +237,6 @@ with st.form("airway_form"):
     
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[2]:
-        st.markdown("### Device Details")
-        
         # Text Inputs with uneditable placeholders (details of each device)
         st.text_input("Laryngoscope details", key="laryngoscope_details", disabled=True)
         st.text_input("Glidescope details", key="glidescope_details", disabled=True)
