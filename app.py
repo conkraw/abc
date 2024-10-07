@@ -204,33 +204,39 @@ with st.form("airway_form"):
         # ETT Size Selection
         ett_options = ['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
         ett_size = st.selectbox("ETT Size", ett_options, key="ett_size")
-
+    
     st.write("Device:")
     
-    # Create columns layout
-    cols = st.columns(2)
+    # Create columns layout for checkboxes and text inputs to appear inline
+    cols = st.columns([3, 1, 3, 1, 3, 1, 3, 1])  # Adjust column sizes
     
-    # First column: checkboxes for devices
+    # Laryngoscope
     with cols[0]:
-        laryngoscope = st.checkbox("Laryngoscope", key="laryngoscope")
-        glidescope = st.checkbox("Glidescope", key="glidescope")
-        lma = st.checkbox("LMA", key="lma")
-        other_device = st.checkbox("Other Device", key="other_device")
+        st.checkbox("Laryngoscope", key="laryngoscope")
     
-    # Second column: text inputs for the devices (conditionally rendered)
     with cols[1]:
-        # Conditional text inputs based on the checkboxes
-        if laryngoscope:
-            laryngoscope_text = st.text_input("Laryngoscope Details", key="laryngoscope_text")
-            
-        if glidescope:
-            glidescope_text = st.text_input("Glidescope Details", key="glidescope_text")
-            
-        if lma:
-            lma_text = st.text_input("LMA Details", key="lma_text")
-            
-        if other_device:
-            other_device_text = st.text_input("Other Device Details", key="other_device_text")
+        st.text_input("", key="laryngoscope_text")
+    
+    # Glidescope
+    with cols[2]:
+        st.checkbox("Glidescope", key="glidescope")
+    
+    with cols[3]:
+        st.text_input("", key="glidescope_text")
+    
+    # LMA
+    with cols[4]:
+        st.checkbox("LMA", key="lma")
+    
+    with cols[5]:
+        st.text_input("", key="lma_text")
+    
+    # Other Device
+    with cols[6]:
+        st.checkbox("Other Device", key="other_device")
+    
+    with cols[7]:
+        st.text_input("", key="other_device_text")
 
         
     # Timing of Intubation section
