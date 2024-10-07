@@ -122,8 +122,9 @@ with st.form("airway_form"):
         #    "18 year old"
         #]
         #age = st.selectbox("Select Patient Age", age_options, key="age")
-        age = st.selectbox("Select Patient Age", list(age_to_ett_size_mapping.keys()), key="age_select")
+        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select")  # <-- Use age_to_ett_mapping instead!
 
+        
         if st.session_state.get("age_select"):
             update_ett_size_based_on_age()
         
