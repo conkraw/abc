@@ -76,7 +76,7 @@ def box_section(title):
 with st.form("airway_form"):
     # Front Page Section
     st.markdown(box_section("Front Page Completed"), unsafe_allow_html=True)
-    front_page_completed = st.multiselect(
+    front_page_completed = st.selectbox(
         "Select when the front page was completed",
         ['On admission', 'During rounds', 'After rounds', 'Just prior to intubation', 'After intubation', 'Prior to extubation']
     )
@@ -192,7 +192,7 @@ with st.form("airway_form"):
             "who_bag_mask": ", ".join(who_bag_mask),
             "ett_size": ett_size,
             "intubation_timing": intubation_timing,
-            "front_page_completed": ", ".join(front_page_completed),  # Convert list to comma-separated string
+            "front_page_completed": front_page_completed,  # Only one option selected
             "completed_by": completed_by
         }
         
@@ -205,3 +205,4 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+
