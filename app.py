@@ -270,9 +270,9 @@ with st.form("airway_form"):
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
-        st.text_input("Mac details", key="mac_details", disabled=False)
-        st.text_input("Miller details", key="miller_details", disabled=False)
-        st.text_input("Wis-Hipple details", key="wis_hipple_details", disabled=False)
+        st.text_input("Mac Details:", key="mac_details", disabled=False)
+        st.text_input("Miller Details:", key="miller_details", disabled=False)
+        st.text_input("Wis-Hipple Details:", key="wis_hipple_details", disabled=False)
     
     st.write("Medications:")
     
@@ -305,14 +305,14 @@ with st.form("airway_form"):
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
-        st.text_input("Atropine dosage:", key="atropine_dosage", disabled=False)
-        st.text_input("Glycopyrrolate dosage:", key="glyco_dosage", disabled=False)
-        st.text_input("Fentanyl dosage:", key="fentanyl_dosage", disabled=False)
-        st.text_input("Midazolam dosage:", key="midazolam_dosage", disabled=False)
-        st.text_input("Ketamine dosage:", key="ketamine_dosage", disabled=False)
-        st.text_input("Propofol dosage:", key="propofol_dosage", disabled=False)
-        st.text_input("Rocuronium dosage:", key="roc_dosage", disabled=False)
-        st.text_input("Vecuronium dosage:", key="vec_dosage", disabled=False)
+        st.text_input("Atropine Dosage:", key="atropine_dosage", disabled=False)
+        st.text_input("Glycopyrrolate Dosage:", key="glyco_dosage", disabled=False)
+        st.text_input("Fentanyl Dosage:", key="fentanyl_dosage", disabled=False)
+        st.text_input("Midazolam Dosage:", key="midazolam_dosage", disabled=False)
+        st.text_input("Ketamine Dosage:", key="ketamine_dosage", disabled=False)
+        st.text_input("Propofol Dosage:", key="propofol_dosage", disabled=False)
+        st.text_input("Rocuronium Dosage:", key="roc_dosage", disabled=False)
+        st.text_input("Vecuronium Dosage:", key="vec_dosage", disabled=False)
 
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
