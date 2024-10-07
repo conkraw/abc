@@ -215,28 +215,28 @@ with st.form("airway_form"):
         laryngoscope = st.checkbox("Laryngoscope", key="laryngoscope")
         
     with cols[1]:
-        laryngoscope_text = st.text_input("Specify", key="laryngoscope_text")
+        laryngoscope_text = st.text_input("", key="laryngoscope_text")
     
     # LMA
     with cols[2]:
         lma = st.checkbox("LMA", key="lma")
         
     with cols[3]:
-        lma_text = st.text_input("Specify", key="lma_text")
+        lma_text = st.text_input("", key="lma_text")
     
     # Glidescope
     with cols[0]:
         glidescope = st.checkbox("Glidescope", key="glidescope")
         
     with cols[1]:
-        glidescope_text = st.text_input("Specify", key="glidescope_text")
+        glidescope_text = st.text_input("", key="glidescope_text")
     
     # Other Device
     with cols[2]:
         other_device = st.checkbox("Other", key="other_device")
         
     with cols[3]:
-        other_device_text = st.text_input("Specify", key="other_device_text")
+        other_device_text = st.text_input("", key="other_device_text")
 
         
     # Timing of Intubation section
