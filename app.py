@@ -210,13 +210,6 @@ with st.form("airway_form"):
     # Create columns layout
     cols = st.columns(2)
 
-    st.write("Device:")
-
-    st.write("Device:")
-
-    # Create columns layout
-    cols = st.columns(2)
-
     # First column: checkboxes for devices
     with cols[0]:
         laryngoscope = st.checkbox("Laryngoscope", key="laryngoscope")
