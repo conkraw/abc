@@ -221,11 +221,6 @@ with st.form("airway_form"):
     
     # Column 2: Device dropdowns (Laryngoscope, Glidescope, LMA, Other)
     with cols[1]:
-        laryngoscope = st.selectbox("Laryngoscope", options=["Select", "Option 1", "Option 2", "Option 3"], key="laryngoscope")
-        glidescope = st.selectbox("Glidescope", options=["Select", "Option 1", "Option 2", "Option 3"], key="glidescope")
-        lma = st.selectbox("LMA", options=["Select", "Option 1", "Option 2", "Option 3"], key="lma")
-        other_device = st.selectbox("Other Device", options=["Select", "Option 1", "Option 2", "Option 3"], key="other_device")
-
         st.text_input("Laryngoscope details", value="Laryngoscope", key="laryngoscope_textx", disabled=True)
         st.text_input("Glidescope details", value="Glidescope", key="glidescope_textx", disabled=True)
         st.text_input("LMA details", value="LMA", key="lma_textx", disabled=True)
