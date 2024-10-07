@@ -207,20 +207,37 @@ with st.form("airway_form"):
 
     st.write("Device:")
 
-    # Create a row with checkboxes for device selection
-    cols = st.columns([1, 1])  # Adjust the column widths to suit the content
+    # Create columns layout for the device selection with text inputs next to checkboxes
+    cols = st.columns([2, 1, 2, 1])  # Adjust column sizes to your preference
     
+    # Laryngoscope
     with cols[0]:
         laryngoscope = st.checkbox("Laryngoscope", key="laryngoscope")
+        
+    with cols[1]:
+        laryngoscope_text = st.text_input("Specify", key="laryngoscope_text")
     
-    with cols[0]:
+    # LMA
+    with cols[2]:
         lma = st.checkbox("LMA", key="lma")
+        
+    with cols[3]:
+        lma_text = st.text_input("Specify", key="lma_text")
     
-    with cols[1]:
+    # Glidescope
+    with cols[0]:
         glidescope = st.checkbox("Glidescope", key="glidescope")
-    
+        
     with cols[1]:
-        other_device = st.checkbox("Other (Specify)", key="other_device")
+        glidescope_text = st.text_input("Specify", key="glidescope_text")
+    
+    # Other Device
+    with cols[2]:
+        other_device = st.checkbox("Other", key="other_device")
+        
+    with cols[3]:
+        other_device_text = st.text_input("Specify", key="other_device_text")
+
         
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
@@ -253,10 +270,14 @@ if submit:
         "unstable_hemodynamics": unstable_hemodynamics,
         "other_risk_factors": other_risk_factors,
         "other_risk_yes_no": other_risk_yes_no,
-        "laryngoscope": laryngoscope,  # Capture the checkbox result
-        "lma": lma,                    # Capture the checkbox result
-        "glidescope": glidescope,      # Capture the checkbox result
-        "other_device": other_device   # Capture the text input for "Other"
+        "laryngoscope": laryngoscope,  # Checkbox value
+        "laryngoscope_text": laryngoscope_text,  # Text input value
+        "lma": lma,                    # Checkbox value
+        "lma_text": lma_text,          # Text input value
+        "glidescope": glidescope,      # Checkbox value
+        "glidescope_text": glidescope_text,  # Text input value
+        "other_device": other_device,  # Checkbox value
+        "other_device_text": other_device_text  
     }
 
     # Path to the provided Word template
