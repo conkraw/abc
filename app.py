@@ -221,11 +221,22 @@ with st.form("airway_form"):
     
     # Column 2: Device dropdowns (Laryngoscope, Glidescope, LMA, Other)
     with cols[1]:
-        st.text_input("Device #1", value="Laryngoscope", key="laryngoscope_textx", disabled=False)
-        st.text_input("Device #2", value="Glidescope", key="glidescope_textx", disabled=False)
-        st.text_input("Device #3", value="LMA", key="lma_textx", disabled=False)
-        st.text_input("Device #4", value="Other Device", key="other_device_textx", disabled=False)
-    
+        #st.text_input("Device #1", value="Laryngoscope", key="laryngoscope_textx", disabled=False)
+        #st.text_input("Device #2", value="Glidescope", key="glidescope_textx", disabled=False)
+        #st.text_input("Device #3", value="LMA", key="lma_textx", disabled=False)
+        #st.text_input("Device #4", value="Other Device", key="other_device_textx", disabled=False)
+        # Text Inputs that persist the values (use `key` to retain state across interactions)
+        device_1 = st.text_input("Device #1", value="Laryngoscope", key="laryngoscope_textx")
+        device_2 = st.text_input("Device #2", value="Glidescope", key="glidescope_textx")
+        device_3 = st.text_input("Device #3", value="LMA", key="lma_textx")
+        device_4 = st.text_input("Device #4", value="Other Device", key="other_device_textx")
+        
+        # Display the values as an example
+        st.write(f"Device #1: {device_1}")
+        st.write(f"Device #2: {device_2}")
+        st.write(f"Device #3: {device_3}")
+        st.write(f"Device #4: {device_4}")
+
     # Column 3: Text Inputs with uneditable placeholders (Laryngoscope, Glidescope, etc.)
     with cols[2]:
         st.text_input("Laryngoscope details", key="laryngoscope_text")
