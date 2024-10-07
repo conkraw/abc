@@ -207,36 +207,23 @@ with st.form("airway_form"):
     
     st.write("Device:")
     
-    # Create columns layout for checkboxes and text inputs to appear inline
-    cols = st.columns([3, 1, 3, 1, 3, 1, 3, 1])  # Adjust column sizes
+    # Create columns layout for checkboxes and text inputs side by side
+    cols = st.columns([2, 3])  # Adjust column widths (2 for checkboxes, 3 for text inputs)
     
-    # Laryngoscope
+    # Column 1: Checkboxes
     with cols[0]:
         st.checkbox("Laryngoscope", key="laryngoscope")
-    
-    with cols[1]:
-        st.text_input("", key="laryngoscope_text")
-    
-    # Glidescope
-    with cols[2]:
         st.checkbox("Glidescope", key="glidescope")
-    
-    with cols[3]:
-        st.text_input("", key="glidescope_text")
-    
-    # LMA
-    with cols[4]:
         st.checkbox("LMA", key="lma")
-    
-    with cols[5]:
-        st.text_input("", key="lma_text")
-    
-    # Other Device
-    with cols[6]:
         st.checkbox("Other Device", key="other_device")
     
-    with cols[7]:
-        st.text_input("", key="other_device_text")
+    # Column 2: Text Inputs (aligned with checkboxes)
+    with cols[1]:
+        st.text_input("Laryngoscope details", key="laryngoscope_text")
+        st.text_input("Glidescope details", key="glidescope_text")
+        st.text_input("LMA details", key="lma_text")
+        st.text_input("Other Device details", key="other_device_text")
+
 
         
     # Timing of Intubation section
