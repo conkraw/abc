@@ -29,16 +29,16 @@ def box_section(title):
     """
 
 def reset_input(default_value, key):
-    # If the value doesn't exist in session state, initialize it with the default value
     if key not in st.session_state:
         st.session_state[key] = default_value
     
-    # Display the text input, and bind the session state value to it
+    # Display the text input and allow the user to edit it
     current_value = st.text_input("", key=key, value=st.session_state[key])
     
-    # When the user moves away, reset the value to the default if it's different
+    # If the user has changed the value, reset it after moving away (real-time).
     if current_value != st.session_state[key]:
-        st.session_state[key] = default_value  # reset to default when user changes
+        st.session_state[key] = current_value
+        st.rerun()  # Trigger rerun to reset it in real-time
     
     return current_value
 
