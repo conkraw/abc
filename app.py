@@ -90,6 +90,7 @@ with st.form("airway_form"):
     cols = st.columns([3, 1])  # Adjust column widths for better alignment
     with cols[0]:
         st.markdown("")
+        st.markdown("")
         st.write("History of difficult airway?")
     
     with cols[1]:
