@@ -79,6 +79,48 @@ with st.form("airway_form"):
         if weight_str and not validate_weight(weight_str):
             st.error("Please enter a valid number for the weight (e.g., 12.5 or 12).")
 
+    # Intubation Risk Assessment Section
+    st.markdown(box_section("Intubation Risk Assessment"), unsafe_allow_html=True)
+
+    # Create a table-like layout with YES/NO dropdowns
+    st.write("### Difficult Airway")
+    difficult_airway_history = st.selectbox(
+        "History of difficult airway?",
+        ['YES', 'NO']
+    )
+
+    physical_risk = st.selectbox(
+        "Physical (e.g. small mouth, small jaw, large tongue, or short neck)?",
+        ['YES', 'NO']
+    )
+
+    st.write("### At Risk For:")
+    
+    high_risk_desaturation = st.selectbox(
+        "High risk for rapid desaturation during intubation?",
+        ['YES', 'NO']
+    )
+
+    high_risk_ICP = st.selectbox(
+        "Increased ICP, pulmonary hypertension, need to avoid hypercarbia?",
+        ['YES', 'NO']
+    )
+
+    unstable_hemodynamics = st.selectbox(
+        "Unstable hemodynamics (e.g., hypovolemia, potential need for fluid bolus, vasopressor, CPR)?",
+        ['YES', 'NO']
+    )
+
+    other_risk_factors = st.text_input(
+        "Other risk factors? (Specify)",
+        ""
+    )
+    
+    other_risk_yes_no = st.selectbox(
+        "Is there an other risk factor?",
+        ['YES', 'NO']
+    )
+
     # Intubation plan section
     st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
 
@@ -125,7 +167,14 @@ with st.form("airway_form"):
             "intubation_timing": intubation_timing,
             "front_page_completed": front_page_completed,  # Only one option selected
             "completed_by": completed_by,
-            "room_number": room_number  # Room Number added
+            "room_number": room_number,  # Room Number added
+            "difficult_airway_history": difficult_airway_history,
+            "physical_risk": physical_risk,
+            "high_risk_desaturation": high_risk_desaturation,
+            "high_risk_ICP": high_risk_ICP,
+            "unstable_hemodynamics": unstable_hemodynamics,
+            "other_risk_factors": other_risk_factors,
+            "other_risk_yes_no": other_risk_yes_no
         }
         
         # Path to the provided Word template
@@ -149,4 +198,5 @@ def validate_weight(weight_str):
             return False
     except ValueError:
         return False
+
 
