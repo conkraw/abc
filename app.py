@@ -230,7 +230,6 @@ with st.form("airway_form"):
         st.markdown("**Glidescope**")
         st.markdown("")
         st.markdown("")
-        st.markdown("")
         st.markdown("**LMA**")
         st.markdown("")
         st.markdown("")
