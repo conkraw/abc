@@ -113,7 +113,7 @@ with st.form("airway_form"):
             key="physical_risk"
         )
 
-    st.write("###At Risk For:")
+    st.write("### At Risk For:")
     
     cols = st.columns([3, 1])  # Adjust column widths for better alignment
     with cols[0]:
