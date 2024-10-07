@@ -206,9 +206,6 @@ with st.form("airway_form"):
         ett_size = st.selectbox("ETT Size", ett_options, key="ett_size")
 
     st.write("Device:")
-
-
-    st.write("Device:")
     
     # Create columns layout
     cols = st.columns(2)
