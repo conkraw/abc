@@ -27,12 +27,21 @@ def box_section(title):
         <h4 style="margin: 0; color: #0072B8;">{title}</h4>
     </div>
     """
-# Define a function that resets the input field to the original value
+
 def reset_input(default_value, key):
-    # Check if the user input is different from the default value
-    current_value = st.text_input("", key=key, value=default_value)
+    # If the value doesn't exist in session state, initialize it with the default value
+    if key not in st.session_state:
+        st.session_state[key] = default_value
+    
+    # Display the text input, and bind the session state value to it
+    current_value = st.text_input("", key=key, value=st.session_state[key])
+    
+    # When the user moves away, reset the value to the default if it's different
+    if current_value != st.session_state[key]:
+        st.session_state[key] = default_value  # reset to default when user changes
+    
     return current_value
-# Streamlit form for the Airway Bundle Checklist
+
 
 st.title("Airway Bundle Checklist")
 
