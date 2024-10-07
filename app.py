@@ -210,24 +210,30 @@ with st.form("airway_form"):
     # Create columns layout
     cols = st.columns(2)
 
+    st.write("Device:")
+
+    # Create columns layout
+    cols = st.columns(2)
+    
+    # First column: checkboxes for devices
     with cols[0]:
-        st.markdown("")
         laryngoscope = st.checkbox("Laryngoscope", key="laryngoscope")
-        st.markdown("")
         glidescope = st.checkbox("Glidescope", key="glidescope")
-        st.markdown("")
         lma = st.checkbox("LMA", key="lma")
-        st.markdown("")
         other_device = st.checkbox("Other Device", key="other_device")
     
+    # Second column: text inputs for the devices
     with cols[1]:
-        #"lma_text": lma_text,          # Text input value
-        #"glidescope_text": glidescope_text,  # Text input value
-        #"other_device_text": other_device_text  
-        laryngoscope_text = st.text_input(label="",key="laryngoscope_text")
-        lma_text = st.text_input(label="",key="lma_text")
-        glidescope_text = st.text_input("",key="glidescope_text")
-        other_device_text = st.text_input("",key="other_device_text")
+        # Only show text inputs if the respective checkbox is checked
+        if laryngoscope:
+            laryngoscope_text = st.text_input(label="", key="laryngoscope_text")
+        if glidescope:
+            glidescope_text = st.text_input(label="", key="glidescope_text")
+        if lma:
+            lma_text = st.text_input(label="", key="lma_text")
+        if other_device:
+            other_device_text = st.text_input(label="", key="other_device_text")
+
         
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
