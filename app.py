@@ -232,10 +232,10 @@ with st.form("airway_form"):
         device_4 = st.text_input("Device #4", value="Other Device", key="other_device_textx")
         
         # Display the values as an example
-        st.write(f"Device #1: {device_1}")
-        st.write(f"Device #2: {device_2}")
-        st.write(f"Device #3: {device_3}")
-        st.write(f"Device #4: {device_4}")
+        #st.write(f"Device #1: {device_1}")
+        #st.write(f"Device #2: {device_2}")
+        #st.write(f"Device #3: {device_3}")
+        #st.write(f"Device #4: {device_4}")
 
     # Column 3: Text Inputs with uneditable placeholders (Laryngoscope, Glidescope, etc.)
     with cols[2]:
