@@ -27,8 +27,13 @@ def box_section(title):
         <h4 style="margin: 0; color: #0072B8;">{title}</h4>
     </div>
     """
-
+# Define a function that resets the input field to the original value
+def reset_input(default_value, key):
+    # Check if the user input is different from the default value
+    current_value = st.text_input("", key=key, value=default_value)
+    return current_value
 # Streamlit form for the Airway Bundle Checklist
+
 st.title("Airway Bundle Checklist")
 
 # Create a form
@@ -210,18 +215,10 @@ with st.form("airway_form"):
     st.write("Device:")
     
     # Create columns layout for dropdowns, devices, and text inputs side by side
-    cols = st.columns([1, 2, 3])  # Adjust column widths: 1 for the new dropdowns, 2 for devices, 3 for text inputs
-    
-    import streamlit as st
-
-# Define a function that resets the input field to the original value
-def reset_input(default_value, key):
-    # Check if the user input is different from the default value
-    current_value = st.text_input("", key=key, value=default_value)
-    return current_value
+    #cols = st.columns([1, 2, 3])  # Adjust column widths: 1 for the new dropdowns, 2 for devices, 3 for text inputs
 
 # Create columns layout
-    cols = st.columns(3)
+    cols = st.columns(1,2,3)
 
     # Column 1: Dropdowns for "X" or empty
     with cols[0]:
