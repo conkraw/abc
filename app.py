@@ -216,10 +216,14 @@ with st.form("airway_form"):
         lma = st.checkbox("LMA", key="lma")
         other_device = st.checkbox("Other Device", key="other_device")
     
-    #with cols[1]:
-        
-   
-
+    with cols[1]:
+        st.markdown("")
+        #"lma_text": lma_text,          # Text input value
+        #"glidescope_text": glidescope_text,  # Text input value
+        #"other_device_text": other_device_text  
+        lma_text = st.text_input("",key="lma_text")
+        glidescope_text = st.text_input("",key="glidescope_text")
+        other_device_text = st.text_input("",key="other_device_text")
         
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
@@ -228,7 +232,6 @@ with st.form("airway_form"):
     # Submit button
     submit = st.form_submit_button("Submit")
 
-    # Process submission
     # Process submission
 if submit:
     # Store form data into a dictionary to replace placeholders
