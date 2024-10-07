@@ -222,10 +222,10 @@ with st.form("airway_form"):
     # Column 1: Dropdowns for "X" or empty
     with cols[0]:
         # Dropdowns to choose if devices are selected or not (X = selected)
-        device_1_selection = st.selectbox("Select Laryngoscope", options=["", "X"], key="dropdown_1")
-        device_2_selection = st.selectbox("Select Glidescope", options=["", "X"], key="dropdown_2")
-        device_3_selection = st.selectbox("Select LMA", options=["", "X"], key="dropdown_3")
-        device_4_selection = st.selectbox("Select Other Device", options=["", "X"], key="dropdown_4")
+        device_1_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_1")
+        device_2_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_2")
+        device_3_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_3")
+        device_4_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_4")
     
     # Column 2: Editable text inputs (reverts to the original value after the user moves away)
     with cols[1]:
