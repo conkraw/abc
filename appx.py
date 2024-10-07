@@ -339,29 +339,22 @@ with st.form("airway_form"):
     # Your existing markdown for the section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
 
-
-    # Create a session state variable to control the display of the SPO2 input
-    if "hypoxemia_refractory" not in st.session_state:
-        st.session_state.hypoxemia_refractory = False
-    
-    # Multiselect for timing of intubation
+    # Multi-select for timing of intubation
     when_intubate = st.multiselect(
         "When will we intubate? (Describe timing of airway management):",
-        ['Prior to procedure', 'Mental Status Changes', 'Hypoxemia Refractory to CPAP',
-         'Ventilation failure refractory to NIV', 'Loss of Airway Protection', 'Other'],
+        ['Prior to procedure', 'Mental Status Changes', 
+         'Hypoxemia Refractory to CPAP', 'Ventilation failure refractory to NIV', 
+         'Loss of Airway Protection', 'Other'],
         key="when_intubate"
     )
     
-    # Check if "Hypoxemia Refractory to CPAP" is selected and update session state
+    # Check if "Hypoxemia Refractory to CPAP" is selected
     if "Hypoxemia Refractory to CPAP" in when_intubate:
-        st.session_state.hypoxemia_refractory = True
-    else:
-        st.session_state.hypoxemia_refractory = False
-    
-    # Conditionally display the SPO2 input based on the session state
-    if st.session_state.hypoxemia_refractory:
         spo2_input = st.text_input("SPO2 Less Than?:", key="spo2_input")
-
+    
+    # Submit button
+    submit = st.button("Submit")
+        
 
     
     
