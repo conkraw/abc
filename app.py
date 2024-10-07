@@ -84,8 +84,7 @@ with st.form("airway_form"):
     # Intubation Risk Assessment Section
     st.markdown(box_section("Intubation Risk Assessment"), unsafe_allow_html=True)
 
-    # Create a table-like layout with YES/NO dropdowns
-    st.write("### Difficult Airway")
+    # Create a table-like layout with YES/NO dropdowns in the same row using st.columns
     cols = st.columns([2, 1])  # Adjust column widths
 
     with cols[0]:
@@ -217,9 +216,9 @@ with st.form("airway_form"):
             "who_bag_mask": ", ".join(who_bag_mask),
             "ett_size": ett_size,
             "intubation_timing": intubation_timing,
-            "front_page_completed": front_page_completed,  # Only one option selected
+            "front_page_completed": front_page_completed,
             "completed_by": completed_by,
-            "room_number": room_number,  # Room Number added
+            "room_number": room_number,
             "difficult_airway_history": difficult_airway_history,
             "physical_risk": physical_risk,
             "high_risk_desaturation": high_risk_desaturation,
