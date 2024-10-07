@@ -93,8 +93,7 @@ with st.form("airway_form"):
     
     with cols[1]:
         difficult_airway_history = st.selectbox(
-            '',
-            ['YES', 'NO'],
+            options=['YES', 'NO'],
             key="difficult_airway_history"
         )
 
@@ -104,8 +103,7 @@ with st.form("airway_form"):
     
     with cols[1]:
         physical_risk = st.selectbox(
-            '',
-            ['YES', 'NO'],
+            options=['YES', 'NO'],
             key="physical_risk"
         )
 
@@ -117,8 +115,7 @@ with st.form("airway_form"):
     
     with cols[1]:
         high_risk_desaturation = st.selectbox(
-            '',
-            ['YES', 'NO'],
+            options=['YES', 'NO'],
             key="high_risk_desaturation"
         )
 
@@ -128,8 +125,7 @@ with st.form("airway_form"):
     
     with cols[1]:
         high_risk_ICP = st.selectbox(
-            '',
-            ['YES', 'NO'],
+            options=['YES', 'NO'],
             key="high_risk_ICP"
         )
 
@@ -139,8 +135,7 @@ with st.form("airway_form"):
     
     with cols[1]:
         unstable_hemodynamics = st.selectbox(
-            '',
-            ['YES', 'NO'],
+            options=['YES', 'NO'],
             key="unstable_hemodynamics"
         )
 
@@ -151,7 +146,6 @@ with st.form("airway_form"):
     with cols[1]:
         other_risk_factors = st.text_input(
             "",
-            "",
             key="other_risk_factors"
         )
 
@@ -161,8 +155,7 @@ with st.form("airway_form"):
     
     with cols[1]:
         other_risk_yes_no = st.selectbox(
-            '',
-            ['YES', 'NO'],
+            options=['YES', 'NO'],
             key="other_risk_yes_no"
         )
 
@@ -224,15 +217,13 @@ with st.form("airway_form"):
             "other_risk_yes_no": other_risk_yes_no
         }
 
-        # Call the fill_word_template function
-        buffer = fill_word_template('path/to/template.docx', form_data)
+        # Path to the provided Word template
+        template_path = 'AirwayBundleChecklist_7-2020.docx'
 
-        # Provide a download link for the updated document
-        st.download_button(
-            label="Download filled template",
-            data=buffer,
-            file_name=f"filled_airway_checklist_{date}.docx",
-            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        )
-
+        # Fill the Word template with form data
+        filled_doc = fill_word_template(template_path, form_data)
+        
+        # Provide download link for the filled Word document
+        st.success("Form submitted successfully!")
+        st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
 
