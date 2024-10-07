@@ -76,12 +76,10 @@ def box_section(title):
 with st.form("airway_form"):
     # Front Page Section
     st.markdown(box_section("Front Page Completed"), unsafe_allow_html=True)
-    front_page_completed = st.checkbox("On admission")
-    during_rounds = st.checkbox("During rounds")
-    after_rounds = st.checkbox("After rounds")
-    just_prior_intubation = st.checkbox("Just prior to intubation")
-    after_intubation = st.checkbox("After intubation")
-    prior_to_extubation = st.checkbox("Prior to extubation")
+    front_page_completed = st.multiselect(
+        "Select when the front page was completed",
+        ['On admission', 'During rounds', 'After rounds', 'Just prior to intubation', 'After intubation', 'Prior to extubation']
+    )
 
     # Person who completed the form
     completed_by = st.text_input("Who completed the form? (Name or Role)")
@@ -194,7 +192,7 @@ with st.form("airway_form"):
             "who_bag_mask": ", ".join(who_bag_mask),
             "ett_size": ett_size,
             "intubation_timing": intubation_timing,
-            "front_page_completed": ", ".join([k for k, v in {"On admission": front_page_completed, "During rounds": during_rounds, "After rounds": after_rounds, "Just prior to intubation": just_prior_intubation, "After intubation": after_intubation, "Prior to extubation": prior_to_extubation}.items() if v]),
+            "front_page_completed": ", ".join(front_page_completed),  # Convert list to comma-separated string
             "completed_by": completed_by
         }
         
@@ -206,6 +204,5 @@ with st.form("airway_form"):
         
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
-        st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
-
+        st.download_button("Download Word Document", data=filled_doc, file_name="Filled
 
