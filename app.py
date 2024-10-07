@@ -231,6 +231,7 @@ with st.form("airway_form"):
     with cols[1]:
         st.markdown("")
         st.markdown("")
+        st.markdown("")
         glidescope_text = st.text_input("", key="glidescope_text")
     
     # Other Device
