@@ -220,6 +220,7 @@ with st.form("airway_form"):
         #"lma_text": lma_text,          # Text input value
         #"glidescope_text": glidescope_text,  # Text input value
         #"other_device_text": other_device_text  
+        laryngoscope_text = st.text_input(label="",key="laryngoscope_text")
         lma_text = st.text_input(label="",key="lma_text")
         glidescope_text = st.text_input("",key="glidescope_text")
         other_device_text = st.text_input("",key="other_device_text")
