@@ -207,22 +207,23 @@ with st.form("airway_form"):
     
     st.write("Device:")
     
-    # Create columns layout for checkboxes and text inputs side by side
-    cols = st.columns([2, 3])  # Adjust column widths (2 for checkboxes, 3 for text inputs)
+    # Create columns layout for dropdowns and text inputs side by side
+    cols = st.columns([2, 3])  # Adjust column widths (2 for dropdowns, 3 for text inputs)
     
-    # Column 1: Checkboxes
+    # Column 1: Dropdowns
     with cols[0]:
-        st.checkbox("Laryngoscope", key="laryngoscope")
-        st.checkbox("Glidescope", key="glidescope")
-        st.checkbox("LMA", key="lma")
-        st.checkbox("Other Device", key="other_device")
+        laryngoscope = st.selectbox("Laryngoscope", options=["Laryngoscope"], key="laryngoscope")
+        glidescope = st.selectbox("Glidescope", options=["Glidescope"], key="glidescope")
+        lma = st.selectbox("LMA", options=["LMA"], key="lma")
+        other_device = st.selectbox("Other Device", options=["Other Device"], key="other_device")
     
-    # Column 2: Text Inputs (aligned with checkboxes)
+    # Column 2: Text Inputs (aligned with dropdowns)
     with cols[1]:
         st.text_input("Laryngoscope details", key="laryngoscope_text")
         st.text_input("Glidescope details", key="glidescope_text")
         st.text_input("LMA details", key="lma_text")
         st.text_input("Other Device details", key="other_device_text")
+
 
 
         
