@@ -108,15 +108,16 @@ with st.form("airway_form"):
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
 
         # Replace number input with dropdown for age
-        age_options = ["",
-            "Premature", "Newborn", "1 month old", "2 month old", "3 month old", "4 month old", "5 month old", 
-            "6 month old", "7 month old", "8 month old", "9 month old", "10 month old", "11 month old", 
-            "12 month old", "1 year old", "2 year old", "3 year old", "4 year old", "5 year old", 
-            "6 year old", "7 year old", "8 year old", "9 year old", "10 year old", "11 year old", 
-            "12 year old", "13 year old", "14 year old", "15 year old", "16 year old", "17 year old", 
-            "18 year old"
-        ]
-        age = st.selectbox("Select Patient Age", age_options, key="age")
+        #age_options = ["",
+        #    "Premature", "Newborn", "1 month old", "2 month old", "3 month old", "4 month old", "5 month old", 
+        #    "6 month old", "7 month old", "8 month old", "9 month old", "10 month old", "11 month old", 
+        #    "12 month old", "1 year old", "2 year old", "3 year old", "4 year old", "5 year old", 
+        #    "6 year old", "7 year old", "8 year old", "9 year old", "10 year old", "11 year old", 
+        #    "12 year old", "13 year old", "14 year old", "15 year old", "16 year old", "17 year old", 
+        #    "18 year old"
+        #]
+        #age = st.selectbox("Select Patient Age", age_options, key="age")
+        age = st.selectbox("Select Patient Age", list(age_to_ett_size_mapping.keys()), key="age_select")
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
@@ -249,13 +250,36 @@ with st.form("airway_form"):
 
     with cols[1]:
         # ETT Size Selection
-        ett_options = ['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
+        #ett_options = ['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
 
-        default_ett_size = age_to_ett_mapping.get(age, "")
+        #default_ett_size = age_to_ett_mapping.get(age, "")
         
-        ett_size = st.selectbox("Select ETT Size", ett_options, index=ett_options.index(default_ett_size) if default_ett_size in ett_options else 0, key="ett_size")
+        #ett_size = st.selectbox("Select ETT Size", ett_options, index=ett_options.index(default_ett_size) if default_ett_size in ett_options else 0, key="ett_size")
 
-      
+        if 'ett_size' not in st.session_state:
+        # Set the default ETT size based on the initial patient age
+            st.session_state['ett_size'] = age_to_ett_size_mapping[age]
+
+        ett_size = st.selectbox(
+        "Select ETT Size",
+        options=['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
+        key="ett_size",
+        index=['3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
+    )
+        if ett_size != st.session_state['ett_size']:
+            st.session_state['ett_size'] = ett_size
+
+# Ensure the ETT size updates dynamically as the age changes
+def update_ett_size_based_on_age():
+    # Update ETT size based on selected age
+    selected_age = st.session_state.get("age_select")
+    if selected_age:
+        st.session_state['ett_size'] = age_to_ett_size_mapping.get(selected_age, '4.0')  # Default ETT size if age is not found
+
+# Automatically rerun the script when the age changes
+    if st.session_state.get("age_select"):
+        update_ett_size_based_on_age()
+        
     st.write("Device:")
     
     cols = st.columns(3)
