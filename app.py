@@ -239,6 +239,9 @@ with st.form("airway_form"):
         other_device = st.checkbox("Other", key="other_device")
         
     with cols[3]:
+        st.markdown("")
+        st.markdown("")
+        st.markdown("")
         other_device_text = st.text_input("", key="other_device_text")
 
         
