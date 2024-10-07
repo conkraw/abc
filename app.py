@@ -205,6 +205,23 @@ with st.form("airway_form"):
         ett_options = ['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
         ett_size = st.selectbox("ETT Size", ett_options, key="ett_size")
 
+    st.write("#### Device Used for Intubation:")
+
+    # Create a row with checkboxes for device selection
+    cols = st.columns([1, 1, 1, 3])  # Adjust the column widths to suit the content
+    
+    with cols[0]:
+        laryngoscope = st.checkbox("Laryngoscope", key="laryngoscope")
+    
+    with cols[1]:
+        lma = st.checkbox("LMA", key="lma")
+    
+    with cols[2]:
+        glidescope = st.checkbox("Glidescope", key="glidescope")
+    
+    with cols[3]:
+        other_device = st.text_input("Other (Specify)", key="other_device")
+        
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
     intubation_timing = st.text_input("Describe timing of airway management", key="intubation_timing")
@@ -213,29 +230,43 @@ with st.form("airway_form"):
     submit = st.form_submit_button("Submit")
 
     # Process submission
-    if submit:
-        # Store form data into a dictionary to replace placeholders
-        form_data = {
-            "date": date,
-            "time": time,
-            "weight": weight_str,  # Save the weight as the string (allowing decimal numbers if entered)
-            "age": age,
-            "ett_type": ett_type,
-            "who_intubate": ", ".join(who_intubate),
-            "who_bag_mask": ", ".join(who_bag_mask),
-            "ett_size": ett_size,
-            "intubation_timing": intubation_timing,
-            "front_page_completed": front_page_completed,
-            "completed_by": completed_by,
-            "room_number": room_number,
-            "difficult_airway_history": difficult_airway_history,
-            "physical_risk": physical_risk,
-            "high_risk_desaturation": high_risk_desaturation,
-            "high_risk_ICP": high_risk_ICP,
-            "unstable_hemodynamics": unstable_hemodynamics,
-            "other_risk_factors": other_risk_factors,
-            "other_risk_yes_no": other_risk_yes_no
-        }
+    # Process submission
+if submit:
+    # Store form data into a dictionary to replace placeholders
+    form_data = {
+        "date": date,
+        "time": time,
+        "weight": weight_str,  # Save the weight as the string (allowing decimal numbers if entered)
+        "age": age,
+        "ett_type": ett_type,
+        "who_intubate": ", ".join(who_intubate),
+        "who_bag_mask": ", ".join(who_bag_mask),
+        "ett_size": ett_size,
+        "intubation_timing": intubation_timing,
+        "front_page_completed": front_page_completed,
+        "completed_by": completed_by,
+        "room_number": room_number,
+        "difficult_airway_history": difficult_airway_history,
+        "physical_risk": physical_risk,
+        "high_risk_desaturation": high_risk_desaturation,
+        "high_risk_ICP": high_risk_ICP,
+        "unstable_hemodynamics": unstable_hemodynamics,
+        "other_risk_factors": other_risk_factors,
+        "other_risk_yes_no": other_risk_yes_no,
+        "laryngoscope": laryngoscope,  # Capture the checkbox result
+        "lma": lma,                    # Capture the checkbox result
+        "glidescope": glidescope,      # Capture the checkbox result
+        "other_device": other_device   # Capture the text input for "Other"
+    }
+
+    # Path to the provided Word template
+    template_path = 'AirwayBundleChecklist_7-2020.docx'
+
+    # Fill the Word template with form data
+    filled_doc = fill_word_template(template_path, form_data)
+
+    # Now you can save, display, or process the filled_doc
+
 
         # Path to the provided Word template
         template_path = 'AirwayBundleChecklist_7-2020.docx'
