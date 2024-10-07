@@ -210,47 +210,17 @@ with st.form("airway_form"):
     st.write("Device:")
 
     # Create columns layout
-    cols = st.columns([2, 2])  # Adjust column sizes to your preference
+    cols = st.columns(2)
     
     # Laryngoscope
     with cols[0]:
-        st.markdown("**Laryngoscope**")
         laryngoscope = st.checkbox("", key="laryngoscope")
-    
-    with cols[1]:
-        if laryngoscope:
-            laryngoscope_text = st.text_input("", key="laryngoscope_text")
-    
-    
-    # Glidescope
-    with cols[0]:
-        st.markdown("**Glidescope**")
         glidescope = st.checkbox("", key="glidescope")
-    
-    with cols[1]:
-        if glidescope:
-            glidescope_text = st.text_input("", key="glidescope_text")
-    
-    
-    # LMA
-    with cols[0]:
-        st.markdown("**LMA**")
         lma = st.checkbox("", key="lma")
-    
-    with cols[1]:
-        if lma:
-            lma_text = st.text_input("", key="lma_text")
-    
-    
-    # Other Device
-    with cols[0]:
-        st.markdown("**Other Device (Specify)**")
         other_device = st.checkbox("", key="other_device")
     
-    with cols[1]:
-        if other_device:
-            other_device_text = st.text_input("", key="other_device_text")
-
+    #with cols[1]:
+        
    
 
         
