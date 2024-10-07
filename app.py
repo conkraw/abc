@@ -225,13 +225,19 @@ with st.form("airway_form"):
         glidescope = st.selectbox("Glidescope", options=["Select", "Option 1", "Option 2", "Option 3"], key="glidescope")
         lma = st.selectbox("LMA", options=["Select", "Option 1", "Option 2", "Option 3"], key="lma")
         other_device = st.selectbox("Other Device", options=["Select", "Option 1", "Option 2", "Option 3"], key="other_device")
+
+        st.text_input("Laryngoscope details", value="Laryngoscope", key="laryngoscope_textx", disabled=True)
+        st.text_input("Glidescope details", value="Glidescope", key="glidescope_textx", disabled=True)
+        st.text_input("LMA details", value="LMA", key="lma_textx", disabled=True)
+        st.text_input("Other Device details", value="Other Device", key="other_device_textx", disabled=True)
     
     # Column 3: Text Inputs with uneditable placeholders (Laryngoscope, Glidescope, etc.)
     with cols[2]:
-        st.text_input("Laryngoscope details", value="Laryngoscope", key="laryngoscope_text", disabled=True)
-        st.text_input("Glidescope details", value="Glidescope", key="glidescope_text", disabled=True)
-        st.text_input("LMA details", value="LMA", key="lma_text", disabled=True)
-        st.text_input("Other Device details", value="Other Device", key="other_device_text", disabled=True)
+        st.text_input("Laryngoscope details", key="laryngoscope_text")
+        st.text_input("Glidescope details", key="glidescope_text")
+        st.text_input("LMA details", key="lma_text")
+        st.text_input("Other Device details", key="other_device_text")
+        
 
 
         
@@ -272,7 +278,11 @@ if submit:
         "glidescope": glidescope,      # Checkbox value
         "glidescope_text": glidescope_text,  # Text input value
         "other_device": other_device,  # Checkbox value
-        "other_device_text": other_device_text  
+        "other_device_text": other_device_text,  
+        "laryngoscope_textx": laryngoscope_text,  # Text input value
+        "lma_textx": lma_text,          # Text input value
+        "glidescope_textx": glidescope_text,  # Text input value
+        "other_device_textx": other_device_text,  
     }
 
     # Path to the provided Word template
