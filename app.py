@@ -37,7 +37,8 @@ with st.form("airway_form"):
     st.markdown(box_section("Front Page Completed"), unsafe_allow_html=True)
     front_page_completed = st.selectbox(
         "Select when the front page was completed",
-        ['On admission', 'During rounds', 'After rounds', 'Just prior to intubation', 'After intubation', 'Prior to extubation']
+        ['On admission', 'During rounds', 'After rounds', 'Just prior to intubation', 'After intubation', 'Prior to extubation'],
+        key="front_page_completed"
     )
 
     # Person who completed the form
@@ -47,7 +48,8 @@ with st.form("airway_form"):
     room_number = st.selectbox(
         "Select Room Number",
         ['4102', '4104', '4106', '4108', '4110', '4112', '4114', '4116', '4201', '4203', '4209', 
-         '4211', '4213', '4215', '4217', '4219', '4221', '4223']
+         '4211', '4213', '4215', '4217', '4219', '4221', '4223'],
+        key="room_number"
     )
 
     # Patient Information Section
@@ -67,7 +69,7 @@ with st.form("airway_form"):
             "12 year old", "13 year old", "14 year old", "15 year old", "16 year old", "17 year old", 
             "18 year old"
         ]
-        age = st.selectbox("Select Patient Age", age_options)
+        age = st.selectbox("Select Patient Age", age_options, key="age")
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
@@ -92,7 +94,8 @@ with st.form("airway_form"):
     with cols[1]:
         difficult_airway_history = st.selectbox(
             "",
-            ['YES', 'NO']
+            ['YES', 'NO'],
+            key="difficult_airway_history"
         )
 
     with cols[0]:
@@ -101,7 +104,8 @@ with st.form("airway_form"):
     with cols[1]:
         physical_risk = st.selectbox(
             "",
-            ['YES', 'NO']
+            ['YES', 'NO'],
+            key="physical_risk"
         )
 
     st.write("### At Risk For:")
@@ -113,7 +117,8 @@ with st.form("airway_form"):
     with cols[1]:
         high_risk_desaturation = st.selectbox(
             "",
-            ['YES', 'NO']
+            ['YES', 'NO'],
+            key="high_risk_desaturation"
         )
 
     with cols[0]:
@@ -122,7 +127,8 @@ with st.form("airway_form"):
     with cols[1]:
         high_risk_ICP = st.selectbox(
             "",
-            ['YES', 'NO']
+            ['YES', 'NO'],
+            key="high_risk_ICP"
         )
 
     with cols[0]:
@@ -131,7 +137,8 @@ with st.form("airway_form"):
     with cols[1]:
         unstable_hemodynamics = st.selectbox(
             "",
-            ['YES', 'NO']
+            ['YES', 'NO'],
+            key="unstable_hemodynamics"
         )
 
     with cols[0]:
@@ -140,7 +147,8 @@ with st.form("airway_form"):
     with cols[1]:
         other_risk_factors = st.text_input(
             "",
-            ""
+            "",
+            key="other_risk_factors"
         )
     
     with cols[0]:
@@ -149,7 +157,8 @@ with st.form("airway_form"):
     with cols[1]:
         other_risk_yes_no = st.selectbox(
             "",
-            ['YES', 'NO']
+            ['YES', 'NO'],
+            key="other_risk_yes_no"
         )
 
     # Intubation plan section
@@ -157,28 +166,30 @@ with st.form("airway_form"):
 
     # Multi-select for "Who will intubate?" and "Who will bag-mask?"
     who_intubate = st.multiselect("Who will intubate?", 
-                                   ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other'])
+                                   ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other'],
+                                   key="who_intubate")
 
     who_bag_mask = st.multiselect("Who will bag-mask?", 
-                                   ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'])
+                                   ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'],
+                                   key="who_bag_mask")
 
     # Create a layout for intubation method
-    intubation_method = st.selectbox("How will we intubate? (Method)", ["Oral", "Nasal"])
+    intubation_method = st.selectbox("How will we intubate? (Method)", ["Oral", "Nasal"], key="intubation_method")
 
     # Create a layout for ETT Type and ETT Size
     cols = st.columns(2)
 
     with cols[0]:
-        ett_type = st.selectbox("ETT Type", ["", "Cuffed", "Uncuffed"])
+        ett_type = st.selectbox("ETT Type", ["", "Cuffed", "Uncuffed"], key="ett_type")
 
     with cols[1]:
         # ETT Size Selection
         ett_options = ['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
-        ett_size = st.selectbox("ETT Size", ett_options)
+        ett_size = st.selectbox("ETT Size", ett_options, key="ett_size")
 
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
-    intubation_timing = st.text_input("Describe timing of airway management")
+    intubation_timing = st.text_input("Describe timing of airway management", key="intubation_timing")
 
     # Submit button
     submit = st.form_submit_button("Submit")
@@ -207,7 +218,7 @@ with st.form("airway_form"):
             "other_risk_factors": other_risk_factors,
             "other_risk_yes_no": other_risk_yes_no
         }
-        
+
         # Path to the provided Word template
         template_path = 'AirwayBundleChecklist_7-2020.docx'
 
@@ -217,18 +228,5 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
-
-# Function to validate if the input is a valid integer or decimal number
-def validate_weight(weight_str):
-    try:
-        # Check if it's a valid float number or integer
-        if weight_str:
-            float(weight_str)  # Check if the value is a number (float or int)
-            return True
-        else:
-            return False
-    except ValueError:
-        return False
-
 
 
