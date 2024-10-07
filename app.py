@@ -250,10 +250,15 @@ with st.form("airway_form"):
 
     with cols[1]:
         # ETT Size Selection
-        #ett_options = ['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
-        #ett_size = st.selectbox("ETT Size", ett_options, key="ett_size")
+        ett_options = ['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0']
+
         ett_size_right = age_to_ett_mapping.get(age, "")
-        ett_size = st.selectbox("Select ETT Size", options=[ett_size_right], key="ett_size", disabled=False)
+        
+        ett_size = st.selectbox("Select ETT Size", ett_options, index=ett_options.index(default_ett_size) if default_ett_size in ett_options else 0, key="ett_size")
+
+        
+        
+    #ett_size = st.selectbox("Select ETT Size", options=[ett_size_right], key="ett_size", disabled=False)
 
     st.write("Device:")
     
