@@ -212,13 +212,11 @@ with st.form("airway_form"):
 
     with cols[0]:
         laryngoscope = st.checkbox("Laryngoscope", key="laryngoscope")
-        st.markdown("")
         glidescope = st.checkbox("Glidescope", key="glidescope")
         lma = st.checkbox("LMA", key="lma")
         other_device = st.checkbox("Other Device", key="other_device")
     
     with cols[1]:
-        st.markdown("")
         #"lma_text": lma_text,          # Text input value
         #"glidescope_text": glidescope_text,  # Text input value
         #"other_device_text": other_device_text  
