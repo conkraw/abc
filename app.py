@@ -102,6 +102,8 @@ with st.form("airway_form"):
 
     cols = st.columns([3, 1])  # Reset columns for next question
     with cols[0]:
+        st.markdown("")
+        st.markdown("")
         st.write("Physical (e.g. small mouth, small jaw, large tongue, or short neck)?")
     
     with cols[1]:
@@ -115,6 +117,8 @@ with st.form("airway_form"):
     
     cols = st.columns([3, 1])  # Adjust column widths for better alignment
     with cols[0]:
+        st.markdown("")
+        st.markdown("")
         st.write("High risk for rapid desaturation during intubation?")
     
     with cols[1]:
@@ -126,6 +130,8 @@ with st.form("airway_form"):
 
     cols = st.columns([3, 1])
     with cols[0]:
+        st.markdown("")
+        st.markdown("")
         st.write("Increased ICP, pulmonary hypertension, need to avoid hypercarbia?")
     
     with cols[1]:
@@ -137,6 +143,8 @@ with st.form("airway_form"):
 
     cols = st.columns([3, 1])
     with cols[0]:
+        st.markdown("")
+        st.markdown("")
         st.write("Unstable hemodynamics (e.g., hypovolemia, potential need for fluid bolus, vasopressor, CPR)?")
     
     with cols[1]:
@@ -148,6 +156,8 @@ with st.form("airway_form"):
 
     cols = st.columns([3, 1])
     with cols[0]:
+        st.markdown("")
+        st.markdown("")
         st.write("Other risk factors?")
     
     with cols[1]:
@@ -158,6 +168,8 @@ with st.form("airway_form"):
 
     cols = st.columns([3, 1])
     with cols[0]:
+        st.markdown("")
+        st.markdown("")
         st.write("Is there another risk factor?")
     
     with cols[1]:
