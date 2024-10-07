@@ -223,9 +223,6 @@ with st.form("airway_form"):
 
     st.write("Device:")
     
-
-
-# Create columns layout
     cols = st.columns(3)
 
     # Column 1: Dropdowns for "X" or empty
@@ -252,8 +249,32 @@ with st.form("airway_form"):
         st.text_input("LMA details", key="lma_details", disabled=False)
         st.text_input("Other Device details", key="other_device_details", disabled=False)
 
+    st.write("Blade:")
     
-        
+    cols = st.columns(3)
+
+    # Column 1: Dropdowns for "X" or empty
+    with cols[0]:
+        # Dropdowns to choose if devices are selected or not (X = selected)
+        blade_1_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_5")
+        blade_2_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_6")
+        blade_3_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_7")
+    
+    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
+    with cols[1]:
+        # These text inputs will reset to their default value if changed and the user moves away
+        blade_1_text = reset_input("Mac", key="macx")
+        blade_2_text = reset_input("Miller", key="millerx")
+        blade_3_text = reset_input("Wis-Hipple", key="wis_hipplex")
+    
+    # Column 3: Additional details for each device (uneditable placeholders)
+    with cols[2]:
+        # Text Inputs with uneditable placeholders (details of each device)
+        st.text_input("Mac details", key="mac_details", disabled=False)
+        st.text_input("Miller details", key="miller_details", disabled=False)
+        st.text_input("Wis-Hipple details", key="wis_hipple_details", disabled=False)
+
+    
     # Timing of Intubation section
     st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
     intubation_timing = st.text_input("Describe timing of airway management", key="intubation_timing")
