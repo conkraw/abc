@@ -342,7 +342,7 @@ with st.form("airway_form"):
                                    key="when_intubate")
 
 
-    st.markdown(box_section("Backup?"), unsafe_allow_html=True)
+    st.markdown(box_section("Backup"), unsafe_allow_html=True)
     advance_airway_provider = st.multiselect("Advance Airway Provider:", 
                                    ['Attending','Anesthesia','ENT','Fellow','Other'],
                                    key="advance_airway_provider")
