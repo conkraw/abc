@@ -189,6 +189,11 @@ elif st.session_state.section == 1:
         st.session_state['miller_details'] = ''  # Default value for ETT size
     
     st.session_state['miller_details'] = age_to_miller_mapping.get(selected_age, '')
+
+    if 'ao_details' not in st.session_state:
+        st.session_state['ao_details'] = ''  # Default value for ETT size
+    
+    st.session_state['ao_details'] = age_to_oxygenation_mapping.get(selected_age, '')
     
     # Single Next and Previous Buttons
     if st.button("Next", on_click=next_section):
@@ -357,11 +362,11 @@ elif st.session_state.section == 3:
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[2]:
         mac_details = list(set(age_to_mac_mapping.values()))  # Get unique ETT sizes
-        selected_mac_details = st.selectbox("Mac Details", options=mac_details, key="mac_size_display", index=mac_details.index(st.session_state['mac_details']) if st.session_state['mac_details'] in mac_details else 0)
+        selected_mac_details = st.selectbox("Mac Details:", options=mac_details, key="mac_size_display", index=mac_details.index(st.session_state['mac_details']) if st.session_state['mac_details'] in mac_details else 0)
         st.session_state['mac_details'] = selected_mac_details
 
         miller_details = list(set(age_to_miller_mapping.values()))  # Get unique ETT sizes
-        selected_miller_details = st.selectbox("Miller Details", options=miller_details, key="miller_size_display", index=miller_details.index(st.session_state['miller_details']) if st.session_state['miller_details'] in miller_details else 0)
+        selected_miller_details = st.selectbox("Miller Details:", options=miller_details, key="miller_size_display", index=miller_details.index(st.session_state['miller_details']) if st.session_state['miller_details'] in miller_details else 0)
         st.session_state['miller_details'] = selected_miller_details
 
         st.text_input("Wis-Hipple Details:", key="wis_hipple_details", disabled=False)
@@ -423,8 +428,12 @@ elif st.session_state.section == 3:
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
-        st.text_input("Apneic Oxygenation Details:", key="ao_details", disabled=False)
+        #st.text_input("Apneic Oxygenation Details:", key="ao_details", disabled=False)
 
+        ao_details = list(set(age_to_oxygenation_mapping.values()))  # Get unique ETT sizes
+        selected_ao_details = st.selectbox("Apneic Oxygenation:", options=ao_details, key="ao_details_display", index=ao_details.index(st.session_state['ao_details']) if st.session_state['ao_details'] in ao_details else 0)
+        st.session_state['ao_details'] = selected_ao_details
+            
     other_planning = st.text_input("Other Intubation Planning Details:", key="other_planning")
 
     # Single Next and Previous Buttons
