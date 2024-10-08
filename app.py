@@ -261,6 +261,16 @@ elif st.session_state.section == 1:
     
     st.session_state['ett_size'] = age_to_ett_mapping.get(selected_age, '')  # Update the session state with ETT size
 
+    if 'lma_details' not in st.session_state:
+        st.session_state['lma_details'] = ''  # Default value for ETT size
+    
+    st.session_state['lma_details'] = age_to_lma_mapping.get(selected_age, '')
+
+    if 'glide_details' not in st.session_state:
+        st.session_state['glide_details'] = ''  # Default value for ETT size
+
+    st.session_state['glide_details'] = age_to_glide_mapping.get(selected_age, '')
+    
     if 'mac_details' not in st.session_state:
         st.session_state['mac_details'] = ''  # Default value for ETT size
     
@@ -442,6 +452,14 @@ elif st.session_state.section == 3:
     
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[2]:
+        lma_details = list(set(age_to_lma_mapping.values()))  # Get unique ETT sizes
+        selected_lma_details = st.selectbox("LMA Details:", options=lma_details, key="lma_display", index=lma_details.index(st.session_state['lma_details']) if st.session_state['lma_details'] in lma_details else 0)
+        st.session_state['lma_details'] = selected_lma_details
+
+        glide_details = list(set(age_to_glide_mapping.values()))  # Get unique ETT sizes
+        selected_glide_details = st.selectbox("Glidescope Details:", options=glide_details, key="glide_size_display", index=glide_details.index(st.session_state['glide_details']) if st.session_state['glide_details'] in glide_details else 0)
+        st.session_state['glide_details'] = selected_glide_details
+
         mac_details = list(set(age_to_mac_mapping.values()))  # Get unique ETT sizes
         selected_mac_details = st.selectbox("Mac Details:", options=mac_details, key="mac_size_display", index=mac_details.index(st.session_state['mac_details']) if st.session_state['mac_details'] in mac_details else 0)
         st.session_state['mac_details'] = selected_mac_details
