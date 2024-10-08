@@ -346,9 +346,10 @@ elif st.session_state.section == 3:
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
         #st.text_input("Mac Details:", key="mac_details", disabled=False)
-        ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
-        selected_ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
-        st.session_state['ett_size'] = selected_ett_size
+        
+        #ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
+        #selected_ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
+        #st.session_state['ett_size'] = selected_ett_size
 
         mac_details = list(set(age_to_blade_mapping.values()))  # Get unique ETT sizes
         selected_mac_details = st.selectbox("Mac Details", options=mac_sizes, key="mac_size_display", index=mac_sizes.index(st.session_state['mac_details']) if st.session_state['mac_details'] in mac_details else 0)
