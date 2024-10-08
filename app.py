@@ -542,7 +542,11 @@ elif st.session_state.section == 3:
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
-        st.text_input("Atropine Dosage:", key="atropine_dosage", disabled=False)
+        #st.text_input("Atropine Dosage:", key="atropine_dosage", disabled=False)
+        atropine_doses = list(set(weight_to_atropine_mapping.values()))  # Get unique Atropine doses
+        selected_atropine_dose = st.selectbox("Atropine Dose:", options=atropine_doses, key="atropine_dose_display",index=atropine_doses.index(st.session_state['atropine_dose']) if st.session_state['atropine_dose'] in atropine_doses else 0)
+        st.session_state['atropine_dose'] = selected_atropine_dose
+
         st.text_input("Glycopyrrolate Dosage:", key="glyco_dosage", disabled=False)
         st.text_input("Fentanyl Dosage:", key="fentanyl_dosage", disabled=False)
         st.text_input("Midazolam Dosage:", key="midazolam_dosage", disabled=False)
