@@ -127,12 +127,30 @@ age_to_oxygenation_mapping = {
 
 # Define a function to automatically update the other settings when the age is selected
 def update_automatic_selections():
-    selected_age = st.session_state.age_select
-    if selected_age:
+    # Check if age is selected (you can keep this or modify it as needed)
+    if "age_select" in st.session_state and st.session_state.age_select:
+        selected_age = st.session_state.age_select
         st.session_state.ett_size = age_to_ett_mapping[selected_age]
+        st.session_state.lma_details = age_to_lma_mapping[selected_age]
+        st.session_state.glide_details = age_to_glide_mapping[selected_age]
         st.session_state.mac_details = age_to_mac_mapping[selected_age]
         st.session_state.miller_details = age_to_miller_mapping[selected_age]
         st.session_state.oxygenation = age_to_oxygenation_mapping[selected_age]
+
+    # Check if weight is selected
+    if "weight_select" in st.session_state and st.session_state.weight_select:
+        selected_weight = st.session_state.weight_select
+        # Update drug dosages based on the selected weight
+        st.session_state.atropine_dose = weight_to_atropine_mapping[selected_weight]
+        st.session_state.glycopyrrolate_dose = weight_to_glycopyrrolate_mapping[selected_weight]
+        st.session_state.fentanyl_dose = weight_to_fentanyl_mapping[selected_weight]
+        st.session_state.midazolam_dose = weight_to_midaz_mapping[selected_weight]
+        st.session_state.ketamine_dose = weight_to_ketamine_mapping[selected_weight]
+        st.session_state.propofol_dose = weight_to_propo_mapping[selected_weight]
+        st.session_state.roc_dose = weight_to_roc_mapping[selected_weight]
+        st.session_state.vec_dose = weight_to_vec_mapping[selected_weight]
+
+        
 
 def reset_input(default_value, key):
     if key not in st.session_state:
@@ -162,24 +180,6 @@ def initialize_firebase():
         raise Exception(f"Error initializing Firebase: {e}")
 
 db = initialize_firebase()
-
-def load_age_to_ett_mapping(filename):
-    mapping = {}
-    with open(filename, 'r') as file:
-        for line in file:
-            # Strip whitespace and skip empty lines
-            line = line.strip()
-            if line:  # Only process non-empty lines
-                parts = line.split(': ')
-                if len(parts) == 2:  # Ensure there are exactly two parts
-                    age, size = parts
-                    mapping[age] = size
-                else:
-                    print(f"Skipping invalid line: {line}")  # Optional: log the invalid line
-    return mapping
-    
-# Load the mapping (make sure the path is correct)
-#age_to_ett_mapping = load_age_to_ett_mapping('age_to_ett_mapping.txt')
 
 def update_ett_size():
     selected_age = st.session_state.age_select
@@ -214,9 +214,6 @@ def save_data():
     data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
     db.collection('airway_checklists').add(data)
 
-
-
-
 # Front Page Completed Section
 if st.session_state.section == 0:
     st.title("Front Page Completed")
@@ -244,14 +241,11 @@ elif st.session_state.section == 1:
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date")
         # Select Patient Age
-        age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),key="age_select",on_change=update_automatic_selections)  # Automatically update other settings)
+        age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),key="age_select",on_change=update_automatic_selections)
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time(), key="time")
-        weight_str = st.text_input("Enter Patient Weight (Kilograms)", value="", key="weight")
-        
-        if weight_str and not weight_str.replace('.', '', 1).isdigit():
-            st.error("Please enter a valid number for the weight (e.g., 12.5 or 12).")
+        weight = st.selectbox("Enter Patient Weight (Kilograms)", options=[""] + list(weight_to_atropine_mapping.keys()), key="weight_select",on_change=update_automatic_selections)
 
     # Initialize 'ett_size' in session state if it's not already set
     if 'ett_size' not in st.session_state:
@@ -285,6 +279,54 @@ elif st.session_state.section == 1:
         st.session_state['ao_details'] = ''  # Default value for ETT size
     
     st.session_state['ao_details'] = age_to_oxygenation_mapping.get(selected_age, '')
+
+    if 'atropine_dose' not in st.session_state:
+        st.session_state['atropine_dose'] = ''  # Default value for Atropine
+
+    selected_weight = st.session_state.weight_select
+    
+    if 'glycopyrrolate_dose' not in st.session_state:
+        st.session_state['glycopyrrolate_dose'] = ''  # Default value for Glycopyrrolate
+    
+    if 'fentanyl_dose' not in st.session_state:
+        st.session_state['fentanyl_dose'] = ''  # Default value for Fentanyl
+    
+    # Retrieve the selected weight from session state
+    selected_weight = st.session_state.get('weight_select', '')
+    
+    # If the weight is selected, update the drug doses accordingly (based on mappings)
+    if selected_weight:
+        st.session_state['atropine_dose'] = weight_to_atropine_mapping.get(selected_weight, '')
+        st.session_state['glycopyrrolate_dose'] = weight_to_glycopyrrolate_mapping.get(selected_weight, '')
+        st.session_state['fentanyl_dose'] = weight_to_fentanyl_mapping.get(selected_weight, '')
+
+    # Default values for Midazolam, Ketamine, and Propofol if not set in session state
+    if 'midazolam_dose' not in st.session_state:
+        st.session_state['midazolam_dose'] = ''  # Default value for Midazolam
+    
+    if 'ketamine_dose' not in st.session_state:
+        st.session_state['ketamine_dose'] = ''  # Default value for Ketamine
+    
+    if 'propofol_dose' not in st.session_state:
+        st.session_state['propofol_dose'] = ''  # Default value for Propofol
+    
+    # Update doses based on the selected weight
+    if selected_weight:
+        st.session_state['midazolam_dose'] = weight_to_midaz_mapping.get(selected_weight, '')
+        st.session_state['ketamine_dose'] = weight_to_ketamine_mapping.get(selected_weight, '')
+        st.session_state['propofol_dose'] = weight_to_propo_mapping.get(selected_weight, '')
+
+    # Default values for Rocuronium and Vecuronium if not set in session state
+    if 'roc_dose' not in st.session_state:
+        st.session_state['roc_dose'] = ''  # Default value for Rocuronium
+    
+    if 'vec_dose' not in st.session_state:
+        st.session_state['vec_dose'] = ''  # Default value for Vecuronium
+    
+    # Update doses based on the selected weight
+    if selected_weight:
+        st.session_state['roc_dose'] = weight_to_roc_mapping.get(selected_weight, '')
+        st.session_state['vec_dose'] = weight_to_vec_mapping.get(selected_weight, '')
     
     # Single Next and Previous Buttons
     if st.button("Next", on_click=next_section):
