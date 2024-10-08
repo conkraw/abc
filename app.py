@@ -689,22 +689,28 @@ elif st.session_state.section == 5:
     if 'Other' in advance_airway_procedure:
         st.text_input("Please state an 'other' protocol for Difficult Airway Protocol Initiation:", key="other_advance_airway_procedure")
 
-    # Single Submit and Previous Buttons
-    if st.button("Submit", key="submit_button"):
-        # Prepare the final data for submission
-        final_data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
-        
-        # Include the data from this section
-        final_data['advance_airway_provider'] = advance_airway_provider
-        
-        # Submit data to Firestore
-        db.collection('airway_checklists').add(final_data)
-        
-        st.success("Data submitted successfully!")
-        
-        # Optionally reset the form or redirect
-        st.session_state.section = 0  # Reset to the first section if needed
-        st.session_state.form_data = {}  # Clear form data
-
-    if st.button("Previous", on_click=prev_section):
-        pass
+# Create two columns: one for the 'Previous' button and one for the 'Submit' button
+    col1, col2 = st.columns(2)
+    
+    # Add the 'Submit' button to the second column
+    with col2:
+        if st.button("Submit", key="submit_button"):
+            # Prepare the final data for submission
+            final_data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
+            
+            # Include the data from this section
+            final_data['advance_airway_provider'] = advance_airway_provider
+            
+            # Submit data to Firestore
+            db.collection('airway_checklists').add(final_data)
+            
+            st.success("Data submitted successfully!")
+            
+            # Optionally reset the form or redirect
+            st.session_state.section = 0  # Reset to the first section if needed
+            st.session_state.form_data = {}  # Clear form data
+    
+    # Add the 'Previous' button to the first column
+    with col1:
+        if st.button("Previous", on_click=prev_section):
+            pass
