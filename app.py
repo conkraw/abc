@@ -43,9 +43,13 @@ def load_age_to_ett_mapping(filename):
             age, size = line.strip().split(': ')
             mapping[age] = size
     return mapping
-
+    
 # Load the mapping (make sure the path is correct)
 age_to_ett_mapping = load_age_to_ett_mapping('age_to_ett_mapping.txt')
+
+def update_ett_size():
+    selected_age = st.session_state.age_select
+    st.session_state.ett_size = age_to_ett_mapping.get(selected_age, '')
 
 def fill_word_template(template_path, data):
     doc = Document(template_path)
@@ -77,9 +81,7 @@ def save_data():
     db.collection('airway_checklists').add(data)
 
 
-def update_ett_size():
-    selected_age = st.session_state.age_select
-    st.session_state.ett_size = age_to_ett_mapping.get(selected_age, '')
+
 
 # Front Page Completed Section
 if st.session_state.section == 0:
