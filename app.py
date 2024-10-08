@@ -396,8 +396,7 @@ elif st.session_state.section == 3:
         "Apneic Oxygenation Details:", 
         options=ao_details, 
         key="ao_detail_display", 
-        index=ao_details.index(st.session_state['ao_details']) if st.session_state['ao_details'] in ao_details else 0
-    )
+        index=ao_details.index(st.session_state['ao_details']) if st.session_state['ao_details'] in ao_details else 0)
         st.session_state['ao_details'] = selected_ao_detail
 
     other_planning = st.text_input("Other Intubation Planning Details:", key="other_planning")
