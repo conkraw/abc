@@ -650,10 +650,16 @@ elif st.session_state.section == 5:
     advance_airway_provider = st.multiselect("Advance Airway Provider:", 
                                    ['Attending', 'Anesthesia', 'ENT', 'Fellow', 'Other'],
                                    key="advance_airway_provider")
-
-    advance_airway_provider = st.multiselect("Difficult Airway Procedure:", 
+    
+    advance_airway_procedure = st.multiselect("Difficult Airway Procedure:", 
                                    ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other'],
                                    key="difficult_airway")
+
+    if 'Other' in advance_airway_provider:
+        st.text_input("Please state an 'other' Advanced Airway Provider", key="other_advance_airway_provider")
+
+    if 'Other' in advance_airway_procedure:
+        st.text_input("Please state an 'other' protocol for Difficult Airway Protocol Initiation:", key="other_advance_airway_procedure")
 
     # Single Submit and Previous Buttons
     if st.button("Submit", key="submit_button"):
