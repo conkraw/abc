@@ -2,13 +2,37 @@ import streamlit as st
 from docx import Document
 from io import BytesIO
 from datetime import datetime
+import os
+import json
 import firebase_admin
 from firebase_admin import credentials, firestore
 
-# Initialize Firebase
-cred = credentials.Certificate("path/to/your/firebase/credentials.json")
-firebase_admin.initialize_app(cred)
-db = firestore.client()
+# Global variable for Firestore collection name
+FIREBASE_COLLECTION_NAME = None
+
+def initialize_firebase():
+    global FIREBASE_COLLECTION_NAME  # Use the global variable
+
+    FIREBASE_KEY_JSON = os.getenv('FIREBASE_KEY')
+    FIREBASE_COLLECTION_NAME = os.getenv('FIREBASE_COLLECTION_NAME')
+    
+    if FIREBASE_KEY_JSON is None:
+        raise ValueError("FIREBASE_KEY environment variable not set.")
+    if FIREBASE_COLLECTION_NAME is None:
+        raise ValueError("FIREBASE_COLLECTION_NAME environment variable not set.")
+
+    try:
+        firebase_credentials = json.loads(FIREBASE_KEY_JSON)
+
+        if not firebase_admin._apps:
+            cred = credentials.Certificate(firebase_credentials)
+            firebase_admin.initialize_app(cred)
+
+        return firestore.client()
+    except json.JSONDecodeError:
+        raise ValueError("FIREBASE_KEY is not a valid JSON string.")
+    except Exception as e:
+        raise Exception(f"Error initializing Firebase: {e}")
 
 # Function to load the age to ETT mapping from the text file
 def load_age_to_ett_mapping(filename):
@@ -19,6 +43,9 @@ def load_age_to_ett_mapping(filename):
 
 # Load the mapping
 age_to_ett_mapping = load_age_to_ett_mapping('age_to_ett_mapping.txt')
+
+# Initialize Firebase
+db = initialize_firebase()
 
 # Function to fill the Word template with form inputs
 def fill_word_template(template_path, data):
@@ -49,7 +76,7 @@ def prev_section():
 def save_data():
     # Save current section data to Firestore
     data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
-    db.collection('airway_checklists').add(data)
+    db.collection(FIREBASE_COLLECTION_NAME).add(data)
 
 # Front Page Completed Section
 if st.session_state.section == 0:
