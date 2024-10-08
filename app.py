@@ -131,9 +131,6 @@ elif st.session_state.section == 1:
     # Initialize 'ett_size' in session state if it's not already set
     if 'ett_size' not in st.session_state:
         st.session_state['ett_size'] = ''  # Default value for ETT size
-
-    # Display the ETT size as read-only
-    
     
     # Single Next and Previous Buttons
     if st.button("Next", on_click=next_section):
@@ -248,20 +245,13 @@ elif st.session_state.section == 3:
         ett_type = st.selectbox("ETT Type", ["", "Cuffed", "Uncuffed"], key="ett_type")
 
     with cols[1]:
-        # Initialize 'ett_size' in session_state if it's not already set
-        #if 'ett_size' not in st.session_state:
-            #st.session_state['ett_size'] = ''  # Default value for ETT size
-    
-        #ett_size = st.selectbox(
-        #"Select ETT Size",
-        #options=['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
-        #key="ett_size",
-        #index=['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
-    #)
-        #if ett_size != st.session_state['ett_size']:
-            #st.session_state['ett_size'] = ett_size
+        selected_age = st.session_state.age_select
+        ett_size = age_to_ett_mapping.get(selected_age, '') 
+        ett_sizes = list(set(age_to_ett_mapping.values())) 
+        selected_ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(ett_size) if ett_size in ett_sizes else 0)
+        st.session_state['ett_size'] = selected_ett_size
 
-        st.selectbox("ETT Size", options=[st.session_state.ett_size], key="ett_size_display", disabled=True)  #
+        #st.selectbox("ETT Size", options=[st.session_state.ett_size], key="ett_size_display", disabled=False)  #
         
     st.write("Device:")
     
