@@ -1,4 +1,5 @@
-age_to_ett_mapping = {"": "",
+{
+    "": "",
     "Premature": "3.0",
     "Newborn": "3.5",
     "1 month old": "3.5",
@@ -29,4 +30,5 @@ age_to_ett_mapping = {"": "",
     "15 year old": "6.5",
     "16 year old": "7.0",
     "17 year old": "7.0",
-    "18 year old": "7.0"}
+    "18 year old": "7.0"
+}
