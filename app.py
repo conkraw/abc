@@ -414,7 +414,10 @@ elif st.session_state.section == 2:
             options=['','YES', 'NO'],
             key="other_risk_yes_no"
         )
-        # Single Next and Previous Buttons
+
+        if other_risk_yes_no == 'YES':
+            st.text_input("Please specify the other risk:", key="other_risk_text_input")
+    
     if st.button("Next", on_click=next_section):
         pass
     if st.button("Previous", on_click=prev_section):
