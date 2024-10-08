@@ -119,7 +119,7 @@ elif st.session_state.section == 1:
         
         # Select Patient Age
         age_options = [""] + list(age_to_ett_mapping.keys())
-        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select", on_change=update_ett_size)
+        age = st.selectbox("Select Patient Age", age_options, key="age_select", on_change=update_ett_size)
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time(), key="time")
