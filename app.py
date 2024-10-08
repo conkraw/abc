@@ -632,7 +632,10 @@ elif st.session_state.section == 4:
     )
 
     if 'Hypoxemia Refractory to CPAP' in when_intubate:
-        st.text_input("If the patient has refractory hypoxemia refractory to CPAP, it will be defined as a SPO2 Level Less than:", key="other_intubate")
+        st.text_input("If the patient has refractory hypoxemia refractory to CPAP, it will be defined as a SPO2 Level Less than:", key="hypoxemia")
+
+    if 'Other' in when_intubate:
+        st.text_input("Please state an 'other' reason for the timing of intubation:", key="other_when_intubate")
         
     # Single Next and Previous Buttons
     if st.button("Next", on_click=next_section):
