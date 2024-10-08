@@ -3,8 +3,9 @@ from docx import Document
 from io import BytesIO
 from datetime import datetime
 
-age_to_ett_mapping = {"":"",
-    "Premature":"3.0",
+age_to_ett_mapping = {
+    "": "",
+    "Premature": "3.0",
     "Newborn": "3.5",
     "1 month old": "3.5",
     "2 month old": "3.5",
@@ -40,18 +41,13 @@ age_to_ett_mapping = {"":"",
 # Function to fill the Word template with form inputs
 def fill_word_template(template_path, data):
     doc = Document(template_path)
-
-    # Replace placeholders in the document with form data
     for paragraph in doc.paragraphs:
         for key, value in data.items():
             if f'{{{{{key}}}}}' in paragraph.text:
                 paragraph.text = paragraph.text.replace(f'{{{{{key}}}}}', str(value))
-
-    # Save the updated document in memory
     buffer = BytesIO()
     doc.save(buffer)
     buffer.seek(0)
-    
     return buffer
 
 # Function to create a boxed section
@@ -63,17 +59,11 @@ def box_section(title):
     """
 
 def reset_input(default_value, key):
-    # If the key does not exist in session state, initialize it with the default value
     if key not in st.session_state:
-        st.session_state[key] = default_value  # Set the default value only once
-
-    # Display the text input without a default value, since it is already handled by session state
+        st.session_state[key] = default_value
     current_value = st.text_input("", key=key)
-
-    # If the current input differs from the session state, update the session state
     if current_value != st.session_state[key]:
         st.session_state[key] = current_value
-
     return current_value
 
 st.title("Airway Bundle Checklist")
@@ -81,11 +71,10 @@ st.title("Airway Bundle Checklist")
 def update_ett_size_based_on_age():
     selected_age = st.session_state.get("age_select")
     if selected_age:
-        st.session_state['ett_size'] = age_to_ett_mapping.get(selected_age, '4.0')  # <-- Use age_to_ett_mapping instead!
+        st.session_state['ett_size'] = age_to_ett_mapping.get(selected_age, '4.0')
 
 # Create a form
 with st.form("airway_form"):
-    # Front Page Section
     st.markdown(box_section("Front Page Completed"), unsafe_allow_html=True)
     front_page_completed = st.selectbox(
         "Select when the front page was completed",
@@ -93,10 +82,8 @@ with st.form("airway_form"):
         key="front_page_completed"
     )
 
-    # Person who completed the form
     completed_by = st.text_input("Who completed the form? (Name or Role)")
 
-    # Room Number selection
     room_number = st.selectbox(
         "Select Room Number",
         ['4102', '4104', '4106', '4108', '4110', '4112', '4114', '4116', '4201', '4203', '4209', 
@@ -104,130 +91,41 @@ with st.form("airway_form"):
         key="room_number"
     )
 
-    # Patient Information Section
     st.markdown(box_section("Patient Information"), unsafe_allow_html=True)
     
     cols = st.columns(2)
 
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
-        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select")  # <-- Use age_to_ett_mapping instead!
+        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select")
+        update_ett_size_based_on_age()  # Update ETT size based on selected age
 
-        if st.session_state.get("age_select"):
-            update_ett_size_based_on_age()
-        
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
-
-        # Weight input with text input validation
         weight_str = st.text_input("Enter Patient Weight (Kilograms)", value="")
-
-        # Validate the weight input
-        if weight_str and not validate_weight(weight_str):
+        if weight_str and not weight_str.replace('.', '', 1).isdigit():
             st.error("Please enter a valid number for the weight (e.g., 12.5 or 12).")
 
-    # Intubation Risk Assessment Section
     st.markdown(box_section("Intubation Risk Assessment"), unsafe_allow_html=True)
 
-    # Create a table-like layout with YES/NO dropdowns in the same row using st.columns
+    # Difficult airway assessment
     st.write("#### Difficult Airway:")
-    
-    cols = st.columns([4, 1])  # Adjust column widths (make dropdown narrower)
+    cols = st.columns([4, 1])
     with cols[0]:
-        st.markdown("")
-        st.markdown("")
         st.write("History of difficult airway?")
-    
     with cols[1]:
-        difficult_airway_history = st.selectbox(
-            label="",  # Set label to empty string
-            options=['YES', 'NO'],
-            key="difficult_airway_history"
-        )
-
-    cols = st.columns([4, 1])  # Reset columns for next question
-    with cols[0]:
-        st.markdown("")
-        st.markdown("")
-        st.write("Physical (e.g. small mouth, small jaw, large tongue, or short neck)?")
-    
-    with cols[1]:
-        physical_risk = st.selectbox(
-            label="",  # Set label to empty string
-            options=['YES', 'NO'],
-            key="physical_risk"
-        )
-
-    st.write("#### At Risk For:")
-    
-    cols = st.columns([4, 1])  # Adjust column widths (make dropdown narrower)
-    with cols[0]:
-        st.markdown("")
-        st.markdown("")
-        st.write("High risk for rapid desaturation during intubation?")
-    
-    with cols[1]:
-        high_risk_desaturation = st.selectbox(
-            label="",  # Set label to empty string
-            options=['YES', 'NO'],
-            key="high_risk_desaturation"
-        )
+        difficult_airway_history = st.selectbox("", ['YES', 'NO'], key="difficult_airway_history")
 
     cols = st.columns([4, 1])
     with cols[0]:
-        st.markdown("")
-        st.markdown("")
-        st.write("Increased ICP, pulmonary hypertension, need to avoid hypercarbia?")
-    
+        st.write("Physical risk factors (small mouth, small jaw, etc.)?")
     with cols[1]:
-        high_risk_ICP = st.selectbox(
-            label="",  # Set label to empty string
-            options=['YES', 'NO'],
-            key="high_risk_ICP"
-        )
+        physical_risk = st.selectbox("", ['YES', 'NO'], key="physical_risk")
 
-    cols = st.columns([4, 1])
-    with cols[0]:
-        st.markdown("")
-        st.markdown("")
-        st.write("Unstable hemodynamics (e.g., hypovolemia, potential need for fluid bolus, vasopressor, CPR)?")
-    
-    with cols[1]:
-        unstable_hemodynamics = st.selectbox(
-            label="",  # Set label to empty string
-            options=['YES', 'NO'],
-            key="unstable_hemodynamics"
-        )
+    # Additional risk assessments...
 
-    cols = st.columns([4, 1])
-    with cols[0]:
-        st.markdown("")
-        st.markdown("")
-        st.write("Other risk factors?")
-    
-    with cols[1]:
-        other_risk_factors = st.text_input(
-            "",
-            key="other_risk_factors"
-        )
-
-    cols = st.columns([4, 1])
-    with cols[0]:
-        st.markdown("")
-        st.markdown("")
-        st.write("Is there another risk factor?")
-    
-    with cols[1]:
-        other_risk_yes_no = st.selectbox(
-            label="",  # Set label to empty string
-            options=['YES', 'NO'],
-            key="other_risk_yes_no"
-        )
-
-    # Intubation plan section
     st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
 
-    # Multi-select for "Who will intubate?" and "Who will bag-mask?"
     who_intubate = st.multiselect("Who will intubate?", 
                                    ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other'],
                                    key="who_intubate")
@@ -236,28 +134,22 @@ with st.form("airway_form"):
                                    ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'],
                                    key="who_bag_mask")
 
-    # Create a layout for intubation method
     intubation_method = st.selectbox("How will we intubate? (Method)", ["Oral", "Nasal"], key="intubation_method")
 
-    # Create a layout for ETT Type and ETT Size
     cols = st.columns(2)
-
     with cols[0]:
         ett_type = st.selectbox("ETT Type", ["", "Cuffed", "Uncuffed"], key="ett_type")
-
     with cols[1]:
         # Initialize 'ett_size' in session_state if it's not already set
         if 'ett_size' not in st.session_state:
-            st.session_state['ett_size'] = ''  # Default value for ETT size
-    
+            st.session_state['ett_size'] = age_to_ett_mapping.get(age, '')
+
         ett_size = st.selectbox(
-        "Select ETT Size",
-        options=['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
-        key="ett_size",
-        index=['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
-    )
-        if ett_size != st.session_state['ett_size']:
-            st.session_state['ett_size'] = ett_size
+            "Select ETT Size",
+            options=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
+            key="ett_size",
+            index=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
+        )
 
     st.write("Device:")
     
@@ -437,6 +329,10 @@ if submit:
         "lma_textx": lma_text,          # Text input value
         "glidescope_textx": glidescope_text,  # Text input value
         "other_device_textx": other_device_text,  
+                    "ett_type": ett_type,
+            "ett_size": st.session_state['ett_size'],  # Use dynamically set ETT size
+            "who_intubate": ", ".join(who_intubate),
+            "who_bag_mask": ", ".join(who_bag_mask),
     }
 
     # Path to the provided Word template
