@@ -659,10 +659,17 @@ elif st.session_state.section == 4:
         st.text_input("Please state an 'other' reason for the timing of intubation:", key="other_when_intubate")
         
     # Single Next and Previous Buttons
-    if st.button("Next", on_click=next_section):
-        pass
-    if st.button("Previous", on_click=prev_section):
-        pass
+    col1, col2 = st.columns(2)
+
+    # Add the 'Previous' button to the first column
+    with col1:
+        if st.button("Previous", on_click=prev_section):
+            pass
+    
+    # Add the 'Next' button to the second column
+    with col2:
+        if st.button("Next", on_click=next_section):
+            pass
 
 elif st.session_state.section == 5:
     st.title("Backup")
