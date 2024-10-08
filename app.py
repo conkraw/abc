@@ -91,12 +91,15 @@ with st.form("airway_form"):
 
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
-        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select")
+        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select", 
+                           on_change=lambda: st.session_state.update({'ett_size': age_to_ett_mapping.get(st.session_state['age_select'], '4.0')}))
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
         weight_str = st.text_input("Enter Patient Weight (Kilograms)", value="")
-
+        if weight_str and not weight_str.replace('.', '', 1).isdigit():
+            st.error("Please enter a valid number for the weight (e.g., 12.5 or 12).")
+            
     st.markdown(box_section("Intubation Risk Assessment"), unsafe_allow_html=True)
 
     # Update ETT size based on selected age
@@ -104,12 +107,12 @@ with st.form("airway_form"):
         st.session_state['ett_size'] = age_to_ett_mapping.get(age, '4.0')
 
     # Function to update ETT size
-    def update_ett_size():
-        if age:
-            st.session_state['ett_size'] = age_to_ett_mapping.get(age, '4.0')
+    #def update_ett_size():
+    #    if age:
+    #        st.session_state['ett_size'] = age_to_ett_mapping.get(age, '4.0')
 
-    st.session_state.age_select = age
-    update_ett_size()  # Call the function to update ETT size
+    #st.session_state.age_select = age
+    #update_ett_size()  # Call the function to update ETT size
 
     # Intubation plan
     ett_size = st.selectbox(
