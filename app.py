@@ -173,6 +173,10 @@ elif st.session_state.section == 1:
     
     st.session_state['ett_size'] = age_to_ett_mapping.get(selected_age, '')  # Update the session state with ETT size
 
+    if 'mac_details' not in st.session_state:
+        st.session_state['mac_details'] = ''  # Default value for ETT size
+    
+    st.session_state['mac_details'] = age_to_blade_mapping.get(selected_age, '')
     
     # Single Next and Previous Buttons
     if st.button("Next", on_click=next_section):
@@ -290,11 +294,7 @@ elif st.session_state.section == 3:
 
         ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
         selected_ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
-
-        # Save the selected ETT size in the session state
         st.session_state['ett_size'] = selected_ett_size
-
-        #st.selectbox("ETT Size", options=[st.session_state.ett_size], key="ett_size_display", disabled=False)  #
         
     st.write("Device:")
     
@@ -345,7 +345,15 @@ elif st.session_state.section == 3:
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
-        st.text_input("Mac Details:", key="mac_details", disabled=False)
+        #st.text_input("Mac Details:", key="mac_details", disabled=False)
+        ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
+        selected_ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
+        st.session_state['ett_size'] = selected_ett_size
+
+        mac_details = list(set(age_to_blade_mapping.values()))  # Get unique ETT sizes
+        selected_mac_details = st.selectbox("Mac Details", options=mac_sizes, key="mac_size_display", index=mac_sizes.index(st.session_state['mac_details']) if st.session_state['mac_details'] in mac_details else 0)
+        st.session_state['mac_details'] = selected_mac_details
+        
         st.text_input("Miller Details:", key="miller_details", disabled=False)
         st.text_input("Wis-Hipple Details:", key="wis_hipple_details", disabled=False)
     
