@@ -40,8 +40,15 @@ def load_age_to_ett_mapping(filename):
     mapping = {}
     with open(filename, 'r') as file:
         for line in file:
-            age, size = line.strip().split(': ')
-            mapping[age] = size
+            # Strip whitespace and skip empty lines
+            line = line.strip()
+            if line:  # Only process non-empty lines
+                parts = line.split(': ')
+                if len(parts) == 2:  # Ensure there are exactly two parts
+                    age, size = parts
+                    mapping[age] = size
+                else:
+                    print(f"Skipping invalid line: {line}")  # Optional: log the invalid line
     return mapping
     
 # Load the mapping (make sure the path is correct)
