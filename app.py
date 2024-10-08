@@ -201,7 +201,147 @@ elif st.session_state.section == 3:
     who_intubate = st.multiselect("Who will intubate?", 
                                    ['Resident', 'Fellow', 'NP', 'Attending'],
                                    key="who_intubate")
-    # Other inputs...
+    
+    who_bag_mask = st.multiselect("Who will bag-mask?", 
+                                   ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'],
+                                   key="who_bag_mask")
+
+    # Create a layout for intubation method
+    intubation_method = st.selectbox("How will we intubate? (Method)", ["","Oral", "Nasal"], key="intubation_method")
+
+    # Create a layout for ETT Type and ETT Size
+    cols = st.columns(2)
+
+    with cols[0]:
+        ett_type = st.selectbox("ETT Type", ["", "Cuffed", "Uncuffed"], key="ett_type")
+
+    with cols[1]:
+        # Initialize 'ett_size' in session_state if it's not already set
+        if 'ett_size' not in st.session_state:
+            st.session_state['ett_size'] = ''  # Default value for ETT size
+    
+        ett_size = st.selectbox(
+        "Select ETT Size",
+        options=['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
+        key="ett_size",
+        index=['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
+    )
+        if ett_size != st.session_state['ett_size']:
+            st.session_state['ett_size'] = ett_size
+
+    st.write("Device:")
+    
+    cols = st.columns(3)
+
+    # Column 1: Dropdowns for "X" or empty
+    with cols[0]:
+        # Dropdowns to choose if devices are selected or not (X = selected)
+        device_1_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_1")
+        device_2_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_2")
+        device_3_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_3")
+        device_4_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_4")
+    
+    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
+    with cols[1]:
+        # These text inputs will reset to their default value if changed and the user moves away
+        device_1_text = reset_input("Laryngoscope", key="laryngoscope_textx")
+        device_2_text = reset_input("Glidescope", key="glidescope_textx")
+        device_3_text = reset_input("LMA", key="lma_textx")
+        device_4_text = reset_input("Other Device", key="other_device_textx")
+    
+    # Column 3: Additional details for each device (uneditable placeholders)
+    with cols[2]:
+        # Text Inputs with uneditable placeholders (details of each device)
+        st.text_input("Laryngoscope details:", key="laryngoscope_details", disabled=False)
+        st.text_input("Glidescope details:", key="glidescope_details", disabled=False)
+        st.text_input("LMA details:", key="lma_details", disabled=False)
+        st.text_input("Other Device details:", key="other_device_details", disabled=False)
+
+    st.write("Blade:")
+    
+    cols = st.columns(3)
+
+    # Column 1: Dropdowns for "X" or empty
+    with cols[0]:
+        # Dropdowns to choose if devices are selected or not (X = selected)
+        blade_1_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_5")
+        blade_2_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_6")
+        blade_3_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_7")
+    
+    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
+    with cols[1]:
+        # These text inputs will reset to their default value if changed and the user moves away
+        blade_1_text = reset_input("Mac", key="macx")
+        blade_2_text = reset_input("Miller", key="millerx")
+        blade_3_text = reset_input("Wis-Hipple", key="wis_hipplex")
+    
+    # Column 3: Additional details for each device (uneditable placeholders)
+    with cols[2]:
+        # Text Inputs with uneditable placeholders (details of each device)
+        st.text_input("Mac Details:", key="mac_details", disabled=False)
+        st.text_input("Miller Details:", key="miller_details", disabled=False)
+        st.text_input("Wis-Hipple Details:", key="wis_hipple_details", disabled=False)
+    
+    st.write("Medications:")
+    
+    cols = st.columns(3)
+
+    # Column 1: Dropdowns for "X" or empty
+    with cols[0]:
+        # Dropdowns to choose if devices are selected or not (X = selected)
+        med_1_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_8")
+        med_2_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_9")
+        med_3_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_10")
+        med_4_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_11")
+        med_5_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_12")
+        med_6_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_13")
+        med_7_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_14")
+        med_8_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_15")
+    
+    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
+    with cols[1]:
+        # These text inputs will reset to their default value if changed and the user moves away
+        med_1_text = reset_input("Atropine", key="atropinex")
+        med_2_text = reset_input("Glycopyrrolate", key="glycox")
+        med_3_text = reset_input("Fentanyl", key="fentanylx")
+        med_4_text = reset_input("Midazolam", key="midazolamx")
+        med_5_text = reset_input("Ketamine", key="ketaminex")
+        med_6_text = reset_input("Propofol", key="propofolx")
+        med_7_text = reset_input("Rocuronium", key="rocx")
+        med_8_text = reset_input("Vecuronium", key="vecx")
+
+    # Column 3: Additional details for each device (uneditable placeholders)
+    with cols[2]:
+        # Text Inputs with uneditable placeholders (details of each device)
+        st.text_input("Atropine Dosage:", key="atropine_dosage", disabled=False)
+        st.text_input("Glycopyrrolate Dosage:", key="glyco_dosage", disabled=False)
+        st.text_input("Fentanyl Dosage:", key="fentanyl_dosage", disabled=False)
+        st.text_input("Midazolam Dosage:", key="midazolam_dosage", disabled=False)
+        st.text_input("Ketamine Dosage:", key="ketamine_dosage", disabled=False)
+        st.text_input("Propofol Dosage:", key="propofol_dosage", disabled=False)
+        st.text_input("Rocuronium Dosage:", key="roc_dosage", disabled=False)
+        st.text_input("Vecuronium Dosage:", key="vec_dosage", disabled=False)
+
+    st.write("Apneic Oxygenation:")
+    
+    cols = st.columns(3)
+
+    # Column 1: Dropdowns for "X" or empty
+    with cols[0]:
+        # Dropdowns to choose if devices are selected or not (X = selected)
+        ao_selection = st.selectbox("Select Use", options=["", "Yes", "No"], key="dropdown_16")
+    
+    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
+    with cols[1]:
+        # These text inputs will reset to their default value if changed and the user moves away
+        ao_text = reset_input("Apneic Oxygenation", key="aox")
+    
+    # Column 3: Additional details for each device (uneditable placeholders)
+    with cols[2]:
+        # Text Inputs with uneditable placeholders (details of each device)
+        st.text_input("Apneic Oxygenation Details:", key="ao_details", disabled=False)
+
+    other_planning = st.text_input("Other Intubation Planning Details:", key="other_planning")
 
     # Single Next and Previous Buttons
     if st.button("Next", on_click=next_section):
