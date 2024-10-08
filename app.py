@@ -191,18 +191,6 @@ elif st.session_state.section == 2:
     with cols[0]:
         st.markdown("")
         st.markdown("")
-        st.write("Other risk factors?")
-    
-    with cols[1]:
-        other_risk_factors = st.text_input(
-            "",
-            key="other_risk_factors"
-        )
-
-    cols = st.columns([4, 1])
-    with cols[0]:
-        st.markdown("")
-        st.markdown("")
         st.write("Is there another risk factor?")
     
     with cols[1]:
