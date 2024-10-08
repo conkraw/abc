@@ -49,7 +49,8 @@ def update_automatic_selections():
     selected_age = st.session_state.age_select
     if selected_age:
         st.session_state.ett_size = age_to_ett_mapping[selected_age]
-        st.session_state.blade_type = age_to_blade_mapping[selected_age]
+        st.session_state.mac_details = age_to_mac_mapping[selected_age]
+        st.session_state.miller_details = age_to_miller_mapping[selected_age]
         st.session_state.oxygenation = age_to_oxygenation_mapping[selected_age]
 
 def reset_input(default_value, key):
