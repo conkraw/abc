@@ -30,3 +30,15 @@ Newborn: 3.5
 16 year old: 7.0
 17 year old: 7.0
 18 year old: 7.0
+19 year old: 7.0
+20 year old: 7.0
+21 year old: 7.0
+22 year old: 7.0
+23 year old: 7.0
+24 year old: 7.0
+25 year old: 7.0
+26 year old: 7.0
+27 year old: 7.0
+28 year old: 7.0
+29 year old: 7.0
+30 year old: 7.0
