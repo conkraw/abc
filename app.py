@@ -123,7 +123,7 @@ elif st.session_state.section == 1:
         st.session_state['ett_size'] = ''  # Default value for ETT size
 
     # Display the ETT size as read-only
-    st.selectbox("ETT Size", options=[st.session_state.ett_size], key="ett_size_display", disabled=True)  #
+    
     
     # Single Next and Previous Buttons
     if st.button("Next", on_click=next_section):
@@ -251,6 +251,8 @@ elif st.session_state.section == 3:
         if ett_size != st.session_state['ett_size']:
             st.session_state['ett_size'] = ett_size
 
+        #st.selectbox("ETT Size", options=[st.session_state.ett_size], key="ett_size_display", disabled=True)  #
+        
     st.write("Device:")
     
     cols = st.columns(3)
