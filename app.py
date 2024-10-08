@@ -402,9 +402,9 @@ elif st.session_state.section == 5:
                                    ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other'],
                                    key="difficult_airway")
 
-    if st.button("Next", key="next_button_5"):
+    if st.button("Next", key="next_button_6"):
         next_section()
-    if st.button("Previous", key="prev_button_5"):
+    if st.button("Previous", key="prev_button_6"):
         prev_section()
         
 # Display navigation
