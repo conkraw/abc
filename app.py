@@ -101,29 +101,33 @@ if st.session_state.section == 0:
 # Patient Information Section
 elif st.session_state.section == 1:
     st.title("Patient Information")
+
     cols = st.columns(2)
+
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date")
-        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select")
+        
+        # Select Patient Age
+        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select", on_change=update_ett_size)
+
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time(), key="time")
         weight_str = st.text_input("Enter Patient Weight (Kilograms)", value="", key="weight")
+        
         if weight_str and not weight_str.replace('.', '', 1).isdigit():
             st.error("Please enter a valid number for the weight (e.g., 12.5 or 12).")
-     # Set the ETT size based on the selected age
+
+    # Initialize 'ett_size' in session state if it's not already set
     if 'ett_size' not in st.session_state:
         st.session_state['ett_size'] = ''  # Default value for ETT size
-        
-    ett_size = st.selectbox(
-        "Select ETT Size",
-        options=[''] + age_to_ett_mapping.get(age, []),  # Update options based on age
-        key="ett_size",
-        index=[''] + age_to_ett_mapping.get(age, []).index(st.session_state['ett_size']) if st.session_state['ett_size'] in age_to_ett_mapping.get(age, []) else 0
-    )
 
-    if ett_size != st.session_state['ett_size']:
-        st.session_state['ett_size'] = ett_size
-        
+    # Get the ETT size based on selected age
+    selected_age = st.session_state.age_select
+    ett_size = age_to_ett_mapping.get(selected_age, '')  # Get ETT size for selected age
+
+    # Show ETT size as a read-only text input or selectbox
+    st.selectbox("ETT Size", options=[ett_size], key="ett_size", disabled=True)  #
+    
     # Single Next and Previous Buttons
     if st.button("Next", on_click=next_section):
         pass
