@@ -436,14 +436,14 @@ elif st.session_state.section == 3:
                                    key="who_intubate")
 
     if 'Other' in who_intubate:
-        st.text_input("Please specify the person who will intubate:", key="other_intubate")
+        st.text_input("Please specify the 'other' clinician who will intubate:", key="other_intubate")
     
     who_bag_mask = st.multiselect("Who will bag-mask?", 
                                    ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'],
                                    key="who_bag_mask")
 
     if 'Other' in who_bag_mask:
-        st.text_input("Please specify the person who will intubate:", key="other_bag_mask")
+        st.text_input("Please specify the 'other' clinician who will intubate:", key="other_bag_mask")
         
     # Create a layout for intubation method
     intubation_method = st.selectbox("How will we intubate? (Method)", ["","Oral", "Nasal"], key="intubation_method")
