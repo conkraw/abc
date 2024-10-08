@@ -430,7 +430,7 @@ elif st.session_state.section == 2:
             st.text_input("Please specify the other risk:", key="other_risk_text_input")
 
     # Single Next and Previous Buttons
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     # Add the 'Previous' button to the first column
     with col1:
@@ -438,7 +438,7 @@ elif st.session_state.section == 2:
             pass
     
     # Add the 'Next' button to the second column
-    with col2:
+    with col3:
         if st.button("Next", on_click=next_section):
             pass
     
@@ -629,7 +629,7 @@ elif st.session_state.section == 3:
     other_planning = st.text_input("Other Intubation Planning Details:", key="other_planning")
 
     # Single Next and Previous Buttons
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     # Add the 'Previous' button to the first column
     with col1:
@@ -637,7 +637,7 @@ elif st.session_state.section == 3:
             pass
     
     # Add the 'Next' button to the second column
-    with col2:
+    with col3:
         if st.button("Next", on_click=next_section):
             pass
 
