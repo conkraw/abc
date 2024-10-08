@@ -37,10 +37,14 @@ def initialize_firebase():
 db = initialize_firebase()
 
 def load_age_to_ett_mapping(filename):
+    mapping = {}
     with open(filename, 'r') as file:
-        content = file.read()
-    return eval(content)
+        for line in file:
+            age, size = line.strip().split(': ')
+            mapping[age] = size
+    return mapping
 
+# Load the mapping (make sure the path is correct)
 age_to_ett_mapping = load_age_to_ett_mapping('age_to_ett_mapping.txt')
 
 def fill_word_template(template_path, data):
