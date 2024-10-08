@@ -329,11 +329,18 @@ elif st.session_state.section == 1:
         st.session_state['vec_dose'] = weight_to_vec_mapping.get(selected_weight, '')
     
     # Single Next and Previous Buttons
-    if st.button("Next", on_click=next_section):
-        pass
-    if st.button("Previous", on_click=prev_section):
-        pass
+    col1, col2 = st.columns(2)
 
+    # Add the 'Previous' button to the first column
+    with col1:
+        if st.button("Previous", on_click=prev_section):
+            pass
+    
+    # Add the 'Next' button to the second column
+    with col2:
+        if st.button("Next", on_click=next_section):
+            pass
+            
 # Intubation Risk Assessment Section
 elif st.session_state.section == 2:
     st.title("Intubation Risk Assessment")
@@ -422,12 +429,19 @@ elif st.session_state.section == 2:
         if other_risk_yes_no == 'YES':
             st.text_input("Please specify the other risk:", key="other_risk_text_input")
 
-    
-    if st.button("Next", on_click=next_section):
-        pass
-    if st.button("Previous", on_click=prev_section):
-        pass
+    # Single Next and Previous Buttons
+    col1, col2 = st.columns(2)
 
+    # Add the 'Previous' button to the first column
+    with col1:
+        if st.button("Previous", on_click=prev_section):
+            pass
+    
+    # Add the 'Next' button to the second column
+    with col2:
+        if st.button("Next", on_click=next_section):
+            pass
+    
 # Intubation Plan Section
 elif st.session_state.section == 3:
     st.title("Intubation Plan")
@@ -615,10 +629,17 @@ elif st.session_state.section == 3:
     other_planning = st.text_input("Other Intubation Planning Details:", key="other_planning")
 
     # Single Next and Previous Buttons
-    if st.button("Next", on_click=next_section):
-        pass
-    if st.button("Previous", on_click=prev_section):
-        pass
+    col1, col2 = st.columns(2)
+
+    # Add the 'Previous' button to the first column
+    with col1:
+        if st.button("Previous", on_click=prev_section):
+            pass
+    
+    # Add the 'Next' button to the second column
+    with col2:
+        if st.button("Next", on_click=next_section):
+            pass
 
 # Timing of Intubation Section
 elif st.session_state.section == 4:
