@@ -381,23 +381,6 @@ elif st.session_state.section == 3:
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
         st.text_input("Apneic Oxygenation Details:", key="ao_details", disabled=False)
-        
-        age_options = [""] + list(ao_to_details_mapping.keys())
-        #selected_age = st.selectbox("Select Patient Age", age_options, key="ao_age_select")
-        
-        if 'ao_details' not in st.session_state:
-            st.session_state['ao_details'] = ''
-            
-        # Text input for Apneic Oxygenation Details
-        ao_details = list(set(ao_to_details_mapping.values())) 
-        st.session_state['ao_details'] = ao_to_details_mapping.get(selected_age, '') 
-        
-        selected_ao_detail = st.selectbox(
-        "Apneic Oxygenation Details:", 
-        options=ao_details, 
-        key="ao_detail_display", 
-        index=ao_details.index(st.session_state['ao_details']) if st.session_state['ao_details'] in ao_details else 0)
-        st.session_state['ao_details'] = selected_ao_detail
 
     other_planning = st.text_input("Other Intubation Planning Details:", key="other_planning")
 
