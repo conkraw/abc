@@ -374,7 +374,9 @@ elif st.session_state.section == 5:
                                    ['Attending', 'Anesthesia', 'ENT', 'Fellow', 'Other'],
                                    key="advance_airway_provider")
 
-    # You can add other inputs here...
+    advance_airway_provider = st.multiselect("Difficult Airway Procedure:", 
+                                   ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other'],
+                                   key="difficult_airway")
 
     # Single Submit and Previous Buttons
     if st.button("Submit", key="submit_button"):
