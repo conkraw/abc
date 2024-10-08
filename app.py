@@ -376,13 +376,12 @@ elif st.session_state.section == 3:
                                    ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other'],
                                    key="difficult_airway")
 
-    if st.button("Submit", key="submit_button"):
-        save_data()
-        st.success("Form submitted successfully!")
+    if st.button("Next", key="next_button_2"):
+        next_section()
     if st.button("Previous", key="prev_button_2"):
         prev_section()
         
 # Display navigation
-if st.session_state.section > 0:
-    st.button("Previous", key="prev_button", on_click=prev_section)
+#if st.session_state.section > 0:
+#    st.button("Previous", key="prev_button", on_click=prev_section)
 
