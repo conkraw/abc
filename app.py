@@ -283,7 +283,7 @@ elif st.session_state.section == 1:
     if 'atropine_dose' not in st.session_state:
         st.session_state['atropine_dose'] = ''  # Default value for Atropine
 
-    selected_weight = st.session_state.weight_select
+    #selected_weight = st.session_state.weight_select
     
     if 'glycopyrrolate_dose' not in st.session_state:
         st.session_state['glycopyrrolate_dose'] = ''  # Default value for Glycopyrrolate
