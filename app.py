@@ -200,13 +200,6 @@ elif st.session_state.section == 2:
             key="other_risk_yes_no"
         )
 
-    if st.button("Submit", key="submit_button"):
-        save_data()
-        st.success("Form submitted successfully!")
-    if st.button("Previous", key="prev_button_2"):
-        prev_section()
-
-
 elif st.session_state.section == 3:
     st.title("Intubation Plan")
 
@@ -382,7 +375,13 @@ elif st.session_state.section == 3:
     advance_airway_provider = st.multiselect("Difficult Airway Procedure:", 
                                    ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other'],
                                    key="difficult_airway")
-    
+
+    if st.button("Submit", key="submit_button"):
+        save_data()
+        st.success("Form submitted successfully!")
+    if st.button("Previous", key="prev_button_2"):
+        prev_section()
+        
 # Display navigation
 if st.session_state.section > 0:
     st.button("Previous", key="prev_button", on_click=prev_section)
