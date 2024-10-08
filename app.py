@@ -19,13 +19,22 @@ age_to_ett_mapping = {
 }
 
 # Define other mappings based on age
-age_to_blade_mapping = {
-    "0-1": "Miller Blade #0",
-    "2-5": "Miller Blade #1",
-    "6-12": "Mac Blade #2",
-    "13-18": "Mac Blade #3",
-    "18+": "Mac Blade #4"
+age_to_mac_mapping = {
+    "0-1": "mac Blade #0",
+    "2-5": "mac Blade #1",
+    "6-12": "mac Blade #2",
+    "13-18": "mac Blade #3",
+    "18+": "mac Blade #4"
 }
+
+age_to_miller_mapping = {
+    "0-1": "miller Blade #0",
+    "2-5": "miller Blade #1",
+    "6-12": "miller Blade #2",
+    "13-18": "miller Blade #3",
+    "18+": "miller Blade #4"
+}
+
 
 age_to_oxygenation_mapping = {
     "0-1": "5 L/min",
@@ -152,10 +161,7 @@ elif st.session_state.section == 1:
 
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date")
-        
         # Select Patient Age
-        #age_options = [""] + list(age_to_ett_mapping.keys())
-        #age = st.selectbox("Select Patient Age", age_options, key="age_select", on_change=update_ett_size)
         age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),key="age_select",on_change=update_automatic_selections)  # Automatically update other settings)
 
     with cols[1]:
@@ -176,7 +182,12 @@ elif st.session_state.section == 1:
     if 'mac_details' not in st.session_state:
         st.session_state['mac_details'] = ''  # Default value for ETT size
     
-    st.session_state['mac_details'] = age_to_blade_mapping.get(selected_age, '')
+    st.session_state['mac_details'] = age_to_mac_mapping.get(selected_age, '')
+
+    if 'miller_details' not in st.session_state:
+        st.session_state['miller_details'] = ''  # Default value for ETT size
+    
+    st.session_state['miller_details'] = age_to_miller_mapping.get(selected_age, '')
     
     # Single Next and Previous Buttons
     if st.button("Next", on_click=next_section):
@@ -346,17 +357,21 @@ elif st.session_state.section == 3:
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
         #st.text_input("Mac Details:", key="mac_details", disabled=False)
+        #st.text_input("Miller Details:", key="miller_details", disabled=False)
+        #st.text_input("Wis-Hipple Details:", key="wis_hipple_details", disabled=False)
         
         #ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
         #selected_ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
         #st.session_state['ett_size'] = selected_ett_size
 
-        mac_details = list(set(age_to_blade_mapping.values()))  # Get unique ETT sizes
+        mac_details = list(set(age_to_mac_mapping.values()))  # Get unique ETT sizes
         selected_mac_details = st.selectbox("Mac Details", options=mac_details, key="mac_size_display", index=mac_details.index(st.session_state['mac_details']) if st.session_state['mac_details'] in mac_details else 0)
         st.session_state['mac_details'] = selected_mac_details
-        
-        st.text_input("Miller Details:", key="miller_details", disabled=False)
-        st.text_input("Wis-Hipple Details:", key="wis_hipple_details", disabled=False)
+
+        miller_details = list(set(age_to_miller_mapping.values()))  # Get unique ETT sizes
+        selected_miller_details = st.selectbox("Miller Details", options=miller_details, key="miller_size_display", index=miller_details.index(st.session_state['miller_details']) if st.session_state['miller_details'] in miller_details else 0)
+        st.session_state['miller_details'] = selected_miller_details
+
     
     st.write("Medications:")
     
