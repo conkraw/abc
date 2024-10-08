@@ -352,7 +352,7 @@ elif st.session_state.section == 3:
         #st.session_state['ett_size'] = selected_ett_size
 
         mac_details = list(set(age_to_blade_mapping.values()))  # Get unique ETT sizes
-        selected_mac_details = st.selectbox("Mac Details", options=mac_sizes, key="mac_size_display", index=mac_details.index(st.session_state['mac_details']) if st.session_state['mac_details'] in mac_details else 0)
+        selected_mac_details = st.selectbox("Mac Details", options=mac_details, key="mac_size_display", index=mac_details.index(st.session_state['mac_details']) if st.session_state['mac_details'] in mac_details else 0)
         st.session_state['mac_details'] = selected_mac_details
         
         st.text_input("Miller Details:", key="miller_details", disabled=False)
