@@ -3,6 +3,7 @@ from docx import Document
 from io import BytesIO
 from datetime import datetime
 
+# Mapping of age to ETT size
 age_to_ett_mapping = {
     "": "",
     "Premature": "3.0",
@@ -58,14 +59,6 @@ def box_section(title):
     </div>
     """
 
-def reset_input(default_value, key):
-    if key not in st.session_state:
-        st.session_state[key] = default_value
-    current_value = st.text_input("", key=key)
-    if current_value != st.session_state[key]:
-        st.session_state[key] = current_value
-    return current_value
-
 st.title("Airway Bundle Checklist")
 
 # Create a form
@@ -78,6 +71,7 @@ with st.form("airway_form"):
     )
 
     completed_by = st.text_input("Who completed the form? (Name or Role)")
+    
     room_number = st.selectbox(
         "Select Room Number",
         ['4102', '4104', '4106', '4108', '4110', '4112', '4114', '4116', '4201', '4203', '4209', 
@@ -91,20 +85,23 @@ with st.form("airway_form"):
 
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
-        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select", 
-                           on_change=lambda: st.session_state.update({'ett_size': age_to_ett_mapping.get(st.session_state['age_select'], '4.0')}))
+        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select")
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
         weight_str = st.text_input("Enter Patient Weight (Kilograms)", value="")
         if weight_str and not weight_str.replace('.', '', 1).isdigit():
             st.error("Please enter a valid number for the weight (e.g., 12.5 or 12).")
-            
-    st.markdown(box_section("Intubation Risk Assessment"), unsafe_allow_html=True)
-
+    
     # Update ETT size based on selected age
     if 'ett_size' not in st.session_state:
         st.session_state['ett_size'] = age_to_ett_mapping.get(age, '4.0')
+    
+    # Change ETT size when age changes
+    if st.session_state.age_select:
+        st.session_state['ett_size'] = age_to_ett_mapping.get(st.session_state.age_select, '4.0')
+
+    st.markdown(box_section("Intubation Risk Assessment"), unsafe_allow_html=True)
 
     # Intubation plan
     ett_size = st.selectbox(
@@ -118,18 +115,26 @@ with st.form("airway_form"):
     submit = st.form_submit_button("Submit")
 
     # Process submission
+    if submit:
+        # Store form data into a dictionary to replace placeholders
+        form_data = {
+            "front_page_completed": front_page_completed,
+            "completed_by": completed_by,
+            "room_number": room_number,
+            "date": date.strftime("%Y-%m-%d"),
+            "time": time.strftime("%H:%M"),
+            "weight": weight_str,
+            "age": st.session_state.age_select,
+            "ett_size": st.session_state['ett_size']
+        }
 
-if submit:
-    # Store form data into a dictionary to replace placeholders
-    form_data = {}
+        # Path to the provided Word template
+        template_path = 'AirwayBundleChecklist_7-2020.docx'
 
-    # Path to the provided Word template
-    template_path = 'AirwayBundleChecklist_7-2020.docx'
+        # Fill the Word template with form data
+        filled_doc = fill_word_template(template_path, form_data)
 
-    # Fill the Word template with form data
-    filled_doc = fill_word_template(template_path, form_data)
-
-    # Provide download link for the filled Word document
-    st.success("Form submitted successfully!")
-    st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+        # Provide download link for the filled Word document
+        st.success("Form submitted successfully!")
+        st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
 
