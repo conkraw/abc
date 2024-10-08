@@ -383,7 +383,7 @@ elif st.session_state.section == 3:
         st.text_input("Apneic Oxygenation Details:", key="ao_details", disabled=False)
         
         age_options = [""] + list(ao_to_details_mapping.keys())
-        selected_age = st.selectbox("Select Patient Age", age_options, key="ao_age_select")
+        #selected_age = st.selectbox("Select Patient Age", age_options, key="ao_age_select")
         
         if 'ao_details' not in st.session_state:
             st.session_state['ao_details'] = ''
