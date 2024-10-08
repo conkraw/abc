@@ -375,7 +375,7 @@ elif st.session_state.section == 3:
     if st.button("Previous", key="prev_button_3"):
         prev_section()
         
-elif st.session_state.section == 3:
+elif st.session_state.section == 4:
     st.title("Timing of Intubation")
 
     # Multi-select for timing of intubation
