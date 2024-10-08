@@ -392,7 +392,7 @@ elif st.session_state.section == 3:
         ao_details = list(set(ao_to_details_mapping.values())) 
         st.session_state['ao_details'] = ao_to_details_mapping.get(selected_age, '') 
         
-       selected_ao_detail = st.selectbox(
+        selected_ao_detail = st.selectbox(
         "Apneic Oxygenation Details:", 
         options=ao_details, 
         key="ao_detail_display", 
