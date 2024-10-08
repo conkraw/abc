@@ -61,10 +61,6 @@ def box_section(title):
 
 st.title("Airway Bundle Checklist")
 
-# Initialize session state for ETT size if not already done
-if 'ett_size' not in st.session_state:
-    st.session_state['ett_size'] = ''
-
 # Create a form
 with st.form("airway_form"):
     st.markdown(box_section("Front Page Completed"), unsafe_allow_html=True)
@@ -92,6 +88,19 @@ with st.form("airway_form"):
         
         # Select patient age
         age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select")
+        
+        # Update ETT size based on selected age
+        ett_size = age_to_ett_mapping.get(age, '4.0')
+        st.session_state['ett_size'] = ett_size  # Update ETT size in session state
+
+        # Show the ETT size based on age
+        st.selectbox(
+            "ETT Size (Auto-Selected Based on Age)",
+            options=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
+            index=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(ett_size),
+            key="ett_size",
+            disabled=True  # Disable the ETT size selectbox
+        )
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
@@ -100,16 +109,6 @@ with st.form("airway_form"):
             st.error("Please enter a valid number for the weight (e.g., 12.5 or 12).")
     
     st.markdown(box_section("Intubation Risk Assessment"), unsafe_allow_html=True)
-
-    # ETT Size selectbox, default to the current session state
-    st.session_state['ett_size'] = age_to_ett_mapping.get(st.session_state.get('age_select', ''), '4.0')
-    
-    ett_size = st.selectbox(
-        "Select ETT Size",
-        options=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
-        key="ett_size",
-        index=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
-    )
 
     # Submit button
     submit = st.form_submit_button("Submit")
@@ -125,7 +124,7 @@ with st.form("airway_form"):
             "time": time.strftime("%H:%M"),
             "weight": weight_str,
             "age": age,
-            "ett_size": st.session_state['ett_size']
+            "ett_size": ett_size
         }
 
         # Path to the provided Word template
@@ -137,4 +136,5 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+
 
