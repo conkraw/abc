@@ -41,6 +41,10 @@ def load_age_to_ett_mapping(filename):
     # Evaluate the content to get the dictionary
     return eval(content)
 
+def load_age_to_ett_mapping(filename):
+    with open(filename, 'r') as file:
+        return json.load(file)
+
 # Load the mapping
 age_to_ett_mapping = load_age_to_ett_mapping('age_to_ett_mapping.txt')
 
