@@ -72,6 +72,10 @@ def save_data():
     data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
     db.collection('airway_checklists').add(data)
 
+def update_ett_size():
+    selected_age = st.session_state.age_select  # Access selected age from session state
+    st.session_state['ett_size'] = ''  # Reset ETT size when age changes
+
 # Front Page Completed Section
 if st.session_state.section == 0:
     st.title("Front Page Completed")
@@ -122,8 +126,6 @@ elif st.session_state.section == 1:
     if st.button("Previous", on_click=prev_section):
         pass
         
-def update_ett_size(selected_age):
-    st.session_state['ett_size'] = ''  # Reset ETT size when age changes
 
 # Intubation Risk Assessment Section
 elif st.session_state.section == 2:
