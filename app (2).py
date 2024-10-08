@@ -111,20 +111,8 @@ with st.form("airway_form"):
 
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
-
-        # Replace number input with dropdown for age
-        #age_options = ["",
-        #    "Premature", "Newborn", "1 month old", "2 month old", "3 month old", "4 month old", "5 month old", 
-        #    "6 month old", "7 month old", "8 month old", "9 month old", "10 month old", "11 month old", 
-        #    "12 month old", "1 year old", "2 year old", "3 year old", "4 year old", "5 year old", 
-        #    "6 year old", "7 year old", "8 year old", "9 year old", "10 year old", "11 year old", 
-        #    "12 year old", "13 year old", "14 year old", "15 year old", "16 year old", "17 year old", 
-        #    "18 year old"
-        #]
-        #age = st.selectbox("Select Patient Age", age_options, key="age")
         age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select")  # <-- Use age_to_ett_mapping instead!
 
-        
         if st.session_state.get("age_select"):
             update_ett_size_based_on_age()
         
