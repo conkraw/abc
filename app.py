@@ -58,7 +58,6 @@ def load_ao_mapping(filename='ao.txt'):
     mapping = {}
     with open(filename, 'r') as file:
         for line in file:
-            # Assumes format: Age: "Detail"
             if ': ' in line:
                 age, detail = line.strip().split(': ')
                 mapping[age] = detail.strip('"')
@@ -132,7 +131,7 @@ elif st.session_state.section == 1:
         # Select Patient Age
         age_options = [""] + list(age_to_ett_mapping.keys())
         age = st.selectbox("Select Patient Age", age_options, key="age_select", on_change=update_ett_size)
-
+    
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time(), key="time")
         weight_str = st.text_input("Enter Patient Weight (Kilograms)", value="", key="weight")
@@ -382,17 +381,23 @@ elif st.session_state.section == 3:
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
         st.text_input("Apneic Oxygenation Details:", key="ao_details", disabled=False)
+        
         age_options = [""] + list(ao_to_details_mapping.keys())
-        selected_age = st.selectbox("Select Patient Age", age_options, key="ao_age_select", on_change=update_ao_details)
+        selected_age = st.selectbox("Select Patient Age", age_options, key="ao_age_select")
+        
         if 'ao_details' not in st.session_state:
             st.session_state['ao_details'] = ''
-        st.session_state['ao_details'] = ao_to_details_mapping.get(selected_age, '')  # Update the session state
-
+            
         # Text input for Apneic Oxygenation Details
-        ao_detail_options = list(set(ao_to_details_mapping.values()))  # Get unique details
-        selected_ao_detail = st.selectbox("Apneic Oxygenation Details:", options=ao_detail_options, key="ao_detail_display", index=ao_detail_options.index(st.session_state['ao_details']) if st.session_state['ao_details'] in ao_detail_options else 0)
-
-        # Save the selected Apneic Oxygenation detail in the session state
+        ao_details = list(set(ao_to_details_mapping.values())) 
+        st.session_state['ao_details'] = ao_to_details_mapping.get(selected_age, '') 
+        
+       selected_ao_detail = st.selectbox(
+        "Apneic Oxygenation Details:", 
+        options=ao_details, 
+        key="ao_detail_display", 
+        index=ao_details.index(st.session_state['ao_details']) if st.session_state['ao_details'] in ao_details else 0
+    )
         st.session_state['ao_details'] = selected_ao_detail
 
     other_planning = st.text_input("Other Intubation Planning Details:", key="other_planning")
