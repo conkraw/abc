@@ -207,8 +207,8 @@ elif st.session_state.section == 2:
         prev_section()
 
 
-# Intubation plan section
-    st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
+elif st.session_state.section == 3:
+    st.title("Intubation Plan")
 
     # Multi-select for "Who will intubate?" and "Who will bag-mask?"
     who_intubate = st.multiselect("Who will intubate?", 
