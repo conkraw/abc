@@ -76,9 +76,10 @@ def save_data():
     data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
     db.collection('airway_checklists').add(data)
 
+
 def update_ett_size():
-    selected_age = st.session_state.age_select  # Access selected age from session state
-    st.session_state['ett_size'] = ''  # Reset ETT size when age changes
+    selected_age = st.session_state.age_select
+    st.session_state.ett_size = age_to_ett_mapping.get(selected_age, '')
 
 # Front Page Completed Section
 if st.session_state.section == 0:
@@ -121,19 +122,14 @@ elif st.session_state.section == 1:
     if 'ett_size' not in st.session_state:
         st.session_state['ett_size'] = ''  # Default value for ETT size
 
-    # Get the ETT size based on selected age
-    selected_age = st.session_state.age_select
-    ett_size = age_to_ett_mapping.get(selected_age, '')  # Get ETT size for selected age
-
-    # Show ETT size as a read-only text input or selectbox
-    st.selectbox("ETT Size", options=[ett_size], key="ett_size", disabled=True)  #
+    # Display the ETT size as read-only
+    st.selectbox("ETT Size", options=[st.session_state.ett_size], key="ett_size_display", disabled=True)  #
     
     # Single Next and Previous Buttons
     if st.button("Next", on_click=next_section):
         pass
     if st.button("Previous", on_click=prev_section):
         pass
-        
 
 # Intubation Risk Assessment Section
 elif st.session_state.section == 2:
