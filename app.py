@@ -690,10 +690,10 @@ elif st.session_state.section == 5:
         st.text_input("Please state an 'other' protocol for Difficult Airway Protocol Initiation:", key="other_advance_airway_procedure")
 
 # Create two columns: one for the 'Previous' button and one for the 'Submit' button
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     
     # Add the 'Submit' button to the second column
-    with col2:
+    with col3:
         if st.button("Submit", key="submit_button"):
             # Prepare the final data for submission
             final_data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
