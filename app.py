@@ -505,6 +505,7 @@ elif st.session_state.section == 3:
         blade_1_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_5")
         blade_2_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_6")
         blade_3_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_7")
+        
     
     # Column 2: Editable text inputs (reverts to the original value after the user moves away)
     with cols[1]:
@@ -630,6 +631,9 @@ elif st.session_state.section == 4:
         key="when_intubate"
     )
 
+    if 'Hypoxemia Refractory to CPAP' in when_intubate:
+        st.text_input("With a SPO2 Level Less than:", key="other_intubate")
+        
     # Single Next and Previous Buttons
     if st.button("Next", on_click=next_section):
         pass
