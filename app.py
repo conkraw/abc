@@ -74,12 +74,13 @@ if 'form_data' not in st.session_state:
 
 # Navigation function
 def next_section():
-    st.session_state.section += 1
-    save_data()
+    if st.session_state.section < 5:  # Assuming there are 6 sections (0-5)
+        st.session_state.section += 1
+        save_data()
 
 def prev_section():
-    st.session_state.section -= 1
-
+    if st.session_state.section > 0:
+        st.session_state.section -= 1
 def save_data():
     # Save current section data to Firestore
     data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
@@ -104,7 +105,7 @@ if st.session_state.section == 0:
         key="room_number"
     )
     
-    if st.button("Next", key="next_button_0"):
+    if st.button("Next", on_click=next_section, key="next_button_0"):
         next_section()
 
 # Patient Information Section
@@ -124,9 +125,9 @@ elif st.session_state.section == 1:
         if weight_str and not weight_str.replace('.', '', 1).isdigit():
             st.error("Please enter a valid number for the weight (e.g., 12.5 or 12).")
 
-    if st.button("Next", key="next_button_1"):
+    if st.button("Next", on_click=next_section, key="next_button_1"):
         next_section()
-    if st.button("Previous", key="prev_button_1"):
+    if st.button("Previous", on_click=prev_section, key="prev_button_1"):
         prev_section()
 
 # Intubation Risk Assessment Section
@@ -214,10 +215,10 @@ elif st.session_state.section == 2:
             options=['','YES', 'NO'],
             key="other_risk_yes_no"
         )
-    if st.button("Next", key="next_button_2"):
+    if st.button("Next", on_click=next_section, key="next_button_2"):
         next_section()
       
-    if st.button("Previous", key="prev_button_2"):
+    if st.button("Previous", on_click=prev_section, key="prev_button_2"):
         prev_section()
         
 elif st.session_state.section == 3:
@@ -387,9 +388,9 @@ elif st.session_state.section == 4:
         key="when_intubate"
     )
 
-if st.button("Next", key="next_button_5"):
+if st.button("Next", on_click=next_section, key="next_button_5"):
         next_section()
-if st.button("Previous", key="prev_button_5"):
+if st.button("Previous", on_click=prev_section, key="prev_button_5"):
         prev_section()
 
 elif st.session_state.section == 5:
@@ -402,9 +403,9 @@ elif st.session_state.section == 5:
                                    ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other'],
                                    key="difficult_airway")
 
-    if st.button("Next", key="next_button_6"):
+    if st.button("Next", on_click=next_section, key="next_button_6"):
         next_section()
-    if st.button("Previous", key="prev_button_6"):
+    if st.button("Previous", on_click=prev_section, key="prev_button_6"):
         prev_section()
         
 # Display navigation
