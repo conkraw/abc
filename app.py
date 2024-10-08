@@ -386,13 +386,14 @@ elif st.session_state.section == 4:
          'Loss of Airway Protection', 'Other'],
         key="when_intubate"
     )
-    
-    # Check if "Hypoxemia Refractory to CPAP" is selected
-    if "Hypoxemia Refractory to CPAP" in when_intubate:
-        spo2_input = st.text_input("SPO2 Less Than?:", key="spo2_input")
-    
-    
-    st.markdown(box_section("Backup"), unsafe_allow_html=True)
+
+if st.button("Next", key="next_button_5"):
+        next_section()
+if st.button("Previous", key="prev_button_5"):
+        prev_section()
+
+elif st.session_state.section == 5:
+    st.title("Backup")
     advance_airway_provider = st.multiselect("Advance Airway Provider:", 
                                    ['Attending','Anesthesia','ENT','Fellow','Other'],
                                    key="advance_airway_provider")
@@ -401,9 +402,9 @@ elif st.session_state.section == 4:
                                    ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other'],
                                    key="difficult_airway")
 
-    if st.button("Next", key="next_button_4"):
+    if st.button("Next", key="next_button_5"):
         next_section()
-    if st.button("Previous", key="prev_button_4"):
+    if st.button("Previous", key="prev_button_5"):
         prev_section()
         
 # Display navigation
