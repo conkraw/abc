@@ -91,8 +91,7 @@ with st.form("airway_form"):
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
         
         # Select patient age
-        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select",
-                           on_change=lambda: st.session_state.update({'ett_size': age_to_ett_mapping.get(st.session_state['age_select'], '4.0')}))
+        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select")
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
@@ -102,7 +101,9 @@ with st.form("airway_form"):
     
     st.markdown(box_section("Intubation Risk Assessment"), unsafe_allow_html=True)
 
-    # Intubation plan
+    # ETT Size selectbox, default to the current session state
+    st.session_state['ett_size'] = age_to_ett_mapping.get(st.session_state.get('age_select', ''), '4.0')
+    
     ett_size = st.selectbox(
         "Select ETT Size",
         options=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
