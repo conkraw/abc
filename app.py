@@ -96,16 +96,15 @@ with st.form("airway_form"):
     
     st.markdown(box_section("Intubation Risk Assessment"), unsafe_allow_html=True)
 
-    # Initialize ETT size in session state if it doesn't exist
-    if 'ett_size' not in st.session_state:
-        st.session_state['ett_size'] = age_to_ett_mapping.get(age, '4.0')
+    # Get ETT size based on the selected age
+    ett_size = age_to_ett_mapping.get(age, '4.0')
 
     # Intubation plan
     ett_size = st.selectbox(
         "Select ETT Size",
         options=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
         key="ett_size",
-        index=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
+        index=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(ett_size)
     )
 
     # Submit button
@@ -113,9 +112,6 @@ with st.form("airway_form"):
 
     # Process submission
     if submit:
-        # Update ETT size based on selected age before processing the form
-        st.session_state['ett_size'] = age_to_ett_mapping.get(st.session_state.age_select, '4.0')
-
         # Store form data into a dictionary to replace placeholders
         form_data = {
             "front_page_completed": front_page_completed,
@@ -124,8 +120,8 @@ with st.form("airway_form"):
             "date": date.strftime("%Y-%m-%d"),
             "time": time.strftime("%H:%M"),
             "weight": weight_str,
-            "age": st.session_state.age_select,
-            "ett_size": st.session_state['ett_size']
+            "age": age,
+            "ett_size": ett_size
         }
 
         # Path to the provided Word template
