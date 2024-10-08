@@ -233,7 +233,7 @@ elif st.session_state.section == 3:
                                    key="who_bag_mask")
 
     # Create a layout for intubation method
-    intubation_method = st.selectbox("How will we intubate? (Method)", ["Oral", "Nasal"], key="intubation_method")
+    intubation_method = st.selectbox("How will we intubate? (Method)", ["","Oral", "Nasal"], key="intubation_method")
 
     # Create a layout for ETT Type and ETT Size
     cols = st.columns(2)
