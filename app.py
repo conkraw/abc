@@ -199,8 +199,9 @@ elif st.session_state.section == 2:
             options=['','YES', 'NO'],
             key="other_risk_yes_no"
         )
-  if st.button("Next", key="next_button_2"):
+    if st.button("Next", key="next_button_2"):
         next_section()
+      
     if st.button("Previous", key="prev_button_2"):
         prev_section()
         
