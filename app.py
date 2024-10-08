@@ -356,15 +356,6 @@ elif st.session_state.section == 3:
     
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[2]:
-        # Text Inputs with uneditable placeholders (details of each device)
-        #st.text_input("Mac Details:", key="mac_details", disabled=False)
-        #st.text_input("Miller Details:", key="miller_details", disabled=False)
-        #st.text_input("Wis-Hipple Details:", key="wis_hipple_details", disabled=False)
-        
-        #ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
-        #selected_ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
-        #st.session_state['ett_size'] = selected_ett_size
-
         mac_details = list(set(age_to_mac_mapping.values()))  # Get unique ETT sizes
         selected_mac_details = st.selectbox("Mac Details", options=mac_details, key="mac_size_display", index=mac_details.index(st.session_state['mac_details']) if st.session_state['mac_details'] in mac_details else 0)
         st.session_state['mac_details'] = selected_mac_details
@@ -373,7 +364,8 @@ elif st.session_state.section == 3:
         selected_miller_details = st.selectbox("Miller Details", options=miller_details, key="miller_size_display", index=miller_details.index(st.session_state['miller_details']) if st.session_state['miller_details'] in miller_details else 0)
         st.session_state['miller_details'] = selected_miller_details
 
-    
+        st.text_input("Wis-Hipple Details:", key="wis_hipple_details", disabled=False)
+        
     st.write("Medications:")
     
     cols = st.columns(3)
