@@ -102,12 +102,28 @@ elif st.session_state.section == 1:
         weight_str = st.text_input("Enter Patient Weight (Kilograms)", value="", key="weight")
         if weight_str and not weight_str.replace('.', '', 1).isdigit():
             st.error("Please enter a valid number for the weight (e.g., 12.5 or 12).")
+     # Set the ETT size based on the selected age
+    if 'ett_size' not in st.session_state:
+        st.session_state['ett_size'] = ''  # Default value for ETT size
+        
+    ett_size = st.selectbox(
+        "Select ETT Size",
+        options=[''] + age_to_ett_mapping.get(age, []),  # Update options based on age
+        key="ett_size",
+        index=[''] + age_to_ett_mapping.get(age, []).index(st.session_state['ett_size']) if st.session_state['ett_size'] in age_to_ett_mapping.get(age, []) else 0
+    )
 
+    if ett_size != st.session_state['ett_size']:
+        st.session_state['ett_size'] = ett_size
+        
     # Single Next and Previous Buttons
     if st.button("Next", on_click=next_section):
         pass
     if st.button("Previous", on_click=prev_section):
         pass
+        
+def update_ett_size(selected_age):
+    st.session_state['ett_size'] = ''  # Reset ETT size when age changes
 
 # Intubation Risk Assessment Section
 elif st.session_state.section == 2:
