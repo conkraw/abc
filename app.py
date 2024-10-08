@@ -249,19 +249,19 @@ elif st.session_state.section == 3:
 
     with cols[1]:
         # Initialize 'ett_size' in session_state if it's not already set
-        if 'ett_size' not in st.session_state:
-            st.session_state['ett_size'] = ''  # Default value for ETT size
+        #if 'ett_size' not in st.session_state:
+            #st.session_state['ett_size'] = ''  # Default value for ETT size
     
-        ett_size = st.selectbox(
-        "Select ETT Size",
-        options=['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
-        key="ett_size",
-        index=['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
-    )
-        if ett_size != st.session_state['ett_size']:
-            st.session_state['ett_size'] = ett_size
+        #ett_size = st.selectbox(
+        #"Select ETT Size",
+        #options=['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
+        #key="ett_size",
+        #index=['','3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
+    #)
+        #if ett_size != st.session_state['ett_size']:
+            #st.session_state['ett_size'] = ett_size
 
-        #st.selectbox("ETT Size", options=[st.session_state.ett_size], key="ett_size_display", disabled=True)  #
+        st.selectbox("ETT Size", options=[st.session_state.ett_size], key="ett_size_display", disabled=True)  #
         
     st.write("Device:")
     
