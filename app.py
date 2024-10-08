@@ -10,41 +10,15 @@ cred = credentials.Certificate("path/to/your/firebase/credentials.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-# Mapping of age to ETT size
-age_to_ett_mapping = {
-    "": "",
-    "Premature": "3.0",
-    "Newborn": "3.5",
-    "1 month old": "3.5",
-    "2 month old": "3.5",
-    "3 month old": "3.5",
-    "4 month old": "3.5",
-    "5 month old": "3.5",
-    "6 month old": "4.0",
-    "7 month old": "4.0",
-    "8 month old": "4.0",
-    "9 month old": "4.0",
-    "10 month old": "4.0",
-    "11 month old": "4.0",
-    "1 year old": "4.5",
-    "2 year old": "4.5",
-    "3 year old": "4.5",
-    "4 year old": "5.0",
-    "5 year old": "5.0",
-    "6 year old": "5.0",
-    "7 year old": "6.0",
-    "8 year old": "6.0",
-    "9 year old": "6.0",
-    "10 year old": "6.0",
-    "11 year old": "6.5",
-    "12 year old": "6.5",
-    "13 year old": "6.5",
-    "14 year old": "6.5",
-    "15 year old": "6.5",
-    "16 year old": "7.0",
-    "17 year old": "7.0",
-    "18 year old": "7.0"
-}
+# Function to load the age to ETT mapping from the text file
+def load_age_to_ett_mapping(filename):
+    with open(filename, 'r') as file:
+        content = file.read()
+    # Evaluate the content to get the dictionary
+    return eval(content)
+
+# Load the mapping
+age_to_ett_mapping = load_age_to_ett_mapping('age_to_ett_mapping.txt')
 
 # Function to fill the Word template with form inputs
 def fill_word_template(template_path, data):
