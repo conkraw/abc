@@ -82,6 +82,13 @@ if st.session_state.section == 0:
     
     completed_by = st.text_input("Who completed the form? (Name or Role)", key="completed_by")
 
+    room_number = st.selectbox(
+        "Select Room Number",
+        ['4102', '4104', '4106', '4108', '4110', '4112', '4114', '4116', '4201', '4203', '4209', 
+         '4211', '4213', '4215', '4217', '4219', '4221', '4223'],
+        key="room_number"
+    )
+    
     if st.button("Next", key="next_button_0"):
         next_section()
 
