@@ -86,12 +86,7 @@ with st.form("airway_form"):
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
         
-        # Update ETT size based on selected age
-        def update_ett_size():
-            if st.session_state.age_select:
-                st.session_state['ett_size'] = age_to_ett_mapping.get(st.session_state.age_select, '4.0')
-
-        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select", on_change=update_ett_size)
+        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select")
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
@@ -118,6 +113,9 @@ with st.form("airway_form"):
 
     # Process submission
     if submit:
+        # Update ETT size based on selected age before processing the form
+        st.session_state['ett_size'] = age_to_ett_mapping.get(st.session_state.age_select, '4.0')
+
         # Store form data into a dictionary to replace placeholders
         form_data = {
             "front_page_completed": front_page_completed,
@@ -139,4 +137,5 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
+
 
