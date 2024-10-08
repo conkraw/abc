@@ -7,6 +7,42 @@ from firebase_admin import credentials, firestore
 import os
 import json
 
+import streamlit as st
+
+# Define mappings for ETT size, Blade type, and Apneic Oxygenation based on patient age
+age_to_ett_mapping = {
+    "0-1": "3.0",
+    "2-5": "3.5",
+    "6-12": "4.0",
+    "13-18": "4.5",
+    "18+": "5.0"
+}
+
+# Define other mappings based on age
+age_to_blade_mapping = {
+    "0-1": "Miller Blade #0",
+    "2-5": "Miller Blade #1",
+    "6-12": "Mac Blade #2",
+    "13-18": "Mac Blade #3",
+    "18+": "Mac Blade #4"
+}
+
+age_to_oxygenation_mapping = {
+    "0-1": "5 L/min",
+    "2-5": "5 L/min",
+    "6-12": "6 L/min",
+    "13-18": "6 L/min",
+    "18+": "8 L/min"
+}
+
+# Define a function to automatically update the other settings when the age is selected
+def update_automatic_selections():
+    selected_age = st.session_state.age_select
+    if selected_age:
+        st.session_state.ett_size = age_to_ett_mapping[selected_age]
+        st.session_state.blade_type = age_to_blade_mapping[selected_age]
+        st.session_state.oxygenation = age_to_oxygenation_mapping[selected_age]
+
 def reset_input(default_value, key):
     if key not in st.session_state:
         st.session_state[key] = default_value
@@ -52,18 +88,7 @@ def load_age_to_ett_mapping(filename):
     return mapping
     
 # Load the mapping (make sure the path is correct)
-age_to_ett_mapping = load_age_to_ett_mapping('age_to_ett_mapping.txt')
-
-def load_ao_mapping(filename='ao.txt'):
-    mapping = {}
-    with open(filename, 'r') as file:
-        for line in file:
-            if ': ' in line:
-                age, detail = line.strip().split(': ')
-                mapping[age] = detail.strip('"')
-    return mapping
-
-ao_to_details_mapping = load_ao_mapping()
+#age_to_ett_mapping = load_age_to_ett_mapping('age_to_ett_mapping.txt')
 
 def update_ett_size():
     selected_age = st.session_state.age_select
@@ -129,9 +154,10 @@ elif st.session_state.section == 1:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date")
         
         # Select Patient Age
-        age_options = [""] + list(age_to_ett_mapping.keys())
-        age = st.selectbox("Select Patient Age", age_options, key="age_select", on_change=update_ett_size)
-    
+        #age_options = [""] + list(age_to_ett_mapping.keys())
+        #age = st.selectbox("Select Patient Age", age_options, key="age_select", on_change=update_ett_size)
+        age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),key="age_select",on_change=update_automatic_selections  # Automatically update other settings)
+
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time(), key="time")
         weight_str = st.text_input("Enter Patient Weight (Kilograms)", value="", key="weight")
