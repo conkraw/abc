@@ -118,83 +118,67 @@ elif st.session_state.section == 1:
 elif st.session_state.section == 2:
     st.title("Intubation Risk Assessment")
 
-    # Intubation Risk Assessment Section
-    st.markdown(box_section("Intubation Risk Assessment"), unsafe_allow_html=True)
-
-    # Create a table-like layout with YES/NO dropdowns in the same row using st.columns
     st.write("#### Difficult Airway:")
     
-    cols = st.columns([4, 1])  # Adjust column widths (make dropdown narrower)
+    cols = st.columns([4, 1])
     with cols[0]:
-        st.markdown("")
-        st.markdown("")
         st.write("History of difficult airway?")
     
     with cols[1]:
         difficult_airway_history = st.selectbox(
-            label="",  # Set label to empty string
+            label="",  
             options=['YES', 'NO'],
             key="difficult_airway_history"
         )
 
-    cols = st.columns([4, 1])  # Reset columns for next question
+    cols = st.columns([4, 1])
     with cols[0]:
-        st.markdown("")
-        st.markdown("")
         st.write("Physical (e.g. small mouth, small jaw, large tongue, or short neck)?")
     
     with cols[1]:
         physical_risk = st.selectbox(
-            label="",  # Set label to empty string
+            label="",  
             options=['YES', 'NO'],
             key="physical_risk"
         )
 
     st.write("#### At Risk For:")
     
-    cols = st.columns([4, 1])  # Adjust column widths (make dropdown narrower)
+    cols = st.columns([4, 1])
     with cols[0]:
-        st.markdown("")
-        st.markdown("")
         st.write("High risk for rapid desaturation during intubation?")
     
     with cols[1]:
         high_risk_desaturation = st.selectbox(
-            label="",  # Set label to empty string
+            label="",  
             options=['YES', 'NO'],
             key="high_risk_desaturation"
         )
 
     cols = st.columns([4, 1])
     with cols[0]:
-        st.markdown("")
-        st.markdown("")
         st.write("Increased ICP, pulmonary hypertension, need to avoid hypercarbia?")
     
     with cols[1]:
         high_risk_ICP = st.selectbox(
-            label="",  # Set label to empty string
+            label="",  
             options=['YES', 'NO'],
             key="high_risk_ICP"
         )
 
     cols = st.columns([4, 1])
     with cols[0]:
-        st.markdown("")
-        st.markdown("")
         st.write("Unstable hemodynamics (e.g., hypovolemia, potential need for fluid bolus, vasopressor, CPR)?")
     
     with cols[1]:
         unstable_hemodynamics = st.selectbox(
-            label="",  # Set label to empty string
+            label="",  
             options=['YES', 'NO'],
             key="unstable_hemodynamics"
         )
 
     cols = st.columns([4, 1])
     with cols[0]:
-        st.markdown("")
-        st.markdown("")
         st.write("Other risk factors?")
     
     with cols[1]:
@@ -205,17 +189,14 @@ elif st.session_state.section == 2:
 
     cols = st.columns([4, 1])
     with cols[0]:
-        st.markdown("")
-        st.markdown("")
         st.write("Is there another risk factor?")
     
     with cols[1]:
         other_risk_yes_no = st.selectbox(
-            label="",  # Set label to empty string
+            label="",  
             options=['YES', 'NO'],
             key="other_risk_yes_no"
         )
-
 
     if st.button("Submit", key="submit_button"):
         save_data()
