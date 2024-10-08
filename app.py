@@ -408,7 +408,7 @@ elif st.session_state.section == 2:
     with cols[0]:
         st.markdown("")
         st.markdown("")
-        st.write("Is there another risk factor?")
+        st.write("Other Risk Factors?")
     
     # Second column for the selectbox
     with cols[1]:
