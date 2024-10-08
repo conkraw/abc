@@ -61,6 +61,10 @@ def box_section(title):
 
 st.title("Airway Bundle Checklist")
 
+# Initialize session state for ETT size if not already done
+if 'ett_size' not in st.session_state:
+    st.session_state['ett_size'] = ''
+
 # Create a form
 with st.form("airway_form"):
     st.markdown(box_section("Front Page Completed"), unsafe_allow_html=True)
@@ -86,7 +90,9 @@ with st.form("airway_form"):
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
         
-        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select")
+        # Select patient age
+        age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select",
+                           on_change=lambda: st.session_state.update({'ett_size': age_to_ett_mapping.get(st.session_state['age_select'], '4.0')}))
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
@@ -96,15 +102,12 @@ with st.form("airway_form"):
     
     st.markdown(box_section("Intubation Risk Assessment"), unsafe_allow_html=True)
 
-    # Get ETT size based on the selected age
-    ett_size = age_to_ett_mapping.get(age, '4.0')
-
     # Intubation plan
     ett_size = st.selectbox(
         "Select ETT Size",
         options=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
         key="ett_size",
-        index=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(ett_size)
+        index=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
     )
 
     # Submit button
@@ -121,7 +124,7 @@ with st.form("airway_form"):
             "time": time.strftime("%H:%M"),
             "weight": weight_str,
             "age": age,
-            "ett_size": ett_size
+            "ett_size": st.session_state['ett_size']
         }
 
         # Path to the provided Word template
@@ -133,5 +136,4 @@ with st.form("airway_form"):
         # Provide download link for the filled Word document
         st.success("Form submitted successfully!")
         st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
-
 
