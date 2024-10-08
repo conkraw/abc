@@ -68,11 +68,6 @@ def reset_input(default_value, key):
 
 st.title("Airway Bundle Checklist")
 
-def update_ett_size_based_on_age():
-    selected_age = st.session_state.get("age_select")
-    if selected_age:
-        st.session_state['ett_size'] = age_to_ett_mapping.get(selected_age, '4.0')
-
 # Create a form
 with st.form("airway_form"):
     st.markdown(box_section("Front Page Completed"), unsafe_allow_html=True)
@@ -83,7 +78,6 @@ with st.form("airway_form"):
     )
 
     completed_by = st.text_input("Who completed the form? (Name or Role)")
-
     room_number = st.selectbox(
         "Select Room Number",
         ['4102', '4104', '4106', '4108', '4110', '4112', '4114', '4116', '4201', '4203', '4209', 
@@ -98,59 +92,32 @@ with st.form("airway_form"):
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today())
         age = st.selectbox("Select Patient Age", list(age_to_ett_mapping.keys()), key="age_select")
-        update_ett_size_based_on_age()  # Update ETT size based on selected age
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time())
         weight_str = st.text_input("Enter Patient Weight (Kilograms)", value="")
-        if weight_str and not weight_str.replace('.', '', 1).isdigit():
-            st.error("Please enter a valid number for the weight (e.g., 12.5 or 12).")
 
     st.markdown(box_section("Intubation Risk Assessment"), unsafe_allow_html=True)
 
-    # Difficult airway assessment
-    st.write("#### Difficult Airway:")
-    cols = st.columns([4, 1])
-    with cols[0]:
-        st.write("History of difficult airway?")
-    with cols[1]:
-        difficult_airway_history = st.selectbox("", ['YES', 'NO'], key="difficult_airway_history")
+    # Update ETT size based on selected age
+    if 'ett_size' not in st.session_state:
+        st.session_state['ett_size'] = age_to_ett_mapping.get(age, '4.0')
 
-    cols = st.columns([4, 1])
-    with cols[0]:
-        st.write("Physical risk factors (small mouth, small jaw, etc.)?")
-    with cols[1]:
-        physical_risk = st.selectbox("", ['YES', 'NO'], key="physical_risk")
+    # Function to update ETT size
+    def update_ett_size():
+        if age:
+            st.session_state['ett_size'] = age_to_ett_mapping.get(age, '4.0')
 
-    # Additional risk assessments...
+    st.session_state.age_select = age
+    update_ett_size()  # Call the function to update ETT size
 
-    st.markdown(box_section("Intubation Plan"), unsafe_allow_html=True)
-
-    who_intubate = st.multiselect("Who will intubate?", 
-                                   ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other'],
-                                   key="who_intubate")
-
-    who_bag_mask = st.multiselect("Who will bag-mask?", 
-                                   ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'],
-                                   key="who_bag_mask")
-
-    intubation_method = st.selectbox("How will we intubate? (Method)", ["Oral", "Nasal"], key="intubation_method")
-
-    cols = st.columns(2)
-    with cols[0]:
-        ett_type = st.selectbox("ETT Type", ["", "Cuffed", "Uncuffed"], key="ett_type")
-    with cols[1]:
-        # Initialize 'ett_size' in session_state if it's not already set
-        if 'ett_size' not in st.session_state:
-            st.session_state['ett_size'] = age_to_ett_mapping.get(age, '')
-
-        ett_size = st.selectbox(
-            "Select ETT Size",
-            options=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
-            key="ett_size",
-            index=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
-        )
-
+    # Intubation plan
+    ett_size = st.selectbox(
+        "Select ETT Size",
+        options=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'],
+        key="ett_size",
+        index=['', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0'].index(st.session_state['ett_size'])
+    )
     st.write("Device:")
     
     cols = st.columns(3)
@@ -305,7 +272,6 @@ if submit:
         "ett_type": ett_type,
         "who_intubate": ", ".join(who_intubate),
         "who_bag_mask": ", ".join(who_bag_mask),
-        "ett_size": ett_size,
         "intubation_timing": intubation_timing,
         "front_page_completed": front_page_completed,
         "completed_by": completed_by,
@@ -331,8 +297,6 @@ if submit:
         "other_device_textx": other_device_text,  
                     "ett_type": ett_type,
             "ett_size": st.session_state['ett_size'],  # Use dynamically set ETT size
-            "who_intubate": ", ".join(who_intubate),
-            "who_bag_mask": ", ".join(who_bag_mask),
     }
 
     # Path to the provided Word template
