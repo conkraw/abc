@@ -116,23 +116,12 @@ elif st.session_state.section == 2:
     
     cols = st.columns([4, 1])
     with cols[0]:
+        st.markdown("")
+        st.markdown("")
         st.write("History of difficult airway?")
     with cols[1]:
         difficult_airway_history = st.selectbox("", options=['', 'YES', 'NO'], key="difficult_airway_history")
 
-    # Other risk assessment questions...
-
-    # Single Next and Previous Buttons
-    if st.button("Next", on_click=next_section):
-        pass
-    if st.button("Previous", on_click=prev_section):
-        pass
-        with cols[1]:
-        difficult_airway_history = st.selectbox(
-            label="",  
-            options=['','YES', 'NO'],
-            key="difficult_airway_history"
-        )
 
     cols = st.columns([4, 1])
     with cols[0]:
@@ -200,6 +189,12 @@ elif st.session_state.section == 2:
             options=['','YES', 'NO'],
             key="other_risk_yes_no"
         )
+        # Single Next and Previous Buttons
+    if st.button("Next", on_click=next_section):
+        pass
+    if st.button("Previous", on_click=prev_section):
+        pass
+
 # Intubation Plan Section
 elif st.session_state.section == 3:
     st.title("Intubation Plan")
