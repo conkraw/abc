@@ -106,14 +106,6 @@ with st.form("airway_form"):
     if 'ett_size' not in st.session_state:
         st.session_state['ett_size'] = age_to_ett_mapping.get(age, '4.0')
 
-    # Function to update ETT size
-    #def update_ett_size():
-    #    if age:
-    #        st.session_state['ett_size'] = age_to_ett_mapping.get(age, '4.0')
-
-    #st.session_state.age_select = age
-    #update_ett_size()  # Call the function to update ETT size
-
     # Intubation plan
     ett_size = st.selectbox(
         "Select ETT Size",
@@ -308,15 +300,6 @@ if submit:
     # Fill the Word template with form data
     filled_doc = fill_word_template(template_path, form_data)
 
-    # Now you can save, display, or process the filled_doc
-
-
-    # Path to the provided Word template
-    template_path = 'AirwayBundleChecklist_7-2020.docx'
-
-    # Fill the Word template with form data
-    filled_doc = fill_word_template(template_path, form_data)
-        
     # Provide download link for the filled Word document
     st.success("Form submitted successfully!")
     st.download_button("Download Word Document", data=filled_doc, file_name="Filled_Airway_Bundle_Checklist.docx")
