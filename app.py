@@ -18,6 +18,22 @@ age_to_ett_mapping = {
     "18+": "5.0"
 }
 
+age_to_lma_mapping = {
+    "0-1": "LMA #0",
+    "2-5": "LMA #1",
+    "6-12": "LMA #2",
+    "13-18": "LMA #3",
+    "18+": "LMA #4"
+}
+
+age_to_glide_mapping = {
+    "0-1": "Glidescope #0",
+    "2-5": "Glidescope #1",
+    "6-12": "Glidescope #2",
+    "13-18": "Glidescope #3",
+    "18+": "Glidescope #4"
+}
+
 # Define other mappings based on age
 age_to_mac_mapping = {
     "0-1": "mac Blade #0",
@@ -33,6 +49,71 @@ age_to_miller_mapping = {
     "6-12": "miller Blade #2",
     "13-18": "miller Blade #3",
     "18+": "miller Blade #4"
+}
+
+weight_to_atropine_mapping = {
+    "1 kg": "a1 mg",
+    "2 kg": "a2 mg",
+    "3 kg": "a3 mg",
+    "4 kg": "a4 mg",
+    "5 kg": "a5 mg"
+}
+
+weight_to_glycopyrrolate_mapping = {
+    "1 kg": "g1 mcg",
+    "2 kg": "g2 mcg",
+    "3 kg": "g3 mcg",
+    "4 kg": "g4 mcg",
+    "5 kg": "g5 mcg"
+}
+
+weight_to_fentanyl_mapping = {
+    "1 kg": "f1 mcg",
+    "2 kg": "f2 mcg",
+    "3 kg": "f3 mcg",
+    "4 kg": "f4 mcg",
+    "5 kg": "f5 mcg"
+}
+
+
+weight_to_midaz_mapping = {
+    "1 kg": "m1 mcg",
+    "2 kg": "m2 mcg",
+    "3 kg": "m3 mcg",
+    "4 kg": "m4 mcg",
+    "5 kg": "m5 mcg"
+}
+
+weight_to_ketamine_mapping = {
+    "1 kg": "k1 mcg",
+    "2 kg": "k2 mcg",
+    "3 kg": "k3 mcg",
+    "4 kg": "k4 mcg",
+    "5 kg": "k5 mcg"
+}
+
+weight_to_propo_mapping = {
+    "1 kg": "p1 mcg",
+    "2 kg": "p2 mcg",
+    "3 kg": "p3 mcg",
+    "4 kg": "p4 mcg",
+    "5 kg": "p5 mcg"
+}
+
+weight_to_roc_mapping = {
+    "1 kg": "r1 mcg",
+    "2 kg": "r2 mcg",
+    "3 kg": "r3 mcg",
+    "4 kg": "r4 mcg",
+    "5 kg": "r5 mcg"
+}
+
+weight_to_vec_mapping = {
+    "1 kg": "v1 mcg",
+    "2 kg": "v2 mcg",
+    "3 kg": "v3 mcg",
+    "4 kg": "v4 mcg",
+    "5 kg": "v5 mcg"
 }
 
 
