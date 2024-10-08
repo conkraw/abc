@@ -542,18 +542,37 @@ elif st.session_state.section == 3:
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
-        #st.text_input("Atropine Dosage:", key="atropine_dosage", disabled=False)
         atropine_doses = list(set(weight_to_atropine_mapping.values()))  # Get unique Atropine doses
         selected_atropine_dose = st.selectbox("Atropine Dose:", options=atropine_doses, key="atropine_dose_display",index=atropine_doses.index(st.session_state['atropine_dose']) if st.session_state['atropine_dose'] in atropine_doses else 0)
         st.session_state['atropine_dose'] = selected_atropine_dose
+        
+        glycopyrrolate_doses = list(set(weight_to_glycopyrrolate_mapping.values()))  # Get unique Glycopyrrolate doses
+        selected_glycopyrrolate_dose = st.selectbox("Glycopyrrolate Dose:",options=glycopyrrolate_doses, key="glycopyrrolate_dose_display",index=glycopyrrolate_doses.index(st.session_state['glycopyrrolate_dose']) if st.session_state['glycopyrrolate_dose'] in glycopyrrolate_doses else 0)
+        st.session_state['glycopyrrolate_dose'] = selected_glycopyrrolate_dose
 
-        st.text_input("Glycopyrrolate Dosage:", key="glyco_dosage", disabled=False)
-        st.text_input("Fentanyl Dosage:", key="fentanyl_dosage", disabled=False)
-        st.text_input("Midazolam Dosage:", key="midazolam_dosage", disabled=False)
-        st.text_input("Ketamine Dosage:", key="ketamine_dosage", disabled=False)
-        st.text_input("Propofol Dosage:", key="propofol_dosage", disabled=False)
-        st.text_input("Rocuronium Dosage:", key="roc_dosage", disabled=False)
-        st.text_input("Vecuronium Dosage:", key="vec_dosage", disabled=False)
+        fentanyl_doses = list(set(weight_to_fentanyl_mapping.values()))  # Get unique Fentanyl doses
+        selected_fentanyl_dose = st.selectbox("Fentanyl Dose:", options=fentanyl_doses, key="fentanyl_dose_display",index=fentanyl_doses.index(st.session_state['fentanyl_dose']) if st.session_state['fentanyl_dose'] in fentanyl_doses else 0)
+        st.session_state['fentanyl_dose'] = selected_fentanyl_dose
+        
+        midazolam_doses = list(set(weight_to_midaz_mapping.values()))  # Get unique Midazolam doses
+        selected_midazolam_dose = st.selectbox("Midazolam Dose:", options=midazolam_doses, key="midazolam_dose_display",index=midazolam_doses.index(st.session_state['midazolam_dose']) if st.session_state['midazolam_dose'] in midazolam_doses else 0)
+        st.session_state['midazolam_dose'] = selected_midazolam_dose
+        
+        ketamine_doses = list(set(weight_to_ketamine_mapping.values()))  # Get unique Ketamine doses
+        selected_ketamine_dose = st.selectbox("Ketamine Dose:", options=ketamine_doses, key="ketamine_dose_display",index=ketamine_doses.index(st.session_state['ketamine_dose']) if st.session_state['ketamine_dose'] in ketamine_doses else 0)
+        st.session_state['ketamine_dose'] = selected_ketamine_dose
+        
+        propofol_doses = list(set(weight_to_propo_mapping.values()))  # Get unique Propofol doses
+        selected_propofol_dose = st.selectbox("Propofol Dose:", options=propofol_doses, key="propofol_dose_display",index=propofol_doses.index(st.session_state['propofol_dose']) if st.session_state['propofol_dose'] in propofol_doses else 0)
+        st.session_state['propofol_dose'] = selected_propofol_dose
+        
+        roc_doses = list(set(weight_to_roc_mapping.values()))  # Get unique Rocuronium doses
+        selected_roc_dose = st.selectbox("Rocuronium Dose:", options=roc_doses, key="roc_dose_display",index=roc_doses.index(st.session_state['roc_dose']) if st.session_state['roc_dose'] in roc_doses else 0)
+        st.session_state['roc_dose'] = selected_roc_dose
+        
+        vec_doses = list(set(weight_to_vec_mapping.values()))  # Get unique Vecuronium doses
+        selected_vec_dose = st.selectbox("Vecuronium Dose:", options=vec_doses, key="vec_dose_display",index=vec_doses.index(st.session_state['vec_dose']) if st.session_state['vec_dose'] in vec_doses else 0)
+        st.session_state['vec_dose'] = selected_vec_dose
 
     st.write("Apneic Oxygenation:")
     
