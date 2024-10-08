@@ -131,9 +131,11 @@ elif st.session_state.section == 1:
     # Initialize 'ett_size' in session state if it's not already set
     if 'ett_size' not in st.session_state:
         st.session_state['ett_size'] = ''  # Default value for ETT size
+    
     selected_age = st.session_state.age_select
-    ett_size = age_to_ett_mapping.get(selected_age, '') 
-    ett_sizes = list(set(age_to_ett_mapping.values())) 
+    
+    st.session_state['ett_size'] = age_to_ett_mapping.get(selected_age, '')  # Update the session state with ETT size
+
     
     # Single Next and Previous Buttons
     if st.button("Next", on_click=next_section):
@@ -249,7 +251,10 @@ elif st.session_state.section == 3:
 
     with cols[1]:
 
-        selected_ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(ett_size) if ett_size in ett_sizes else 0)
+        ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
+        selected_ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
+
+        # Save the selected ETT size in the session state
         st.session_state['ett_size'] = selected_ett_size
 
         #st.selectbox("ETT Size", options=[st.session_state.ett_size], key="ett_size_display", disabled=False)  #
