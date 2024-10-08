@@ -369,9 +369,14 @@ elif st.session_state.section == 3:
 
     other_planning = st.text_input("Other Intubation Planning Details:", key="other_planning")
     
-
-    # Your existing markdown for the section
-    st.markdown(box_section("Timing of Intubation"), unsafe_allow_html=True)
+    if st.button("Next", key="next_button_3"):
+        next_section()
+      
+    if st.button("Previous", key="prev_button_3"):
+        prev_section()
+        
+elif st.session_state.section == 3:
+    st.title("Timing of Intubation")
 
     # Multi-select for timing of intubation
     when_intubate = st.multiselect(
@@ -396,9 +401,9 @@ elif st.session_state.section == 3:
                                    ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other'],
                                    key="difficult_airway")
 
-    if st.button("Next", key="next_button_3"):
+    if st.button("Next", key="next_button_4"):
         next_section()
-    if st.button("Previous", key="prev_button_3"):
+    if st.button("Previous", key="prev_button_4"):
         prev_section()
         
 # Display navigation
