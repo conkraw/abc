@@ -3,29 +3,34 @@ from docx import Document
 import os
 
 # Function to replace placeholders in the template
-def create_word_doc(template_path, date_input):
+def create_word_doc(template_path, name, time):
     doc = Document(template_path)
-    
+
+    # Replace placeholders in paragraphs
     for paragraph in doc.paragraphs:
-        if '{{date}}' in paragraph.text:
-            paragraph.text = paragraph.text.replace('{{date}}', date_input)
-    
-    doc_file = 'airway_bundle_form.docx'
+        if 'NamePlaceholder' in paragraph.text:
+            paragraph.text = paragraph.text.replace('date', name)
+        if 'AgePlaceholder' in paragraph.text:
+            paragraph.text = paragraph.text.replace('time', time)
+
+    # Save the modified document
+    doc_file = 'airway_bundle.docx'
     doc.save(doc_file)
     return doc_file
 
 # Streamlit app
 st.title("Fill in Template Document")
 
-# User input
-date_input = st.text_input("Enter a date (e.g., 2024-10-09)")
+# User inputs
+date = st.text_input("Enter your date")
+time = st.text_input("Enter your time")
 
 if st.button("Submit"):
-    if date_input:
+    if name and age:
         # Path to your template file
-        template_path = 'airway_bundle.docx'  # Change this to the path of your template
+        template_path = 'airway_bundle_form.docx'  # Adjust this to your template's path
         
-        doc_file = create_word_doc(template_path, date_input)
+        doc_file = create_word_doc(template_path, date,time)
         
         with open(doc_file, 'rb') as f:
             st.download_button(
@@ -36,4 +41,4 @@ if st.button("Submit"):
             )
         os.remove(doc_file)  # Clean up the file after download
     else:
-        st.warning("Please enter a valid date.")
+        st.warning("Please fill in all fields.")
