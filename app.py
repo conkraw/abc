@@ -52,7 +52,7 @@ time = st.text_input("Enter your time")
 option = st.selectbox("Select an option", ["Select an option", "On Admission", "During Rounds", "After Rounds", "Just Prior to Intubation", "After Intubation", "Prior to Extubation"])
 
 if st.button("Submit"):
-    if date and time:
+    if date and time and option != "Select an option":
         # Path to your template file
         template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
 
@@ -60,9 +60,10 @@ if st.button("Submit"):
         st.write(f"Using template: {template_path}")
         st.write(f"Date entered: {date}")
         st.write(f"Time entered: {time}")
+        st.write(f"Selected option: {option}")
 
         try:
-            doc_file = create_word_doc(template_path, date, time)
+            doc_file = create_word_doc(template_path, date, time, option)
             st.success("Document created successfully!")
             
             with open(doc_file, 'rb') as f:
