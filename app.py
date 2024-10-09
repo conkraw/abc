@@ -46,7 +46,7 @@ time = st.text_input("Enter your time")
 if st.button("Submit"):
     if date and time:
         # Path to your template file
-        template_path = 'airway_bundle.docx'  # Ensure this is the correct path
+        template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
 
         # Debugging output
         st.write(f"Using template: {template_path}")
