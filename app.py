@@ -16,19 +16,24 @@ if uploaded_file is not None and custom_text:
     reader = PdfReader(uploaded_file)
     writer = PdfWriter()
 
-    field_name = 'date'  # Change this to your PDF's text input field name
+    field_name = 'textFieldName'  # Change this to your PDF's text input field name
 
     # Loop through all pages to fill the specified text field
     for page in reader.pages:
         writer.add_page(page)  # Add the page to the writer
         if '/Annots' in page:
-            for annot in page['/Annots']:
-                # Dereference the indirect object
+            annotations = page['/Annots']
+            st.write("Annotations found:", annotations)  # Debugging line
+            for annot in annotations:
                 annot_obj = annot.get_object()
+                # Print out the annotation details for debugging
+                st.write("Annotation object:", annot_obj)
+
                 if annot_obj.get('/T') == NameObject(field_name):
                     annot_obj.update({
                         NameObject('/V'): TextStringObject(custom_text)  # Set the value
                     })
+                    st.write("Updated annotation with text:", custom_text)  # Debugging line
 
     # Write to a bytes buffer
     output_pdf = io.BytesIO()
@@ -42,5 +47,3 @@ if uploaded_file is not None and custom_text:
         file_name="filled_form.pdf",
         mime="application/pdf"
     )
-
-
