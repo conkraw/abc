@@ -10,7 +10,8 @@ custom_text = st.text_input("Enter text to fill in PDF (e.g., '98%'):")
 field_name = 'date'  # Change this to your desired text input field name
 
 # File uploader
-uploaded_file = st.file_uploader("Upload airway_bundle.pdf", type=["pdf"])
+#uploaded_file = st.file_uploader("Upload airway_bundle.pdf", type=["pdf"])
+uploaded_file = "https://raw.githubusercontent.com/conkraw/abc/main/airway_bundle.pdf"
 
 # Submit button
 if st.button("Submit"):
