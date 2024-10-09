@@ -6,21 +6,26 @@ import os
 def create_word_doc(template_path, date, time):
     doc = Document(template_path)
 
-    # Replace placeholders in paragraphs
+    # Debug: Check paragraphs for placeholders
     for paragraph in doc.paragraphs:
         for run in paragraph.runs:
             if 'DatePlaceholder' in run.text:
+                st.write(f"Found 'DatePlaceholder' in paragraph: {run.text}")
                 run.text = run.text.replace('DatePlaceholder', date)
             if 'TimePlaceholder' in run.text:
+                st.write(f"Found 'TimePlaceholder' in paragraph: {run.text}")
                 run.text = run.text.replace('TimePlaceholder', time)
 
-    # Replace placeholders in text boxes (shapes)
+    # Debug: Check text boxes (shapes) for placeholders
     for shape in doc.inline_shapes:
         if shape.type == 1:  # 1 corresponds to a text box
-            if 'DatePlaceholder' in shape.text:
-                shape.text = shape.text.replace('DatePlaceholder', date)
-            if 'TimePlaceholder' in shape.text:
-                shape.text = shape.text.replace('TimePlaceholder', time)
+            shape_text = shape.text
+            if 'DatePlaceholder' in shape_text:
+                st.write(f"Found 'DatePlaceholder' in shape: {shape_text}")
+                shape.text = shape_text.replace('DatePlaceholder', date)
+            if 'TimePlaceholder' in shape_text:
+                st.write(f"Found 'TimePlaceholder' in shape: {shape_text}")
+                shape.text = shape_text.replace('TimePlaceholder', time)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
