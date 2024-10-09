@@ -1,6 +1,7 @@
 import io
 import streamlit as st
 from PyPDF2 import PdfReader, PdfWriter
+from PyPDF2.generic import NameObject, TextStringObject
 
 st.title("PDF Form Filler")
 
@@ -10,7 +11,7 @@ custom_text = st.text_input("Enter text to fill in PDF:")
 # File uploader
 uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
 
-if uploaded_file is not None:
+if uploaded_file is not None and custom_text:
     # Load the PDF template
     reader = PdfReader(uploaded_file)
     writer = PdfWriter()
@@ -22,8 +23,10 @@ if uploaded_file is not None:
         writer.add_page(page)  # Add the page to the writer
         if '/Annots' in page:
             for annot in page['/Annots']:
-                if annot.get('/T') == f'({field_name})':
-                    annot.update({
+                # Dereference the indirect object
+                annot_obj = annot.get_object()
+                if annot_obj.get('/T') == NameObject(field_name):
+                    annot_obj.update({
                         NameObject('/V'): TextStringObject(custom_text)  # Set the value
                     })
 
