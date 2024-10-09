@@ -711,7 +711,8 @@ elif st.session_state.section == 5:
 elif st.session_state.section == 6:
     st.title("Download Form")
     
-
+    uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
+    
     if uploaded_file is not None:
     # Load the PDF template
         template_pdf = pdfrw.PdfReader(uploaded_file)
