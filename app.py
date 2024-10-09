@@ -725,24 +725,22 @@ elif st.session_state.section == 5:
 elif st.session_state.section == 6:
     st.title("Fill in Template Document")
 
-  col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns(3)
     
-    # Add the 'Submit' button to the second column
     with col3:
-
         if st.button("Submit"):
             if formatted_date:
                 # Path to your template file
                 template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
-        
+    
                 # Debugging output
                 st.write(f"Using template: {template_path}")
-                st.write(f"Date entered: {date}")
-        
+                st.write(f"Date entered: {formatted_date}")
+    
                 try:
-                    doc_file = create_word_doc(template_path, date)
+                    doc_file = create_word_doc(template_path, formatted_date)
                     st.success("Document created successfully!")
-                    
+    
                     with open(doc_file, 'rb') as f:
                         st.download_button(
                             label="Download Word Document",
@@ -755,10 +753,9 @@ elif st.session_state.section == 6:
                     st.error(f"An error occurred: {e}")
             else:
                 st.warning("Please enter a date.")
-
     
     with col1:
         if st.button("Previous", on_click=prev_section):
             pass
-
-
+    
+    
