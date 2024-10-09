@@ -169,7 +169,7 @@ def update_automatic_selections():
 #    doc.save(doc_file)
 #    return doc_file
 
-def create_word_doc(template_path, date, front_page_completed):
+def create_word_doc(template_path, date, time):
     doc = Document(template_path)
 
     # Check and replace text in paragraphs
@@ -180,11 +180,11 @@ def create_word_doc(template_path, date, front_page_completed):
         # Replace Date Placeholder
         for run in paragraph.runs:
             if 'DatePlaceholder' in run.text:
-                run.text = run.text.replace('DatePlaceholder', date)
+                run.text = run.text.replace('DatePlaceholder', date or "")
 
-            # Replace Front Page Placeholder
-            if 'FrontPagePlaceholder' in run.text:
-                run.text = run.text.replace('FrontPagePlaceholder', front_page_completed or "")
+            # Replace Time Placeholder
+            if 'TimePlaceholder' in run.text:
+                run.text = run.text.replace('TimePlaceholder', time or "")
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
