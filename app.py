@@ -7,6 +7,7 @@ import os
 from docx import Document
 from lxml import etree
 
+# Inside your create_word_doc function
 def create_word_doc(template_path, date, time):
     doc = Document(template_path)
 
@@ -27,38 +28,36 @@ def create_word_doc(template_path, date, time):
 
     # Check and replace text in content controls
     st.write("Checking content controls:")
-    # Access the XML tree directly
     xml = doc.element.xml
     root = etree.fromstring(xml)
-    
+
     sdt_elements = root.xpath('//w:sdt', namespaces=namespace)
     st.write("Number of content controls found:", len(sdt_elements))
-    
+
     for sdt in sdt_elements:
         # Get the title of the content control
         title = sdt.find('.//w:sdtPr/w:title', namespaces=namespace)
-        if title is not None:
-            title_text = title.text
-            st.write(f"Content control title: '{title_text}'")  # Debug output
-    
-            sdt_content = sdt.find('.//w:sdtContent', namespaces=namespace)
-            if sdt_content is not None:
-                for text in sdt_content.xpath('.//w:t', namespaces=namespace):
-                    st.write(f"Content control text: '{text.text}'")  # Debug output
-    
-                    # Check the title to decide which placeholder to replace
-                    if title_text == "DateControl":  # Example title for the date
-                        st.write(f"Replacing 'DateControl' in: '{text.text}'")
-                        text.text = text.text.replace(text.text, date)
-                    elif title_text == "TimeControl":  # Example title for the time
-                        st.write(f"Replacing 'TimeControl' in: '{text.text}'")
-                        text.text = text.text.replace(text.text, time)
+        title_text = title.text if title is not None else "No Title"
+        st.write(f"Content control title: '{title_text}'")  # Debug output
 
+        sdt_content = sdt.find('.//w:sdtContent', namespaces=namespace)
+        if sdt_content is not None:
+            for text in sdt_content.xpath('.//w:t', namespaces=namespace):
+                st.write(f"Content control text: '{text.text}'")  # Debug output
+
+                # Check the title to decide which placeholder to replace
+                if title_text == "DateControl":  # Adjust this title as needed
+                    st.write(f"Replacing in DateControl: '{text.text}'")
+                    text.text = date  # Replace with date
+                elif title_text == "TimeControl":  # Adjust this title as needed
+                    st.write(f"Replacing in TimeControl: '{text.text}'")
+                    text.text = time  # Replace with time
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
     doc.save(doc_file)
     return doc_file
+
 
 
 # Streamlit app
