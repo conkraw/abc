@@ -304,6 +304,10 @@ elif st.session_state.section == 1:
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time(), key="time")
+
+        if time:
+            st.session_state['time'] = True
+            
         weight = st.selectbox("Enter Patient Weight (Kilograms)", options=[""] + list(weight_to_atropine_mapping.keys()), key="weight_select",on_change=update_automatic_selections)
 
     # Initialize 'ett_size' in session state if it's not already set
@@ -777,29 +781,28 @@ elif st.session_state.section == 6:
 
     with col3:
         if st.button("Submit"):
-            # Retrieve values from session state
-            front_page_completed = st.session_state.get('front_page_completed', '')
-            formatted_date = st.session_state.get('date', '')
-    
-            if formatted_date and front_page_completed:
-                template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
-    
-                try:
-                    doc_file = create_word_doc(template_path, formatted_date, front_page_completed)
-                    st.success("Document created successfully!")
-    
-                    with open(doc_file, 'rb') as f:
-                        st.download_button(
-                            label="Download Word Document",
-                            data=f,
-                            file_name=doc_file,
-                            mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                        )
-                    os.remove(doc_file)  # Clean up the file after download
-                except Exception as e:
-                    st.error(f"An error occurred: {e}")
-            else:
-                st.warning("Please ensure both front page completion and date are selected.")
+        formatted_date = st.session_state.get('date', '')
+        formatted_time = st.session_state.get('time', '')
+
+        if formatted_date and formatted_time:
+            template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
+
+            try:
+                doc_file = create_word_doc(template_path, formatted_date, formatted_time)
+                st.success("Document created successfully!")
+
+                with open(doc_file, 'rb') as f:
+                    st.download_button(
+                        label="Download Word Document",
+                        data=f,
+                        file_name=doc_file,
+                        mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                    )
+                os.remove(doc_file)  # Clean up the file after download
+            except Exception as e:
+                st.error(f"An error occurred: {e}")
+        else:
+            st.warning("Please ensure both date and time are selected correctly.")
 
     with col1:
         if st.button("Previous", on_click=prev_section):
