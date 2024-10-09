@@ -7,6 +7,9 @@ import os
 def create_word_doc(template_path, date, time):
     doc = Document(template_path)
 
+    # Define the namespace
+    namespace = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+
     # Check and replace text in paragraphs
     st.write("Checking paragraphs:")
     for paragraph in doc.paragraphs:
@@ -21,10 +24,10 @@ def create_word_doc(template_path, date, time):
 
     # Check and replace text in content controls
     st.write("Checking content controls:")
-    for sdt in doc.element.xpath('//w:sdt'):
-        sdt_content = sdt.find('.//w:sdtContent')
+    for sdt in doc.element.xpath('//w:sdt', namespaces=namespace):
+        sdt_content = sdt.find('.//w:sdtContent', namespaces=namespace)
         if sdt_content is not None:
-            for text in sdt_content.xpath('.//w:t'):
+            for text in sdt_content.xpath('.//w:t', namespaces=namespace):
                 if 'DatePlaceholder' in text.text:
                     st.write(f"Found 'DatePlaceholder' in content control: {text.text}")
                     text.text = text.text.replace('DatePlaceholder', date)
