@@ -172,26 +172,36 @@ def update_automatic_selections():
 def create_word_doc(template_path, date, time, front_page_completed):
     doc = Document(template_path)
 
+    # Debugging: Print the original document content (for troubleshooting)
+    st.write("Original Document Content:")
+    for paragraph in doc.paragraphs:
+        st.write(paragraph.text)
+
     # Check and replace text in paragraphs
     for paragraph in doc.paragraphs:
-        # Replace Date Placeholder
         for run in paragraph.runs:
             if 'DatePlaceholder' in run.text:
+                st.write(f"Replacing DatePlaceholder with: {date}")
                 run.text = run.text.replace('DatePlaceholder', date or "")
             
-            # Replace Time Placeholder
             if 'TimePlaceholder' in run.text:
+                st.write(f"Replacing TimePlaceholder with: {time}")
                 run.text = run.text.replace('TimePlaceholder', time or "")
             
-            # Replace Front Page Completed Placeholder
             if 'FrontPagePlaceholder' in run.text:
                 st.write(f"Replacing FrontPagePlaceholder with: {front_page_completed}")
                 run.text = run.text.replace('FrontPagePlaceholder', front_page_completed or "")
     
+    # Debugging: Print the modified document content
+    st.write("Modified Document Content:")
+    for paragraph in doc.paragraphs:
+        st.write(paragraph.text)
+
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
     doc.save(doc_file)
     return doc_file
+
 
     
 def reset_input(default_value, key):
