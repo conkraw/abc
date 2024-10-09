@@ -191,12 +191,6 @@ def create_word_doc(template_path, date, time):
     doc.save(doc_file)
     return doc_file
 
-    # Save the modified document
-    doc_file = 'airway_bundle_form.docx'
-    doc.save(doc_file)
-    return doc_file
-
-
     
 def reset_input(default_value, key):
     if key not in st.session_state:
