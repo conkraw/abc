@@ -185,7 +185,7 @@ def create_word_doc(template_path, date, time, front_page_completed):
             
             # Replace Front Page Completed Placeholder
             if 'FrontPagePlaceholder' in run.text:
-                print(f"Replacing FrontPagePlaceholder with: {front_page_completed}")
+                st.write(f"Replacing FrontPagePlaceholder with: {front_page_completed}")
                 run.text = run.text.replace('FrontPagePlaceholder', front_page_completed or "")
     
     # Save the modified document
