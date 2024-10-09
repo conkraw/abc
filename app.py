@@ -1,27 +1,22 @@
 import io
-import requests
 import streamlit as st
 from PyPDF2 import PdfReader, PdfWriter
 from PyPDF2.generic import NameObject, TextStringObject
 
 st.title("PDF Form Filler")
 
-# URL of the PDF file in your GitHub repository
-pdf_url = "https://raw.githubusercontent.com/conkraw/abc/main/airway_bundle.pdf"
-
-
 # Text input for user
 custom_text = st.text_input("Enter text to fill in PDF (e.g., '98%'):")
 field_name = 'date'  # Change this to your desired text input field name
 
+# File uploader
+uploaded_file = st.file_uploader("Upload airway_bundle.pdf", type=["pdf"])
+
 # Submit button
 if st.button("Submit"):
-    if custom_text:
-        # Load the PDF template from GitHub
-        response = requests.get(pdf_url)
-        pdf_content = io.BytesIO(response.content)
-        
-        reader = PdfReader(pdf_content)
+    if uploaded_file is not None and custom_text:
+        # Load the PDF template
+        reader = PdfReader(uploaded_file)
         writer = PdfWriter()
 
         # Loop through all pages to fill the specified text field
@@ -52,5 +47,5 @@ if st.button("Submit"):
             mime="application/pdf"
         )
     else:
-        st.warning("Please enter text to fill in the PDF.")
+        st.warning("Please upload a PDF and enter the text.")
 
