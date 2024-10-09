@@ -775,13 +775,18 @@ elif st.session_state.section == 6:
 
     with col3:
         if st.button("Submit"):
+            formatted_date = st.session_state.get('formatted_date', '')
+            formatted_time = st.session_state.get('formatted_time', '')
+
             if formatted_date and formatted_time:
                 template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
     
                 try:
+                    # Create the Word document with the date and time
                     doc_file = create_word_doc(template_path, formatted_date, formatted_time)
                     st.success("Document created successfully!")
     
+                    # Allow the user to download the Word document
                     with open(doc_file, 'rb') as f:
                         st.download_button(
                             label="Download Word Document",
@@ -794,7 +799,6 @@ elif st.session_state.section == 6:
                     st.error(f"An error occurred: {e}")
             else:
                 st.warning("Please ensure both date and time are selected correctly.")
-
     with col1:
         if st.button("Previous", on_click=prev_section):
             pass
