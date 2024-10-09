@@ -778,12 +778,13 @@ elif st.session_state.section == 6:
             formatted_date = st.session_state.get('formatted_date', '')
             formatted_time = st.session_state.get('formatted_time', '')
 
-            if formatted_date and formatted_time:
+            #if formatted_date and formatted_time:
+            if formatted_time:
                 template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
     
                 try:
                     # Create the Word document with the date and time
-                    doc_file = create_word_doc(template_path, formatted_date, formatted_time)
+                    doc_file = create_word_doc(template_path, formatted_time) #formatted_date
                     st.success("Document created successfully!")
     
                     # Allow the user to download the Word document
