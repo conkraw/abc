@@ -714,7 +714,7 @@ elif st.session_state.section == 6:
 
     if uploaded_file is not None:
     # Load the PDF template
-    template_pdf = pdfrw.PdfReader(uploaded_file)
+        template_pdf = pdfrw.PdfReader(uploaded_file)
     
     # Define the field name in your PDF form where the date should go
     field_name = 'date'  # Change this to the actual field name in your PDF
