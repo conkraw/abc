@@ -712,20 +712,25 @@ elif st.session_state.section == 6:
     st.title("Download Form")
     
 
-    # File uploader
-    uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
-    
     if uploaded_file is not None:
-        # Load the PDF template
-        template_pdf = pdfrw.PdfReader(uploaded_file)
-        
-        # Define the field name in your PDF form where the date should go
-        field_name = 'date'  # Change this to the actual field name in your PDF
-        
+    # Load the PDF template
+    template_pdf = pdfrw.PdfReader(uploaded_file)
+    
+    # Define the field name in your PDF form where the date should go
+    field_name = 'date'  # Change this to the actual field name in your PDF
+
+    # Get the date from date input
+    date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date")
+    formatted_date = date.strftime("%m-%d-%Y")  # Format date as MM-DD-YYYY
+    
+    try:
         # Fill in the date field
         for page in template_pdf.pages:
-            for annotation in page.get('/Annots', []):
-                if annotation['/T'] == f'({field_name})':
+            annotations = page.get('/Annots', [])
+            st.write("Annotations:", annotations)  # Debug line
+            for annotation in annotations:
+                st.write("Annotation:", annotation)  # Debug line
+                if annotation.get('/T') == f'({field_name})':
                     annotation.update(pdfrw.PdfDict(V=f'{formatted_date}'))  # Fill in the date
         
         # Write to a bytes buffer
@@ -740,6 +745,8 @@ elif st.session_state.section == 6:
             file_name="filled_form.pdf",
             mime="application/pdf"
         )
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
 
 # Create two columns: one for the 'Previous' button and one for the 'Submit' button
     col1, col2, col3 = st.columns(3)
