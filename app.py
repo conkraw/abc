@@ -181,7 +181,11 @@ def create_word_doc(template_path, date, front_page_completed):
         for run in paragraph.runs:
             if 'DatePlaceholder' in run.text:
                 run.text = run.text.replace('DatePlaceholder', date)
-            if 'FrontPagePlaceholder' in run.text:  # Replace this with your actual placeholder
+
+            # Replace Front Page Placeholder
+            if 'FrontPagePlaceholder' in run.text:
+                status_text = "Completed" if front_page_completed else "Not Completed"
+                st.write(f"Replacing 'FrontPagePlaceholder' with: {status_text}")  # Debug output
                 run.text = run.text.replace('FrontPagePlaceholder', status_text)
     
     # Save the modified document
@@ -765,37 +769,35 @@ elif st.session_state.section == 6:
     #                template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
 
     with col3:
-        if st.button("Submit"):
-            # Check if the front page is completed and if the formatted date exists
-            if 'front_page' in st.session_state and st.session_state['front_page']:
-                if 'formatted_date' in st.session_state:
-                    formatted_date = st.session_state['formatted_date']
-                    
-                    if formatted_date:
-                        # Path to your template file
-                        template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
-    
-                        try:
-                            # Pass both the formatted date and front page completion status
-                            doc_file = create_word_doc(template_path, formatted_date, st.session_state['front_page'])
-                            st.success("Document created successfully!")
-            
-                            with open(doc_file, 'rb') as f:
-                                st.download_button(
-                                    label="Download Word Document",
-                                    data=f,
-                                    file_name=doc_file,
-                                    mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                                )
-                            os.remove(doc_file)  # Clean up the file after download
-                        except Exception as e:
-                            st.error(f"An error occurred: {e}")
-                    else:
-                        st.warning("Please enter a date.")
+    if st.button("Submit"):
+        if 'front_page' in st.session_state and st.session_state['front_page']:
+            if 'formatted_date' in st.session_state:
+                formatted_date = st.session_state['formatted_date']
+                
+                if formatted_date:
+                    template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
+
+                    try:
+                        # Create the Word document using both the date and front page status
+                        doc_file = create_word_doc(template_path, formatted_date, st.session_state['front_page'])
+                        st.success("Document created successfully!")
+        
+                        with open(doc_file, 'rb') as f:
+                            st.download_button(
+                                label="Download Word Document",
+                                data=f,
+                                file_name=doc_file,
+                                mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                            )
+                        os.remove(doc_file)  # Clean up the file after download
+                    except Exception as e:
+                        st.error(f"An error occurred: {e}")
                 else:
-                    st.warning("Formatted date not set. Please enter a date.")
+                    st.warning("Please enter a date.")
             else:
-                st.warning("Please complete the front page before proceeding.")
+                st.warning("Formatted date not set. Please enter a date.")
+        else:
+            st.warning("Please complete the front page before proceeding.")
 
     
     with col1:
