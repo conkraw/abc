@@ -694,6 +694,20 @@ elif st.session_state.section == 5:
     if 'Other' in advance_airway_procedure:
         st.text_input("Please state an 'other' protocol for Difficult Airway Protocol Initiation:", key="other_advance_airway_procedure")
 
+        
+    # Single Next and Previous Buttons
+    col1, col2, col3 = st.columns(3)
+
+    # Add the 'Previous' button to the first column
+    with col1:
+        if st.button("Previous", on_click=prev_section):
+            pass
+    
+    # Add the 'Next' button to the second column
+    with col3:
+        if st.button("Next", on_click=next_section):
+            pass
+
 elif st.session_state.section == 6:
     
     uploaded_file = st.file_uploader("airway_bundle.pdf", type=["pdf"])
