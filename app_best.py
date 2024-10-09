@@ -12,6 +12,7 @@ import pdfrw
 import io
 
 
+
 # Define mappings for ETT size, Blade type, and Apneic Oxygenation based on patient age
 age_to_ett_mapping = {
     "0-1": "3.0",
@@ -153,8 +154,21 @@ def update_automatic_selections():
         st.session_state.roc_dose = weight_to_roc_mapping[selected_weight]
         st.session_state.vec_dose = weight_to_vec_mapping[selected_weight]
 
-        
-
+def create_word_doc(template_path, date):
+    doc = Document(template_path)
+    # Check and replace text in paragraphs
+    st.write("Checking paragraphs:")
+    for paragraph in doc.paragraphs:
+        st.write(f"Paragraph: {paragraph.text}")
+        # Replace Date Placeholder
+        for run in paragraph.runs:
+            if 'DatePlaceholder' in run.text:
+                run.text = run.text.replace('DatePlaceholder', date)
+    # Save the modified document
+    doc_file = 'airway_bundle_form.docx'
+    doc.save(doc_file)
+    return doc_file
+    
 def reset_input(default_value, key):
     if key not in st.session_state:
         st.session_state[key] = default_value
@@ -709,31 +723,42 @@ elif st.session_state.section == 5:
             pass
 
 elif st.session_state.section == 6:
-    st.title("Download Form")
+    st.title("Fill in Template Document")
 
-
-# Create two columns: one for the 'Previous' button and one for the 'Submit' button
-    col1, col2, col3 = st.columns(3)
+  col1, col2, col3 = st.columns(3)
     
     # Add the 'Submit' button to the second column
     with col3:
-        if st.button("Submit", key="submit_button"):
-            # Prepare the final data for submission
-            final_data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
-            
-            # Include the data from this section
-            final_data['advance_airway_provider'] = advance_airway_provider
-            
-            # Submit data to Firestore
-            db.collection('airway_checklists').add(final_data)
-            
-            st.success("Data submitted successfully!")
-            
-            # Optionally reset the form or redirect
-            st.session_state.section = 0  # Reset to the first section if needed
-            st.session_state.form_data = {}  # Clear form data
+
+        if st.button("Submit"):
+            if formatted_date:
+                # Path to your template file
+                template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
+        
+                # Debugging output
+                st.write(f"Using template: {template_path}")
+                st.write(f"Date entered: {date}")
+        
+                try:
+                    doc_file = create_word_doc(template_path, date)
+                    st.success("Document created successfully!")
+                    
+                    with open(doc_file, 'rb') as f:
+                        st.download_button(
+                            label="Download Word Document",
+                            data=f,
+                            file_name=doc_file,
+                            mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                        )
+                    os.remove(doc_file)  # Clean up the file after download
+                except Exception as e:
+                    st.error(f"An error occurred: {e}")
+            else:
+                st.warning("Please enter a date.")
+
     
-    # Add the 'Previous' button to the first column
     with col1:
         if st.button("Previous", on_click=prev_section):
             pass
+
+
