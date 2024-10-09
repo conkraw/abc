@@ -730,8 +730,6 @@ elif st.session_state.section == 5:
 elif st.session_state.section == 6:
     st.title("Fill in Template Document")
     
-    st.session_state['date'] = date
-    
     col1, col2, col3 = st.columns(3)
     
     with col3:
