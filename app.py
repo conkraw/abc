@@ -3,7 +3,6 @@ import streamlit as st
 import pdfrw
 from datetime import datetime
 
-# Streamlit app title
 st.title("PDF Form Filler")
 
 # Date input
@@ -17,14 +16,14 @@ if uploaded_file is not None:
     # Load the PDF template
     template_pdf = pdfrw.PdfReader(uploaded_file)
     
-    # Define the field name in your PDF form where the date should go
-    field_name = 'date'  # Adjust to the actual field name in your PDF
+    field_name = 'date'  # Field name in your PDF form
 
     # Fill in the date field
     for page in template_pdf.pages:
         annotations = page.get('/Annots', [])
-        st.write("Annotations on this page:", annotations)  # Debug line
-        if annotations:
+        st.write("Type of annotations:", type(annotations))  # Debug line
+        if annotations is not None:
+            st.write("Annotations on this page:", annotations)  # Debug line
             for annotation in annotations:
                 st.write("Annotation object:", annotation)  # Debug line
                 if annotation.get('/T') == f'({field_name})':
@@ -35,7 +34,7 @@ if uploaded_file is not None:
     pdfrw.PdfWriter().write(output_pdf, template_pdf)
     output_pdf.seek(0)
 
-    # Allow the user to download the modified PDF
+    # Download button
     st.download_button(
         label="Download Filled PDF",
         data=output_pdf,
