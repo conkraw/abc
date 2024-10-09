@@ -7,7 +7,7 @@ st.title("PDF Form Filler")
 
 # Text input for user
 custom_text = st.text_input("Enter text to fill in PDF (e.g., '98%'):")
-field_name = 'spo2'  # Change this to your desired text input field name
+field_name = 'date'  # Change this to your desired text input field name
 
 # File uploader
 uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
