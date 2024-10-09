@@ -25,7 +25,7 @@ if uploaded_file is not None:
             for annotation in annotations:
                 # Check if the annotation is a text field
                 if annotation.get('/T') == f'({field_name})':
-                    annotation.update(pdfrw.PdfDict(V=f'{formatted_date}', AS=pdfrw.PdfName('Yes')))  # Set the value
+                    annotation.update(pdfrw.PdfDict(V=f'{formatted_date}'))  # Set the value
 
     # Write to a bytes buffer
     output_pdf = io.BytesIO()
