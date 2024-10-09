@@ -4,6 +4,9 @@ from lxml import etree
 import os
 
 # Function to replace placeholders in the template
+from docx import Document
+from lxml import etree
+
 def create_word_doc(template_path, date, time):
     doc = Document(template_path)
 
@@ -24,7 +27,11 @@ def create_word_doc(template_path, date, time):
 
     # Check and replace text in content controls
     st.write("Checking content controls:")
-    for sdt in doc.element.xpath('//w:sdt', namespaces=namespace):
+    # Access the XML tree directly
+    xml = doc.element.xml
+    root = etree.fromstring(xml)
+
+    for sdt in root.xpath('//w:sdt', namespaces=namespace):
         sdt_content = sdt.find('.//w:sdtContent', namespaces=namespace)
         if sdt_content is not None:
             for text in sdt_content.xpath('.//w:t', namespaces=namespace):
@@ -39,6 +46,7 @@ def create_word_doc(template_path, date, time):
     doc_file = 'airway_bundle_form.docx'
     doc.save(doc_file)
     return doc_file
+
 
 # Streamlit app
 st.title("Fill in Template Document")
