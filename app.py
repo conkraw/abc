@@ -8,10 +8,10 @@ def create_word_doc(template_path, date, time):
 
     # Replace placeholders in paragraphs
     for paragraph in doc.paragraphs:
-        if 'NamePlaceholder' in paragraph.text:
-            paragraph.text = paragraph.text.replace('date', date)
-        if 'AgePlaceholder' in paragraph.text:
-            paragraph.text = paragraph.text.replace('time', time)
+        if 'DatePlaceholder' in paragraph.text:
+            paragraph.text = paragraph.text.replace('DatePlaceholder', date)
+        if 'TimePlaceholder' in paragraph.text:
+            paragraph.text = paragraph.text.replace('TimePlaceholder', time)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -28,9 +28,9 @@ time = st.text_input("Enter your time")
 if st.button("Submit"):
     if date and time:
         # Path to your template file
-        template_path = 'airway_bundle.docx'  # Adjust this to your template's path
+        template_path = 'airway_bundle.docx'  # Ensure this is the correct path
         
-        doc_file = create_word_doc(template_path, date,time)
+        doc_file = create_word_doc(template_path, date, time)
         
         with open(doc_file, 'rb') as f:
             st.download_button(
