@@ -182,11 +182,12 @@ def create_word_doc(template_path, date, front_page_completed):
             if 'DatePlaceholder' in run.text:
                 run.text = run.text.replace('DatePlaceholder', date)
 
-            # Replace Front Page Placeholder
+            # Replace Front Page Placeholder with the selected option
             if 'FrontPagePlaceholder' in run.text:
-                status_text = "Completed" if front_page_completed else "Not Completed"
-                st.write(f"Replacing 'FrontPagePlaceholder' with: {status_text}")  # Debug output
-                run.text = run.text.replace('FrontPagePlaceholder', status_text)
+                if front_page_completed:
+                    run.text = run.text.replace('FrontPagePlaceholder', front_page_completed)
+                else:
+                    run.text = run.text.replace('FrontPagePlaceholder', "Not Completed")
     
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -264,8 +265,11 @@ if st.session_state.section == 0:
                                           'Just prior to intubation', 'After intubation', 
                                           'Prior to extubation'], key="front_page_completed")
 
+    # Set session state based on the selection
     if front_page_completed:
-        st.session_state['front_page'] = True
+        st.session_state['front_page'] = front_page_completed  # Store the selected option
+    else:
+        st.session_state['front_page'] = None  # Reset if no selection
     
     completed_by = st.text_input("Who completed the form? (Name or Role)", key="completed_by")
     room_number = st.selectbox("Select Room Number", 
@@ -769,37 +773,37 @@ elif st.session_state.section == 6:
     #                template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
 
     with col3:
-    if st.button("Submit"):
-        if 'front_page' in st.session_state and st.session_state['front_page']:
-            if 'formatted_date' in st.session_state:
-                formatted_date = st.session_state['formatted_date']
-                
-                if formatted_date:
-                    template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
-
-                    try:
-                        # Create the Word document using both the date and front page status
-                        doc_file = create_word_doc(template_path, formatted_date, st.session_state['front_page'])
-                        st.success("Document created successfully!")
-        
-                        with open(doc_file, 'rb') as f:
-                            st.download_button(
-                                label="Download Word Document",
-                                data=f,
-                                file_name=doc_file,
-                                mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                            )
-                        os.remove(doc_file)  # Clean up the file after download
-                    except Exception as e:
-                        st.error(f"An error occurred: {e}")
-                else:
-                    st.warning("Please enter a date.")
-            else:
-                st.warning("Formatted date not set. Please enter a date.")
-        else:
-            st.warning("Please complete the front page before proceeding.")
-
+        if st.button("Submit"):
+            if 'front_page' in st.session_state and st.session_state['front_page']:
+                if 'formatted_date' in st.session_state:
+                    formatted_date = st.session_state['formatted_date']
+                    
+                    if formatted_date:
+                        template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
     
+                        try:
+                            # Pass the selected front page completion status to the function
+                            doc_file = create_word_doc(template_path, formatted_date, st.session_state['front_page'])
+                            st.success("Document created successfully!")
+            
+                            with open(doc_file, 'rb') as f:
+                                st.download_button(
+                                    label="Download Word Document",
+                                    data=f,
+                                    file_name=doc_file,
+                                    mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                                )
+                            os.remove(doc_file)  # Clean up the file after download
+                        except Exception as e:
+                            st.error(f"An error occurred: {e}")
+                    else:
+                        st.warning("Please enter a date.")
+                else:
+                    st.warning("Formatted date not set. Please enter a date.")
+            else:
+                st.warning("Please select when the front page was completed before proceeding.")
+    
+        
     with col1:
         if st.button("Previous", on_click=prev_section):
             pass
