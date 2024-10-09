@@ -171,7 +171,7 @@ def update_automatic_selections():
 
 def create_word_doc(template_path, date, front_page_completed):
     doc = Document(template_path)
-    
+
     # Check and replace text in paragraphs
     st.write("Checking paragraphs:")
     for paragraph in doc.paragraphs:
@@ -184,10 +184,12 @@ def create_word_doc(template_path, date, front_page_completed):
 
             # Replace Front Page Placeholder
             if 'FrontPagePlaceholder' in run.text:
-                if front_page_completed:
-                    run.text = run.text.replace('FrontPagePlaceholder', front_page_completed)
-                else:
-                    run.text = run.text.replace('FrontPagePlaceholder', "")  # or leave it blank
+                run.text = run.text.replace('FrontPagePlaceholder', front_page_completed or "")
+
+    # Save the modified document
+    doc_file = 'airway_bundle_form.docx'
+    doc.save(doc_file)
+    return doc_file
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
