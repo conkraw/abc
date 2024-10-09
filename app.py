@@ -3,11 +3,6 @@ from docx import Document
 from lxml import etree
 import os
 
-# Function to replace placeholders in the template
-from docx import Document
-from lxml import etree
-
-# Inside your create_word_doc function
 def create_word_doc(template_path, date, time):
     doc = Document(template_path)
 
@@ -31,42 +26,45 @@ def create_word_doc(template_path, date, time):
     xml = doc.element.xml
     root = etree.fromstring(xml)
 
+    # Print the entire XML structure for debugging
+    st.write("Document XML:", etree.tostring(root, pretty_print=True).decode())
+
     sdt_elements = root.xpath('//w:sdt', namespaces=namespace)
     st.write("Number of content controls found:", len(sdt_elements))
 
     for sdt in sdt_elements:
         # Print the entire sdt element for debugging
         st.write("Content Control XML:", etree.tostring(sdt, pretty_print=True).decode())
-    
+        
         # Attempt to get the alias or tag of the content control
         alias = sdt.find('.//w:sdtPr/w:alias', namespaces=namespace)
         tag = sdt.find('.//w:sdtPr/w:tag', namespaces=namespace)
-        
+
         alias_text = alias.text if alias is not None else "No Alias"
         tag_text = tag.text if tag is not None else "No Tag"
-    
+
         st.write(f"Content control alias: '{alias_text}'")  # Debug output
         st.write(f"Content control tag: '{tag_text}'")      # Debug output
-    
+
         sdt_content = sdt.find('.//w:sdtContent', namespaces=namespace)
         if sdt_content is not None:
             for text in sdt_content.xpath('.//w:t', namespaces=namespace):
                 st.write(f"Content control text: '{text.text}'")  # Debug output
-    
+
                 # Replace based on the alias or tag
                 if alias_text == "DatePlaceholder":
-                    st.write(f"Replacing in DatePlaceholder: '{text.text}'")
+                    st.write(f"Replacing in DatePlaceholder: '{text.text}' with '{date}'")
                     text.text = date  # Replace with date
                 elif alias_text == "TimePlaceholder":
-                    st.write(f"Replacing in TimePlaceholder: '{text.text}'")
-                    text.text = time  # Replace with time
+                    st.write(f"Replacing in TimePlaceholder: '{text.text}' with '{time}'")
+                    text.text = time
+        else:
+            st.write("No content found in this content control.")
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
     doc.save(doc_file)
     return doc_file
-
-
 
 # Streamlit app
 st.title("Fill in Template Document")
@@ -101,3 +99,4 @@ if st.button("Submit"):
             st.error(f"An error occurred: {e}")
     else:
         st.warning("Please fill in all fields.")
+
