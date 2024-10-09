@@ -32,34 +32,23 @@ def create_word_doc(template_path, date, time):
     sdt_elements = root.xpath('//w:sdt', namespaces=namespace)
     st.write("Number of content controls found:", len(sdt_elements))
 
+    # Check and replace text in content controls
     for sdt in sdt_elements:
-        # Print the entire sdt element for debugging
-        st.write("Content Control XML:", etree.tostring(sdt, pretty_print=True).decode())
-        
-        # Attempt to get the alias or tag of the content control
-        alias = sdt.find('.//w:sdtPr/w:alias', namespaces=namespace)
-        tag = sdt.find('.//w:sdtPr/w:tag', namespaces=namespace)
-
-        alias_text = alias.text if alias is not None else "No Alias"
-        tag_text = tag.text if tag is not None else "No Tag"
-
-        st.write(f"Content control alias: '{alias_text}'")  # Debug output
-        st.write(f"Content control tag: '{tag_text}'")      # Debug output
-
+        # Get the content control text directly
         sdt_content = sdt.find('.//w:sdtContent', namespaces=namespace)
         if sdt_content is not None:
             for text in sdt_content.xpath('.//w:t', namespaces=namespace):
-                st.write(f"Content control text: '{text.text}'")  # Debug output
-
-                # Replace based on the alias or tag
-                if alias_text == "DatePlaceholder":
-                    st.write(f"Replacing in DatePlaceholder: '{text.text}' with '{date}'")
-                    text.text = date  # Replace with date
-                elif alias_text == "TimePlaceholder":
-                    st.write(f"Replacing in TimePlaceholder: '{text.text}' with '{time}'")
-                    text.text = time
-        else:
-            st.write("No content found in this content control.")
+                # Replace based on the content control text directly
+                if "Click or tap here to enter text." in text.text:
+                    if "DatePlaceholder" in text.text:
+                        st.write(f"Replacing in DatePlaceholder: '{text.text}' with '{date}'")
+                        text.text = date  # Replace with date
+                    elif "TimePlaceholder" in text.text:
+                        st.write(f"Replacing in TimePlaceholder: '{text.text}' with '{time}'")
+                        text.text = time
+    
+            else:
+                st.write("No content found in this content control.")
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
