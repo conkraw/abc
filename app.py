@@ -285,7 +285,7 @@ if st.session_state.section == 0:
     front_page_completed = st.selectbox("Select when the front page was completed",
                                          ['','On admission', 'During rounds', 'After rounds', 
                                           'Just prior to intubation', 'After intubation', 
-                                          'Prior to extubation'], key="front_page_completed",on_change=update_front_page_completed)
+                                          'Prior to extubation'], key="front_page_completed")
 
 
     
