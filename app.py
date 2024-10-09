@@ -783,6 +783,8 @@ elif st.session_state.section == 6:
                 formatted_time = st.session_state['formatted_time']
                 front_page_completed = st.session_state['front_page_completed']
                 
+                st.write(f"Session State - FrontPageCompleted: {st.session_state.get('front_page_completed')}")
+
                 if formatted_date and formatted_time and front_page_completed:
                     # Path to your template file
                     template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
