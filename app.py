@@ -6,8 +6,10 @@ import os
 def create_word_doc(template_path, date, time):
     doc = Document(template_path)
 
-    # Debug: Check paragraphs for placeholders
+    # Debug: Output all paragraphs and shapes to check for placeholders
+    st.write("Checking paragraphs:")
     for paragraph in doc.paragraphs:
+        st.write(f"Paragraph: {paragraph.text}")
         for run in paragraph.runs:
             if 'DatePlaceholder' in run.text:
                 st.write(f"Found 'DatePlaceholder' in paragraph: {run.text}")
@@ -16,10 +18,11 @@ def create_word_doc(template_path, date, time):
                 st.write(f"Found 'TimePlaceholder' in paragraph: {run.text}")
                 run.text = run.text.replace('TimePlaceholder', time)
 
-    # Debug: Check text boxes (shapes) for placeholders
+    st.write("Checking text boxes (shapes):")
     for shape in doc.inline_shapes:
         if shape.type == 1:  # 1 corresponds to a text box
             shape_text = shape.text
+            st.write(f"Shape text: {shape_text}")
             if 'DatePlaceholder' in shape_text:
                 st.write(f"Found 'DatePlaceholder' in shape: {shape_text}")
                 shape.text = shape_text.replace('DatePlaceholder', date)
