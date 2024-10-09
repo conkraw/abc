@@ -30,8 +30,11 @@ def create_word_doc(template_path, date, time):
     # Access the XML tree directly
     xml = doc.element.xml
     root = etree.fromstring(xml)
-
-    for sdt in root.xpath('//w:sdt', namespaces=namespace):
+    
+    sdt_elements = root.xpath('//w:sdt', namespaces=namespace)
+    st.write("Number of content controls found:", len(sdt_elements))
+    
+    for sdt in sdt_elements:
         sdt_content = sdt.find('.//w:sdtContent', namespaces=namespace)
         if sdt_content is not None:
             for text in sdt_content.xpath('.//w:t', namespaces=namespace):
@@ -41,6 +44,7 @@ def create_word_doc(template_path, date, time):
                 if 'TimePlaceholder' in text.text:
                     st.write(f"Found 'TimePlaceholder' in content control: {text.text}")
                     text.text = text.text.replace('TimePlaceholder', time)
+
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
