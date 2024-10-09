@@ -259,6 +259,9 @@ elif st.session_state.section == 1:
     # Use a default value and store it in session state directly
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date")
 
+        if date:
+            st.session_state['formatted_date'] = date.strftime("%m-%d-%Y")
+    
         # Select Patient Age
         age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),key="age_select",on_change=update_automatic_selections)
 
@@ -733,30 +736,32 @@ elif st.session_state.section == 6:
     
     with col3:
         if st.button("Submit"):
-            if date:
-                # Path to your template file
-                template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
-    
-                # Debugging output
-                st.write(f"Using template: {template_path}")
-                st.write(f"Date entered: {formatted_date}")
-    
-                try:
-                    doc_file = create_word_doc(template_path, formatted_date)
-                    st.success("Document created successfully!")
-    
-                    with open(doc_file, 'rb') as f:
-                        st.download_button(
-                            label="Download Word Document",
-                            data=f,
-                            file_name=doc_file,
-                            mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                        )
-                    os.remove(doc_file)  # Clean up the file after download
-                except Exception as e:
-                    st.error(f"An error occurred: {e}")
-            else:
-                st.warning("Please enter a date.")
+            if 'formatted_date' in st.session_state:
+                formatted_date = st.session_state['formatted_date']
+                if formatted_date:
+                    # Path to your template file
+                    template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
+        
+                    # Debugging output
+                    st.write(f"Using template: {template_path}")
+                    st.write(f"Date entered: {formatted_date}")
+        
+                    try:
+                        doc_file = create_word_doc(template_path, formatted_date)
+                        st.success("Document created successfully!")
+        
+                        with open(doc_file, 'rb') as f:
+                            st.download_button(
+                                label="Download Word Document",
+                                data=f,
+                                file_name=doc_file,
+                                mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                            )
+                        os.remove(doc_file)  # Clean up the file after download
+                    except Exception as e:
+                        st.error(f"An error occurred: {e}")
+                else:
+                    st.warning("Please enter a date.")
     
     with col1:
         if st.button("Previous", on_click=prev_section):
