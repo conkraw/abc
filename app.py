@@ -258,6 +258,7 @@ elif st.session_state.section == 1:
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date")
         formatted_date = date.strftime("%m-%d-%Y")
+        st.session_state['date'] = formatted_date
         
         # Select Patient Age
         age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),key="age_select",on_change=update_automatic_selections)
@@ -729,7 +730,7 @@ elif st.session_state.section == 6:
     
     with col3:
         if st.button("Submit"):
-            if formatted_date:
+            if date:
                 # Path to your template file
                 template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
     
