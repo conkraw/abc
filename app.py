@@ -6,10 +6,6 @@ import os
 def create_word_doc(template_path, date, time):
     doc = Document(template_path)
 
-    # Debug: Print the current paragraphs
-    for paragraph in doc.paragraphs:
-        st.write(f"Original paragraph: {paragraph.text}")
-
     # Replace placeholders in paragraphs
     for paragraph in doc.paragraphs:
         for run in paragraph.runs:
@@ -17,6 +13,14 @@ def create_word_doc(template_path, date, time):
                 run.text = run.text.replace('DatePlaceholder', date)
             if 'TimePlaceholder' in run.text:
                 run.text = run.text.replace('TimePlaceholder', time)
+
+    # Replace placeholders in text boxes (shapes)
+    for shape in doc.inline_shapes:
+        if shape.type == 1:  # 1 corresponds to a text box
+            if 'DatePlaceholder' in shape.text:
+                shape.text = shape.text.replace('DatePlaceholder', date)
+            if 'TimePlaceholder' in shape.text:
+                shape.text = shape.text.replace('TimePlaceholder', time)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -56,3 +60,4 @@ if st.button("Submit"):
             st.error(f"An error occurred: {e}")
     else:
         st.warning("Please fill in all fields.")
+
