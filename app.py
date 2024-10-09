@@ -8,10 +8,11 @@ def create_word_doc(template_path, date, time):
 
     # Replace placeholders in paragraphs
     for paragraph in doc.paragraphs:
-        if 'date' in paragraph.text:
-            paragraph.text = paragraph.text.replace('date', date)
-        if 'time' in paragraph.text:
-            paragraph.text = paragraph.text.replace('time', time)
+        for run in paragraph.runs:
+            if 'DatePlaceholder' in run.text:
+                run.text = run.text.replace('DatePlaceholder', date)
+            if 'TimePlaceholder' in run.text:
+                run.text = run.text.replace('TimePlaceholder', time)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -29,16 +30,25 @@ if st.button("Submit"):
     if date and time:
         # Path to your template file
         template_path = 'airway_bundle.docx'  # Ensure this is the correct path
-        
-        doc_file = create_word_doc(template_path, date, time)
-        
-        with open(doc_file, 'rb') as f:
-            st.download_button(
-                label="Download Word Document",
-                data=f,
-                file_name=doc_file,
-                mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-            )
-        os.remove(doc_file)  # Clean up the file after download
+
+        # Debugging output
+        st.write(f"Using template: {template_path}")
+        st.write(f"Date entered: {date}")
+        st.write(f"Time entered: {time}")
+
+        try:
+            doc_file = create_word_doc(template_path, date, time)
+            st.success("Document created successfully!")
+            
+            with open(doc_file, 'rb') as f:
+                st.download_button(
+                    label="Download Word Document",
+                    data=f,
+                    file_name=doc_file,
+                    mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                )
+            os.remove(doc_file)  # Clean up the file after download
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
     else:
         st.warning("Please fill in all fields.")
