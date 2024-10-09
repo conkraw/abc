@@ -2,7 +2,6 @@ import streamlit as st
 from docx import Document
 import os
 
-# Function to replace placeholders in the template
 def create_word_doc(template_path, date, time, option):
     doc = Document(template_path)
 
@@ -23,11 +22,17 @@ def create_word_doc(template_path, date, time, option):
             # Replace only the checkbox corresponding to the selected option
             if option in paragraph.text:
                 checkbox_index = paragraph.text.index(option) - 2  # Adjust to get the checkbox character
-                if paragraph.text[checkbox_index] == '':
+                if paragraph.text[checkbox_index:checkbox_index + 2] == ' ':
                     st.write(f"Found checkbox for '{option}' in paragraph: {paragraph.text}")
-                    paragraph.text = (paragraph.text[:checkbox_index] + 
-                                      ' x' + 
-                                      paragraph.text[checkbox_index + 2:])  # Replace with checked box
+                    
+                    # Create a new run for the modified text
+                    new_run = paragraph.add_run(paragraph.text[checkbox_index + 2:])  # Text after checkbox
+                    paragraph.text = paragraph.text[:checkbox_index] + ' x '  # Updated checkbox with 'x'
+                    
+                    # Copy original formatting to the new run
+                    new_run.bold = False
+                    new_run.italic = False
+                    # You can also copy font size, color, etc. if needed
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
