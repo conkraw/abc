@@ -3,20 +3,27 @@ from docx import Document
 import os
 
 # Function to replace placeholders in the template
-def create_word_doc(template_path, date, time):
+def create_word_doc(template_path, date, time, option):
     doc = Document(template_path)
 
     # Check and replace text in paragraphs
     st.write("Checking paragraphs:")
     for paragraph in doc.paragraphs:
         st.write(f"Paragraph: {paragraph.text}")
+        
+        # Replace Date and Time Placeholders
         for run in paragraph.runs:
             if 'DatePlaceholder' in run.text:
-                st.write(f"Found 'DatePlaceholder' in paragraph: {run.text}")
                 run.text = run.text.replace('DatePlaceholder', date)
             if 'TimePlaceholder' in run.text:
-                st.write(f"Found 'TimePlaceholder' in paragraph: {run.text}")
                 run.text = run.text.replace('TimePlaceholder', time)
+        
+        # Check for checkbox replacement
+        if option == "On Admission":
+            if '' in paragraph.text:  # Assuming this is the checkbox character
+                st.write(f"Found checkbox in paragraph: {paragraph.text}")
+                paragraph.text = paragraph.text.replace('', ' x')  # Replace with checked box
+
 
     # Check and replace text in inline shapes (text boxes)
     st.write("Checking inline shapes (text boxes):")
@@ -42,6 +49,7 @@ st.title("Fill in Template Document")
 # User inputs
 date = st.text_input("Enter your date")
 time = st.text_input("Enter your time")
+option = st.selectbox("Select an option", ["Select an option", "On Admission", "During Rounds", "After Rounds", "Just Prior to Intubation", "After Intubation", "Prior to Extubation"])
 
 if st.button("Submit"):
     if date and time:
