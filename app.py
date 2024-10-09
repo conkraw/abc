@@ -802,7 +802,6 @@ elif st.session_state.section == 6:
                     st.warning("Formatted date not set. Please enter a date.")
             else:
                 st.warning("Please select when the front page was completed before proceeding.")
-    
         
     with col1:
         if st.button("Previous", on_click=prev_section):
