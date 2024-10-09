@@ -269,18 +269,25 @@ def prev_section():
 def save_data():
     data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
     db.collection('airway_checklists').add(data)
+    
+def update_front_page_completed():
+    # This function will update the session state based on the selection
+    st.session_state['front_page_completed'] = front_page_completed
 
 # Front Page Completed Section
 if st.session_state.section == 0:
     st.title("Front Page Completed")
+    
+        # Set session state based on the selection
+    if 'front_page_completed' not in st.session_state:
+        st.session_state['front_page_completed'] = '' 
+    
     front_page_completed = st.selectbox("Select when the front page was completed",
                                          ['','On admission', 'During rounds', 'After rounds', 
                                           'Just prior to intubation', 'After intubation', 
-                                          'Prior to extubation'], key="front_page_completed")
+                                          'Prior to extubation'], key="front_page_completed",on_change=update_front_page_completed)
 
-    # Set session state based on the selection
-    if front_page_completed:
-        st.session_state['front_page_completed'] = front_page_completed
+
     
     completed_by = st.text_input("Who completed the form? (Name or Role)", key="completed_by")
     room_number = st.selectbox("Select Room Number", 
