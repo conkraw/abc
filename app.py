@@ -254,14 +254,18 @@ elif st.session_state.section == 1:
     st.title("Patient Information")
 
     cols = st.columns(2)
-
+    
+    if 'date' not in st.session_state:
+        st.session_state['date'] = ""
+    
     with cols[0]:
-        date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date")
-        formatted_date = date.strftime("%m-%d-%Y")
-        st.session_state['date'] = formatted_date
+        date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date", 
+                         on_change=lambda: st.session_state.update({'date': date.strftime("%m-%d-%Y")}))
         
         # Select Patient Age
         age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),key="age_select",on_change=update_automatic_selections)
+
+    
 
     with cols[1]:
         time = st.time_input("Select Time", value=datetime.now().time(), key="time")
