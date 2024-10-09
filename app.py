@@ -169,23 +169,24 @@ def update_automatic_selections():
 #    doc.save(doc_file)
 #    return doc_file
 
-def create_word_doc(template_path, date, time):
+def create_word_doc(template_path, date, time, front_page_completed):
     doc = Document(template_path)
 
     # Check and replace text in paragraphs
-    st.write("Checking paragraphs:")
     for paragraph in doc.paragraphs:
-        st.write(f"Paragraph: {paragraph.text}")
-        
         # Replace Date Placeholder
         for run in paragraph.runs:
             if 'DatePlaceholder' in run.text:
                 run.text = run.text.replace('DatePlaceholder', date or "")
-
+            
             # Replace Time Placeholder
             if 'TimePlaceholder' in run.text:
                 run.text = run.text.replace('TimePlaceholder', time or "")
-
+            
+            # Replace Front Page Completed Placeholder
+            if 'FrontPagePlaceholder' in run.text:
+                run.text = run.text.replace('FrontPagePlaceholder', front_page_completed or "")
+    
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
     doc.save(doc_file)
@@ -773,22 +774,22 @@ elif st.session_state.section == 6:
     #                # Path to your template file
     #                template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
 
-    with col3:
+    if 'formatted_date' in st.session_state:
+        formatted_date = st.session_state['formatted_date']
+    if 'formatted_time' in st.session_state:
+        formatted_time = st.session_state['formatted_time']
+    
+    # If submit button is pressed, generate the Word document
+
+    with col3: 
         if st.button("Submit"):
-            # Retrieve the date and time from session state
-            if 'formatted_date' in st.session_state:
-                formatted_date = st.session_state['formatted_date']
-            if 'formatted_time' in st.session_state:
-                formatted_time = st.session_state['formatted_time']
-            
-            # Check if both date and time are available
-            if formatted_date and formatted_time:
+            if formatted_date and formatted_time and front_page_completed:
                 # Path to your template file
                 template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
                 
                 try:
-                    # Generate the document
-                    doc_file = create_word_doc(template_path, formatted_date, formatted_time)
+                    # Create the document with all the information
+                    doc_file = create_word_doc(template_path, formatted_date, formatted_time, front_page_completed)
                     st.success("Document created successfully!")
                     
                     # Provide download button
@@ -803,11 +804,10 @@ elif st.session_state.section == 6:
                 except Exception as e:
                     st.error(f"An error occurred: {e}")
             else:
-                st.warning("Please fill in all fields.")
-    
+                st.warning("Please ensure all fields (date, time, front page) are filled in.")
+
     with col1:
         if st.button("Previous", on_click=prev_section):
             pass
-
 
         
