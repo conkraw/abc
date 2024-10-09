@@ -35,16 +35,24 @@ def create_word_doc(template_path, date, time):
     st.write("Number of content controls found:", len(sdt_elements))
     
     for sdt in sdt_elements:
-        sdt_content = sdt.find('.//w:sdtContent', namespaces=namespace)
-        if sdt_content is not None:
-            for text in sdt_content.xpath('.//w:t', namespaces=namespace):
-                st.write(f"Content control text: {text.text}")  # Debugging line
-                if 'DatePlaceholder' in text.text:
-                    st.write(f"Found 'DatePlaceholder' in content control: {text.text}")
-                    text.text = text.text.replace('DatePlaceholder', date)
-                if 'TimePlaceholder' in text.text:
-                    st.write(f"Found 'TimePlaceholder' in content control: {text.text}")
-                    text.text = text.text.replace('TimePlaceholder', time)
+        # Get the title of the content control
+        title = sdt.find('.//w:sdtPr/w:title', namespaces=namespace)
+        if title is not None:
+            title_text = title.text
+            st.write(f"Content control title: '{title_text}'")  # Debug output
+    
+            sdt_content = sdt.find('.//w:sdtContent', namespaces=namespace)
+            if sdt_content is not None:
+                for text in sdt_content.xpath('.//w:t', namespaces=namespace):
+                    st.write(f"Content control text: '{text.text}'")  # Debug output
+    
+                    # Check the title to decide which placeholder to replace
+                    if title_text == "DateControl":  # Example title for the date
+                        st.write(f"Replacing 'DateControl' in: '{text.text}'")
+                        text.text = text.text.replace(text.text, date)
+                    elif title_text == "TimeControl":  # Example title for the time
+                        st.write(f"Replacing 'TimeControl' in: '{text.text}'")
+                        text.text = text.text.replace(text.text, time)
 
 
     # Save the modified document
