@@ -185,6 +185,7 @@ def create_word_doc(template_path, date, time, front_page_completed):
             
             # Replace Front Page Completed Placeholder
             if 'FrontPagePlaceholder' in run.text:
+                print(f"Replacing FrontPagePlaceholder with: {front_page_completed}")
                 run.text = run.text.replace('FrontPagePlaceholder', front_page_completed or "")
     
     # Save the modified document
@@ -763,14 +764,6 @@ elif st.session_state.section == 6:
     st.title("Fill in Template Document")
     
     col1, col2, col3 = st.columns(3)
-    
-    #with col3:
-    #    if st.button("Submit"):
-    #        if 'formatted_date' in st.session_state:
-    #            formatted_date = st.session_state['formatted_date']
-    #            if formatted_date:
-    #                # Path to your template file
-    #                template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
 
     if 'formatted_date' in st.session_state:
         formatted_date = st.session_state['formatted_date']
