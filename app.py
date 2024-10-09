@@ -260,8 +260,11 @@ elif st.session_state.section == 1:
     
     with cols[0]:
     # Use a default value and store it in session state directly
-        date_input = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date", 
-                                on_change=lambda: st.session_state.update({'date': date_input.strftime("%m-%d-%Y")}))
+        date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date")
+    
+    # Update session state with the formatted date
+        st.session_state['date'] = date.strftime("%m-%d-%Y")  # Ensure this is a datetime.date object
+
 
             
         # Select Patient Age
