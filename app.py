@@ -7,8 +7,10 @@ from firebase_admin import credentials, firestore
 import os
 import json
 from PyPDF2 import PdfReader, PdfWriter
+from datetime import datetime
+import pdfrw
+import io
 
-import streamlit as st
 
 # Define mappings for ETT size, Blade type, and Apneic Oxygenation based on patient age
 age_to_ett_mapping = {
@@ -660,7 +662,7 @@ elif st.session_state.section == 4:
         st.text_input("Please state an 'other' reason for the timing of intubation:", key="other_when_intubate")
         
     # Single Next and Previous Buttons
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     # Add the 'Previous' button to the first column
     with col1:
@@ -668,7 +670,7 @@ elif st.session_state.section == 4:
             pass
     
     # Add the 'Next' button to the second column
-    with col2:
+    with col3:
         if st.button("Next", on_click=next_section):
             pass
 
@@ -689,6 +691,36 @@ elif st.session_state.section == 5:
 
     if 'Other' in advance_airway_procedure:
         st.text_input("Please state an 'other' protocol for Difficult Airway Protocol Initiation:", key="other_advance_airway_procedure")
+
+elif st.session_state.section == 6:
+    
+uploaded_file = st.file_uploader("airway_bundle.pdf", type=["pdf"])
+
+if uploaded_file is not None:
+        # Load the PDF template
+        template_pdf = pdfrw.PdfReader(uploaded_file)
+        
+        # Define the field name in your PDF form where the date should go
+        field_name = 'date'  # Change this to the actual field name in your PDF
+    
+        # Fill in the date field
+        for page in template_pdf.pages:
+            for annotation in page['/Annots']:
+                if annotation['/T'] == f'({field_name})':
+                    annotation.update(pdfrw.PdfDict(V=f'{date}'))  # Fill in the date
+    
+        # Write to a bytes buffer
+        output_pdf = io.BytesIO()
+        pdfrw.PdfWriter().write(output_pdf, template_pdf)
+        output_pdf.seek(0)
+    
+        # Allow the user to download the modified PDF
+        st.download_button(
+            label="Download PDF",
+            data=output_pdf,
+            file_name="filled_form.pdf",
+            mime="application/pdf"
+        )
 
 # Create two columns: one for the 'Previous' button and one for the 'Submit' button
     col1, col2, col3 = st.columns(3)
