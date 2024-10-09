@@ -260,8 +260,9 @@ elif st.session_state.section == 1:
     
     with cols[0]:
     # Use a default value and store it in session state directly
-        date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date", 
-                             on_change=lambda: st.session_state.update({'date': st.session_state['date'].strftime("%m-%d-%Y")}))
+        date_input = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date", 
+                                on_change=lambda: st.session_state.update({'date': date_input.strftime("%m-%d-%Y")}))
+
             
         # Select Patient Age
         age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),key="age_select",on_change=update_automatic_selections)
