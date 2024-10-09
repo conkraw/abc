@@ -16,7 +16,7 @@ if uploaded_file is not None and custom_text:
     reader = PdfReader(uploaded_file)
     writer = PdfWriter()
 
-    field_name = 'textFieldName'  # Change this to your PDF's text input field name
+    field_name = 'date'  # Change this to your PDF's text input field name
 
     # Loop through all pages to fill the specified text field
     for page in reader.pages:
