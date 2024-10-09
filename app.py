@@ -182,7 +182,7 @@ def create_word_doc(template_path, date, front_page_completed):
             if 'DatePlaceholder' in run.text:
                 run.text = run.text.replace('DatePlaceholder', date)
             if 'FrontPagePlaceholder' in run.text:  # Replace this with your actual placeholder
-                run.text = run.text.replace('FrontPageStatusPlaceholder', front_page_completed)
+                run.text = run.text.replace('FrontPagePlaceholder', front_page_completed)
     
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
