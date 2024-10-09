@@ -764,34 +764,34 @@ elif st.session_state.section == 6:
     #                # Path to your template file
     #                template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
 
-    ith col3:
-    if st.button("Submit"):
-        # Check if the front page is completed and if the formatted date exists
-        if 'front_page' in st.session_state and st.session_state['front_page']:
-            if 'formatted_date' in st.session_state:
-                formatted_date = st.session_state['formatted_date']
+    with col3:
+        if st.button("Submit"):
+            # Check if the front page is completed and if the formatted date exists
+            if 'front_page' in st.session_state and st.session_state['front_page']:
+                if 'formatted_date' in st.session_state:
+                    formatted_date = st.session_state['formatted_date']
+                    
+                    if formatted_date:
+                        # Path to your template file
+                        template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
+                        try:
+                                #doc_file = create_word_doc(template_path, formatted_date)
+                                 doc_file = create_word_doc(template_path, formatted_date, st.session_state['front_page'])
+                            
+                                st.success("Document created successfully!")
                 
-                if formatted_date:
-                    # Path to your template file
-                    template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
-                    try:
-                            #doc_file = create_word_doc(template_path, formatted_date)
-                             doc_file = create_word_doc(template_path, formatted_date, st.session_state['front_page'])
-                        
-                            st.success("Document created successfully!")
-            
-                            with open(doc_file, 'rb') as f:
-                                st.download_button(
-                                    label="Download Word Document",
-                                    data=f,
-                                    file_name=doc_file,
-                                    mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                                )
-                            os.remove(doc_file)  # Clean up the file after download
-                        except Exception as e:
-                            st.error(f"An error occurred: {e}")
-                    else:
-                        st.warning("Please enter a date.")
+                                with open(doc_file, 'rb') as f:
+                                    st.download_button(
+                                        label="Download Word Document",
+                                        data=f,
+                                        file_name=doc_file,
+                                        mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                                    )
+                                os.remove(doc_file)  # Clean up the file after download
+                            except Exception as e:
+                                st.error(f"An error occurred: {e}")
+                        else:
+                            st.warning("Please enter a date.")
     
     with col1:
         if st.button("Previous", on_click=prev_section):
