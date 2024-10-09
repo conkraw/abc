@@ -43,11 +43,11 @@ date = st.text_input("Enter your date")
 time = st.text_input("Enter your time")
 option = st.selectbox("Select an option", [
     "Select an option", 
-    "On Admission", 
-    "During Rounds", 
+    "On admission", 
+    "During rounds", 
     "After Rounds", 
-    "Just Prior to Intubation", 
-    "After Intubation", 
+    "Just prior to intubation", 
+    "After intubation", 
     "Prior to Extubation"
 ])
 
