@@ -265,9 +265,7 @@ if st.session_state.section == 0:
 
     # Set session state based on the selection
     if front_page_completed:
-        st.session_state['front_page'] = front_page_completed  # Store the selected option
-    else:
-        st.session_state['front_page'] = None  # Reset if no selection
+        st.session_state['front_page_completed'] = front_page_completed
     
     completed_by = st.text_input("Who completed the form? (Name or Role)", key="completed_by")
     room_number = st.selectbox("Select Room Number", 
