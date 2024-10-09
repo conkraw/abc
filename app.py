@@ -774,24 +774,29 @@ elif st.session_state.section == 6:
                     if formatted_date:
                         # Path to your template file
                         template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
+    
                         try:
-                                #doc_file = create_word_doc(template_path, formatted_date)
-                                 doc_file = create_word_doc(template_path, formatted_date, st.session_state['front_page'])
-                            
-                                st.success("Document created successfully!")
-                
-                                with open(doc_file, 'rb') as f:
-                                    st.download_button(
-                                        label="Download Word Document",
-                                        data=f,
-                                        file_name=doc_file,
-                                        mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                                    )
-                                os.remove(doc_file)  # Clean up the file after download
-                            except Exception as e:
-                                st.error(f"An error occurred: {e}")
-                        else:
-                            st.warning("Please enter a date.")
+                            # Pass both the formatted date and front page completion status
+                            doc_file = create_word_doc(template_path, formatted_date, st.session_state['front_page'])
+                            st.success("Document created successfully!")
+            
+                            with open(doc_file, 'rb') as f:
+                                st.download_button(
+                                    label="Download Word Document",
+                                    data=f,
+                                    file_name=doc_file,
+                                    mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                                )
+                            os.remove(doc_file)  # Clean up the file after download
+                        except Exception as e:
+                            st.error(f"An error occurred: {e}")
+                    else:
+                        st.warning("Please enter a date.")
+                else:
+                    st.warning("Formatted date not set. Please enter a date.")
+            else:
+                st.warning("Please complete the front page before proceeding.")
+
     
     with col1:
         if st.button("Previous", on_click=prev_section):
