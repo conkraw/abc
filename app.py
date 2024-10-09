@@ -7,7 +7,8 @@ from PyPDF2.generic import NameObject, TextStringObject
 st.title("PDF Form Filler")
 
 # URL of the PDF file in your GitHub repository
-pdf_url = "airway_bundle.pdf"
+pdf_url = "https://raw.githubusercontent.com/conkraw/abc/main/airway_bundle.pdf"
+
 
 # Text input for user
 custom_text = st.text_input("Enter text to fill in PDF (e.g., '98%'):")
