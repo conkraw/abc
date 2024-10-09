@@ -1,52 +1,39 @@
-import io
 import streamlit as st
-from PyPDF2 import PdfReader, PdfWriter
-from PyPDF2.generic import NameObject, TextStringObject
+from docx import Document
+import os
 
-st.title("PDF Form Filler")
+# Function to replace placeholders in the template
+def create_word_doc(template_path, date_input):
+    doc = Document(template_path)
+    
+    for paragraph in doc.paragraphs:
+        if '{{date}}' in paragraph.text:
+            paragraph.text = paragraph.text.replace('{{date}}', date_input)
+    
+    doc_file = 'airway_bundle_form.docx'
+    doc.save(doc_file)
+    return doc_file
 
-# Text input for user
-custom_text = st.text_input("Enter text to fill in PDF (e.g., '98%'):")
-field_name = 'date'  # Change this to your desired text input field name
+# Streamlit app
+st.title("Fill in Template Document")
 
-# File uploader
-#uploaded_file = st.file_uploader("Upload airway_bundle.pdf", type=["pdf"])
-uploaded_file = "https://raw.githubusercontent.com/conkraw/abc/main/airway_bundle.pdf"
+# User input
+date_input = st.text_input("Enter a date (e.g., 2024-10-09)")
 
-# Submit button
 if st.button("Submit"):
-    if uploaded_file is not None and custom_text:
-        # Load the PDF template
-        reader = PdfReader(uploaded_file)
-        writer = PdfWriter()
-
-        # Loop through all pages to fill the specified text field
-        for page in reader.pages:
-            if '/Annots' in page:
-                annotations = page['/Annots']
-                for annot in annotations:
-                    annot_obj = annot.get_object()
-
-                    # Check if the field name matches
-                    if annot_obj.get('/T') == NameObject(field_name):
-                        annot_obj.update({
-                            NameObject('/V'): TextStringObject(custom_text)  # Set the value
-                        })
-
-            writer.add_page(page)  # Add the modified page to the writer
-
-        # Write to a bytes buffer
-        output_pdf = io.BytesIO()
-        writer.write(output_pdf)
-        output_pdf.seek(0)
-
-        # Download button
-        st.download_button(
-            label="Download Filled PDF",
-            data=output_pdf,
-            file_name="filled_form.pdf",
-            mime="application/pdf"
-        )
+    if date_input:
+        # Path to your template file
+        template_path = 'airway_bundle.docx'  # Change this to the path of your template
+        
+        doc_file = create_word_doc(template_path, date_input)
+        
+        with open(doc_file, 'rb') as f:
+            st.download_button(
+                label="Download Word Document",
+                data=f,
+                file_name=doc_file,
+                mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            )
+        os.remove(doc_file)  # Clean up the file after download
     else:
-        st.warning("Please upload a PDF and enter the text.")
-
+        st.warning("Please enter a valid date.")
