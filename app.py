@@ -8,10 +8,10 @@ def create_word_doc(template_path, date, time):
 
     # Replace placeholders in paragraphs
     for paragraph in doc.paragraphs:
-        if 'DatePlaceholder' in paragraph.text:
-            paragraph.text = paragraph.text.replace('DatePlaceholder', date)
-        if 'TimePlaceholder' in paragraph.text:
-            paragraph.text = paragraph.text.replace('TimePlaceholder', time)
+        if 'date' in paragraph.text:
+            paragraph.text = paragraph.text.replace('date', date)
+        if 'time' in paragraph.text:
+            paragraph.text = paragraph.text.replace('time', time)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
