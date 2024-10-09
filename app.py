@@ -16,18 +16,16 @@ if uploaded_file is not None:
     # Load the PDF template
     template_pdf = pdfrw.PdfReader(uploaded_file)
     
-    field_name = 'date'  # Field name in your PDF form
+    field_name = 'date'  # Ensure this matches your PDF's text input field name
 
     # Fill in the date field
     for page in template_pdf.pages:
         annotations = page.get('/Annots', [])
-        st.write("Type of annotations:", type(annotations))  # Debug line
-        if annotations is not None:
-            st.write("Annotations on this page:", annotations)  # Debug line
+        if annotations:
             for annotation in annotations:
-                st.write("Annotation object:", annotation)  # Debug line
+                # Check if the annotation is a text field
                 if annotation.get('/T') == f'({field_name})':
-                    annotation.update(pdfrw.PdfDict(V=f'{formatted_date}'))
+                    annotation.update(pdfrw.PdfDict(V=f'{formatted_date}', AS=pdfrw.PdfName('Yes')))  # Set the value
 
     # Write to a bytes buffer
     output_pdf = io.BytesIO()
