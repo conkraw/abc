@@ -6,6 +6,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import os
 import json
+from PyPDF2 import PdfReader, PdfWriter
 
 import streamlit as st
 
