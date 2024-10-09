@@ -172,33 +172,34 @@ def update_automatic_selections():
 def create_word_doc(template_path, date, time, front_page_completed):
     doc = Document(template_path)
 
-    # Debugging: Print the original document content (for troubleshooting)
+    # Debug: Print original document content to check placeholders
     st.write("Original Document Content:")
     for paragraph in doc.paragraphs:
         st.write(paragraph.text)
 
-    # Check and replace text in paragraphs
+    # Replace placeholders
     for paragraph in doc.paragraphs:
         for run in paragraph.runs:
             if 'DatePlaceholder' in run.text:
-                st.write(f"Replacing DatePlaceholder with: {date}")
+                st.write(f"Replacing DatePlaceholder with: {date}")  # Debug
                 run.text = run.text.replace('DatePlaceholder', date or "")
             
             if 'TimePlaceholder' in run.text:
-                st.write(f"Replacing TimePlaceholder with: {time}")
+                st.write(f"Replacing TimePlaceholder with: {time}")  # Debug
                 run.text = run.text.replace('TimePlaceholder', time or "")
             
             if 'FrontPagePlaceholder' in run.text:
-                st.write(f"Replacing FrontPagePlaceholder with: {front_page_completed}")
+                st.write(f"Replacing FrontPagePlaceholder with: {front_page_completed}")  # Debug
                 run.text = run.text.replace('FrontPagePlaceholder', front_page_completed or "")
-    
-    # Debugging: Print the modified document content
+
+    # Debug: Print modified document content
     st.write("Modified Document Content:")
     for paragraph in doc.paragraphs:
         st.write(paragraph.text)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
+    st.write(f"Saving document to: {doc_file}")  # Debug
     doc.save(doc_file)
     return doc_file
 
