@@ -832,10 +832,4 @@ elif st.session_state.section == 6:
     with col1:
         if st.button("Previous", on_click=prev_section):
             pass
-
-
-    with col1:
-        if st.button("Previous", on_click=prev_section):
-            pass
-
         
