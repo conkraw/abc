@@ -6,6 +6,10 @@ import os
 def create_word_doc(template_path, date, time):
     doc = Document(template_path)
 
+    # Debug: Print the current paragraphs
+    for paragraph in doc.paragraphs:
+        st.write(f"Original paragraph: {paragraph.text}")
+
     # Replace placeholders in paragraphs
     for paragraph in doc.paragraphs:
         for run in paragraph.runs:
