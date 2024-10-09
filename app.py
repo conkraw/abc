@@ -38,24 +38,28 @@ def create_word_doc(template_path, date, time):
         # Print the entire sdt element for debugging
         st.write("Content Control XML:", etree.tostring(sdt, pretty_print=True).decode())
     
-        # Attempt to get the title of the content control
-        title = sdt.find('.//w:sdtPr/w:title', namespaces=namespace)
-        title_text = title.text if title is not None else "No Title"
-        st.write(f"Content control title: '{title_text}'")  # Debug output
+        # Attempt to get the alias or tag of the content control
+        alias = sdt.find('.//w:sdtPr/w:alias', namespaces=namespace)
+        tag = sdt.find('.//w:sdtPr/w:tag', namespaces=namespace)
+        
+        alias_text = alias.text if alias is not None else "No Alias"
+        tag_text = tag.text if tag is not None else "No Tag"
+    
+        st.write(f"Content control alias: '{alias_text}'")  # Debug output
+        st.write(f"Content control tag: '{tag_text}'")      # Debug output
     
         sdt_content = sdt.find('.//w:sdtContent', namespaces=namespace)
         if sdt_content is not None:
             for text in sdt_content.xpath('.//w:t', namespaces=namespace):
                 st.write(f"Content control text: '{text.text}'")  # Debug output
     
-                # Replace based on the content control title
-                if title_text == "DateControl":  # Adjust title as needed
-                    st.write(f"Replacing in DateControl: '{text.text}'")
+                # Replace based on the alias or tag
+                if alias_text == "DatePlaceholder":
+                    st.write(f"Replacing in DatePlaceholder: '{text.text}'")
                     text.text = date  # Replace with date
-                elif title_text == "TimeControl":  # Adjust title as needed
-                    st.write(f"Replacing in TimeControl: '{text.text}'")
+                elif alias_text == "TimePlaceholder":
+                    st.write(f"Replacing in TimePlaceholder: '{text.text}'")
                     text.text = time  # Replace with time
-
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
