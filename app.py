@@ -205,7 +205,7 @@ if 'form_data' not in st.session_state:
     st.session_state.form_data = {}
 
 def next_section():
-    if st.session_state.section < 5:
+    if st.session_state.section < 6:
         st.session_state.section += 1
         save_data()
 
@@ -715,10 +715,6 @@ elif st.session_state.section == 6:
     # File uploader
     uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
     
-    # Date input with a label
-    date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date")
-    formatted_date = date.strftime("%m-%d-%Y")  # Format date as MM-DD-YYYY
-    
     if uploaded_file is not None:
         # Load the PDF template
         template_pdf = pdfrw.PdfReader(uploaded_file)
@@ -744,7 +740,6 @@ elif st.session_state.section == 6:
             file_name="filled_form.pdf",
             mime="application/pdf"
         )
-
 
 # Create two columns: one for the 'Previous' button and one for the 'Submit' button
     col1, col2, col3 = st.columns(3)
