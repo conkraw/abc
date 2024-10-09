@@ -710,44 +710,7 @@ elif st.session_state.section == 5:
 
 elif st.session_state.section == 6:
     st.title("Download Form")
-    
-    uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
-    
-    if uploaded_file is not None:
-    # Load the PDF template
-        template_pdf = pdfrw.PdfReader(uploaded_file)
-    
-    # Define the field name in your PDF form where the date should go
-    field_name = 'date'  # Change this to the actual field name in your PDF
 
-    # Get the date from date input
-    date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date")
-    formatted_date = date.strftime("%m-%d-%Y")  # Format date as MM-DD-YYYY
-    
-    try:
-        # Fill in the date field
-        for page in template_pdf.pages:
-            annotations = page.get('/Annots', [])
-            st.write("Annotations:", annotations)  # Debug line
-            for annotation in annotations:
-                st.write("Annotation:", annotation)  # Debug line
-                if annotation.get('/T') == f'({field_name})':
-                    annotation.update(pdfrw.PdfDict(V=f'{formatted_date}'))  # Fill in the date
-        
-        # Write to a bytes buffer
-        output_pdf = io.BytesIO()
-        pdfrw.PdfWriter().write(output_pdf, template_pdf)
-        output_pdf.seek(0)
-        
-        # Allow the user to download the modified PDF
-        st.download_button(
-            label="Download Filled PDF",
-            data=output_pdf,
-            file_name="filled_form.pdf",
-            mime="application/pdf"
-        )
-    except Exception as e:
-        st.error(f"An error occurred: {e}")
 
 # Create two columns: one for the 'Previous' button and one for the 'Submit' button
     col1, col2, col3 = st.columns(3)
