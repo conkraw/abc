@@ -29,7 +29,7 @@ def create_word_doc(template_path, date, time, option):
                     st.write(f"Found checkbox for '{option}' in paragraph: {paragraph.text}")
 
                     # Create a new text for the checkbox with an "x"
-                    new_checkbox = ' x '
+                    new_checkbox = 'x'
                     # Rebuild the paragraph text
                     new_paragraph_text = parts[0][:checkbox_index] + new_checkbox + option + ''.join(parts[1:])
                     paragraph.clear()  # Clear existing runs
