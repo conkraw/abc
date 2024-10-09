@@ -1,6 +1,6 @@
 import io
 import streamlit as st
-import pdfrw
+from PyPDF2 import PdfReader, PdfWriter
 
 st.title("PDF Form Filler")
 
@@ -12,22 +12,24 @@ uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
 
 if uploaded_file is not None:
     # Load the PDF template
-    template_pdf = pdfrw.PdfReader(uploaded_file)
-    
+    reader = PdfReader(uploaded_file)
+    writer = PdfWriter()
+
     field_name = 'textFieldName'  # Change this to your PDF's text input field name
 
-    # Fill in the specified text field
-    for page in template_pdf.pages:
-        annotations = page.get('/Annots', [])
-        if annotations:
-            for annotation in annotations:
-                # Check if the annotation is a text field
-                if annotation.get('/T') == f'({field_name})':
-                    annotation.update(pdfrw.PdfDict(V=f'{custom_text}'))  # Set the value
+    # Loop through all pages to fill the specified text field
+    for page in reader.pages:
+        writer.add_page(page)  # Add the page to the writer
+        if '/Annots' in page:
+            for annot in page['/Annots']:
+                if annot.get('/T') == f'({field_name})':
+                    annot.update({
+                        NameObject('/V'): TextStringObject(custom_text)  # Set the value
+                    })
 
     # Write to a bytes buffer
     output_pdf = io.BytesIO()
-    pdfrw.PdfWriter().write(output_pdf, template_pdf)
+    writer.write(output_pdf)
     output_pdf.seek(0)
 
     # Download button
@@ -37,4 +39,5 @@ if uploaded_file is not None:
         file_name="filled_form.pdf",
         mime="application/pdf"
     )
+
 
