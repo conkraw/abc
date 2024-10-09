@@ -6,7 +6,7 @@ import os
 def create_word_doc(template_path, date, time):
     doc = Document(template_path)
 
-    # Debug: Output all paragraphs
+    # Check and replace text in paragraphs
     st.write("Checking paragraphs:")
     for paragraph in doc.paragraphs:
         st.write(f"Paragraph: {paragraph.text}")
@@ -18,12 +18,24 @@ def create_word_doc(template_path, date, time):
                 st.write(f"Found 'TimePlaceholder' in paragraph: {run.text}")
                 run.text = run.text.replace('TimePlaceholder', time)
 
-    # Debug: Check text boxes (shapes) for placeholders
-    st.write("Checking text boxes (shapes):")
+    # Check and replace text in shapes
+    st.write("Checking shapes (text boxes and other elements):")
+    for shape in doc.inline_shapes:
+        if shape.type == 1:  # Text box
+            shape_text = shape.text
+            st.write(f"Shape text: {shape_text}")
+            if 'DatePlaceholder' in shape_text:
+                st.write(f"Found 'DatePlaceholder' in shape: {shape_text}")
+                shape.text = shape_text.replace('DatePlaceholder', date)
+            if 'TimePlaceholder' in shape_text:
+                st.write(f"Found 'TimePlaceholder' in shape: {shape_text}")
+                shape.text = shape_text.replace('TimePlaceholder', time)
+
+    # Check for any text boxes in the shapes collection directly
     for shape in doc.shapes:
         if shape.has_text_frame:
             shape_text = shape.text_frame.text
-            st.write(f"Shape text: {shape_text}")
+            st.write(f"Shape text (from text frame): {shape_text}")
             if 'DatePlaceholder' in shape_text:
                 st.write(f"Found 'DatePlaceholder' in shape: {shape_text}")
                 shape.text_frame.text = shape_text.replace('DatePlaceholder', date)
