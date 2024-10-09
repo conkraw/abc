@@ -776,6 +776,8 @@ elif st.session_state.section == 6:
         formatted_date = st.session_state['formatted_date']
     if 'formatted_time' in st.session_state:
         formatted_time = st.session_state['formatted_time']
+    if 'front_page_completed' in st.session_state:
+        front_page_completed = st.session_state['front_page_completed']
     
     # If submit button is pressed, generate the Word document
 
