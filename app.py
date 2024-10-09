@@ -168,6 +168,7 @@ def update_automatic_selections():
 #    doc_file = 'airway_bundle_form.docx'
 #    doc.save(doc_file)
 #    return doc_file
+
 def create_word_doc(template_path, date, front_page_completed):
     doc = Document(template_path)
     
@@ -774,7 +775,9 @@ elif st.session_state.section == 6:
                     # Path to your template file
                     template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
                     try:
-                            doc_file = create_word_doc(template_path, formatted_date)
+                            #doc_file = create_word_doc(template_path, formatted_date)
+                             doc_file = create_word_doc(template_path, formatted_date, st.session_state['front_page'])
+                        
                             st.success("Document created successfully!")
             
                             with open(doc_file, 'rb') as f:
