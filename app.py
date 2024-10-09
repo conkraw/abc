@@ -243,6 +243,8 @@ elif st.session_state.section == 1:
 
     with cols[0]:
         date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date")
+        formatted_date = date.strftime("%m-%d-%Y")
+        
         # Select Patient Age
         age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),key="age_select",on_change=update_automatic_selections)
 
@@ -694,26 +696,27 @@ elif st.session_state.section == 5:
 
 elif st.session_state.section == 6:
     
-uploaded_file = st.file_uploader("airway_bundle.pdf", type=["pdf"])
-
-if uploaded_file is not None:
-        # Load the PDF template
-        template_pdf = pdfrw.PdfReader(uploaded_file)
+    uploaded_file = st.file_uploader("airway_bundle.pdf", type=["pdf"])
+    
+    if uploaded_file is not None:
         
-        # Define the field name in your PDF form where the date should go
+    # Load the PDF template
+        template_pdf = pdfrw.PdfReader(uploaded_file)
+    
+    # Define the field name in your PDF form where the date should go
         field_name = 'date'  # Change this to the actual field name in your PDF
     
-        # Fill in the date field
+    # Fill in the date field
         for page in template_pdf.pages:
-            for annotation in page['/Annots']:
+            for annotation in page.get('/Annots', []):
                 if annotation['/T'] == f'({field_name})':
-                    annotation.update(pdfrw.PdfDict(V=f'{date}'))  # Fill in the date
-    
+                    annotation.update(pdfrw.PdfDict(V=f'{formatted_date}'))  # Fill in the date
+        
         # Write to a bytes buffer
         output_pdf = io.BytesIO()
         pdfrw.PdfWriter().write(output_pdf, template_pdf)
         output_pdf.seek(0)
-    
+        
         # Allow the user to download the modified PDF
         st.download_button(
             label="Download PDF",
@@ -721,6 +724,7 @@ if uploaded_file is not None:
             file_name="filled_form.pdf",
             mime="application/pdf"
         )
+
 
 # Create two columns: one for the 'Previous' button and one for the 'Submit' button
     col1, col2, col3 = st.columns(3)
