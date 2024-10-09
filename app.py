@@ -14,7 +14,7 @@ def create_word_doc(template_path, date, time):
             paragraph.text = paragraph.text.replace('time', time)
 
     # Save the modified document
-    doc_file = 'airway_bundle.docx'
+    doc_file = 'airway_bundle_form.docx'
     doc.save(doc_file)
     return doc_file
 
@@ -28,7 +28,7 @@ time = st.text_input("Enter your time")
 if st.button("Submit"):
     if date and time:
         # Path to your template file
-        template_path = 'airway_bundle_form.docx'  # Adjust this to your template's path
+        template_path = 'airway_bundle.docx'  # Adjust this to your template's path
         
         doc_file = create_word_doc(template_path, date,time)
         
