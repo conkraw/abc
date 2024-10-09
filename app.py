@@ -3,13 +3,13 @@ from docx import Document
 import os
 
 # Function to replace placeholders in the template
-def create_word_doc(template_path, name, time):
+def create_word_doc(template_path, date, time):
     doc = Document(template_path)
 
     # Replace placeholders in paragraphs
     for paragraph in doc.paragraphs:
         if 'NamePlaceholder' in paragraph.text:
-            paragraph.text = paragraph.text.replace('date', name)
+            paragraph.text = paragraph.text.replace('date', date)
         if 'AgePlaceholder' in paragraph.text:
             paragraph.text = paragraph.text.replace('time', time)
 
@@ -26,7 +26,7 @@ date = st.text_input("Enter your date")
 time = st.text_input("Enter your time")
 
 if st.button("Submit"):
-    if name and age:
+    if date and time:
         # Path to your template file
         template_path = 'airway_bundle_form.docx'  # Adjust this to your template's path
         
