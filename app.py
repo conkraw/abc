@@ -172,6 +172,9 @@ def update_automatic_selections():
 def create_word_doc(template_path, date, time, front_page_completed):
     doc = Document(template_path)
 
+    st.write(f"Session State - FrontPageCompleted: {st.session_state.get('front_page_completed')}")  # Debugging
+
+
     # Debug: Print original document content to check placeholders
     st.write("Original Document Content:")
     for paragraph in doc.paragraphs:
