@@ -35,16 +35,16 @@ def create_word_doc(template_path, date, time):
     st.write("Number of content controls found:", len(sdt_elements))
     
     for sdt in sdt_elements:
-    sdt_content = sdt.find('.//w:sdtContent', namespaces=namespace)
-    if sdt_content is not None:
-        for text in sdt_content.xpath('.//w:t', namespaces=namespace):
-            st.write(f"Content control text: {text.text}")  # Debugging line
-            if 'DatePlaceholder' in text.text:
-                st.write(f"Found 'DatePlaceholder' in content control: {text.text}")
-                text.text = text.text.replace('DatePlaceholder', date)
-            if 'TimePlaceholder' in text.text:
-                st.write(f"Found 'TimePlaceholder' in content control: {text.text}")
-                text.text = text.text.replace('TimePlaceholder', time)
+        sdt_content = sdt.find('.//w:sdtContent', namespaces=namespace)
+        if sdt_content is not None:
+            for text in sdt_content.xpath('.//w:t', namespaces=namespace):
+                st.write(f"Content control text: {text.text}")  # Debugging line
+                if 'DatePlaceholder' in text.text:
+                    st.write(f"Found 'DatePlaceholder' in content control: {text.text}")
+                    text.text = text.text.replace('DatePlaceholder', date)
+                if 'TimePlaceholder' in text.text:
+                    st.write(f"Found 'TimePlaceholder' in content control: {text.text}")
+                    text.text = text.text.replace('TimePlaceholder', time)
 
 
     # Save the modified document
