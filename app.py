@@ -32,4 +32,14 @@ if uploaded_file is not None:
 
     # Write to a bytes buffer
     output_pdf = io.BytesIO()
-    pdfrw.PdfWriter().
+    pdfrw.PdfWriter().write(output_pdf, template_pdf)
+    output_pdf.seek(0)
+
+    # Allow the user to download the modified PDF
+    st.download_button(
+        label="Download Filled PDF",
+        data=output_pdf,
+        file_name="filled_form.pdf",
+        mime="application/pdf"
+    )
+
