@@ -782,24 +782,24 @@ elif st.session_state.section == 6:
             
             if formatted_date and formatted_time:
             # Path to your template file
-            template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
-    
-                try:
-                    doc_file = create_word_doc(template_path, formatted_date, formatted_time)
-                    st.success("Document created successfully!")
-                    
-                    with open(doc_file, 'rb') as f:
-                        st.download_button(
-                            label="Download Word Document",
-                            data=f,
-                            file_name=doc_file,
-                            mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                        )
-                    os.remove(doc_file)  # Clean up the file after download
-                except Exception as e:
-                    st.error(f"An error occurred: {e}")
-            else:
-                st.warning("Please fill in all fields.")
+                template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
+        
+                    try:
+                        doc_file = create_word_doc(template_path, formatted_date, formatted_time)
+                        st.success("Document created successfully!")
+                        
+                        with open(doc_file, 'rb') as f:
+                            st.download_button(
+                                label="Download Word Document",
+                                data=f,
+                                file_name=doc_file,
+                                mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                            )
+                        os.remove(doc_file)  # Clean up the file after download
+                    except Exception as e:
+                        st.error(f"An error occurred: {e}")
+                else:
+                    st.warning("Please fill in all fields.")
 
     with col1:
         if st.button("Previous", on_click=prev_section):
