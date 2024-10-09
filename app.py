@@ -788,12 +788,15 @@ elif st.session_state.section == 6:
 
     with col3: 
         if st.button("Submit"):
+            # Debugging
+            st.write(f"Session State - Date: {st.session_state.get('formatted_date')}")
+            st.write(f"Session State - Time: {st.session_state.get('formatted_time')}")
+            st.write(f"Session State - Front Page Completed: {st.session_state.get('front_page_completed')}")
+            
             if 'formatted_date' in st.session_state and 'formatted_time' in st.session_state and 'front_page_completed' in st.session_state:
                 formatted_date = st.session_state['formatted_date']
                 formatted_time = st.session_state['formatted_time']
                 front_page_completed = st.session_state['front_page_completed']
-                
-                st.write(f"Session State - FrontPageCompleted: {st.session_state.get('front_page_completed')}")
 
                 if formatted_date and formatted_time and front_page_completed:
                     # Path to your template file
