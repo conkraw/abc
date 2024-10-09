@@ -765,39 +765,36 @@ elif st.session_state.section == 6:
     
     col1, col2, col3 = st.columns(3)
 
-    if 'formatted_date' in st.session_state:
-        formatted_date = st.session_state['formatted_date']
-    if 'formatted_time' in st.session_state:
-        formatted_time = st.session_state['formatted_time']
-    if 'front_page_completed' in st.session_state:
-        front_page_completed = st.session_state['front_page_completed']
-    
-    # If submit button is pressed, generate the Word document
-
     with col3: 
         if st.button("Submit"):
-            if formatted_date and formatted_time and front_page_completed:
-                # Path to your template file
-                template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
+            if 'formatted_date' in st.session_state and 'formatted_time' in st.session_state and 'front_page_completed' in st.session_state:
+                formatted_date = st.session_state['formatted_date']
+                formatted_time = st.session_state['formatted_time']
+                front_page_completed = st.session_state['front_page_completed']
                 
-                try:
-                    # Create the document with all the information
-                    doc_file = create_word_doc(template_path, formatted_date, formatted_time, front_page_completed)
-                    st.success("Document created successfully!")
+                if formatted_date and formatted_time and front_page_completed:
+                    # Path to your template file
+                    template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
                     
-                    # Provide download button
-                    with open(doc_file, 'rb') as f:
-                        st.download_button(
-                            label="Download Word Document",
-                            data=f,
-                            file_name=doc_file,
-                            mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                        )
-                    os.remove(doc_file)  # Clean up the file after download
-                except Exception as e:
-                    st.error(f"An error occurred: {e}")
-            else:
-                st.warning("Please ensure all fields (date, time, front page) are filled in.")
+                    try:
+                        # Create the document with all the information
+                        doc_file = create_word_doc(template_path, formatted_date, formatted_time, front_page_completed)
+                        st.success("Document created successfully!")
+                        
+                        # Provide download button
+                        with open(doc_file, 'rb') as f:
+                            st.download_button(
+                                label="Download Word Document",
+                                data=f,
+                                file_name=doc_file,
+                                mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                            )
+                        os.remove(doc_file)  # Clean up the file after download
+                    except Exception as e:
+                        st.error(f"An error occurred: {e}")
+                else:
+                    st.warning("Please ensure all fields (date, time, front page) are filled in.")
+
 
     with col1:
         if st.button("Previous", on_click=prev_section):
