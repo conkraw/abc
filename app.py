@@ -154,7 +154,7 @@ def update_automatic_selections():
         st.session_state.roc_dose = weight_to_roc_mapping[selected_weight]
         st.session_state.vec_dose = weight_to_vec_mapping[selected_weight]
 
-def create_word_doc(template_path, date, time, option,completed_by,room_number,difficult_airway_history,physical_risk,high_risk_desaturation,high_risk_ICP,unstable_hemodynamics,other_risk_yes_no,other_risk_text_input):
+def create_word_doc(template_path, date, time, option,completed_by,room_number,difficult_airway_history,physical_risk,high_risk_desaturation,high_risk_ICP,unstable_hemodynamics,other_risk_yes_no,other_risk_text_input,who_will_intubate,who_will_bvm):
     # Load the Word document template
     doc = Document(template_path)
 
@@ -186,6 +186,10 @@ def create_word_doc(template_path, date, time, option,completed_by,room_number,d
                 run.text = run.text.replace('R4', other_risk_yes_no)
             if 'risk_factors' in run.text:
                 run.text = run.text.replace('risk_factors', other_risk_text_input)
+            if 'who_will_intubate' in run.text:
+                run.text = run.text.replace('who_will_intubate', who_will_intubate)
+            if 'who_will_bvm' in run.text:
+                run.text = run.text.replace('who_will_bvm', who_will_bvm)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -273,6 +277,10 @@ if 'other_risk_yes_no' not in st.session_state:
     st.session_state.other_risk_yes_no = 'Select'
 if 'other_risk_text_input' not in st.session_state:
     st.session_state.other_risk_text_input = ''
+if 'who_will_intubate' not in st.session_state:
+    st.session_state.who_will_intubate = ''
+if 'who_will_bvm' not in st.session_state:
+    st.session_state.who_will_bvm = ''
     
 # Front Page Completed Section
 if st.session_state.section == 0:
@@ -536,19 +544,18 @@ elif st.session_state.section == 2:
 # Intubation Plan Section
 elif st.session_state.section == 3:
     st.title("Intubation Plan")
-    who_intubate = st.multiselect("Who will intubate?", 
-                                   ['Resident', 'Fellow', 'NP', 'Attending','Anesthesiologist','ENT physician','RT','Other'],
-                                   key="who_intubate")
+    who_will_intubate = st.multiselect("Who will intubate?", 
+                                   ['Select_Intubator','Resident', 'Fellow', 'NP', 'Attending','Anesthesiologist','ENT physician','RT','Other Intubator:'])
 
-    if 'Other' in who_intubate:
-        st.text_input("Please specify the 'other' clinician who will intubate:", key="other_intubate")
+    if 'Other' in who_will_intubate:
+        other_intubate = st.text_input("Please specify the 'other' clinician who will intubate:")
     
-    who_bag_mask = st.multiselect("Who will bag-mask?", 
-                                   ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other'],
-                                   key="who_bag_mask")
-
-    if 'Other' in who_bag_mask:
-        st.text_input("Please specify the 'other' clinician who will intubate:", key="other_bag_mask")
+    who_will_bvm = st.multiselect("Who will bag-mask?", 
+                                   ['Select_BVMer','Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:'])
+    other_bvm = ""
+    
+    if 'Other' in who_will_bvm:
+        other_bvm = st.text_input("Please specify the 'other' clinician who will intubate:")
         
     # Create a layout for intubation method
     intubation_method = st.selectbox("How will we intubate? (Method)", ["","Oral", "Nasal"], key="intubation_method")
@@ -729,8 +736,24 @@ elif st.session_state.section == 3:
     
     # Add the 'Next' button to the second column
     with col3:
-        if st.button("Next", on_click=next_section):
-            pass
+        if st.button("Next"):
+            if who_will_intubate != "Select Intubator" and who_will_bvm != "Select BVMer":
+                st.session_state.who_will_intubate = who_will_intubate
+                st.session_state.who_will_bvm = who_will_bvm
+                if who_will_intubate == 'Other Intubator:':
+                    st.session_state.other_intubate = other_intubate
+                else:
+                    st.session_state.other_intubate = ""  # or handle accordingly
+                if who_will_bvm == 'Other BVMer:':
+                    st.session_state.other_bvm = other_bvm
+                else:
+                    st.session_state.other_bvm = ""  # or handle accordingly
+                    
+                st.session_state.section += 1  # Increment the section
+                st.rerun()  # Force a rerun to reflect changes immediately
+            else:
+                st.warning("Please select an option.")
+
 
 # Timing of Intubation Section
 elif st.session_state.section == 4:
