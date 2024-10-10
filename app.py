@@ -272,7 +272,7 @@ if st.session_state.section == 0:
     if st.button("Next"):
         if option != "Select an option":
             st.session_state.option = option
-            st.session_state.page = '1'
+            st.session_state.section == 1
         else:
             st.warning("Please select an option.")
 
