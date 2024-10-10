@@ -166,7 +166,7 @@ def create_word_doc(template_path, date, time, option,completed_by,room_number,d
                 run.text = run.text.replace('DatePlaceholder', date)
             if 'TimePlaceholder' in run.text:
                 run.text = run.text.replace('TimePlaceholder', time)
-                if 'FrontPagePlaceholder' in run.text:
+            if 'FrontPagePlaceholder' in run.text:
                 run.text = run.text.replace('FrontPagePlaceholder', option)
             if 'DocumenterPlaceholder' in run.text:
                 run.text = run.text.replace('DocumenterPlaceholder', completed_by)
