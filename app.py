@@ -565,7 +565,7 @@ elif st.session_state.section == 3:
     other_bvm = ""
     
     if 'Other BVMer:' in who_will_bvm:
-        other_bvm = st.text_input("Please specify the 'other' clinician who will intubate:")
+        other_bvm = st.text_input("Please specify the 'other' clinician who will perform bag mask valve ventilation:")
         
     # Create a layout for intubation method
     intubation_method = st.selectbox("How will we intubate? (Method)", ["","Oral", "Nasal"], key="intubation_method")
