@@ -543,7 +543,7 @@ elif st.session_state.section == 2:
 # Intubation Plan Section
 elif st.session_state.section == 3:
     st.title("Intubation Plan")
-    who_will_intubate = st.selectbox("Who will intubate?", 
+    who_will_intubate = st.multiselect("Who will intubate?", 
                                    ['Select_Intubator','Resident', 'Fellow', 'NP', 'Attending','Anesthesiologist','ENT physician','RT','Other Intubator:'])
 
     other_intubate = ""
@@ -551,7 +551,7 @@ elif st.session_state.section == 3:
     if 'Other Intubator:' in who_will_intubate:
         other_intubate = st.text_input("Please specify the 'other' clinician who will intubate:")
     
-    who_will_bvm = st.selectbox("Who will bag-mask?", 
+    who_will_bvm = st.multiselect("Who will bag-mask?", 
                                    ['Select_BVMer','Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:'])
     other_bvm = ""
     
