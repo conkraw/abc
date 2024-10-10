@@ -775,7 +775,7 @@ elif st.session_state.section == 3:
                 #else:
                 #    st.session_state.other_bvm = ""  # or handle accordingly
                     
-                #st.session_state.section += 1  # Increment the section
+                st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
                 st.warning("Please select an option.")
