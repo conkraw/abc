@@ -438,9 +438,7 @@ elif st.session_state.section == 2:
         st.markdown("")
         st.write("History of difficult airway?")
     with cols[1]:
-        difficult_airway_history = st.selectbox("", options=['Select', 'YES', 'NO'],key='difficult_airway_history')
-
-
+        difficult_airway_history = st.selectbox("", options=['Select', 'YES', 'NO'])
 
     cols = st.columns([4, 1])
     with cols[0]:
