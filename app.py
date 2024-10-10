@@ -759,12 +759,12 @@ elif st.session_state.section == 6:
         
             # Debugging output
             st.write(f"Using template: {template_path}")
-            st.write(f"Date entered: {st.session_state.date}")
-            st.write(f"Time entered: {st.session_state.time}")
+            st.write(f"Date entered: {st.session_state.formatted_date}")
+            st.write(f"Time entered: {st.session_state.formatted_time}")
             st.write(f"Option selected: {st.session_state.front_page_completed}")
         
             try:
-                doc_file = create_word_doc(template_path, st.session_state.date, st.session_state.time, st.session_state.front_page_completed)
+                doc_file = create_word_doc(template_path, st.session_state.formatted_date, st.session_state.formatted_time, st.session_state.front_page_completed)
                 st.success("Document created successfully!")
                 
                 with open(doc_file, 'rb') as f:
