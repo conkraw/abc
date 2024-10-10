@@ -445,7 +445,7 @@ elif st.session_state.section == 2:
         st.markdown("")
         st.write("History of difficult airway?")
     with cols[1]:
-        difficult_airway_history = st.selectbox("", options=['Select', 'YES', 'NO'])
+        difficult_airway_history = st.selectbox("", options=['Select', 'YES', 'NO'],key='difficult_airway_history')
 
 
 
@@ -467,7 +467,7 @@ elif st.session_state.section == 2:
         st.write("High risk for rapid desaturation during intubation?")
     
     with cols[1]:
-        high_risk_desaturation = st.selectbox("", options=['Select', 'YES', 'NO'])
+        high_risk_desaturation = st.selectbox("", options=['Select', 'YES', 'NO'], key='high_risk_desaturation')
 
     cols = st.columns([4, 1])
     with cols[0]:
@@ -476,7 +476,7 @@ elif st.session_state.section == 2:
         st.write("Increased ICP, pulmonary hypertension, need to avoid hypercarbia?")
     
     with cols[1]:
-        high_risk_ICP = st.selectbox("", options=['Select', 'YES', 'NO'])
+        high_risk_ICP = st.selectbox("", options=['Select', 'YES', 'NO'],key='high_risk_ICP')
 
     cols = st.columns([4, 1])
     with cols[0]:
@@ -485,7 +485,7 @@ elif st.session_state.section == 2:
         st.write("Unstable hemodynamics (e.g., hypovolemia, potential need for fluid bolus, vasopressor, CPR)?")
     
     with cols[1]:
-        unstable_hemodynamics = st.selectbox("", options=['Select', 'YES', 'NO'])
+        unstable_hemodynamics = st.selectbox("", options=['Select', 'YES', 'NO'], key='unstable_hemodynamics')
 
     cols = st.columns([4, 1])
     
@@ -497,7 +497,7 @@ elif st.session_state.section == 2:
     
     # Second column for the selectbox
     with cols[1]:
-        other_risk_yes_no = st.selectbox("", options=['Select', 'YES', 'NO'])
+        other_risk_yes_no = st.selectbox("", options=['Select', 'YES', 'NO'], key='other_risk_yes_no')
 
     with cols[0]:
         if other_risk_yes_no == 'YES':
