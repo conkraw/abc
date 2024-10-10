@@ -555,14 +555,16 @@ elif st.session_state.section == 3:
     who_will_intubate = st.multiselect("Who will intubate?", 
                                    ['Select_Intubator','Resident', 'Fellow', 'NP', 'Attending','Anesthesiologist','ENT physician','RT','Other Intubator:'])
 
-    if 'Other' in who_will_intubate:
+    other_intubate = ""
+    
+    if 'Other Intubator:' in who_will_intubate:
         other_intubate = st.text_input("Please specify the 'other' clinician who will intubate:")
     
     who_will_bvm = st.multiselect("Who will bag-mask?", 
                                    ['Select_BVMer','Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:'])
     other_bvm = ""
     
-    if 'Other' in who_will_bvm:
+    if 'Other BVMer:' in who_will_bvm:
         other_bvm = st.text_input("Please specify the 'other' clinician who will intubate:")
         
     # Create a layout for intubation method
@@ -745,13 +747,15 @@ elif st.session_state.section == 3:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if who_will_intubate != "Select Intubator" and who_will_bvm != "Select BVMer":
+            if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer":
                 st.session_state.who_will_intubate = who_will_intubate
                 st.session_state.who_will_bvm = who_will_bvm
+                
                 if who_will_intubate == 'Other Intubator:':
                     st.session_state.other_intubate = other_intubate
                 else:
                     st.session_state.other_intubate = ""  # or handle accordingly
+                
                 if who_will_bvm == 'Other BVMer:':
                     st.session_state.other_bvm = other_bvm
                 else:
