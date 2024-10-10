@@ -256,9 +256,9 @@ if 'section' not in st.session_state:
 if 'option' not in st.session_state:
     st.session_state.option = None
 if 'completed_by' not in st.session_state:
-    st.session_state.option = None
+    st.session_state.completed_by = None  
 if 'room_number' not in st.session_state:
-    st.session_state.option = None
+    st.session_state.room_number = None  
     
 # Front Page Completed Section
 if st.session_state.section == 0:
