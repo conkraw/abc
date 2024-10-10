@@ -154,9 +154,28 @@ def update_automatic_selections():
         st.session_state.roc_dose = weight_to_roc_mapping[selected_weight]
         st.session_state.vec_dose = weight_to_vec_mapping[selected_weight]
 
-def create_word_doc(template_path, date, time, option,completed_by,room_number,difficult_airway_history,physical_risk,high_risk_desaturation,high_risk_ICP,unstable_hemodynamics,other_risk_yes_no,other_risk_text_input,who_will_intubate,who_will_bvm,other_intubate,other_bvm):
+def create_word_doc(template_path, data):
     # Load the Word document template
     doc = Document(template_path)
+    
+    # Access parameters
+    date = data.get('date')
+    time = data.get('time')
+    option = data.get('option')
+    completed_by = data.get('completed_by')
+    room_number = data.get('room_number')
+    difficult_airway_history = data.get('difficult_airway_history')
+    physical_risk = data.get('physical_risk')
+    high_risk_desaturation = data.get('high_risk_desaturation')
+    high_risk_ICP = data.get('high_risk_ICP')
+    unstable_hemodynamics = data.get('unstable_hemodynamics')
+    other_risk_yes_no = data.get('other_risk_yes_no')
+    other_risk_text_input = data.get('other_risk_text_input')
+    who_will_intubate = data.get('who_will_intubate')
+    who_will_bvm = data.get('who_will_bvm')
+    other_intubate = data.get('other_intubate')
+    other_bvm = data.get('other_bvm')
+    intubation_method = data.get('intubation_method')
 
     # Check and replace text in paragraphs
     for paragraph in doc.paragraphs:
@@ -194,6 +213,8 @@ def create_word_doc(template_path, date, time, option,completed_by,room_number,d
                 run.text = run.text.replace('other_intubate', other_intubate)
             if 'other_bvm' in run.text:
                 run.text = run.text.replace('other_bvm', other_bvm)
+            if 'intubation_method' in run.text:
+                run.text = run.text.replace('intubation_method', intubation_method)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -273,7 +294,8 @@ default_values = {
     'who_will_intubate': [],  # Change to list if needed
     'who_will_bvm': [],       # Change to list if needed
     'other_intubate': '',
-    'other_bvm': ''
+    'other_bvm': '',
+    'intubation_method': None,
 }
 
 # Initialize session state variables if not already set
@@ -559,7 +581,7 @@ elif st.session_state.section == 3:
         other_bvm = st.text_input("Please specify the 'other' clinician who will perform bag mask valve ventilation:")
         
     # Create a layout for intubation method
-    intubation_method = st.selectbox("How will we intubate? (Method)", ["","Oral", "Nasal"], key="intubation_method")
+    intubation_method = st.selectbox("How will we intubate? (Method)", ["Intubation Method","Oral", "Nasal"])
 
     # Create a layout for ETT Type and ETT Size
     cols = st.columns(2)
@@ -738,9 +760,10 @@ elif st.session_state.section == 3:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer":
+            if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer" and intubation_method != "Intubation Method":
                 st.session_state.who_will_intubate = who_will_intubate
                 st.session_state.who_will_bvm = who_will_bvm
+                st.session_state.intubation_method = intubation_method
                 
                 if who_will_intubate == 'Other Intubator:':
                     st.session_state.other_intubate = other_intubate
@@ -865,7 +888,8 @@ elif st.session_state.section == 6:
                                                 st.session_state.who_will_intubate,
                                               st.session_state.who_will_bvm,
                                               st.session_state.other_intubate,
-                                              st.session_state.other_bvm)
+                                              st.session_state.other_bvm,
+                                              st.session_state.intubation_method)
     
                     st.success("Document created successfully!")
     
