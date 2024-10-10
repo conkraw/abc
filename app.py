@@ -869,6 +869,7 @@ elif st.session_state.section == 6:
                 st.write(f"Who will BVM: {st.session_state.who_will_bvm}")
                 st.write(f"Other Intubator: {st.session_state.other_intubate}")
                 st.write(f"Other BVMer: {st.session_state.other_bvm}")
+                st.write(f"Method: {st.session_state.intubation_method}")
                 
                 
                 try:
