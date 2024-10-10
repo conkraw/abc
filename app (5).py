@@ -6,12 +6,8 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import os
 import json
-from PyPDF2 import PdfReader, PdfWriter
 from datetime import datetime
-import pdfrw
 import io
-
-
 
 # Define mappings for ETT size, Blade type, and Apneic Oxygenation based on patient age
 age_to_ett_mapping = {
@@ -595,160 +591,7 @@ elif st.session_state.section == 3:
         selected_ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
         st.session_state['ett_size'] = selected_ett_size
         
-    st.write("Device:")
-    
-    cols = st.columns(3)
-
-    # Column 1: Dropdowns for "X" or empty
-    with cols[0]:
-        # Dropdowns to choose if devices are selected or not (X = selected)
-        device_1_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_1")
-        device_2_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_2")
-        device_3_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_3")
-        device_4_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_4")
-    
-    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
-    with cols[1]:
-        # These text inputs will reset to their default value if changed and the user moves away
-        device_1_text = reset_input("Laryngoscope", key="laryngoscope_textx")
-        device_2_text = reset_input("Glidescope", key="glidescope_textx")
-        device_3_text = reset_input("LMA", key="lma_textx")
-        device_4_text = reset_input("Other Device", key="other_device_textx")
-    
-    # Column 3: Additional details for each device (uneditable placeholders)
-    with cols[2]:
-        # Text Inputs with uneditable placeholders (details of each device)
-        st.text_input("Laryngoscope details:", key="laryngoscope_details", disabled=False)
-        
-        glide_details = list(set(age_to_glide_mapping.values()))  # Get unique ETT sizes
-        selected_glide_details = st.selectbox("Glidescope Details:", options=glide_details, key="glide_size_display", index=glide_details.index(st.session_state['glide_details']) if st.session_state['glide_details'] in glide_details else 0)
-        st.session_state['glide_details'] = selected_glide_details
-        
-        lma_details = list(set(age_to_lma_mapping.values()))  # Get unique ETT sizes
-        selected_lma_details = st.selectbox("LMA Details:", options=lma_details, key="lma_display", index=lma_details.index(st.session_state['lma_details']) if st.session_state['lma_details'] in lma_details else 0)
-        st.session_state['lma_details'] = selected_lma_details
-        
-        st.text_input("Other Device details:", key="other_device_details", disabled=False)
-
-    st.write("Blade:")
-    
-    cols = st.columns(3)
-
-    # Column 1: Dropdowns for "X" or empty
-    with cols[0]:
-        # Dropdowns to choose if devices are selected or not (X = selected)
-        blade_1_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_5")
-        blade_2_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_6")
-        blade_3_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_7")
-        
-    
-    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
-    with cols[1]:
-        # These text inputs will reset to their default value if changed and the user moves away
-        blade_1_text = reset_input("Mac", key="macx")
-        blade_2_text = reset_input("Miller", key="millerx")
-        blade_3_text = reset_input("Wis-Hipple", key="wis_hipplex")
-    
-    # Column 3: Additional details for each device (uneditable placeholders)
-    with cols[2]:
-        mac_details = list(set(age_to_mac_mapping.values()))  # Get unique ETT sizes
-        selected_mac_details = st.selectbox("Mac Details:", options=mac_details, key="mac_size_display", index=mac_details.index(st.session_state['mac_details']) if st.session_state['mac_details'] in mac_details else 0)
-        st.session_state['mac_details'] = selected_mac_details
-
-        miller_details = list(set(age_to_miller_mapping.values()))  # Get unique ETT sizes
-        selected_miller_details = st.selectbox("Miller Details:", options=miller_details, key="miller_size_display", index=miller_details.index(st.session_state['miller_details']) if st.session_state['miller_details'] in miller_details else 0)
-        st.session_state['miller_details'] = selected_miller_details
-
-        st.text_input("Wis-Hipple Details:", key="wis_hipple_details", disabled=False)
-        
-    st.write("Medications:")
-    
-    cols = st.columns(3)
-
-    # Column 1: Dropdowns for "X" or empty
-    with cols[0]:
-        # Dropdowns to choose if devices are selected or not (X = selected)
-        med_1_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_8")
-        med_2_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_9")
-        med_3_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_10")
-        med_4_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_11")
-        med_5_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_12")
-        med_6_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_13")
-        med_7_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_14")
-        med_8_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_15")
-    
-    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
-    with cols[1]:
-        # These text inputs will reset to their default value if changed and the user moves away
-        med_1_text = reset_input("Atropine", key="atropinex")
-        med_2_text = reset_input("Glycopyrrolate", key="glycox")
-        med_3_text = reset_input("Fentanyl", key="fentanylx")
-        med_4_text = reset_input("Midazolam", key="midazolamx")
-        med_5_text = reset_input("Ketamine", key="ketaminex")
-        med_6_text = reset_input("Propofol", key="propofolx")
-        med_7_text = reset_input("Rocuronium", key="rocx")
-        med_8_text = reset_input("Vecuronium", key="vecx")
-
-    # Column 3: Additional details for each device (uneditable placeholders)
-    with cols[2]:
-        # Text Inputs with uneditable placeholders (details of each device)
-        atropine_doses = list(set(weight_to_atropine_mapping.values()))  # Get unique Atropine doses
-        selected_atropine_dose = st.selectbox("Atropine Dose:", options=atropine_doses, key="atropine_dose_display",index=atropine_doses.index(st.session_state['atropine_dose']) if st.session_state['atropine_dose'] in atropine_doses else 0)
-        st.session_state['atropine_dose'] = selected_atropine_dose
-        
-        glycopyrrolate_doses = list(set(weight_to_glycopyrrolate_mapping.values()))  # Get unique Glycopyrrolate doses
-        selected_glycopyrrolate_dose = st.selectbox("Glycopyrrolate Dose:",options=glycopyrrolate_doses, key="glycopyrrolate_dose_display",index=glycopyrrolate_doses.index(st.session_state['glycopyrrolate_dose']) if st.session_state['glycopyrrolate_dose'] in glycopyrrolate_doses else 0)
-        st.session_state['glycopyrrolate_dose'] = selected_glycopyrrolate_dose
-
-        fentanyl_doses = list(set(weight_to_fentanyl_mapping.values()))  # Get unique Fentanyl doses
-        selected_fentanyl_dose = st.selectbox("Fentanyl Dose:", options=fentanyl_doses, key="fentanyl_dose_display",index=fentanyl_doses.index(st.session_state['fentanyl_dose']) if st.session_state['fentanyl_dose'] in fentanyl_doses else 0)
-        st.session_state['fentanyl_dose'] = selected_fentanyl_dose
-        
-        midazolam_doses = list(set(weight_to_midaz_mapping.values()))  # Get unique Midazolam doses
-        selected_midazolam_dose = st.selectbox("Midazolam Dose:", options=midazolam_doses, key="midazolam_dose_display",index=midazolam_doses.index(st.session_state['midazolam_dose']) if st.session_state['midazolam_dose'] in midazolam_doses else 0)
-        st.session_state['midazolam_dose'] = selected_midazolam_dose
-        
-        ketamine_doses = list(set(weight_to_ketamine_mapping.values()))  # Get unique Ketamine doses
-        selected_ketamine_dose = st.selectbox("Ketamine Dose:", options=ketamine_doses, key="ketamine_dose_display",index=ketamine_doses.index(st.session_state['ketamine_dose']) if st.session_state['ketamine_dose'] in ketamine_doses else 0)
-        st.session_state['ketamine_dose'] = selected_ketamine_dose
-        
-        propofol_doses = list(set(weight_to_propo_mapping.values()))  # Get unique Propofol doses
-        selected_propofol_dose = st.selectbox("Propofol Dose:", options=propofol_doses, key="propofol_dose_display",index=propofol_doses.index(st.session_state['propofol_dose']) if st.session_state['propofol_dose'] in propofol_doses else 0)
-        st.session_state['propofol_dose'] = selected_propofol_dose
-        
-        roc_doses = list(set(weight_to_roc_mapping.values()))  # Get unique Rocuronium doses
-        selected_roc_dose = st.selectbox("Rocuronium Dose:", options=roc_doses, key="roc_dose_display",index=roc_doses.index(st.session_state['roc_dose']) if st.session_state['roc_dose'] in roc_doses else 0)
-        st.session_state['roc_dose'] = selected_roc_dose
-        
-        vec_doses = list(set(weight_to_vec_mapping.values()))  # Get unique Vecuronium doses
-        selected_vec_dose = st.selectbox("Vecuronium Dose:", options=vec_doses, key="vec_dose_display",index=vec_doses.index(st.session_state['vec_dose']) if st.session_state['vec_dose'] in vec_doses else 0)
-        st.session_state['vec_dose'] = selected_vec_dose
-
-    st.write("Apneic Oxygenation:")
-    
-    cols = st.columns(3)
-
-    # Column 1: Dropdowns for "X" or empty
-    with cols[0]:
-        # Dropdowns to choose if devices are selected or not (X = selected)
-        ao_selection = st.selectbox("Select Use", options=["", "Yes", "No"], key="dropdown_16")
-    
-    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
-    with cols[1]:
-        # These text inputs will reset to their default value if changed and the user moves away
-        ao_text = reset_input("Apneic Oxygenation", key="aox")
-    
-    # Column 3: Additional details for each device (uneditable placeholders)
-    with cols[2]:
-        # Text Inputs with uneditable placeholders (details of each device)
-        #st.text_input("Apneic Oxygenation Details:", key="ao_details", disabled=False)
-
-        ao_details = list(set(age_to_oxygenation_mapping.values()))  # Get unique ETT sizes
-        selected_ao_details = st.selectbox("Apneic Oxygenation:", options=ao_details, key="ao_details_display", index=ao_details.index(st.session_state['ao_details']) if st.session_state['ao_details'] in ao_details else 0)
-        st.session_state['ao_details'] = selected_ao_details
-            
-    other_planning = st.text_input("Other Intubation Planning Details:", key="other_planning")
-
+  
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
 
@@ -780,76 +623,15 @@ elif st.session_state.section == 3:
             else:
                 st.warning("Please select an option.")
                 
-# Timing of Intubation Section
+
 elif st.session_state.section == 4:
-    st.title("Timing of Intubation")
-    when_intubate = st.multiselect(
-        "When will we intubate? (Describe timing of airway management):",
-        ['Prior to procedure', 'Mental Status Changes', 
-         'Hypoxemia Refractory to CPAP', 'Ventilation failure refractory to NIV', 
-         'Loss of Airway Protection', 'Other'],
-        key="when_intubate"
-    )
-
-    if 'Hypoxemia Refractory to CPAP' in when_intubate:
-        st.text_input("If the patient has refractory hypoxemia refractory to CPAP, it will be defined as a SPO2 Level Less than:", key="hypoxemia")
-
-    if 'Other' in when_intubate:
-        st.text_input("Please state an 'other' reason for the timing of intubation:", key="other_when_intubate")
-        
-    # Single Next and Previous Buttons
-    col1, col2, col3 = st.columns(3)
-
-    # Add the 'Previous' button to the first column
-    with col1:
-        if st.button("Previous", on_click=prev_section):
-            pass
-    
-    # Add the 'Next' button to the second column
-    with col3:
-        if st.button("Next", on_click=next_section):
-            pass
-
-elif st.session_state.section == 5:
-    st.title("Backup")
-
-    # Multi-select for Advance Airway Provider
-    advance_airway_provider = st.multiselect("Advance Airway Provider:", 
-                                   ['Attending', 'Anesthesia', 'ENT', 'Fellow', 'Other'],
-                                   key="advance_airway_provider")
-    
-    advance_airway_procedure = st.multiselect("Difficult Airway Procedure:", 
-                                   ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other'],
-                                   key="difficult_airway")
-
-    if 'Other' in advance_airway_provider:
-        st.text_input("Please state an 'other' Advanced Airway Provider", key="other_advance_airway_provider")
-
-    if 'Other' in advance_airway_procedure:
-        st.text_input("Please state an 'other' protocol for Difficult Airway Protocol Initiation:", key="other_advance_airway_procedure")
-
-        
-    # Single Next and Previous Buttons
-    col1, col2, col3 = st.columns(3)
-
-    # Add the 'Previous' button to the first column
-    with col1:
-        if st.button("Previous", on_click=prev_section):
-            pass
-    
-    # Add the 'Next' button to the second column
-    with col3:
-        if st.button("Next", on_click=next_section):
-            pass
-
-elif st.session_state.section == 6:
     st.title("Fill in Template Document")
     
     col1, col2, col3 = st.columns(3)
 
     with col3: 
             if st.button("Submit"):
-                template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
+                template_path = 'airway_bundlez.docx'  # Ensure this is the correct path
     
                 # Debugging output
                 st.write(f"Using template: {template_path}")
