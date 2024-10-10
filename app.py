@@ -456,8 +456,7 @@ elif st.session_state.section == 2:
         st.write("Physical (e.g. small mouth, small jaw, large tongue, or short neck)?")
     
     with cols[1]:
-        physical_risk = st.selectbox(
-            options=['Select','YES', 'NO'])
+        physical_risk = st.selectbox("", options=['Select', 'YES', 'NO'])
 
     st.write("#### At Risk For:")
     
@@ -468,9 +467,7 @@ elif st.session_state.section == 2:
         st.write("High risk for rapid desaturation during intubation?")
     
     with cols[1]:
-        high_risk_desaturation = st.selectbox(
-            label="",  
-            options=['Select','YES', 'NO'])
+        high_risk_desaturation = st.selectbox("", options=['Select', 'YES', 'NO'])
 
     cols = st.columns([4, 1])
     with cols[0]:
@@ -479,9 +476,7 @@ elif st.session_state.section == 2:
         st.write("Increased ICP, pulmonary hypertension, need to avoid hypercarbia?")
     
     with cols[1]:
-        high_risk_ICP = st.selectbox(
-            label="",  
-            options=['Select','YES', 'NO'])
+        high_risk_ICP = st.selectbox("", options=['Select', 'YES', 'NO'])
 
     cols = st.columns([4, 1])
     with cols[0]:
@@ -490,9 +485,7 @@ elif st.session_state.section == 2:
         st.write("Unstable hemodynamics (e.g., hypovolemia, potential need for fluid bolus, vasopressor, CPR)?")
     
     with cols[1]:
-        unstable_hemodynamics = st.selectbox(
-            label="",  
-            options=['Select','YES', 'NO'])
+        unstable_hemodynamics = st.selectbox("", options=['Select', 'YES', 'NO'])
 
     cols = st.columns([4, 1])
     
@@ -504,13 +497,11 @@ elif st.session_state.section == 2:
     
     # Second column for the selectbox
     with cols[1]:
-        other_risk_yes_no = st.selectbox(
-            label="",  
-            options=['Select', 'YES', 'NO'])
+        other_risk_yes_no = st.selectbox("", options=['Select', 'YES', 'NO'])
 
     with cols[0]:
         if other_risk_yes_no == 'YES':
-            st.text_input("Please specify the other risk:", key="other_risk_text_input")
+            other_risk_text_input = st.text_input("Please specify the other risk:")
 
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
@@ -525,6 +516,13 @@ elif st.session_state.section == 2:
         if st.button("Next"):
             if difficult_airway_history != "Select" and physical_risk != "Select" and high_risk_desaturation != "Select" and high_risk_ICP != "Select" and unstable_hemodynamics != "Select" and other_risk_yes_no != "Select" and other_risk_text_input:
                 st.session_state.difficult_airway_history = difficult_airway_history
+                st.session_state.physical_risk = physical_risk
+                st.session_state.high_risk_desaturation = high_risk_desaturation
+                st.session_state.high_risk_ICP = high_risk_ICP
+                st.session_state.unstable_hemodynamics = unstable_hemodynamics
+                st.session_state.other_risk_yes_no = other_risk_yes_no
+                st.session_state.other_risk_text_input = other_risk_text_input
+                
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
