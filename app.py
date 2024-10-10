@@ -520,6 +520,7 @@ elif st.session_state.section == 2:
                 st.session_state.high_risk_desaturation = high_risk_desaturation
                 st.session_state.high_risk_ICP = high_risk_ICP
                 st.session_state.unstable_hemodynamics = unstable_hemodynamics
+                st.session_state.other_risk_yes_no = other_risk_yes_no
                 
                 if other_risk_yes_no == 'YES':
                     st.session_state.other_risk_text_input = other_risk_text_input
