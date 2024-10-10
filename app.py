@@ -738,28 +738,25 @@ elif st.session_state.section == 3:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            # Ensure selections are not the placeholder
-            if 'Select_Intubator' not in st.session_state.who_will_intubate and 'Select_BVMer' not in st.session_state.who_will_bvm:
-                st.session_state.who_will_intubate = st.session_state.who_will_intubate
-                st.session_state.who_will_bvm = st.session_state.who_will_bvm
+            if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer":
+                st.session_state.who_will_intubate = who_will_intubate
+                st.session_state.who_will_bvm = who_will_bvm
                 
-                # Check for "Other Intubator" selection
-                if 'Other Intubator:' in st.session_state.who_will_intubate:
+                if who_will_intubate == 'Other Intubator:':
                     st.session_state.other_intubate = other_intubate
                 else:
-                    st.session_state.other_intubate = ""  # Reset if not selected
+                    st.session_state.other_intubate = ""  # or handle accordingly
                 
-                # Check for "Other BVMer" selection
-                if 'Other BVMer:' in st.session_state.who_will_bvm:
+                if who_will_bvm == 'Other BVMer:':
                     st.session_state.other_bvm = other_bvm
                 else:
-                    st.session_state.other_bvm = ""  # Reset if not selected
+                    st.session_state.other_bvm = ""  # or handle accordingly
                     
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
                 st.warning("Please select an option.")
-
+                
 # Timing of Intubation Section
 elif st.session_state.section == 4:
     st.title("Timing of Intubation")
