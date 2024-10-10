@@ -154,7 +154,7 @@ def update_automatic_selections():
         st.session_state.roc_dose = weight_to_roc_mapping[selected_weight]
         st.session_state.vec_dose = weight_to_vec_mapping[selected_weight]
 
-def create_word_doc(template_path, date, time, option,completed_by,room_number,difficult_airway_history):
+def create_word_doc(template_path, date, time, option,completed_by,room_number,difficult_airway_history,physical_risk,high_risk_desaturation,high_risk_ICP,unstable_hemodynamics,other_risk_yes_no,other_risk_text_input):
     # Load the Word document template
     doc = Document(template_path)
 
