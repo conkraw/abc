@@ -760,23 +760,23 @@ elif st.session_state.section == 3:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer" and intubation_method != "Intubation Method":
-                st.session_state.who_will_intubate = who_will_intubate
-                st.session_state.who_will_bvm = who_will_bvm
+            if intubation_method != "Intubation Method":
+                #st.session_state.who_will_intubate = who_will_intubate
+                #st.session_state.who_will_bvm = who_will_bvm
                 st.session_state.intubation_method = intubation_method
                 
-                if who_will_intubate == 'Other Intubator:':
-                    st.session_state.other_intubate = other_intubate
-                else:
-                    st.session_state.other_intubate = ""  # or handle accordingly
+                #if who_will_intubate == 'Other Intubator:':
+                #    st.session_state.other_intubate = other_intubate
+                #else:
+                #    st.session_state.other_intubate = ""  # or handle accordingly
                 
-                if who_will_bvm == 'Other BVMer:':
-                    st.session_state.other_bvm = other_bvm
-                else:
-                    st.session_state.other_bvm = ""  # or handle accordingly
+                #if who_will_bvm == 'Other BVMer:':
+                #    st.session_state.other_bvm = other_bvm
+                #else:
+                #    st.session_state.other_bvm = ""  # or handle accordingly
                     
-                st.session_state.section += 1  # Increment the section
-                st.rerun()  # Force a rerun to reflect changes immediately
+                #st.session_state.section += 1  # Increment the section
+                #st.rerun()  # Force a rerun to reflect changes immediately
             else:
                 st.warning("Please select an option.")
                 
@@ -886,10 +886,10 @@ elif st.session_state.section == 6:
                         'unstable_hemodynamics': st.session_state.unstable_hemodynamics,
                         'other_risk_yes_no': st.session_state.other_risk_yes_no,
                         'other_risk_text_input': st.session_state.other_risk_text_input,
-                        'who_will_intubate': st.session_state.who_will_intubate,
-                        'who_will_bvm': st.session_state.who_will_bvm,
-                        'other_intubate': st.session_state.other_intubate,
-                        'other_bvm': st.session_state.other_bvm,
+                        #'who_will_intubate': st.session_state.who_will_intubate,
+                        #'who_will_bvm': st.session_state.who_will_bvm,
+                        #'other_intubate': st.session_state.other_intubate,
+                        #'other_bvm': st.session_state.other_bvm,
                         'intubation_method': st.session_state.intubation_method
                     }
                     doc_file = create_word_doc(template_path, data)
