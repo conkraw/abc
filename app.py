@@ -154,7 +154,7 @@ def update_automatic_selections():
         st.session_state.roc_dose = weight_to_roc_mapping[selected_weight]
         st.session_state.vec_dose = weight_to_vec_mapping[selected_weight]
 
-def create_word_doc(template_path, date, time, option,completed_by,room_number):
+def create_word_doc(template_path, date, time, option,completed_by,room_number,difficult_airway_history):
     # Load the Word document template
     doc = Document(template_path)
 
@@ -173,6 +173,9 @@ def create_word_doc(template_path, date, time, option,completed_by,room_number):
                 run.text = run.text.replace('DocumenterPlaceholder', completed_by)
             if 'room_number' in run.text:
                 run.text = run.text.replace('room_number', room_number)
+            if 'difficult_airway_history' in run.text:
+                run.text = run.text.replace('D1', difficult_airway_history)
+
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -424,7 +427,7 @@ elif st.session_state.section == 2:
         st.markdown("")
         st.write("History of difficult airway?")
     with cols[1]:
-        difficult_airway_history = st.selectbox("", options=['', 'YES', 'NO'], key="difficult_airway_history")
+        difficult_airway_history = st.selectbox("", options=['', 'YES', 'NO'])
 
 
     cols = st.columns([4, 1])
@@ -511,8 +514,13 @@ elif st.session_state.section == 2:
     
     # Add the 'Next' button to the second column
     with col3:
-        if st.button("Next", on_click=next_section):
-            pass
+        if st.button("Next"):
+            if difficult_airway_history != "":
+                st.session_state.difficult_airway_history = difficult_airway_history
+                st.session_state.section += 1  # Increment the section
+                st.rerun()  # Force a rerun to reflect changes immediately
+            else:
+                st.warning("Please select an option.")
     
 # Intubation Plan Section
 elif st.session_state.section == 3:
@@ -792,9 +800,10 @@ elif st.session_state.section == 6:
             st.write(f"Option selected: {st.session_state.option}")
             st.write(f"Option selected: {st.session_state.completed_by}")
             st.write(f"Option selected: {st.session_state.room_number}")
+            st.write(f"Option selected: {st.session_state.difficult_airway_history}")
         
             try:
-                doc_file = create_word_doc(template_path, st.session_state.formatted_date, st.session_state.formatted_time, st.session_state.option,st.session_state.completed_by,st.session_state.room_number)
+                doc_file = create_word_doc(template_path, st.session_state.formatted_date, st.session_state.formatted_time, st.session_state.option,st.session_state.completed_by,st.session_state.room_number,st.session_state.difficult_airway_history)
                 st.success("Document created successfully!")
                 
                 with open(doc_file, 'rb') as f:
