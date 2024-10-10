@@ -154,7 +154,7 @@ def update_automatic_selections():
         st.session_state.roc_dose = weight_to_roc_mapping[selected_weight]
         st.session_state.vec_dose = weight_to_vec_mapping[selected_weight]
 
-def create_word_doc(template_path, date, time, front_page_completed):
+def create_word_doc(template_path, date, time, option):
     # Load the Word document template
     doc = Document(template_path)
 
@@ -168,7 +168,13 @@ def create_word_doc(template_path, date, time, front_page_completed):
                 run.text = run.text.replace('TimePlaceholder', time)
             # Replace FrontPagePlaceholder with the selected option
             if 'FrontPagePlaceholder' in run.text:
-                run.text = run.text.replace('FrontPagePlaceholder', front_page_completed)
+                run.text = run.text.replace('FrontPagePlaceholder', option)
+
+    # Save the modified document
+    doc_file = 'airway_bundle_form.docx'
+    doc.save(doc_file)
+    return doc_file
+
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -246,16 +252,15 @@ if st.session_state.section == 0:
     st.title("Front Page Completed")
     
     # Selectbox for front page completion
-    front_page_completed = st.selectbox("Select when the front page was completed", [
-        "Select when the front page was completed", 
+    option = st.selectbox("Select an option", [
+        "Select an option", 
         "On admission", 
         "During rounds", 
-        "After rounds", 
+        "After Rounds", 
         "Just prior to intubation", 
         "After intubation", 
-        "Prior to extubation"
-    ], key="front_page_completed")
-
+        "Prior to Extubation"
+    ])
     
     completed_by = st.text_input("Who completed the form? (Name or Role)", key="completed_by")
     room_number = st.selectbox("Select Room Number", 
@@ -265,9 +270,9 @@ if st.session_state.section == 0:
                                  '4219', '4221', '4223'], key="room_number")
     
     if st.button("Next"):
-        if front_page_completed != "Select when the front page was completed":
-            st.session_state.front_page_completed = front_page_completed
-            st.session_state.page = '1'  # Navigate to the next page
+        if option != "Select an option":
+            st.session_state.option = option
+            st.session_state.page = 'Patient Information'  # Navigate to download page
         else:
             st.warning("Please select an option.")
 
@@ -762,15 +767,15 @@ elif st.session_state.section == 6:
         if st.button("Submit"):
                 # Path to your template file
             template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
-        
+
             # Debugging output
             st.write(f"Using template: {template_path}")
-            st.write(f"Date entered: {st.session_state.formatted_date}")
-            st.write(f"Time entered: {st.session_state.formatted_time}")
-            st.write(f"Option selected: {st.session_state.front_page_completed}")
+            st.write(f"Date entered: {st.session_state.date}")
+            st.write(f"Time entered: {st.session_state.time}")
+            st.write(f"Option selected: {st.session_state.option}")
         
             try:
-                doc_file = create_word_doc(template_path, st.session_state.formatted_date, st.session_state.formatted_time, st.session_state.front_page_completed)
+                doc_file = create_word_doc(template_path, st.session_state.date, st.session_state.time, st.session_state.option)
                 st.success("Document created successfully!")
                 
                 with open(doc_file, 'rb') as f:
