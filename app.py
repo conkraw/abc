@@ -515,7 +515,7 @@ elif st.session_state.section == 2:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if difficult_airway_history != "Select difficult airway history:":
+            if difficult_airway_history != "Select":
                 st.session_state.difficult_airway_history = difficult_airway_history
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
