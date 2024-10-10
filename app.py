@@ -281,7 +281,7 @@ if st.session_state.section == 0:
                                  '4219', '4221', '4223'])
     
     if st.button("Next"):
-        if option != "Select an option":
+        if option != "Select an option" and room_number != "Select Room Number" and completed_by:
             st.session_state.option = option
             st.session_state.completed_by = completed_by
             st.session_state.room_number = room_number
