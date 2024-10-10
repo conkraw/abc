@@ -208,7 +208,7 @@ def initialize_firebase():
     except Exception as e:
         raise Exception(f"Error initializing Firebase: {e}")
 
-#db = initialize_firebase()
+db = initialize_firebase()
 
 def update_ett_size():
     selected_age = st.session_state.age_select
