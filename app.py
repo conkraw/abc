@@ -283,8 +283,8 @@ if st.session_state.section == 0:
     if st.button("Next"):
         if option != "Select an option":
             st.session_state.option = option
-            st.session_state.completed_by = option
-            st.session_state.room_number = option
+            st.session_state.completed_by = completed_by
+            st.session_state.room_number = room_number
             st.session_state.section += 1  # Increment the section
             st.rerun()  # Force a rerun to reflect changes immediately
         else:
