@@ -257,39 +257,30 @@ def save_data():
     data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
     db.collection('airway_checklists').add(data)
     
-if 'section' not in st.session_state:
-    st.session_state.section = 0
-if 'form_data' not in st.session_state:
-    st.session_state.form_data = {}
-if 'option' not in st.session_state:
-    st.session_state.option = None
-if 'completed_by' not in st.session_state:
-    st.session_state.completed_by = None  
-if 'room_number' not in st.session_state:
-    st.session_state.room_number = None  
-if 'difficult_airway_history' not in st.session_state:
-    st.session_state.difficult_airway_history = 'Select Risk Factor 1'
-if 'physical_risk' not in st.session_state:
-    st.session_state.physical_risk = 'Select Risk Factor 2'
-if 'high_risk_desaturation' not in st.session_state:
-    st.session_state.high_risk_desaturation = 'Select Risk Factor 3'
-if 'high_risk_ICP' not in st.session_state:
-    st.session_state.high_risk_ICP = 'Select Risk Factor 4'
-if 'unstable_hemodynamics' not in st.session_state:
-    st.session_state.unstable_hemodynamics = 'Select Risk Factor 5'
-if 'other_risk_yes_no' not in st.session_state:
-    st.session_state.other_risk_yes_no = 'Select Risk Factor 6'
-if 'other_risk_text_input' not in st.session_state:
-    st.session_state.other_risk_text_input = ''
-if 'who_will_intubate' not in st.session_state:
-    st.session_state.who_will_intubate = ''
-if 'who_will_bvm' not in st.session_state:
-    st.session_state.who_will_bvm = ''
-if 'other_intubate' not in st.session_state:
-    st.session_state.other_intubate = ''
-if 'other_bvm' not in st.session_state:
-    st.session_state.other_bvm = ''
-    
+default_values = {
+    'section': 0,
+    'form_data': {},
+    'option': None,
+    'completed_by': None,
+    'room_number': None,
+    'difficult_airway_history': 'Select Risk Factor 1',
+    'physical_risk': 'Select Risk Factor 2',
+    'high_risk_desaturation': 'Select Risk Factor 3',
+    'high_risk_ICP': 'Select Risk Factor 4',
+    'unstable_hemodynamics': 'Select Risk Factor 5',
+    'other_risk_yes_no': 'Select Risk Factor 6',
+    'other_risk_text_input': '',
+    'who_will_intubate': [],  # Change to list if needed
+    'who_will_bvm': [],       # Change to list if needed
+    'other_intubate': '',
+    'other_bvm': ''
+}
+
+# Initialize session state variables if not already set
+for key, value in default_values.items():
+    if key not in st.session_state:
+        st.session_state[key] = value
+        
 # Front Page Completed Section
 if st.session_state.section == 0:
     st.title("Front Page Completed")
@@ -552,7 +543,7 @@ elif st.session_state.section == 2:
 # Intubation Plan Section
 elif st.session_state.section == 3:
     st.title("Intubation Plan")
-    who_will_intubate = st.multiselect("Who will intubate?", 
+    who_will_intubate = st.selectbox("Who will intubate?", 
                                    ['Select_Intubator','Resident', 'Fellow', 'NP', 'Attending','Anesthesiologist','ENT physician','RT','Other Intubator:'])
 
     other_intubate = ""
@@ -560,7 +551,7 @@ elif st.session_state.section == 3:
     if 'Other Intubator:' in who_will_intubate:
         other_intubate = st.text_input("Please specify the 'other' clinician who will intubate:")
     
-    who_will_bvm = st.multiselect("Who will bag-mask?", 
+    who_will_bvm = st.selectbox("Who will bag-mask?", 
                                    ['Select_BVMer','Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:'])
     other_bvm = ""
     
@@ -747,25 +738,27 @@ elif st.session_state.section == 3:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer":
-                st.session_state.who_will_intubate = who_will_intubate
-                st.session_state.who_will_bvm = who_will_bvm
+            # Ensure selections are not the placeholder
+            if 'Select_Intubator' not in st.session_state.who_will_intubate and 'Select_BVMer' not in st.session_state.who_will_bvm:
+                st.session_state.who_will_intubate = st.session_state.who_will_intubate
+                st.session_state.who_will_bvm = st.session_state.who_will_bvm
                 
-                if who_will_intubate == 'Other Intubator:':
+                # Check for "Other Intubator" selection
+                if 'Other Intubator:' in st.session_state.who_will_intubate:
                     st.session_state.other_intubate = other_intubate
                 else:
-                    st.session_state.other_intubate = ""  # or handle accordingly
+                    st.session_state.other_intubate = ""  # Reset if not selected
                 
-                if who_will_bvm == 'Other BVMer:':
+                # Check for "Other BVMer" selection
+                if 'Other BVMer:' in st.session_state.who_will_bvm:
                     st.session_state.other_bvm = other_bvm
                 else:
-                    st.session_state.other_bvm = ""  # or handle accordingly
+                    st.session_state.other_bvm = ""  # Reset if not selected
                     
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
                 st.warning("Please select an option.")
-
 
 # Timing of Intubation Section
 elif st.session_state.section == 4:
