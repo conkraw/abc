@@ -201,8 +201,8 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('R4', other_risk_yes_no)
             if 'risk_factors' in run.text:
                 run.text = run.text.replace('risk_factors', other_risk_text_input)
-            #if 'who_will_intubate' in run.text:
-            #    run.text = run.text.replace('who_will_intubate', ' '.join(who_will_intubate))
+            if 'who_will_intubate' in run.text:
+                run.text = run.text.replace('who_will_intubate', ' '.join(who_will_intubate))
             #if 'who_will_bvm' in run.text:
             #    run.text = run.text.replace('who_will_bvm', ' '.join(who_will_bvm))
             #if 'other_intubate' in run.text:
@@ -287,7 +287,7 @@ default_values = {
     'unstable_hemodynamics': 'Select Risk Factor 5',
     'other_risk_yes_no': 'Select Risk Factor 6',
     'other_risk_text_input': '',
-    #'who_will_intubate': [],  # Change to list if needed
+    'who_will_intubate': [],  # Change to list if needed
     #'who_will_bvm': [],       # Change to list if needed
     #'other_intubate': '',
     #'other_bvm': '',
@@ -603,8 +603,8 @@ elif st.session_state.section == 3:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if intubation_method != "Intubation Method":
-                #st.session_state.who_will_intubate = who_will_intubate
+            if who_will_intubate != "Select_Intubator" and intubation_method != "Intubation Method":
+                st.session_state.who_will_intubate = who_will_intubate
                 #st.session_state.who_will_bvm = who_will_bvm
                 st.session_state.intubation_method = intubation_method
                 
@@ -647,7 +647,7 @@ elif st.session_state.section == 4:
                 st.write(f"unstable_hemodynamics: {st.session_state.unstable_hemodynamics}")
                 st.write(f"other_risk_yes_no: {st.session_state.other_risk_yes_no}")
                 st.write(f"other_risk_text_input: {st.session_state.other_risk_text_input}")
-                #st.write(f"Who will Intubate: {st.session_state.who_will_intubate}")
+                st.write(f"Who will Intubate: {st.session_state.who_will_intubate}")
                 #st.write(f"Who will BVM: {st.session_state.who_will_bvm}")
                 #st.write(f"Other Intubator: {st.session_state.other_intubate}")
                 #st.write(f"Other BVMer: {st.session_state.other_bvm}")
@@ -668,7 +668,7 @@ elif st.session_state.section == 4:
                         'unstable_hemodynamics': st.session_state.unstable_hemodynamics,
                         'other_risk_yes_no': st.session_state.other_risk_yes_no,
                         'other_risk_text_input': st.session_state.other_risk_text_input,
-                        #'who_will_intubate': st.session_state.who_will_intubate,
+                        'who_will_intubate': st.session_state.who_will_intubate,
                         #'who_will_bvm': st.session_state.who_will_bvm,
                         #'other_intubate': st.session_state.other_intubate,
                         #'other_bvm': st.session_state.other_bvm,
