@@ -255,8 +255,11 @@ if 'section' not in st.session_state:
     st.session_state.section = 0
 if 'option' not in st.session_state:
     st.session_state.option = None
+if 'completed_by' not in st.session_state:
+    st.session_state.option = None
+if 'room_number' not in st.session_state:
+    st.session_state.option = None
     
-# Front Page Completed Section
 # Front Page Completed Section
 if st.session_state.section == 0:
     st.title("Front Page Completed")
