@@ -267,19 +267,19 @@ if 'completed_by' not in st.session_state:
 if 'room_number' not in st.session_state:
     st.session_state.room_number = None  
 if 'difficult_airway_history' not in st.session_state:
-    st.session_state.difficult_airway_history = None
+    st.session_state.difficult_airway_history = 'Select'
 if 'physical_risk' not in st.session_state:
-    st.session_state.physical_risk = None
+    st.session_state.physical_risk = 'Select'
 if 'high_risk_desaturation' not in st.session_state:
-    st.session_state.high_risk_desaturation = None
+    st.session_state.high_risk_desaturation = 'Select'
 if 'high_risk_ICP' not in st.session_state:
-    st.session_state.high_risk_ICP = None
+    st.session_state.high_risk_ICP = 'Select'
 if 'unstable_hemodynamics' not in st.session_state:
-    st.session_state.unstable_hemodynamics = None
+    st.session_state.unstable_hemodynamics = 'Select'
 if 'other_risk_yes_no' not in st.session_state:
-    st.session_state.other_risk_yes_no = None
+    st.session_state.other_risk_yes_no = 'Select'
 if 'other_risk_text_input' not in st.session_state:
-    st.session_state.other_risk_text_input = None
+    st.session_state.other_risk_text_input = ''
     
 # Front Page Completed Section
 if st.session_state.section == 0:
