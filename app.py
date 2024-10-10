@@ -172,8 +172,8 @@ def create_word_doc(template_path, date, time, option,completed_by,room_number,d
                 run.text = run.text.replace('DocumenterPlaceholder', completed_by)
             if 'room_number' in run.text:
                 run.text = run.text.replace('room_number', room_number)
-            if 'who_will_intubate' in run.text:
-                run.text = run.text.replace('who_will_intubate', difficult_airway_history)
+            if 'D1' in run.text:
+                run.text = run.text.replace('D1', difficult_airway_history)
 
 
     # Save the modified document
@@ -261,6 +261,8 @@ if 'completed_by' not in st.session_state:
     st.session_state.completed_by = None  
 if 'room_number' not in st.session_state:
     st.session_state.room_number = None  
+if 'difficult_airway_history' not in st.session_state:
+    st.session_state.difficult_airway_history = ''
     
 # Front Page Completed Section
 if st.session_state.section == 0:
