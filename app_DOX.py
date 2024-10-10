@@ -18,8 +18,8 @@ def create_word_doc(template_path, date, time, option, intubation_method):
             if 'FrontPagePlaceholder' in run.text:
                 run.text = run.text.replace('FrontPagePlaceholder', option)
             # Replace IntubationMethodPlaceholder with the selected intubation method
-            if 'IntubationMethodPlaceholder' in run.text:
-                run.text = run.text.replace('IntubationMethodPlaceholder', intubation_method)
+            if 'intubation_method' in run.text:
+                run.text = run.text.replace('intubation_method', intubation_method)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
