@@ -427,7 +427,8 @@ elif st.session_state.section == 2:
         st.markdown("")
         st.write("History of difficult airway?")
     with cols[1]:
-        difficult_airway_history = st.selectbox("", options=['', 'YES', 'NO'])
+        difficult_airway_history = st.selectbox("Select difficult airway history:", options=['Select', 'YES', 'NO'])
+
 
 
     cols = st.columns([4, 1])
@@ -515,7 +516,7 @@ elif st.session_state.section == 2:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if difficult_airway_history != "":
+            if difficult_airway_history != "Select difficult airway history:":
                 st.session_state.difficult_airway_history = difficult_airway_history
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
