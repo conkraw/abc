@@ -509,19 +509,30 @@ elif st.session_state.section == 2:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if difficult_airway_history != "Select" and physical_risk != "Select" and high_risk_desaturation != "Select" and high_risk_ICP != "Select" and unstable_hemodynamics != "Select" and other_risk_yes_no != "Select" and other_risk_text_input:
+            if (difficult_airway_history != "Select" and 
+                physical_risk != "Select" and 
+                high_risk_desaturation != "Select" and 
+                high_risk_ICP != "Select" and 
+                unstable_hemodynamics != "Select" and 
+                other_risk_yes_no != "Select"):
+                
+                # Include the other_risk_text_input in your logic
                 st.session_state.difficult_airway_history = difficult_airway_history
                 st.session_state.physical_risk = physical_risk
                 st.session_state.high_risk_desaturation = high_risk_desaturation
                 st.session_state.high_risk_ICP = high_risk_ICP
                 st.session_state.unstable_hemodynamics = unstable_hemodynamics
-                st.session_state.other_risk_yes_no = other_risk_yes_no
-                st.session_state.other_risk_text_input = other_risk_text_input
                 
-                st.session_state.section += 1  # Increment the section
-                st.rerun()  # Force a rerun to reflect changes immediately
+                if other_risk_yes_no == 'YES':
+                    st.session_state.other_risk_text_input = other_risk_text_input
+                else:
+                    st.session_state.other_risk_text_input = ""  # or handle accordingly
+                
+                # Increment section and rerun
+                st.session_state.section += 1
+                st.rerun()
             else:
-                st.warning("Please select an option.")
+                st.warning("Please select all options.")
     
 # Intubation Plan Section
 elif st.session_state.section == 3:
