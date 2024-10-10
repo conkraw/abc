@@ -790,7 +790,7 @@ elif st.session_state.section == 6:
 
     with col3: 
             if st.button("Submit"):
-                template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
+                template_path = 'airway_bundley.docx'  # Ensure this is the correct path
     
                 # Debugging output
                 st.write(f"Using template: {template_path}")
