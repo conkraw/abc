@@ -800,14 +800,7 @@ elif st.session_state.section == 6:
                 st.write(f"Completed by: {st.session_state.completed_by}")
                 st.write(f"Room number: {st.session_state.room_number}")
                 st.write(f"Difficult airway history: {st.session_state.difficult_airway_history}")
-    
-                # Validate session state variables
-                if not all([st.session_state.formatted_date, st.session_state.formatted_time,
-                             st.session_state.option, st.session_state.completed_by,
-                             st.session_state.room_number, st.session_state.difficult_airway_history]):
-                    st.error("Please ensure all fields are filled out correctly.")
-                    return
-                
+
                 try:
                     doc_file = create_word_doc(template_path, 
                                                 st.session_state.formatted_date, 
