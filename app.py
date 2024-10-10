@@ -166,15 +166,14 @@ def create_word_doc(template_path, date, time, option,completed_by,room_number,d
                 run.text = run.text.replace('DatePlaceholder', date)
             if 'TimePlaceholder' in run.text:
                 run.text = run.text.replace('TimePlaceholder', time)
-            # Replace FrontPagePlaceholder with the selected option
-            if 'FrontPagePlaceholder' in run.text:
+                if 'FrontPagePlaceholder' in run.text:
                 run.text = run.text.replace('FrontPagePlaceholder', option)
             if 'DocumenterPlaceholder' in run.text:
                 run.text = run.text.replace('DocumenterPlaceholder', completed_by)
             if 'room_number' in run.text:
                 run.text = run.text.replace('room_number', room_number)
             if 'difficult_airway_history' in run.text:
-                run.text = run.text.replace('D1', difficult_airway_history)
+                run.text = run.text.replace('   D1', difficult_airway_history)
 
 
     # Save the modified document
