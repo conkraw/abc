@@ -278,8 +278,6 @@ if 'unstable_hemodynamics' not in st.session_state:
     st.session_state.unstable_hemodynamics = None
 if 'other_risk_yes_no' not in st.session_state:
     st.session_state.other_risk_yes_no = None
-if 'other_risk_yes_no' not in st.session_state:
-    st.session_state.other_risk_yes_no = None
 if 'other_risk_text_input' not in st.session_state:
     st.session_state.other_risk_text_input = None
     
