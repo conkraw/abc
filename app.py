@@ -245,18 +245,17 @@ def update_front_page_completed():
 if st.session_state.section == 0:
     st.title("Front Page Completed")
     
-    front_page_completed = st.selectbox("Select when the front page was completed",
-                                     ['Select when the front page was completed', 
-                                      'On admission', 
-                                      'During rounds', 
-                                      'After rounds', 
-                                      'Just prior to intubation', 
-                                      'After intubation', 
-                                      'Prior to extubation'], 
-                                     key="front_page_completed")
+    # Selectbox for front page completion
+    front_page_completed = st.selectbox("Select when the front page was completed", [
+        "Select when the front page was completed", 
+        "On admission", 
+        "During rounds", 
+        "After rounds", 
+        "Just prior to intubation", 
+        "After intubation", 
+        "Prior to extubation"
+    ], key="front_page_completed")
 
-    if front_page_completed != 'Select when the front page was completed':
-        st.session_state.front_page_completed = front_page_completed
     
     completed_by = st.text_input("Who completed the form? (Name or Role)", key="completed_by")
     room_number = st.selectbox("Select Room Number", 
@@ -265,9 +264,12 @@ if st.session_state.section == 0:
                                  '4209', '4211', '4213', '4215', '4217', 
                                  '4219', '4221', '4223'], key="room_number")
     
-    if st.button("Next", on_click=next_section):
-            
-        pass
+    if st.button("Next"):
+        if front_page_completed != "Select when the front page was completed":
+            st.session_state.front_page_completed = front_page_completed
+            st.session_state.page = '1'  # Navigate to the next page
+        else:
+            st.warning("Please select an option.")
 
 # Patient Information Section
 elif st.session_state.section == 1:
