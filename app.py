@@ -275,12 +275,12 @@ if st.session_state.section == 0:
                                  '4219', '4221', '4223'], key="room_number")
     
     if st.button("Next"):
-        if option != "Select an option":
-            st.session_state.option = option
-            st.session_state.section += 1  # Increment the section
-            st.rerun()  # Force a rerun to reflect changes immediately
-        else:
-            st.warning("Please select an option.")
+            if option != "Select an option":
+                st.session_state.option = option
+                st.session_state.section += 1  # Increment the section
+                st.rerun()  # Force a rerun to reflect changes immediately
+            else:
+                st.warning("Please select an option.")
 
 # Patient Information Section
 elif st.session_state.section == 1:
