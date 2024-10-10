@@ -250,7 +250,8 @@ if st.session_state.section == 0:
                                           'Just prior to intubation', 'After intubation', 
                                           'Prior to extubation'], key="front_page_completed")
 
-    
+    if front_page_completed != "Select when the front page was completed":
+            st.session_state.front_page_completed = front_page_completed
     
     completed_by = st.text_input("Who completed the form? (Name or Role)", key="completed_by")
     room_number = st.selectbox("Select Room Number", 
@@ -260,8 +261,6 @@ if st.session_state.section == 0:
                                  '4219', '4221', '4223'], key="room_number")
     
     if st.button("Next", on_click=next_section):
-        if front_page_completed != "Select when the front page was completed":
-            st.session_state.front_page_completed = front_page_completed
             
         pass
 
