@@ -17,24 +17,6 @@ def create_word_doc(template_path, date, time, option):
             if 'TimePlaceholder' in run.text:
                 run.text = run.text.replace('TimePlaceholder', time)
 
-        # Check for checkbox and replace based on the selected option
-        if option != "Select an option":
-            # Look for the option in the paragraph
-            if option in paragraph.text:
-                # Split the paragraph text to find and replace the checkbox
-                parts = paragraph.text.split(option)
-                checkbox_index = paragraph.text.index(option) - 2  # Index of checkbox
-
-                if paragraph.text[checkbox_index:checkbox_index + 2] == ' ':
-                    st.write(f"Found checkbox for '{option}' in paragraph: {paragraph.text}")
-
-                    # Create a new text for the checkbox with an "x"
-                    new_checkbox = 'x '
-                    # Rebuild the paragraph text
-                    new_paragraph_text = parts[0][:checkbox_index] + new_checkbox + option + ''.join(parts[1:])
-                    paragraph.clear()  # Clear existing runs
-                    # Add the modified text back to the paragraph
-                    paragraph.add_run(new_paragraph_text)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -61,7 +43,7 @@ option = st.selectbox("Select an option", [
 
 
 if st.button("Submit"):
-    if date and time and option != "Select an option":
+    if date and time:
         # Path to your template file
         template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
 
@@ -69,10 +51,9 @@ if st.button("Submit"):
         st.write(f"Using template: {template_path}")
         st.write(f"Date entered: {date}")
         st.write(f"Time entered: {time}")
-        st.write(f"Selected option: {option}")
 
         try:
-            doc_file = create_word_doc(template_path, date, time, option)
+            doc_file = create_word_doc(template_path, date, time)
             st.success("Document created successfully!")
             
             with open(doc_file, 'rb') as f:
