@@ -174,13 +174,18 @@ def create_word_doc(template_path, date, time, option,completed_by,room_number,d
                 run.text = run.text.replace('room_number', room_number)
             if 'D1' in run.text:
                 run.text = run.text.replace('D1', difficult_airway_history)
-
-
-    # Save the modified document
-    doc_file = 'airway_bundle_form.docx'
-    doc.save(doc_file)
-    return doc_file
-
+            if 'D2' in run.text:
+                run.text = run.text.replace('D2', physical_risk)
+            if 'R1' in run.text:
+                run.text = run.text.replace('R1', high_risk_desaturation)
+            if 'R2' in run.text:
+                run.text = run.text.replace('R2', high_risk_ICP)
+            if 'R3' in run.text:
+                run.text = run.text.replace('R3', unstable_hemodynamics)
+            if 'R4' in run.text:
+                run.text = run.text.replace('R4', other_risk_yes_no)
+            if 'risk_factors' in run.text:
+                run.text = run.text.replace('risk_factors', other_risk_text_input)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -262,7 +267,21 @@ if 'completed_by' not in st.session_state:
 if 'room_number' not in st.session_state:
     st.session_state.room_number = None  
 if 'difficult_airway_history' not in st.session_state:
-    st.session_state.difficult_airway_history = ''
+    st.session_state.difficult_airway_history = None
+if 'physical_risk' not in st.session_state:
+    st.session_state.physical_risk = None
+if 'high_risk_desaturation' not in st.session_state:
+    st.session_state.high_risk_desaturation = None
+if 'high_risk_ICP' not in st.session_state:
+    st.session_state.high_risk_ICP = None
+if 'unstable_hemodynamics' not in st.session_state:
+    st.session_state.unstable_hemodynamics = None
+if 'other_risk_yes_no' not in st.session_state:
+    st.session_state.other_risk_yes_no = None
+if 'other_risk_yes_no' not in st.session_state:
+    st.session_state.other_risk_yes_no = None
+if 'other_risk_text_input' not in st.session_state:
+    st.session_state.other_risk_text_input = None
     
 # Front Page Completed Section
 if st.session_state.section == 0:
@@ -428,7 +447,7 @@ elif st.session_state.section == 2:
         st.markdown("")
         st.write("History of difficult airway?")
     with cols[1]:
-        difficult_airway_history = st.selectbox("Select difficult airway history:", options=['Select', 'YES', 'NO'])
+        difficult_airway_history = st.selectbox("", options=['Select', 'YES', 'NO'])
 
 
 
@@ -440,10 +459,7 @@ elif st.session_state.section == 2:
     
     with cols[1]:
         physical_risk = st.selectbox(
-            label="",  
-            options=['','YES', 'NO'],
-            key="physical_risk"
-        )
+            options=['Select','YES', 'NO'])
 
     st.write("#### At Risk For:")
     
@@ -456,9 +472,7 @@ elif st.session_state.section == 2:
     with cols[1]:
         high_risk_desaturation = st.selectbox(
             label="",  
-            options=['','YES', 'NO'],
-            key="high_risk_desaturation"
-        )
+            options=['Select','YES', 'NO'])
 
     cols = st.columns([4, 1])
     with cols[0]:
@@ -469,9 +483,7 @@ elif st.session_state.section == 2:
     with cols[1]:
         high_risk_ICP = st.selectbox(
             label="",  
-            options=['','YES', 'NO'],
-            key="high_risk_ICP"
-        )
+            options=['Select','YES', 'NO'])
 
     cols = st.columns([4, 1])
     with cols[0]:
@@ -482,9 +494,7 @@ elif st.session_state.section == 2:
     with cols[1]:
         unstable_hemodynamics = st.selectbox(
             label="",  
-            options=['','YES', 'NO'],
-            key="unstable_hemodynamics"
-        )
+            options=['Select','YES', 'NO'])
 
     cols = st.columns([4, 1])
     
@@ -498,9 +508,7 @@ elif st.session_state.section == 2:
     with cols[1]:
         other_risk_yes_no = st.selectbox(
             label="",  
-            options=['', 'YES', 'NO'],
-            key="other_risk_yes_no"
-        )
+            options=['Select', 'YES', 'NO'])
 
     with cols[0]:
         if other_risk_yes_no == 'YES':
@@ -517,7 +525,7 @@ elif st.session_state.section == 2:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if difficult_airway_history != "Select":
+            if difficult_airway_history != "Select" and physical_risk != "Select" and high_risk_desaturation != "Select" and high_risk_ICP != "Select" and unstable_hemodynamics != "Select" and other_risk_yes_no != "Select" and other_risk_text_input:
                 st.session_state.difficult_airway_history = difficult_airway_history
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
@@ -802,7 +810,13 @@ elif st.session_state.section == 6:
                 st.write(f"Completed by: {st.session_state.completed_by}")
                 st.write(f"Room number: {st.session_state.room_number}")
                 st.write(f"Difficult airway history: {st.session_state.difficult_airway_history}")
-
+                st.write(f"Difficult airway history: {st.session_state.physical_risk}")
+                st.write(f"Difficult airway history: {st.session_state.high_risk_desaturation}")
+                st.write(f"Difficult airway history: {st.session_state.high_risk_ICP}")
+                st.write(f"Difficult airway history: {st.session_state.unstable_hemodynamics}")
+                st.write(f"Difficult airway history: {st.session_state.other_risk_yes_no}")
+                st.write(f"Difficult airway history: {st.session_state.other_risk_text_input}")
+                
                 try:
                     doc_file = create_word_doc(template_path, 
                                                 st.session_state.formatted_date, 
@@ -810,7 +824,13 @@ elif st.session_state.section == 6:
                                                 st.session_state.option,
                                                 st.session_state.completed_by,
                                                 st.session_state.room_number,
-                                                st.session_state.difficult_airway_history)
+                                                st.session_state.difficult_airway_history,
+                                                st.session_state.physical_risk,
+                                                st.session_state.high_risk_desaturation,
+                                                st.session_state.high_risk_ICP,
+                                                st.session_state.unstable_hemodynamics,
+                                                st.session_state.other_risk_yes_no,
+                                                st.session_state.other_risk_text_input)
     
                     st.success("Document created successfully!")
     
