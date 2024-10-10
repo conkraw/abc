@@ -438,7 +438,7 @@ elif st.session_state.section == 2:
         st.markdown("")
         st.write("History of difficult airway?")
     with cols[1]:
-        difficult_airway_history = st.selectbox("", options=['Select', 'YES', 'NO'])
+        difficult_airway_history = st.selectbox("", options=['Select Risk Factor 1', 'YES', 'NO'])
 
     cols = st.columns([4, 1])
     with cols[0]:
@@ -447,7 +447,7 @@ elif st.session_state.section == 2:
         st.write("Physical (e.g. small mouth, small jaw, large tongue, or short neck)?")
     
     with cols[1]:
-        physical_risk = st.selectbox("", options=['Select', 'YES', 'NO'])
+        physical_risk = st.selectbox("", options=['Select Risk Factor 2', 'YES', 'NO'])
 
     st.write("#### At Risk For:")
     
@@ -458,7 +458,7 @@ elif st.session_state.section == 2:
         st.write("High risk for rapid desaturation during intubation?")
     
     with cols[1]:
-        high_risk_desaturation = st.selectbox("", options=['Select', 'YES', 'NO'])
+        high_risk_desaturation = st.selectbox("", options=['Select Risk Factor 3', 'YES', 'NO'])
 
     cols = st.columns([4, 1])
     with cols[0]:
@@ -467,7 +467,7 @@ elif st.session_state.section == 2:
         st.write("Increased ICP, pulmonary hypertension, need to avoid hypercarbia?")
     
     with cols[1]:
-        high_risk_ICP = st.selectbox("", options=['Select', 'YES', 'NO'])
+        high_risk_ICP = st.selectbox("", options=['Select Risk Factor 4', 'YES', 'NO'])
 
     cols = st.columns([4, 1])
     with cols[0]:
@@ -476,7 +476,7 @@ elif st.session_state.section == 2:
         st.write("Unstable hemodynamics (e.g., hypovolemia, potential need for fluid bolus, vasopressor, CPR)?")
     
     with cols[1]:
-        unstable_hemodynamics = st.selectbox("", options=['Select', 'YES', 'NO'])
+        unstable_hemodynamics = st.selectbox("", options=['Select Risk Factor 5', 'YES', 'NO'])
 
     cols = st.columns([4, 1])
     
@@ -488,7 +488,7 @@ elif st.session_state.section == 2:
     
     # Second column for the selectbox
     with cols[1]:
-        other_risk_yes_no = st.selectbox("", options=['Select', 'YES', 'NO'])
+        other_risk_yes_no = st.selectbox("", options=['Select Risk Factor 6', 'YES', 'NO'])
 
     with cols[0]:
         other_risk_text_input = ""
@@ -507,12 +507,12 @@ elif st.session_state.section == 2:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if (difficult_airway_history != "Select" and 
-                physical_risk != "Select" and 
-                high_risk_desaturation != "Select" and 
-                high_risk_ICP != "Select" and 
-                unstable_hemodynamics != "Select" and 
-                other_risk_yes_no != "Select"):
+            if (difficult_airway_history != "Select Risk Factor 1" and 
+                physical_risk != "Select Risk Factor 2" and 
+                high_risk_desaturation != "Select Risk Factor 3" and 
+                high_risk_ICP != "Select Risk Factor 4" and 
+                unstable_hemodynamics != "Select Risk Factor 5" and 
+                other_risk_yes_no != "Select Risk Factor 6"):
                 
                 # Include the other_risk_text_input in your logic
                 st.session_state.difficult_airway_history = difficult_airway_history
