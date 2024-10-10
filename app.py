@@ -493,6 +493,8 @@ elif st.session_state.section == 2:
         other_risk_yes_no = st.selectbox("", options=['Select', 'YES', 'NO'],key='other_risk_yes_no')
 
     with cols[0]:
+    other_risk_text_input = ""
+    
         if other_risk_yes_no == 'YES':
             other_risk_text_input = st.text_input("Please specify the other risk:")
 
