@@ -788,48 +788,49 @@ elif st.session_state.section == 6:
     
     col1, col2, col3 = st.columns(3)
 
-    with col3: 
-        if st.button("Submit"):
-            template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
+with col3: 
+    if st.button("Submit"):
+        template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
 
-            # Debugging output
-            st.write(f"Using template: {template_path}")
-            st.write(f"Date entered: {st.session_state.formatted_date}")
-            st.write(f"Time entered: {st.session_state.formatted_time}")
-            st.write(f"Option selected: {st.session_state.option}")
-            st.write(f"Completed by: {st.session_state.completed_by}")
-            st.write(f"Room number: {st.session_state.room_number}")
-            st.write(f"Difficult airway history: {st.session_state.difficult_airway_history}")
+        # Debugging output
+        st.write(f"Using template: {template_path}")
+        st.write(f"Date entered: {st.session_state.formatted_date}")
+        st.write(f"Time entered: {st.session_state.formatted_time}")
+        st.write(f"Option selected: {st.session_state.option}")
+        st.write(f"Completed by: {st.session_state.completed_by}")
+        st.write(f"Room number: {st.session_state.room_number}")
+        st.write(f"Difficult airway history: {st.session_state.difficult_airway_history}")
 
-            # Validate session state variables
-            if not all([st.session_state.formatted_date, st.session_state.formatted_time,
-                        st.session_state.option, st.session_state.completed_by,
-                        st.session_state.room_number, st.session_state.difficult_airway_history]):
-                st.error("Please ensure all fields are filled out correctly.")
-                return
-            
-            try:
-                doc_file = create_word_doc(template_path, 
-                                            st.session_state.formatted_date, 
-                                            st.session_state.formatted_time, 
-                                            st.session_state.option,
-                                            st.session_state.completed_by,
-                                            st.session_state.room_number,
-                                            st.session_state.difficult_airway_history)
+        # Validate session state variables
+        if not all([st.session_state.formatted_date, st.session_state.formatted_time,
+                     st.session_state.option, st.session_state.completed_by,
+                     st.session_state.room_number, st.session_state.difficult_airway_history]):
+            st.error("Please ensure all fields are filled out correctly.")
+            return
+        
+        try:
+            doc_file = create_word_doc(template_path, 
+                                        st.session_state.formatted_date, 
+                                        st.session_state.formatted_time, 
+                                        st.session_state.option,
+                                        st.session_state.completed_by,
+                                        st.session_state.room_number,
+                                        st.session_state.difficult_airway_history)
 
-                st.success("Document created successfully!")
+            st.success("Document created successfully!")
 
-                with open(doc_file, 'rb') as f:
-                    st.download_button(
-                        label="Download Word Document",
-                        data=f,
-                        file_name=doc_file.split("/")[-1],  # Use only the file name
-                        mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                    )
-                os.remove(doc_file)  # Clean up the file after download
-            except Exception as e:
-                st.error(f"An error occurred: {e}")
-                st.exception(e)  # This will print the stack trace for debugging
+            with open(doc_file, 'rb') as f:
+                st.download_button(
+                    label="Download Word Document",
+                    data=f,
+                    file_name=doc_file.split("/")[-1],  # Use only the file name
+                    mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                )
+            os.remove(doc_file)  # Clean up the file after download
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
+            st.exception(e)  # This will print the stack trace for debugging
+
             
             
     with col1:
