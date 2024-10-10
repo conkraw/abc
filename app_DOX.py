@@ -3,27 +3,25 @@ from docx import Document
 import os
 
 def create_word_doc(template_path, date, time, option):
+    # Load the Word document template
     doc = Document(template_path)
 
     # Check and replace text in paragraphs
-    st.write("Checking paragraphs:")
     for paragraph in doc.paragraphs:
-        st.write(f"Paragraph: {paragraph.text}")
-
-        # Replace Date and Time Placeholders
         for run in paragraph.runs:
+            # Replace Date and Time Placeholders
             if 'DatePlaceholder' in run.text:
                 run.text = run.text.replace('DatePlaceholder', date)
             if 'TimePlaceholder' in run.text:
                 run.text = run.text.replace('TimePlaceholder', time)
-
+            # Replace FrontPagePlaceholder with the selected option
+            if 'FrontPagePlaceholder' in run.text:
+                run.text = run.text.replace('FrontPagePlaceholder', option)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
     doc.save(doc_file)
     return doc_file
-
-
 
 # Streamlit app
 st.title("Fill in Template Document")
@@ -41,9 +39,8 @@ option = st.selectbox("Select an option", [
     "Prior to Extubation"
 ])
 
-
 if st.button("Submit"):
-    if date and time:
+    if date and time and option != "Select an option":
         # Path to your template file
         template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
 
@@ -51,9 +48,10 @@ if st.button("Submit"):
         st.write(f"Using template: {template_path}")
         st.write(f"Date entered: {date}")
         st.write(f"Time entered: {time}")
+        st.write(f"Option selected: {option}")
 
         try:
-            doc_file = create_word_doc(template_path, date, time)
+            doc_file = create_word_doc(template_path, date, time, option)
             st.success("Document created successfully!")
             
             with open(doc_file, 'rb') as f:
@@ -67,7 +65,6 @@ if st.button("Submit"):
         except Exception as e:
             st.error(f"An error occurred: {e}")
     else:
-        st.warning("Please fill in all fields.")
-
+        st.warning("Please fill in all fields and select an option.")
 
 
