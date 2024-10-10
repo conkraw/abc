@@ -247,6 +247,11 @@ def update_front_page_completed():
     # This function will update the session state based on the selection
     st.session_state['front_page_completed'] = front_page_completed
 
+if 'section' not in st.session_state:
+    st.session_state.section = 0
+if 'option' not in st.session_state:
+    st.session_state.option = None
+    
 # Front Page Completed Section
 if st.session_state.section == 0:
     st.title("Front Page Completed")
