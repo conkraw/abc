@@ -94,7 +94,7 @@ elif st.session_state.page == 'intubation_method':
 # Download page
 elif st.session_state.page == 'download':
     # Path to your template file
-    template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
+    template_path = 'airway_bundlez.docx'  # Ensure this is the correct path
 
     # Debugging output
     st.write(f"Using template: {template_path}")
