@@ -274,7 +274,7 @@ if st.session_state.section == 0:
                                  '4209', '4211', '4213', '4215', '4217', 
                                  '4219', '4221', '4223'], key="room_number")
     
-        if st.button("Next"):
+    if st.button("Next"):
         if option != "Select an option":
             st.session_state.option = option
             st.session_state.section += 1  # Increment the section
