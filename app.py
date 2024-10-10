@@ -873,25 +873,27 @@ elif st.session_state.section == 6:
                 
                 
                 try:
-                    doc_file = create_word_doc(template_path, 
-                                                st.session_state.formatted_date, 
-                                                st.session_state.formatted_time, 
-                                                st.session_state.option,
-                                                st.session_state.completed_by,
-                                                st.session_state.room_number,
-                                                st.session_state.difficult_airway_history,
-                                                st.session_state.physical_risk,
-                                                st.session_state.high_risk_desaturation,
-                                                st.session_state.high_risk_ICP,
-                                                st.session_state.unstable_hemodynamics,
-                                                st.session_state.other_risk_yes_no,
-                                                st.session_state.other_risk_text_input,
-                                                st.session_state.who_will_intubate,
-                                              st.session_state.who_will_bvm,
-                                              st.session_state.other_intubate,
-                                              st.session_state.other_bvm,
-                                              st.session_state.intubation_method)
-    
+                    data = {
+                        'date': st.session_state.formatted_date,
+                        'time': st.session_state.formatted_time,
+                        'option': st.session_state.option,
+                        'completed_by': st.session_state.completed_by,
+                        'room_number': st.session_state.room_number,
+                        'difficult_airway_history': st.session_state.difficult_airway_history,
+                        'physical_risk': st.session_state.physical_risk,
+                        'high_risk_desaturation': st.session_state.high_risk_desaturation,
+                        'high_risk_ICP': st.session_state.high_risk_ICP,
+                        'unstable_hemodynamics': st.session_state.unstable_hemodynamics,
+                        'other_risk_yes_no': st.session_state.other_risk_yes_no,
+                        'other_risk_text_input': st.session_state.other_risk_text_input,
+                        'who_will_intubate': st.session_state.who_will_intubate,
+                        'who_will_bvm': st.session_state.who_will_bvm,
+                        'other_intubate': st.session_state.other_intubate,
+                        'other_bvm': st.session_state.other_bvm,
+                        'intubation_method': st.session_state.intubation_method
+                    }
+                    doc_file = create_word_doc(template_path, data)
+                    
                     st.success("Document created successfully!")
     
                     with open(doc_file, 'rb') as f:
