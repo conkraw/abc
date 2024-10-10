@@ -173,7 +173,7 @@ def create_word_doc(template_path, date, time, option,completed_by,room_number,d
             if 'room_number' in run.text:
                 run.text = run.text.replace('room_number', room_number)
             if 'difficult_airway_history' in run.text:
-                run.text = run.text.replace('   D1', difficult_airway_history)
+                run.text = run.text.replace('D1', difficult_airway_history)
 
 
     # Save the modified document
