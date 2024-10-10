@@ -647,10 +647,10 @@ elif st.session_state.section == 4:
                 st.write(f"unstable_hemodynamics: {st.session_state.unstable_hemodynamics}")
                 st.write(f"other_risk_yes_no: {st.session_state.other_risk_yes_no}")
                 st.write(f"other_risk_text_input: {st.session_state.other_risk_text_input}")
-                st.write(f"Who will Intubate: {st.session_state.who_will_intubate}")
-                st.write(f"Who will BVM: {st.session_state.who_will_bvm}")
-                st.write(f"Other Intubator: {st.session_state.other_intubate}")
-                st.write(f"Other BVMer: {st.session_state.other_bvm}")
+                #st.write(f"Who will Intubate: {st.session_state.who_will_intubate}")
+                #st.write(f"Who will BVM: {st.session_state.who_will_bvm}")
+                #st.write(f"Other Intubator: {st.session_state.other_intubate}")
+                #st.write(f"Other BVMer: {st.session_state.other_bvm}")
                 st.write(f"Method: {st.session_state.intubation_method}")
                 
                 
