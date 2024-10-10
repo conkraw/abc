@@ -187,9 +187,9 @@ def create_word_doc(template_path, date, time, option,completed_by,room_number,d
             if 'risk_factors' in run.text:
                 run.text = run.text.replace('risk_factors', other_risk_text_input)
             if 'who_will_intubate' in run.text:
-                run.text = run.text.replace('who_will_intubate', who_will_intubate)
+                run.text = run.text.replace('who_will_intubate', ' '.join(who_will_intubate))
             if 'who_will_bvm' in run.text:
-                run.text = run.text.replace('who_will_bvm', who_will_bvm)
+                run.text = run.text.replace('who_will_bvm', ' '.join(who_will_bvm))
             if 'other_intubate' in run.text:
                 run.text = run.text.replace('other_intubate', other_intubate)
             if 'other_bvm' in run.text:
