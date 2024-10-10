@@ -208,7 +208,7 @@ def initialize_firebase():
     except Exception as e:
         raise Exception(f"Error initializing Firebase: {e}")
 
-db = initialize_firebase()
+#db = initialize_firebase()
 
 def update_ett_size():
     selected_age = st.session_state.age_select
@@ -272,7 +272,8 @@ if st.session_state.section == 0:
     if st.button("Next"):
         if option != "Select an option":
             st.session_state.option = option
-            st.session_state.page = 'Patient Information'  # Navigate to download page
+            st.session_state.page = 'Patient Information'  # Navigate to the next page
+            st.session_state.section += 1  # Increment the section to move forward
         else:
             st.warning("Please select an option.")
 
