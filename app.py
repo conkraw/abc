@@ -269,11 +269,9 @@ if st.session_state.section == 0:
                                  '4209', '4211', '4213', '4215', '4217', 
                                  '4219', '4221', '4223'], key="room_number")
     
-    if st.button("Next"):
+    if st.button("Next",on_click=next_section):
         if option != "Select an option":
             st.session_state.option = option
-            st.session_state.page = 'Patient Information'  # Navigate to the next page
-            st.session_state.section += 1  # Increment the section to move forward
         else:
             st.warning("Please select an option.")
 
