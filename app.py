@@ -260,7 +260,7 @@ if st.session_state.section == 0:
                                  '4219', '4221', '4223'], key="room_number")
     
     if st.button("Next", on_click=next_section):
-        if front_page_completed != "Select an option":
+        if front_page_completed != "Select when the front page was completed":
             st.session_state.front_page_completed = front_page_completed
             
         pass
