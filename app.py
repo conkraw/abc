@@ -205,14 +205,14 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('R4', other_risk_yes_no)
             if 'risk_factors' in run.text:
                 run.text = run.text.replace('risk_factors', other_risk_text_input)
-            if 'who_will_intubate' in run.text:
-                run.text = run.text.replace('who_will_intubate', ' '.join(who_will_intubate))
-            if 'who_will_bvm' in run.text:
-                run.text = run.text.replace('who_will_bvm', ' '.join(who_will_bvm))
-            if 'other_intubate' in run.text:
-                run.text = run.text.replace('other_intubate', other_intubate)
-            if 'other_bvm' in run.text:
-                run.text = run.text.replace('other_bvm', other_bvm)
+            #if 'who_will_intubate' in run.text:
+            #    run.text = run.text.replace('who_will_intubate', ' '.join(who_will_intubate))
+            #if 'who_will_bvm' in run.text:
+            #    run.text = run.text.replace('who_will_bvm', ' '.join(who_will_bvm))
+            #if 'other_intubate' in run.text:
+            #    run.text = run.text.replace('other_intubate', other_intubate)
+            #if 'other_bvm' in run.text:
+            #    run.text = run.text.replace('other_bvm', other_bvm)
             if 'intubation_method' in run.text:
                 run.text = run.text.replace('intubation_method', intubation_method)
 
@@ -291,10 +291,10 @@ default_values = {
     'unstable_hemodynamics': 'Select Risk Factor 5',
     'other_risk_yes_no': 'Select Risk Factor 6',
     'other_risk_text_input': '',
-    'who_will_intubate': [],  # Change to list if needed
-    'who_will_bvm': [],       # Change to list if needed
-    'other_intubate': '',
-    'other_bvm': '',
+    #'who_will_intubate': [],  # Change to list if needed
+    #'who_will_bvm': [],       # Change to list if needed
+    #'other_intubate': '',
+    #'other_bvm': '',
     'intubation_method': None,
 }
 
