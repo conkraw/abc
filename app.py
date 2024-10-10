@@ -788,11 +788,6 @@ elif st.session_state.section == 6:
     
     col1, col2, col3 = st.columns(3)
 
-    elif st.session_state.section == 6:
-    st.title("Fill in Template Document")
-    
-    col1, col2, col3 = st.columns(3)
-
     with col3: 
         if st.button("Submit"):
             template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
@@ -836,10 +831,6 @@ elif st.session_state.section == 6:
                 st.error(f"An error occurred: {e}")
                 st.exception(e)  # This will print the stack trace for debugging
             
-    with col1:
-        if st.button("Previous", on_click=prev_section):
-            pass
-
             
     with col1:
         if st.button("Previous", on_click=prev_section):
