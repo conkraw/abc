@@ -154,60 +154,27 @@ def update_automatic_selections():
         st.session_state.roc_dose = weight_to_roc_mapping[selected_weight]
         st.session_state.vec_dose = weight_to_vec_mapping[selected_weight]
 
-#def create_word_doc(template_path, date):
-#    doc = Document(template_path)
-#    # Check and replace text in paragraphs
-#    st.write("Checking paragraphs:")
-#    for paragraph in doc.paragraphs:
-#        st.write(f"Paragraph: {paragraph.text}")
-#        # Replace Date Placeholder
-#        for run in paragraph.runs:
-#            if 'DatePlaceholder' in run.text:
-#                run.text = run.text.replace('DatePlaceholder', date)
-#    # Save the modified document
-#    doc_file = 'airway_bundle_form.docx'
-#    doc.save(doc_file)
-#    return doc_file
-
 def create_word_doc(template_path, date, time, front_page_completed):
+    # Load the Word document template
     doc = Document(template_path)
 
-    st.write(f"Session State - FrontPageCompleted: {st.session_state.get('front_page_completed')}")  # Debugging
-
-
-    # Debug: Print original document content to check placeholders
-    st.write("Original Document Content:")
-    for paragraph in doc.paragraphs:
-        st.write(paragraph.text)
-
-    # Replace placeholders
+    # Check and replace text in paragraphs
     for paragraph in doc.paragraphs:
         for run in paragraph.runs:
+            # Replace Date and Time Placeholders
             if 'DatePlaceholder' in run.text:
-                st.write(f"Replacing DatePlaceholder with: {date}")  # Debug
-                run.text = run.text.replace('DatePlaceholder', date or "")
-            
+                run.text = run.text.replace('DatePlaceholder', date)
             if 'TimePlaceholder' in run.text:
-                st.write(f"Replacing TimePlaceholder with: {time}")  # Debug
-                run.text = run.text.replace('TimePlaceholder', time or "")
-            
+                run.text = run.text.replace('TimePlaceholder', time)
+            # Replace FrontPagePlaceholder with the selected option
             if 'FrontPagePlaceholder' in run.text:
-                st.write(f"Replacing FrontPagePlaceholder with: {front_page_completed}")  # Debug
-                run.text = run.text.replace('FrontPagePlaceholder', front_page_completed or "")
-
-    # Debug: Print modified document content
-    st.write("Modified Document Content:")
-    for paragraph in doc.paragraphs:
-        st.write(paragraph.text)
+                run.text = run.text.replace('FrontPagePlaceholder', front_page_completed)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
-    st.write(f"Saving document to: {doc_file}")  # Debug
     doc.save(doc_file)
     return doc_file
 
-
-    
 def reset_input(default_value, key):
     if key not in st.session_state:
         st.session_state[key] = default_value
@@ -278,16 +245,12 @@ def update_front_page_completed():
 if st.session_state.section == 0:
     st.title("Front Page Completed")
     
-        # Set session state based on the selection
-    if 'front_page_completed' not in st.session_state:
-        st.session_state['front_page_completed'] = '' 
-    
     front_page_completed = st.selectbox("Select when the front page was completed",
                                          ['','On admission', 'During rounds', 'After rounds', 
                                           'Just prior to intubation', 'After intubation', 
                                           'Prior to extubation'], key="front_page_completed")
 
-
+    
     
     completed_by = st.text_input("Who completed the form? (Name or Role)", key="completed_by")
     room_number = st.selectbox("Select Room Number", 
@@ -297,6 +260,9 @@ if st.session_state.section == 0:
                                  '4219', '4221', '4223'], key="room_number")
     
     if st.button("Next", on_click=next_section):
+        if front_page_completed != "Select an option":
+            st.session_state.front_page_completed = front_page_completed
+            
         pass
 
 # Patient Information Section
@@ -311,7 +277,7 @@ elif st.session_state.section == 1:
 
         if date:
             st.session_state['formatted_date'] = date.strftime("%m-%d-%Y")
-    
+            
         # Select Patient Age
         age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),key="age_select",on_change=update_automatic_selections)
 
@@ -786,40 +752,32 @@ elif st.session_state.section == 6:
     
     col1, col2, col3 = st.columns(3)
 
-    # Debugging - Print the section state to confirm we are in the correct section
-    st.write(f"Current section: {st.session_state.section}")
-
     with col3: 
         if st.button("Submit"):
-            if 'formatted_date' in st.session_state and 'formatted_time' in st.session_state and 'front_page_completed' in st.session_state:
-                formatted_date = st.session_state['formatted_date']
-                formatted_time = st.session_state['formatted_time']
-                front_page_completed = st.session_state['front_page_completed']
+                # Path to your template file
+            template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
+        
+            # Debugging output
+            st.write(f"Using template: {template_path}")
+            st.write(f"Date entered: {st.session_state.date}")
+            st.write(f"Time entered: {st.session_state.time}")
+            st.write(f"Option selected: {st.session_state.option}")
+        
+            try:
+                doc_file = create_word_doc(template_path, st.session_state.date, st.session_state.time, st.session_state.option)
+                st.success("Document created successfully!")
                 
-                if formatted_date and formatted_time and front_page_completed:
-                    # Path to your template file
-                    template_path = 'airway_bundlex.docx'  # Ensure this is the correct path
-                    
-                    try:
-                        # Create the document with all the information
-                        doc_file = create_word_doc(template_path, formatted_date, formatted_time, front_page_completed)
-                        st.success("Document created successfully!")
-                        
-                        # Provide download button
-                        with open(doc_file, 'rb') as f:
-                            st.download_button(
-                                label="Download Word Document",
-                                data=f,
-                                file_name=doc_file,
-                                mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                            )
-                        os.remove(doc_file)  # Clean up the file after download
-                    except Exception as e:
-                        st.error(f"An error occurred: {e}")
-                else:
-                    st.warning("Please ensure all fields (date, time, front page) are filled in.")
-
-    
+                with open(doc_file, 'rb') as f:
+                    st.download_button(
+                        label="Download Word Document",
+                        data=f,
+                        file_name=doc_file,
+                        mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                    )
+                os.remove(doc_file)  # Clean up the file after download
+            except Exception as e:
+                st.error(f"An error occurred: {e}")
+            
     with col1:
         if st.button("Previous", on_click=prev_section):
             pass
