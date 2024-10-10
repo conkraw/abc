@@ -154,7 +154,7 @@ def update_automatic_selections():
         st.session_state.roc_dose = weight_to_roc_mapping[selected_weight]
         st.session_state.vec_dose = weight_to_vec_mapping[selected_weight]
 
-def create_word_doc(template_path, date, time, option,completed_by,room_number,difficult_airway_history,physical_risk,high_risk_desaturation,high_risk_ICP,unstable_hemodynamics,other_risk_yes_no,other_risk_text_input,who_will_intubate,who_will_bvm):
+def create_word_doc(template_path, date, time, option,completed_by,room_number,difficult_airway_history,physical_risk,high_risk_desaturation,high_risk_ICP,unstable_hemodynamics,other_risk_yes_no,other_risk_text_input,who_will_intubate,who_will_bvm,other_intubate,other_bvm):
     # Load the Word document template
     doc = Document(template_path)
 
@@ -190,6 +190,10 @@ def create_word_doc(template_path, date, time, option,completed_by,room_number,d
                 run.text = run.text.replace('who_will_intubate', who_will_intubate)
             if 'who_will_bvm' in run.text:
                 run.text = run.text.replace('who_will_bvm', who_will_bvm)
+            if 'other_intubate' in run.text:
+                run.text = run.text.replace('other_intubate', other_intubate)
+            if 'other_bvm' in run.text:
+                run.text = run.text.replace('other_bvm', other_bvm)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -264,23 +268,27 @@ if 'completed_by' not in st.session_state:
 if 'room_number' not in st.session_state:
     st.session_state.room_number = None  
 if 'difficult_airway_history' not in st.session_state:
-    st.session_state.difficult_airway_history = 'Select'
+    st.session_state.difficult_airway_history = 'Select Risk Factor 1'
 if 'physical_risk' not in st.session_state:
-    st.session_state.physical_risk = 'Select'
+    st.session_state.physical_risk = 'Select Risk Factor 2'
 if 'high_risk_desaturation' not in st.session_state:
-    st.session_state.high_risk_desaturation = 'Select'
+    st.session_state.high_risk_desaturation = 'Select Risk Factor 3'
 if 'high_risk_ICP' not in st.session_state:
-    st.session_state.high_risk_ICP = 'Select'
+    st.session_state.high_risk_ICP = 'Select Risk Factor 4'
 if 'unstable_hemodynamics' not in st.session_state:
-    st.session_state.unstable_hemodynamics = 'Select'
+    st.session_state.unstable_hemodynamics = 'Select Risk Factor 5'
 if 'other_risk_yes_no' not in st.session_state:
-    st.session_state.other_risk_yes_no = 'Select'
+    st.session_state.other_risk_yes_no = 'Select Risk Factor 6'
 if 'other_risk_text_input' not in st.session_state:
     st.session_state.other_risk_text_input = ''
 if 'who_will_intubate' not in st.session_state:
     st.session_state.who_will_intubate = ''
 if 'who_will_bvm' not in st.session_state:
     st.session_state.who_will_bvm = ''
+if 'other_intubate' not in st.session_state:
+    st.session_state.other_intubate = ''
+if 'other_bvm' not in st.session_state:
+    st.session_state.other_bvm = ''
     
 # Front Page Completed Section
 if st.session_state.section == 0:
@@ -834,12 +842,17 @@ elif st.session_state.section == 6:
                 st.write(f"Completed by: {st.session_state.completed_by}")
                 st.write(f"Room number: {st.session_state.room_number}")
                 st.write(f"Difficult airway history: {st.session_state.difficult_airway_history}")
-                st.write(f"Difficult airway history: {st.session_state.physical_risk}")
-                st.write(f"Difficult airway history: {st.session_state.high_risk_desaturation}")
-                st.write(f"Difficult airway history: {st.session_state.high_risk_ICP}")
-                st.write(f"Difficult airway history: {st.session_state.unstable_hemodynamics}")
-                st.write(f"Difficult airway history: {st.session_state.other_risk_yes_no}")
-                st.write(f"Difficult airway history: {st.session_state.other_risk_text_input}")
+                st.write(f"Physical Risk: {st.session_state.physical_risk}")
+                st.write(f"High Risk Desaturation: {st.session_state.high_risk_desaturation}")
+                st.write(f"high_risk_ICP: {st.session_state.high_risk_ICP}")
+                st.write(f"unstable_hemodynamics: {st.session_state.unstable_hemodynamics}")
+                st.write(f"other_risk_yes_no: {st.session_state.other_risk_yes_no}")
+                st.write(f"other_risk_text_input: {st.session_state.other_risk_text_input}")
+                st.write(f"Who will Intubate: {st.session_state.who_will_intubate}")
+                st.write(f"Who will BVM: {st.session_state.who_will_bvm}")
+                st.write(f"Other Intubator: {st.session_state.other_intubate}")
+                st.write(f"Other BVMer: {st.session_state.other_bvm}")
+                
                 
                 try:
                     doc_file = create_word_doc(template_path, 
@@ -854,7 +867,11 @@ elif st.session_state.section == 6:
                                                 st.session_state.high_risk_ICP,
                                                 st.session_state.unstable_hemodynamics,
                                                 st.session_state.other_risk_yes_no,
-                                                st.session_state.other_risk_text_input)
+                                                st.session_state.other_risk_text_input,
+                                                st.session_state.who_will_intubate,
+                                              st.session_state.who_will_bvm,
+                                              st.session_state.other_intubate,
+                                              st.session_state.other_bvm)
     
                     st.success("Document created successfully!")
     
