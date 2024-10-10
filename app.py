@@ -236,11 +236,6 @@ def fill_word_template(template_path, data):
     buffer.seek(0)
     return buffer
 
-if 'section' not in st.session_state:
-    st.session_state.section = 0
-if 'form_data' not in st.session_state:
-    st.session_state.form_data = {}
-
 def next_section():
     if st.session_state.section < 6:
         st.session_state.section += 1
@@ -254,12 +249,10 @@ def save_data():
     data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
     db.collection('airway_checklists').add(data)
     
-def update_front_page_completed():
-    # This function will update the session state based on the selection
-    st.session_state['front_page_completed'] = front_page_completed
-
 if 'section' not in st.session_state:
     st.session_state.section = 0
+if 'form_data' not in st.session_state:
+    st.session_state.form_data = {}
 if 'option' not in st.session_state:
     st.session_state.option = None
 if 'completed_by' not in st.session_state:
