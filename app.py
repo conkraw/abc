@@ -456,7 +456,7 @@ elif st.session_state.section == 2:
         st.write("Physical (e.g. small mouth, small jaw, large tongue, or short neck)?")
     
     with cols[1]:
-        physical_risk = st.selectbox("", options=['Select', 'YES', 'NO'])
+        physical_risk = st.selectbox("", options=['Select', 'YES', 'NO'], key='physical_risk')
 
     st.write("#### At Risk For:")
     
