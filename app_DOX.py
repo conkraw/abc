@@ -28,13 +28,32 @@ st.title("Fill in Template Document")
 
 # Initialize session state
 if 'page' not in st.session_state:
-    st.session_state.page = 'input'
+    st.session_state.page = 'date'
 
-# Input page
-if st.session_state.page == 'input':
-    # User inputs
+# Date input page
+if st.session_state.page == 'date':
     date = st.text_input("Enter your date")
+    
+    if st.button("Next"):
+        if date:
+            st.session_state.date = date
+            st.session_state.page = 'time'  # Navigate to time input page
+        else:
+            st.warning("Please enter a date.")
+
+# Time input page
+elif st.session_state.page == 'time':
     time = st.text_input("Enter your time")
+    
+    if st.button("Next"):
+        if time:
+            st.session_state.time = time
+            st.session_state.page = 'option'  # Navigate to option selection page
+        else:
+            st.warning("Please enter a time.")
+
+# Option selection page
+elif st.session_state.page == 'option':
     option = st.selectbox("Select an option", [
         "Select an option", 
         "On admission", 
@@ -46,14 +65,11 @@ if st.session_state.page == 'input':
     ])
 
     if st.button("Next"):
-        if date and time and option != "Select an option":
-            # Store user input in session state
-            st.session_state.date = date
-            st.session_state.time = time
+        if option != "Select an option":
             st.session_state.option = option
             st.session_state.page = 'download'  # Navigate to download page
         else:
-            st.warning("Please fill in all fields and select an option.")
+            st.warning("Please select an option.")
 
 # Download page
 elif st.session_state.page == 'download':
@@ -82,6 +98,5 @@ elif st.session_state.page == 'download':
         st.error(f"An error occurred: {e}")
 
     if st.button("Go Back"):
-        st.session_state.page = 'input'  # Navigate back to input page
-
+        st.session_state.page = 'option'  # Navigate back to option selection page
 
