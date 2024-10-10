@@ -2,7 +2,7 @@ import streamlit as st
 from docx import Document
 import os
 
-def create_word_doc(template_path, date, time, option, intubation_method):
+def create_word_doc(template_path, date, time, option, intubation_method, who_will_intubate):
     # Load the Word document template
     doc = Document(template_path)
 
@@ -20,6 +20,9 @@ def create_word_doc(template_path, date, time, option, intubation_method):
             # Replace IntubationMethodPlaceholder with the selected intubation method
             if 'intubation_method' in run.text:
                 run.text = run.text.replace('intubation_method', intubation_method)
+            # Replace who_will_intubate placeholder
+            if 'who_will_intubate' in run.text:
+                run.text = run.text.replace('who_will_intubate', ', '.join(who_will_intubate))
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -87,9 +90,27 @@ elif st.session_state.page == 'intubation_method':
     if st.button("Next"):
         if intubation_method != "Select a method":
             st.session_state.intubation_method = intubation_method
-            st.session_state.page = 'download'  # Navigate to download page
+            st.session_state.page = 'who_will_intubate'  # Navigate to who will intubate selection page
         else:
             st.warning("Please select an intubation method.")
+
+# Who will intubate selection page
+elif st.session_state.page == 'who_will_intubate':
+    st.subheader("Who will intubate?")
+    who_will_intubate = st.multiselect("Select the names", [
+        "Doctor A",
+        "Doctor B",
+        "Doctor C",
+        "Nurse A",
+        "Nurse B"
+    ])
+
+    if st.button("Next"):
+        if who_will_intubate:
+            st.session_state.who_will_intubate = who_will_intubate
+            st.session_state.page = 'download'  # Navigate to download page
+        else:
+            st.warning("Please select at least one person.")
 
 # Download page
 elif st.session_state.page == 'download':
@@ -102,9 +123,17 @@ elif st.session_state.page == 'download':
     st.write(f"Time entered: {st.session_state.time}")
     st.write(f"Option selected: {st.session_state.option}")
     st.write(f"Intubation method selected: {st.session_state.intubation_method}")
+    st.write(f"Who will intubate: {', '.join(st.session_state.who_will_intubate)}")
 
     try:
-        doc_file = create_word_doc(template_path, st.session_state.date, st.session_state.time, st.session_state.option, st.session_state.intubation_method)
+        doc_file = create_word_doc(
+            template_path, 
+            st.session_state.date, 
+            st.session_state.time, 
+            st.session_state.option, 
+            st.session_state.intubation_method, 
+            st.session_state.who_will_intubate
+        )
         st.success("Document created successfully!")
         
         with open(doc_file, 'rb') as f:
@@ -119,5 +148,6 @@ elif st.session_state.page == 'download':
         st.error(f"An error occurred: {e}")
 
     if st.button("Go Back"):
-        st.session_state.page = 'intubation_method'  # Navigate back to intubation method selection page
+        st.session_state.page = 'who_will_intubate'  # Navigate back to who will intubate selection page
+
 
