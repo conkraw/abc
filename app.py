@@ -359,9 +359,20 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('other_planning', other_planning)
                         if 'when_intubate' in run.text:
                             if when_intubate:
-                                run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))  # Join with comma and space, then strip
-
-                            
+                                # Adjust the list to ensure "Hypoxemia Refractory to CPAP" has no comma after it
+                                adjusted_list = []
+                                for item in when_intubate:
+                                    if item == "Hypoxemia Refractory to CPAP":
+                                        adjusted_list.append(item)  # Add without a comma
+                                    else:
+                                        adjusted_list.append(item)
+                        
+                                # Join the adjusted list into a formatted string
+                                formatted_string = ' '.join(adjusted_list).rstrip(', ')
+                        
+                                # Replace the placeholder in the document
+                                run.text = run.text.replace('when_intubate', formatted_string)
+                                        
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
     doc.save(doc_file)
