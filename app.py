@@ -264,26 +264,9 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('ao_details', ao_details)
             if 'other_planning' in run.text:
                 run.text = run.text.replace('other_planning', other_planning)
-            #if 'when_intubate' in run.text:
-            #    if when_intubate:
-            #        run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))  # Join with comma and space, then strip
             if 'when_intubate' in run.text:
                 if when_intubate:
-                    # Prepare a new list for formatted output
-                    formatted_items = []
-            
-                    for item in when_intubate:
-                        if item == "Hypoxemia Refractory to CPAP":
-                            # Add the Hypoxemia item followed by a colon
-                            formatted_items.append(f"{item}:")
-                        else:
-                            formatted_items.append(item)
-            
-                    # Join the items, ensuring proper formatting
-                    formatted_string = ' '.join(formatted_items).rstrip(', ')
-            
-                    # Replace the placeholder in the document
-                    run.text = run.text.replace('when_intubate', formatted_string)
+                    run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))  # Join with comma and space, then strip
 
 
     for table in doc.tables:
@@ -362,19 +345,7 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('other_planning', other_planning)
                         if 'when_intubate' in run.text:
                             if when_intubate:
-                                # Adjust the list to ensure "Hypoxemia Refractory to CPAP" has no comma after it
-                                adjusted_list = []
-                                for item in when_intubate:
-                                    if item == "Hypoxemia Refractory to CPAP":
-                                        adjusted_list.append(item)  # Add without a comma
-                                    else:
-                                        adjusted_list.append(item)
-                        
-                                # Join the adjusted list into a formatted string
-                                formatted_string = ' '.join(adjusted_list)
-                        
-                                # Replace the placeholder in the document
-                                run.text = run.text.replace('when_intubate', formatted_string)
+                                run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))  # Join with comma and space, then strip
                                         
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
