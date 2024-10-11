@@ -207,6 +207,13 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('who_will_bvm', ' '.join(who_will_bvm))
             if 'intubation_method' in run.text:
                 run.text = run.text.replace('intubation_method', intubation_method)
+        for table in doc.tables:
+            for row in table.rows:
+                for cell in row.cells:
+                    for paragraph in cell.paragraphs:
+                        if 'intubation_method' in paragraph.text:
+                            paragraph.text = paragraph.text.replace('intubation_method', intubation_method)
+
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
