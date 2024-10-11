@@ -991,26 +991,29 @@ elif st.session_state.section == 4:
     if 'Other' in when_intubate:
         other_when_intubate = st.text_input("Please state an 'other' reason for the timing of intubation:")
 
-    # Remove "Hypoxemia Refractory to CPAP" from the list for processing
-    when_intubate = [person for person in when_intubate if person != 'Hypoxemia Refractory to CPAP']
+    # Prepare the list
+    when_intubate = [person for person in when_intubate if person != 'Other']  # Exclude the placeholder
 
     # Final output list
-    output = when_intubate.copy()  # Start with the remaining selections
+    output = []
 
-    # Append the SpO2 value if provided
-    if hypoxemia_spo2:
-        sanitized_spo2 = hypoxemia_spo2.strip('%')  # Sanitize input
-        output.append(f"SpO2 less than {sanitized_spo2}%")
-    
-    # Re-add "Hypoxemia Refractory to CPAP" before "Other" or at the end
-    if other_when_intubate:
-        output.append("Hypoxemia Refractory to CPAP")  # Add it before Other
-        output.append(other_when_intubate)
+    # Handle the "Hypoxemia Refractory to CPAP" case
+    if 'Hypoxemia Refractory to CPAP' in when_intubate:
+        output.append("Hypoxemia Refractory to CPAP")
+        if hypoxemia_spo2:
+            sanitized_spo2 = hypoxemia_spo2.strip('%')  # Sanitize input
+            output.append(f"SpO2 less than {sanitized_spo2}%")
     else:
-        output.append("Hypoxemia Refractory to CPAP")  # Add it at the end if no Other
+        output.extend(when_intubate)  # Add other selections
+
+    if other_when_intubate:
+        output.append(other_when_intubate)
+
+    # Debugging: Print the output list before joining
+    st.write("Output List:", output)
 
     # Join the output into a single string
-    #final_string = ', '.join(output)
+    final_string = ', '.join(output)
 
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
