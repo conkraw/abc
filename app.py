@@ -1010,7 +1010,7 @@ elif st.session_state.section == 4:
         output.append(other_when_intubate)
 
     # Join the output into a single string
-    final_string = ', '.join(output)
+    final_string = ''.join(output)
 
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
