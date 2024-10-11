@@ -725,13 +725,13 @@ elif st.session_state.section == 1:
 
     # Add the 'Previous' button to the first column
     with col1:
-        if st.button("Previous"):
-            st.session_state['section'] = 0 
-    
+        if st.button("Previous", on_click=prev_section):
+            pass
+          
     # Add the 'Next' button to the second column
     with col2:
-        if st.button("Next"):
-            st.session_state['section'] = 2
+        if st.button("Next", on_click=next_section):
+            pass
             
 # Intubation Risk Assessment Section
 elif st.session_state.get('section', 1) == 2:
