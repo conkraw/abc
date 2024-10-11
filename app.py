@@ -576,28 +576,40 @@ for key, value in default_values.items():
         st.session_state[key] = value
         
 # Front Page Completed Section
-if st.session_state.section == 0:
+if st.session_state['section'] == 0:
     st.title("Front Page Completed")
     
     # Selectbox for front page completion
-    option = st.selectbox("Select an option", [
+    option = st.selectbox(
         "Select an option", 
-        "On admission", 
-        "During rounds", 
-        "After Rounds", 
-        "Just prior to intubation", 
-        "After intubation", 
-        "Prior to Extubation"
-    ])
+        [
+            "Select an option", 
+            "On admission", 
+            "During rounds", 
+            "After Rounds", 
+            "Just prior to intubation", 
+            "After intubation", 
+            "Prior to Extubation"
+        ],
+        index=["Select an option", "On admission", "During rounds", "After Rounds", 
+               "Just prior to intubation", "After intubation", "Prior to Extubation"].index(st.session_state['option']) if st.session_state['option'] else 0
+    )
     
-    completed_by = st.text_input("Who completed the form? (Name or Role)")
+    completed_by = st.text_input("Who completed the form? (Name or Role)", value=st.session_state['completed_by'])
     
-    room_number = st.selectbox("Select Room Number", 
-                                ['Select Room Number', '4102', '4104', '4106', '4108', '4110', 
-                                 '4112', '4114', '4116', '4201', '4203', 
-                                 '4209', '4211', '4213', '4215', '4217', 
-                                 '4219', '4221', '4223'])
-    
+    room_number = st.selectbox(
+        "Select Room Number", 
+        [
+            'Select Room Number', '4102', '4104', '4106', '4108', '4110', 
+            '4112', '4114', '4116', '4201', '4203', 
+            '4209', '4211', '4213', '4215', '4217', 
+            '4219', '4221', '4223'
+        ],
+        index=['Select Room Number', '4102', '4104', '4106', '4108', '4110', 
+               '4112', '4114', '4116', '4201', '4203', 
+               '4209', '4211', '4213', '4215', '4217', 
+               '4219', '4221', '4223'].index(st.session_state['room_number']) if st.session_state['room_number'] else 0
+    )
     if st.button("Next"):
         if option != "Select an option" and room_number != "Select Room Number" and completed_by:
             st.session_state.option = option
@@ -734,7 +746,7 @@ elif st.session_state.section == 1:
             pass
             
 # Intubation Risk Assessment Section
-elif st.session_state.get('section', 1) == 2:
+elif st.session_state.section == 2:
     st.title("Intubation Risk Assessment")
     st.write("#### Difficult Airway:")
     
