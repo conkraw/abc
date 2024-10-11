@@ -202,18 +202,52 @@ def create_word_doc(template_path, data):
             if 'risk_factors' in run.text:
                 run.text = run.text.replace('risk_factors', other_risk_text_input)
             if 'who_will_intubate' in run.text:
-                run.text = run.text.replace('who_will_intubate', ' '.join(who_will_intubate))
+                if who_will_intubate:
+                    run.text = run.text.replace('who_will_intubate', ', '.join(who_will_intubate).rstrip(', '))  # Join with comma and space, then strip
             if 'who_will_bvm' in run.text:
-                run.text = run.text.replace('who_will_bvm', ' '.join(who_will_bvm))
+                if who_will_bvm:
+                    run.text = run.text.replace('who_will_bvm', ', '.join(who_will_bvm).rstrip(', '))  # Join with comma and space, then strip
             if 'intubation_method' in run.text:
                 run.text = run.text.replace('intubation_method', intubation_method)
-        for table in doc.tables:
-            for row in table.rows:
-                for cell in row.cells:
-                    for paragraph in cell.paragraphs:
-                        if 'intubation_method' in paragraph.text:
-                            paragraph.text = paragraph.text.replace('intubation_method', intubation_method)
 
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for paragraph in cell.paragraphs:
+                    for run in paragraph.runs:
+                        # Replace Date and Time Placeholders
+                        if 'DatePlaceholder' in run.text:
+                            run.text = run.text.replace('DatePlaceholder', date)
+                        if 'TimePlaceholder' in run.text:
+                            run.text = run.text.replace('TimePlaceholder', time)
+                        if 'FrontPagePlaceholder' in run.text:
+                            run.text = run.text.replace('FrontPagePlaceholder', option)
+                        if 'DocumenterPlaceholder' in run.text:
+                            run.text = run.text.replace('DocumenterPlaceholder', completed_by)
+                        if 'room_number' in run.text:
+                            run.text = run.text.replace('room_number', room_number)
+                        if 'D1' in run.text:
+                            run.text = run.text.replace('D1', difficult_airway_history)
+                        if 'D2' in run.text:
+                            run.text = run.text.replace('D2', physical_risk)
+                        if 'R1' in run.text:
+                            run.text = run.text.replace('R1', high_risk_desaturation)
+                        if 'R2' in run.text:
+                            run.text = run.text.replace('R2', high_risk_ICP)
+                        if 'R3' in run.text:
+                            run.text = run.text.replace('R3', unstable_hemodynamics)
+                        if 'R4' in run.text:
+                            run.text = run.text.replace('R4', other_risk_yes_no)
+                        if 'risk_factors' in run.text:
+                            run.text = run.text.replace('risk_factors', other_risk_text_input)
+                        if 'who_will_intubate' in run.text:
+                            if who_will_intubate:
+                                run.text = run.text.replace('who_will_intubate', ', '.join(who_will_intubate).rstrip(', '))
+                        if 'who_will_bvm' in run.text:
+                            if who_will_bvm:
+                                run.text = run.text.replace('who_will_bvm', ', '.join(who_will_bvm).rstrip(', '))
+                        if 'intubation_method' in run.text:
+                            run.text = run.text.replace('intubation_method', intubation_method)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
