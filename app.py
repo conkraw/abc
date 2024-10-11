@@ -1002,22 +1002,21 @@ elif st.session_state.section == 4:
     if other_when_intubate:
         when_intubate.append(other_when_intubate)
 
-    # Build the final string without trailing commas
-    final_output = []
-    if "Hypoxemia Refractory to CPAP" in when_intubate:
-        # Add the 'Hypoxemia Refractory to CPAP' first, followed by the SpO2 value if present
-        final_output.append("Hypoxemia Refractory to CPAP")
+    # Ensure proper formatting of the output
+    output = []
+    if 'Hypoxemia Refractory to CPAP' in when_intubate:
+        output.append("Hypoxemia Refractory to CPAP")
         if hypoxemia_spo2:
-            final_output.append(f"SpO2 less than {sanitized_spo2}%")
+            output.append(f"SpO2 less than {sanitized_spo2}%")
     else:
-        final_output.extend(when_intubate)
+        output.extend(when_intubate)
 
-    # If "Other" was selected, append it
-    final_output.extend([x for x in when_intubate if x not in final_output])
+    # Add any remaining items that are not already included
+    output.extend([x for x in when_intubate if x not in output])
 
-    # Join the output
-    final_string = ', '.join(final_output)
-    
+    # Join the output into a single string
+    final_string = ', '.join(output)
+
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
 
@@ -1029,12 +1028,13 @@ elif st.session_state.section == 4:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if final_output:  # Use final_output instead
+            if output:  # Use output instead
                 st.session_state.when_intubate = final_string
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
                 st.warning("Please select an option.")
+
                 
 elif st.session_state.section == 5:
     st.title("Fill in Template Document")
