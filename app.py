@@ -11,13 +11,45 @@ import io
 import pytz 
 
 # Define mappings for ETT size, Blade type, and Apneic Oxygenation based on patient age
-age_to_ett_mapping = {
-    "0-1": "3.0",
-    "2-5": "3.5",
-    "6-12": "4.0",
-    "13-18": "4.5",
-    "18+": "5.0"
-}
+age_to_ett_mapping = {'': '', 
+                      '0 months': '3.5 mm',
+ '1 months': '4.0 mm',
+ '2 months': '4.0 mm',
+ '3 months': '4.0 mm',
+ '4 months': '4.0 mm',
+ '5 months': '4.0 mm',
+ '6 months': '4.0 mm',
+ '7 months': '4.0 mm',
+ '8 months': '4.0 mm',
+ '9 months': '4.0 mm',
+ '10 months': '4.0 mm',
+ '11 months': '4.0 mm',
+ '12 months': '4.0 mm',
+ '1 year': '3.5 mm',
+ '2 years': '4.0 mm',
+ '3 years': '4.0 mm',
+ '4 years': '4.5 mm',
+ '5 years': '4.5 mm',
+ '6 years': '5.0 mm',
+ '7 years': '5.0 mm',
+ '8 years': '5.5 mm',
+ '9 years': '5.5 mm',
+ '10 years': '6.0 mm',
+ '11 years': '6.0 mm',
+ '12 years': '6.5 mm',
+ '13 years': '6.5 mm',
+ '14 years': '7.0 mm',
+ '15 years': '7.0 mm',
+ '16 years': '7.5 mm',
+ '17 years': '7.5 mm',
+ '18 years': '7.5 mm',
+ '19 years': '7.5 mm',
+ '20 years': '7.5 mm',
+ '21 years': '7.5 mm',
+ '22 years': '7.5 mm',
+ '23 years': '7.5 mm',
+ '24 years': '7.5 mm',
+ '25 years': '7.5 mm'}
 
 age_to_lma_mapping = {
     "0-1": "LMA #0",
@@ -68,13 +100,7 @@ weight_to_roc_mapping = {'2.0 kg': '2.0 mg', '2.5 kg': '2.5 mg', '3.0 kg': '3.0 
 
 weight_to_vec_mapping = {'2.0 kg': '0.2 mg', '2.5 kg': '0.3 mg', '3.0 kg': '0.3 mg', '3.5 kg': '0.4 mg', '4.0 kg': '0.4 mg', '4.5 kg': '0.5 mg', '5.0 kg': '0.5 mg', '5.5 kg': '0.6 mg', '6.0 kg': '0.6  mg', '6.5 kg': '0.7 mg', '7.0 kg': '0.7 mg', '7.5 kg': '0.8 mg', '8.0 kg': '0.8 mg', '8.5 kg': '0.9 mg', '9.0 kg': '0.9 mg', '9.5 kg': '1.0 mg', '10.0 kg': '1.0 mg', '11.0 kg': '1.2 mg', '12.0 kg': '1.2 mg', '13.0 kg': '1.4 mg', '14.0 kg': '1.4 mg', '15.0 kg': '1.6 mg', '16.0 kg': '1.6 mg', '17.0 kg': '1.8 mg', '18.0 kg': '1.8 mg', '19.0 kg': '2.0 mg', '20.0 kg': '2.0 mg', '21.0 kg': '2.0 mg', '22.0 kg': '2.0 mg', '23.0 kg': '2.5 mg', '24.0 kg': '2.5 mg', '25.0 kg': '2.5 mg', '26.0 kg': '2.5 mg', '27.0 kg': '2.5 mg', '28.0 kg': '3.0 mg', '29.0 kg': '3.0 mg', '30.0 kg': '3.0 mg', '31.0 kg': '3.0 mg', '32.0 kg': '3.0 mg', '33.0 kg': '3.5 mg', '34.0 kg': '3.5 mg', '35.0 kg': '3.5 mg', '36.0 kg': '3.5 mg', '37.0 kg': '3.5 mg', '38.0 kg': '4.0 mg', '39.0 kg': '4.0 mg', '40.0 kg': '4.0 mg', '41.0 kg': '4.0 mg', '42.0 kg': '4.0 mg', '43.0 kg': '4.5 mg', '44.0 kg': '4.5 mg', '45.0 kg': '4.5 mg', '46.0 kg': '4.5 mg', '47.0 kg': '4.5 mg', '48.0 kg': '4.5 mg', '49.0 kg': '4.5 mg', '50.0 kg': '10.0 mg', '51.0 kg': '10.0 mg', '52.0 kg': '10.0 mg', '53.0 kg': '10.0 mg', '54.0 kg': '10.0 mg', '55.0 kg': '10.0 mg', '56.0 kg': '10.0 mg', '57.0 kg': '10.0 mg', '58.0 kg': '10.0 mg', '59.0 kg': '10.0 mg', '60.0 kg': '10.0 mg', '61.0 kg': '10.0 mg', '62.0 kg': '10.0 mg', '63.0 kg': '10.0 mg', '64.0 kg': '10.0 mg', '65.0 kg': '10.0 mg', '66.0 kg': '10.0 mg', '67.0 kg': '10.0 mg', '68.0 kg': '10.0 mg', '69.0 kg': '10.0 mg', '70.0 kg': '10.0 mg', '71.0 kg': '10.0 mg', '72.0 kg': '10.0 mg', '73.0 kg': '10.0 mg', '74.0 kg': '10.0 mg', '75.0 kg': '10.0 mg', '76.0 kg': '10.0 mg', '77.0 kg': '10.0 mg', '78.0 kg': '10.0 mg', '79.0 kg': '10.0 mg', '80.0 kg': '10.0 mg', '81.0 kg': '10.0 mg', '82.0 kg': '10.0 mg', '83.0 kg': '10.0 mg', '84.0 kg': '10.0 mg', '85.0 kg': '10.0 mg', '86.0 kg': '10.0 mg', '87.0 kg': '10.0 mg', '88.0 kg': '10.0 mg', '89.0 kg': '10.0 mg', '90.0 kg': '10.0 mg', '91.0 kg': '10.0 mg', '92.0 kg': '10.0 mg', '93.0 kg': '10.0 mg', '94.0 kg': '10.0 mg', '95.0 kg': '10.0 mg', '96.0 kg': '10.0 mg', '97.0 kg': '10.0 mg', '98.0 kg': '10.0 mg', '99.0 kg': '10.0 mg', '100.0 kg': '10.0 mg'}
 
-age_to_oxygenation_mapping = {
-    "0-1": "5 L/min",
-    "2-5": "5 L/min",
-    "6-12": "6 L/min",
-    "13-18": "6 L/min",
-    "18+": "8 L/min"
-}
+age_to_oxygenation_mapping = {'0 months': '5 Liters Per Minute', '1 months': '5 Liters Per Minute', '2 months': '5 Liters Per Minute', '3 months': '5 Liters Per Minute', '4 months': '5 Liters Per Minute', '5 months': '5 Liters Per Minute', '6 months': '5 Liters Per Minute', '7 months': '5 Liters Per Minute', '8 months': '5 Liters Per Minute', '9 months': '5 Liters Per Minute', '10 months': '5 Liters Per Minute', '11 months': '5 Liters Per Minute', '12 months': '10 Liters Per Minute', '1 year': '10 Liters Per Minute', '2 years': '10 Liters Per Minute', '3 years': '10 Liters Per Minute', '4 years': '10 Liters Per Minute', '5 years': '10 Liters Per Minute', '6 years': '10 Liters Per Minute', '7 years': '10 Liters Per Minute', '8 years': '15 Liters Per Minute', '9 years': '15 Liters Per Minute', '10 years': '15 Liters Per Minute', '11 years': '15 Liters Per Minute', '12 years': '15 Liters Per Minute', '13 years': '15 Liters Per Minute', '14 years': '15 Liters Per Minute', '15 years': '15 Liters Per Minute', '16 years': '15 Liters Per Minute', '17 years': '15 Liters Per Minute', '18 years': '15 Liters Per Minute', '19 years': '15 Liters Per Minute', '20 years': '15 Liters Per Minute', '21 years': '15 Liters Per Minute', '22 years': '15 Liters Per Minute', '23 years': '15 Liters Per Minute', '24 years': '15 Liters Per Minute', '25 years': '15 Liters Per Minute'}
 
 # Define a function to automatically update the other settings when the age is selected
 def update_automatic_selections():
