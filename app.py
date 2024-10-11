@@ -800,35 +800,35 @@ elif st.session_state.section == 3:
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
         atropine_dose = list(set(weight_to_atropine_mapping.values()))  # Get unique Atropine doses
-        atropine_dose = st.selectbox("Atropine Dose:", options=atropine_doses, key="atropine_dose_display",index=atropine_doses.index(st.session_state['atropine_dose']) if st.session_state['atropine_dose'] in atropine_doses else 0)
+        atropine_dose = st.selectbox("Atropine Dose:", options=atropine_dose, key="atropine_dose_display",index=atropine_dose.index(st.session_state['atropine_dose']) if st.session_state['atropine_dose'] in atropine_dose else 0)
         st.session_state['atropine_dose'] = atropine_dose
         
         glycopyrrolate_dose = list(set(weight_to_glycopyrrolate_mapping.values()))  # Get unique Glycopyrrolate doses
-        glycopyrrolate_dose = st.selectbox("Glycopyrrolate Dose:",options=glycopyrrolate_doses, key="glycopyrrolate_dose_display",index=glycopyrrolate_doses.index(st.session_state['glycopyrrolate_dose']) if st.session_state['glycopyrrolate_dose'] in glycopyrrolate_doses else 0)
+        glycopyrrolate_dose = st.selectbox("Glycopyrrolate Dose:",options=glycopyrrolate_dose, key="glycopyrrolate_dose_display",index=glycopyrrolate_dose.index(st.session_state['glycopyrrolate_dose']) if st.session_state['glycopyrrolate_dose'] in glycopyrrolate_dose else 0)
         st.session_state['glycopyrrolate_dose'] = glycopyrrolate_dose
 
         fentanyl_dose = list(set(weight_to_fentanyl_mapping.values()))  # Get unique Fentanyl doses
-        fentanyl_dose = st.selectbox("Fentanyl Dose:", options=fentanyl_doses, key="fentanyl_dose_display",index=fentanyl_doses.index(st.session_state['fentanyl_dose']) if st.session_state['fentanyl_dose'] in fentanyl_doses else 0)
+        fentanyl_dose = st.selectbox("Fentanyl Dose:", options=fentanyl_dose, key="fentanyl_dose_display",index=fentanyl_dose.index(st.session_state['fentanyl_dose']) if st.session_state['fentanyl_dose'] in fentanyl_dose else 0)
         st.session_state['fentanyl_dose'] = fentanyl_dose
         
         midazolam_dose = list(set(weight_to_midaz_mapping.values()))  # Get unique Midazolam doses
-        midazolam_dose = st.selectbox("Midazolam Dose:", options=midazolam_doses, key="midazolam_dose_display",index=midazolam_doses.index(st.session_state['midazolam_dose']) if st.session_state['midazolam_dose'] in midazolam_doses else 0)
+        midazolam_dose = st.selectbox("Midazolam Dose:", options=midazolam_dose, key="midazolam_dose_display",index=midazolam_dose.index(st.session_state['midazolam_dose']) if st.session_state['midazolam_dose'] in midazolam_dose else 0)
         st.session_state['midazolam_dose'] = midazolam_dose
         
         ketamine_dose = list(set(weight_to_ketamine_mapping.values()))  # Get unique Ketamine doses
-        ketamine_dose = st.selectbox("Ketamine Dose:", options=ketamine_doses, key="ketamine_dose_display",index=ketamine_doses.index(st.session_state['ketamine_dose']) if st.session_state['ketamine_dose'] in ketamine_doses else 0)
+        ketamine_dose = st.selectbox("Ketamine Dose:", options=ketamine_dose, key="ketamine_dose_display",index=ketamine_dose.index(st.session_state['ketamine_dose']) if st.session_state['ketamine_dose'] in ketamine_dose else 0)
         st.session_state['ketamine_dose'] = ketamine_dose
         
         propofol_dose = list(set(weight_to_propo_mapping.values()))  # Get unique Propofol doses
-        propofol_dose = st.selectbox("Propofol Dose:", options=propofol_doses, key="propofol_dose_display",index=propofol_doses.index(st.session_state['propofol_dose']) if st.session_state['propofol_dose'] in propofol_doses else 0)
+        propofol_dose = st.selectbox("Propofol Dose:", options=propofol_dose, key="propofol_dose_display",index=propofol_dose.index(st.session_state['propofol_dose']) if st.session_state['propofol_dose'] in propofol_dose else 0)
         st.session_state['propofol_dose'] = propofol_dose
         
         roc_dose = list(set(weight_to_roc_mapping.values()))  # Get unique Rocuronium doses
-        roc_dose = st.selectbox("Rocuronium Dose:", options=roc_doses, key="roc_dose_display",index=roc_doses.index(st.session_state['roc_dose']) if st.session_state['roc_dose'] in roc_doses else 0)
+        roc_dose = st.selectbox("Rocuronium Dose:", options=roc_dose, key="roc_dose_display",index=roc_dose.index(st.session_state['roc_dose']) if st.session_state['roc_dose'] in roc_dose else 0)
         st.session_state['roc_dose'] = roc_dose
         
         vec_dose = list(set(weight_to_vec_mapping.values()))  # Get unique Vecuronium doses
-        vec_dose = st.selectbox("Vecuronium Dose:", options=vec_doses, key="vec_dose_display",index=vec_doses.index(st.session_state['vec_dose']) if st.session_state['vec_dose'] in vec_doses else 0)
+        vec_dose = st.selectbox("Vecuronium Dose:", options=vec_dose, key="vec_dose_display",index=vec_dose.index(st.session_state['vec_dose']) if st.session_state['vec_dose'] in vec_dose else 0)
         st.session_state['vec_dose'] = vec_dose
 
     st.write("Apneic Oxygenation:")
