@@ -2,7 +2,7 @@ import streamlit as st
 from docx import Document
 import os
 
-def create_word_doc(template_path, date, time, option, intubation_method, who_will_intubate, other_planning):
+def create_word_doc(template_path, date, time, option, intubation_method, who_will_intubate, other_planning, additional_notes):
     # Load the Word document template
     doc = Document(template_path)
 
@@ -20,6 +20,7 @@ def create_word_doc(template_path, date, time, option, intubation_method, who_wi
             replace_placeholder(run, 'intubation_method', intubation_method)
             replace_placeholder(run, 'who_will_intubate', ', '.join(who_will_intubate))
             replace_placeholder(run, 'other_planning', other_planning)
+            replace_placeholder(run, 'additional_notes', additional_notes)
 
     # Check and replace text in tables
     for table in doc.tables:
@@ -33,12 +34,12 @@ def create_word_doc(template_path, date, time, option, intubation_method, who_wi
                         replace_placeholder(run, 'intubation_method', intubation_method)
                         replace_placeholder(run, 'who_will_intubate', ', '.join(who_will_intubate))
                         replace_placeholder(run, 'other_planning', other_planning)
+                        replace_placeholder(run, 'additional_notes', additional_notes)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
     doc.save(doc_file)
     return doc_file
-
 
 # Streamlit app
 st.title("Fill in Template Document")
@@ -130,9 +131,20 @@ elif st.session_state.page == 'other_planning':
     if st.button("Next"):
         if other_planning:
             st.session_state.other_planning = other_planning
-            st.session_state.page = 'download'  # Navigate to download page
+            st.session_state.page = 'additional_notes'  # Navigate to additional notes page
         else:
             st.warning("Please enter additional planning details.")
+
+# Additional notes page
+elif st.session_state.page == 'additional_notes':
+    additional_notes = st.text_area("Enter any additional notes")
+
+    if st.button("Next"):
+        if additional_notes:
+            st.session_state.additional_notes = additional_notes
+            st.session_state.page = 'download'  # Navigate to download page
+        else:
+            st.warning("Please enter additional notes.")
 
 # Download page
 elif st.session_state.page == 'download':
@@ -146,6 +158,7 @@ elif st.session_state.page == 'download':
     st.write(f"Intubation method selected: {st.session_state.intubation_method}")
     st.write(f"Who will intubate: {', '.join(st.session_state.who_will_intubate)}")
     st.write(f"Additional planning details: {st.session_state.other_planning}")
+    st.write(f"Additional notes: {st.session_state.additional_notes}")
 
     try:
         doc_file = create_word_doc(
@@ -155,7 +168,8 @@ elif st.session_state.page == 'download':
             st.session_state.option, 
             st.session_state.intubation_method, 
             st.session_state.who_will_intubate,
-            st.session_state.other_planning  # Pass other planning details
+            st.session_state.other_planning,  # Pass other planning details
+            st.session_state.additional_notes  # Pass additional notes
         )
         st.success("Document created successfully!")
         
@@ -171,6 +185,6 @@ elif st.session_state.page == 'download':
         st.error(f"An error occurred: {e}")
 
     if st.button("Go Back"):
-        st.session_state.page = 'other_planning'  # Navigate back to other planning page
+        st.session_state.page = 'additional_notes'  # Navigate back to additional notes page
 
 
