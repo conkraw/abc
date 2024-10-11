@@ -1008,11 +1008,6 @@ elif st.session_state.section == 4:
 
     if other_when_intubate:
         output.append(other_when_intubate)
-
-    if output and output[-1] == "Hypoxemia Refractory to CPAP":
-        output = output[:-1] + ' ' + output[-1] 
-    else:
-        output
         
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
