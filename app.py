@@ -181,6 +181,13 @@ def create_word_doc(template_path, data):
     miller_details = data.get('miller_details')
     wis_hipple_details = data.get('wis_hipple_details')
     atropine_dose = data.get('atropine_dose')
+    glycopyrrolate_dose = data.get('glycopyrrolate_dose')
+    fentanyl_dose = data.get('fentanyl_dose')
+    midazolam_dose = data.get('midazolam_dose')
+    ketamine_dose = data.get('ketamine_dose')
+    propofol_dose = data.get('propofol_dose')
+    roc_dose = data.get('roc_dose')
+    vec_dose = data.get('vec_dose')
 
     # Check and replace text in paragraphs
     for paragraph in doc.paragraphs:
@@ -236,6 +243,21 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('wis_hipple_details', wis_hipple_details)
             if 'atropine_dose' in run.text:
                 run.text = run.text.replace('atropine_dose', atropine_dose)
+            if 'glycopyrrolate_dose' in run.text:
+                run.text = run.text.replace('glycopyrrolate_dose', glycopyrrolate_dose)
+            if 'fentanyl_dose' in run.text:
+                run.text = run.text.replace('fentanyl_dose', fentanyl_dose)
+            if 'midazolam_dose' in run.text:
+                run.text = run.text.replace('midazolam_dose', midazolam_dose)
+            if 'ketamine_dose' in run.text:
+                run.text = run.text.replace('ketamine_dose', ketamine_dose)
+            if 'propofol_dose' in run.text:
+                run.text = run.text.replace('propofol_dose', propofol_dose)
+            if 'roc_dose' in run.text:
+                run.text = run.text.replace('roc_dose', roc_dose)
+            if 'vec_dose' in run.text:
+                run.text = run.text.replace('vec_dose', vec_dose)
+
 
     for table in doc.tables:
         for row in table.rows:
@@ -293,6 +315,20 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('wis_hipple_details', wis_hipple_details)
                         if 'atropine_dose' in run.text:
                             run.text = run.text.replace('atropine_dose', atropine_dose)
+                        if 'glycopyrrolate_dose' in run.text:
+                            run.text = run.text.replace('glycopyrrolate_dose', glycopyrrolate_dose)
+                        if 'fentanyl_dose' in run.text:
+                            run.text = run.text.replace('fentanyl_dose', fentanyl_dose)
+                        if 'midazolam_dose' in run.text:
+                            run.text = run.text.replace('midazolam_dose', midazolam_dose)
+                        if 'ketamine_dose' in run.text:
+                            run.text = run.text.replace('ketamine_dose', ketamine_dose)
+                        if 'propofol_dose' in run.text:
+                            run.text = run.text.replace('propofol_dose', propofol_dose)
+                        if 'roc_dose' in run.text:
+                            run.text = run.text.replace('roc_dose', roc_dose)
+                        if 'vec_dose' in run.text:
+                            run.text = run.text.replace('vec_dose', vec_dose)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -381,6 +417,13 @@ default_values = {
     'miller_details': None,
     'wis_hipple_details': None,
     'atropine_dose': None,
+    'glycopyrrolate_dose': None,
+'fentanyl_dose': None,
+'midazolam_dose': None,
+'ketamine_dose': None,
+'propofol_dose': None,
+'roc_dose': None,
+'vec_dose': None,
 }
 
 # Initialize session state variables if not already set
@@ -868,7 +911,18 @@ elif st.session_state.section == 3:
     with col3:
         if st.button("Next"):
             #if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer"  and intubation_method != "Intubation Method":
-            if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and ett_size and lma_details and glide_details and other_device_details and mac_details and miller_details and wis_hipple_details and atropine_dose:
+            #if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and ett_size and lma_details and glide_details and other_device_details and mac_details and miller_details and wis_hipple_details and atropine_dose:
+            if (who_will_intubate and who_will_bvm and 
+                intubation_method != "Intubation Method" and 
+                ett_type and ett_size and 
+                lma_details and glide_details and 
+                mac_details and miller_details and 
+                glycopyrrolate_dose and 
+                fentanyl_dose and 
+                midazolam_dose and 
+                ketamine_dose and 
+                propofol_dose and 
+                roc_dose and vec_dose):
                 st.session_state.who_will_intubate = who_will_intubate
                 st.session_state.who_will_bvm = who_will_bvm
                 st.session_state.intubation_method = intubation_method
@@ -881,7 +935,14 @@ elif st.session_state.section == 3:
                 st.session_state.miller_details = miller_details 
                 st.session_state.wis_hipple_details = wis_hipple_details 
                 st.session_state.atropine_dose = atropine_dose 
-                
+                st.session_state.glycopyrrolate_dose = glycopyrrolate_dose
+                st.session_state.fentanyl_dose = fentanyl_dose
+                st.session_state.midazolam_dose = midazolam_dose
+                st.session_state.ketamine_dose = ketamine_dose
+                st.session_state.propofol_dose = propofol_dose
+                st.session_state.roc_dose = roc_dose
+                st.session_state.vec_dose = vec_dose
+
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
@@ -923,6 +984,13 @@ elif st.session_state.section == 4:
                         'miller_details': st.session_state.miller_details,
                         'wis_hipple_details': st.session_state.wis_hipple_details,
                         'atropine_dose': st.session_state.atropine_dose,
+                        'glycopyrrolate_dose': st.session_state.glycopyrrolate_dose,
+                        'fentanyl_dose': st.session_state.fentanyl_dose,
+                        'midazolam_dose': st.session_state.midazolam_dose,
+                        'ketamine_dose': st.session_state.ketamine_dose,
+                        'propofol_dose': st.session_state.propofol_dose,
+                        'roc_dose': st.session_state.roc_dose,
+                        'vec_dose': st.session_state.vec_dose,
                     }
                     
                     doc_file = create_word_doc(template_path, data)
