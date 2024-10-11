@@ -659,11 +659,11 @@ elif st.session_state.section == 1:
             index=age_index,
             key="age_select"
         )
-      
+        
         # Update session state when age changes
         if age != st.session_state.selected_age:
             st.session_state.selected_age = age
-
+          
     with cols[1]:
         # Get the current time in EST for default
         current_time_est = datetime.now(eastern).time()
