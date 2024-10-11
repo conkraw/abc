@@ -638,8 +638,21 @@ elif st.session_state.section == 1:
             st.session_state['formatted_date'] = date.strftime("%m-%d-%Y")
             
         # Select Patient Age
-        age = st.selectbox("Select Patient Age", options=[""] + list(age_to_ett_mapping.keys()), key="age_select", on_change=update_automatic_selections)
+        #age = st.selectbox("Select Patient Age", options=[""] + list(age_to_ett_mapping.keys()), key="age_select", on_change=update_automatic_selections)
 
+        age_options = [""] + list(age_to_ett_mapping.keys())
+        age_index = age_options.index(st.session_state.selected_age) if st.session_state.selected_age in age_options else 0
+
+        age = st.selectbox(
+            "Select Patient Age",
+            options=age_options,
+            index=age_index,
+            key="age_select", on_change=update_automatic_selections
+        )
+
+      if age != st.session_state.selected_age:
+            st.session_state.selected_age = age
+        
     with cols[1]:
         # Use the current time in EST for time input
         current_time_est = datetime.now(eastern).time()
