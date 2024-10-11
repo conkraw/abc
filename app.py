@@ -936,7 +936,7 @@ elif st.session_state.section == 3:
         ao_details = st.selectbox("Apneic Oxygenation:", options=ao_details, key="ao_details_display", index=ao_details.index(st.session_state['ao_details']) if st.session_state['ao_details'] in ao_details else 0)
         st.session_state['ao_details'] = ao_details
             
-    other_planning = st.text_input("Other Intubation Planning Details:")
+    other_planning = st.text_input("Other Intubation Planning Details:", disabled=False)
     
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
