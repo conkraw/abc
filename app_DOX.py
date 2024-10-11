@@ -2,32 +2,43 @@ import streamlit as st
 from docx import Document
 import os
 
-def create_word_doc(template_path, date, time, option, intubation_method, who_will_intubate):
+def create_word_doc(template_path, date, time, option, intubation_method, who_will_intubate, other_planning):
     # Load the Word document template
     doc = Document(template_path)
+
+    # Function to replace text in a run
+    def replace_placeholder(run, placeholder, replacement):
+        if placeholder in run.text:
+            run.text = run.text.replace(placeholder, replacement)
 
     # Check and replace text in paragraphs
     for paragraph in doc.paragraphs:
         for run in paragraph.runs:
-            # Replace Date and Time Placeholders
-            if 'DatePlaceholder' in run.text:
-                run.text = run.text.replace('DatePlaceholder', date)
-            if 'TimePlaceholder' in run.text:
-                run.text = run.text.replace('TimePlaceholder', time)
-            # Replace FrontPagePlaceholder with the selected option
-            if 'FrontPagePlaceholder' in run.text:
-                run.text = run.text.replace('FrontPagePlaceholder', option)
-            # Replace IntubationMethodPlaceholder with the selected intubation method
-            if 'intubation_method' in run.text:
-                run.text = run.text.replace('intubation_method', intubation_method)
-            # Replace who_will_intubate placeholder
-            if 'who_will_intubate' in run.text:
-                run.text = run.text.replace('who_will_intubate', ', '.join(who_will_intubate))
+            replace_placeholder(run, 'DatePlaceholder', date)
+            replace_placeholder(run, 'TimePlaceholder', time)
+            replace_placeholder(run, 'FrontPagePlaceholder', option)
+            replace_placeholder(run, 'intubation_method', intubation_method)
+            replace_placeholder(run, 'who_will_intubate', ', '.join(who_will_intubate))
+            replace_placeholder(run, 'other_planning', other_planning)
+
+    # Check and replace text in tables
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for paragraph in cell.paragraphs:
+                    for run in paragraph.runs:
+                        replace_placeholder(run, 'DatePlaceholder', date)
+                        replace_placeholder(run, 'TimePlaceholder', time)
+                        replace_placeholder(run, 'FrontPagePlaceholder', option)
+                        replace_placeholder(run, 'intubation_method', intubation_method)
+                        replace_placeholder(run, 'who_will_intubate', ', '.join(who_will_intubate))
+                        replace_placeholder(run, 'other_planning', other_planning)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
     doc.save(doc_file)
     return doc_file
+
 
 # Streamlit app
 st.title("Fill in Template Document")
@@ -108,13 +119,23 @@ elif st.session_state.page == 'who_will_intubate':
     if st.button("Next"):
         if who_will_intubate:
             st.session_state.who_will_intubate = who_will_intubate
-            st.session_state.page = 'download'  # Navigate to download page
+            st.session_state.page = 'other_planning'  # Navigate to other planning page
         else:
             st.warning("Please select at least one person.")
 
+# Other planning page
+elif st.session_state.page == 'other_planning':
+    other_planning = st.text_area("Enter additional planning details")
+
+    if st.button("Next"):
+        if other_planning:
+            st.session_state.other_planning = other_planning
+            st.session_state.page = 'download'  # Navigate to download page
+        else:
+            st.warning("Please enter additional planning details.")
+
 # Download page
 elif st.session_state.page == 'download':
-    # Path to your template file
     template_path = 'airway_bundlez.docx'  # Ensure this is the correct path
 
     # Debugging output
@@ -124,6 +145,7 @@ elif st.session_state.page == 'download':
     st.write(f"Option selected: {st.session_state.option}")
     st.write(f"Intubation method selected: {st.session_state.intubation_method}")
     st.write(f"Who will intubate: {', '.join(st.session_state.who_will_intubate)}")
+    st.write(f"Additional planning details: {st.session_state.other_planning}")
 
     try:
         doc_file = create_word_doc(
@@ -132,7 +154,8 @@ elif st.session_state.page == 'download':
             st.session_state.time, 
             st.session_state.option, 
             st.session_state.intubation_method, 
-            st.session_state.who_will_intubate
+            st.session_state.who_will_intubate,
+            st.session_state.other_planning  # Pass other planning details
         )
         st.success("Document created successfully!")
         
@@ -148,6 +171,6 @@ elif st.session_state.page == 'download':
         st.error(f"An error occurred: {e}")
 
     if st.button("Go Back"):
-        st.session_state.page = 'who_will_intubate'  # Navigate back to who will intubate selection page
+        st.session_state.page = 'other_planning'  # Navigate back to other planning page
 
 
