@@ -648,9 +648,12 @@ elif st.session_state.section == 1:
         #age = st.selectbox("Select Patient Age", options=[""] + list(age_to_ett_mapping.keys()), key="age_select", on_change=update_automatic_selections)
         age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),index=list(age_to_ett_mapping.keys()).index(st.session_state.selected_age) if st.session_state.selected_age in age_to_ett_mapping.keys() else 0,key="age_select",on_change=update_automatic_selections)
 
-        if age:
+        def on_age_change():
           st.session_state.age_select = age
-          
+      
+      # Update the session state only when the selection changes
+        if age != st.session_state.age_select:
+            on_age_change()
 
     with cols[1]:
         # Get the current time in EST for default
