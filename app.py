@@ -643,15 +643,13 @@ elif st.session_state.section == 1:
     
         if date:
             st.session_state['formatted_date'] = date.strftime("%m-%d-%Y")
-
-        def on_age_change():
-          st.session_state.age_select = age
             
         # Select Patient Age
         #age = st.selectbox("Select Patient Age", options=[""] + list(age_to_ett_mapping.keys()), key="age_select", on_change=update_automatic_selections)
 
         age_options = [""] + list(age_to_ett_mapping.keys())
         age_index = age_options.index(st.session_state.selected_age) if st.session_state.selected_age in age_options else 0
+
 
         age = st.selectbox(
             "Select Patient Age",
@@ -687,38 +685,14 @@ elif st.session_state.section == 1:
             st.session_state['formatted_time'] = time.strftime('%H:%M:%S')
 
         weight = st.selectbox("Enter Patient Weight (Kilograms)", options=[""] + list(weight_to_atropine_mapping.keys()), key="weight_select",on_change=update_automatic_selections)
-      
-    # Initialize 'ett_size' in session state if it's not already set
-    if 'ett_size' not in st.session_state:
-        st.session_state['ett_size'] = ''  # Default value for ETT size
-    
-    selected_age = st.session_state.age_select
-    
-    st.session_state['ett_size'] = age_to_ett_mapping.get(selected_age, '')  # Update the session state with ETT size
 
-    if 'lma_details' not in st.session_state:
-        st.session_state['lma_details'] = ''  # Default value for ETT size
-    
+    selected_age = st.session_state.age_select  
+  
+    st.session_state['ett_size'] = age_to_ett_mapping.get(selected_age, '')
     st.session_state['lma_details'] = age_to_lma_mapping.get(selected_age, '')
-
-    if 'glide_details' not in st.session_state:
-        st.session_state['glide_details'] = ''  # Default value for ETT size
-
     st.session_state['glide_details'] = age_to_glide_mapping.get(selected_age, '')
-    
-    if 'mac_details' not in st.session_state:
-        st.session_state['mac_details'] = ''  # Default value for ETT size
-    
     st.session_state['mac_details'] = age_to_mac_mapping.get(selected_age, '')
-
-    if 'miller_details' not in st.session_state:
-        st.session_state['miller_details'] = ''  # Default value for ETT size
-    
     st.session_state['miller_details'] = age_to_miller_mapping.get(selected_age, '')
-
-    if 'ao_details' not in st.session_state:
-        st.session_state['ao_details'] = ''  # Default value for ETT size
-    
     st.session_state['ao_details'] = age_to_oxygenation_mapping.get(selected_age, '')
 
     if 'atropine_dose' not in st.session_state:
