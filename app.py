@@ -526,7 +526,8 @@ def next_section():
 def prev_section():
     if st.session_state.section > 0:
         st.session_state.section -= 1
-
+        st.rerun()
+    
 def save_data():
     data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
     db.collection('airway_checklists').add(data)
