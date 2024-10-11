@@ -1025,7 +1025,7 @@ elif st.session_state.section == 4:
         output.append("Hypoxemia Refractory to CPAP")
         if hypoxemia_spo2:
             sanitized_spo2 = hypoxemia_spo2.strip('%')  # Sanitize input
-            output.append(f"SpO2 less than {sanitized_spo2}%")
+            output.append(f"[SpO2 less than {sanitized_spo2}%]")
     else:
         output.extend(when_intubate)  # Add other selections
 
