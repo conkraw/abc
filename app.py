@@ -765,7 +765,7 @@ elif st.session_state.section == 1:
     # Add the 'Previous' button to the first column
     with col1:
         if st.button("Previous", on_click=prev_section):
-            st.session_state.previous_page = True
+            pass
           
     # Add the 'Next' button to the second column
     with col2:
