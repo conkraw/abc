@@ -657,7 +657,41 @@ elif st.session_state.section == 3:
         ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
         ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
         st.session_state['ett_size'] = ett_size
+    
+    st.write("Device:")
+    
+    cols = st.columns(3)
+
+    # Column 1: Dropdowns for "X" or empty
+    with cols[0]:
+        # Dropdowns to choose if devices are selected or not (X = selected)
+        device_1_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_1")
+        device_2_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_2")
+        device_3_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_3")
+        device_4_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_4")
+    
+    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
+    with cols[1]:
+        # These text inputs will reset to their default value if changed and the user moves away
+        device_1_text = reset_input("Laryngoscope", key="laryngoscope_textx")
+        device_2_text = reset_input("Glidescope", key="glidescope_textx")
+        device_3_text = reset_input("LMA", key="lma_textx")
+        device_4_text = reset_input("Other Device", key="other_device_textx")
+    
+    # Column 3: Additional details for each device (uneditable placeholders)
+    with cols[2]:
+        # Text Inputs with uneditable placeholders (details of each device)
+        st.text_input("Laryngoscope details:", key="laryngoscope_details", disabled=False)
         
+        glide_details = list(set(age_to_glide_mapping.values()))  # Get unique ETT sizes
+        selected_glide_details = st.selectbox("Glidescope Details:", options=glide_details, key="glide_size_display", index=glide_details.index(st.session_state['glide_details']) if st.session_state['glide_details'] in glide_details else 0)
+        st.session_state['glide_details'] = selected_glide_details
+        
+        lma_details = list(set(age_to_lma_mapping.values()))  # Get unique ETT sizes
+        selected_lma_details = st.selectbox("LMA Details:", options=lma_details, key="lma_display", index=lma_details.index(st.session_state['lma_details']) if st.session_state['lma_details'] in lma_details else 0)
+        st.session_state['lma_details'] = selected_lma_details
+        
+        st.text_input("Other Device details:", key="other_device_details", disabled=False)
   
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
