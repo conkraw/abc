@@ -188,6 +188,8 @@ def create_word_doc(template_path, data):
     propofol_dose = data.get('propofol_dose')
     roc_dose = data.get('roc_dose')
     vec_dose = data.get('vec_dose')
+    ao_details = data.get('ao_details')
+    other_planning = data.get('other_planning')
 
     # Check and replace text in paragraphs
     for paragraph in doc.paragraphs:
@@ -257,6 +259,11 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('roc_dose', roc_dose)
             if 'vec_dose' in run.text:
                 run.text = run.text.replace('vec_dose', vec_dose)
+            if 'ao_details' in run.text:
+                run.text = run.text.replace('ao_details', ao_details)
+            if 'other_planning' in run.text:
+                run.text = run.text.replace('other_planning', other_planning)
+                            
 
 
     for table in doc.tables:
@@ -329,7 +336,11 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('roc_dose', roc_dose)
                         if 'vec_dose' in run.text:
                             run.text = run.text.replace('vec_dose', vec_dose)
-
+                        if 'ao_details' in run.text:
+                            run.text = run.text.replace('ao_details', ao_details)
+                        if 'other_planning' in run.text:
+                            run.text = run.text.replace('other_planning', other_planning)
+                            
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
     doc.save(doc_file)
@@ -424,6 +435,8 @@ default_values = {
 'propofol_dose': None,
 'roc_dose': None,
 'vec_dose': None,
+'ao_details': None, 
+'other_planning': other_planning
 }
 
 # Initialize session state variables if not already set
@@ -922,7 +935,7 @@ elif st.session_state.section == 3:
                 midazolam_dose and 
                 ketamine_dose and 
                 propofol_dose and 
-                roc_dose and vec_dose):
+                roc_dose and vec_dose and ao_details):
                 st.session_state.who_will_intubate = who_will_intubate
                 st.session_state.who_will_bvm = who_will_bvm
                 st.session_state.intubation_method = intubation_method
@@ -942,6 +955,8 @@ elif st.session_state.section == 3:
                 st.session_state.propofol_dose = propofol_dose
                 st.session_state.roc_dose = roc_dose
                 st.session_state.vec_dose = vec_dose
+                st.session_state.ao_details = ao_details
+                st.session_state.other_planning = other_planning
 
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
@@ -991,6 +1006,8 @@ elif st.session_state.section == 4:
                         'propofol_dose': st.session_state.propofol_dose,
                         'roc_dose': st.session_state.roc_dose,
                         'vec_dose': st.session_state.vec_dose,
+                        'ao_details': st.session_state.ao_details,
+                        'other_planning': st.session_state.other_planning,
                     }
                     
                     doc_file = create_word_doc(template_path, data)
