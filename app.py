@@ -172,6 +172,8 @@ def create_word_doc(template_path, data):
     other_intubate = data.get('other_intubate')
     other_bvm = data.get('other_bvm')
     intubation_method = data.get('intubation_method')
+    ett_size = data.get('ett_size')
+    ett_type = data.get('ett_type')
 
     # Check and replace text in paragraphs
     for paragraph in doc.paragraphs:
@@ -209,6 +211,10 @@ def create_word_doc(template_path, data):
                     run.text = run.text.replace('who_will_bvm', ', '.join(who_will_bvm).rstrip(', '))  # Join with comma and space, then strip
             if 'intubation_method' in run.text:
                 run.text = run.text.replace('intubation_method', intubation_method)
+            if 'ett_type' in run.text:
+                run.text = run.text.replace('ett_type', ett_type)
+            if 'selected_ett_size' in run.text:
+                run.text = run.text.replace('ett_size', selected_ett_size)
 
     for table in doc.tables:
         for row in table.rows:
@@ -248,6 +254,10 @@ def create_word_doc(template_path, data):
                                 run.text = run.text.replace('who_will_bvm', ', '.join(who_will_bvm).rstrip(', '))
                         if 'intubation_method' in run.text:
                             run.text = run.text.replace('intubation_method', intubation_method)
+                        if 'ett_type' in run.text:
+                            run.text = run.text.replace('ett_type', ett_type)
+                        if 'ett_size' in run.text:
+                            run.text = run.text.replace('ett_size', selected_ett_size)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -329,6 +339,8 @@ default_values = {
     #'other_intubate': '',
     #'other_bvm': '',
     'intubation_method': None,
+    'selected_ett_size': None,
+    'ett_type': None,
 }
 
 # Initialize session state variables if not already set
@@ -661,11 +673,12 @@ elif st.session_state.section == 3:
     with col3:
         if st.button("Next"):
             #if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer"  and intubation_method != "Intubation Method":
-            if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method":
+            if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and ett_size:
                 st.session_state.who_will_intubate = who_will_intubate
                 st.session_state.who_will_bvm = who_will_bvm
                 st.session_state.intubation_method = intubation_method
-                    
+                st.session_state.ett_type = ett_type  # Store ETT type
+                st.session_state.ett_size = selected_ett_size 
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
@@ -720,7 +733,9 @@ elif st.session_state.section == 4:
                         'who_will_bvm': st.session_state.who_will_bvm,
                         #'other_intubate': st.session_state.other_intubate,
                         #'other_bvm': st.session_state.other_bvm,
-                        'intubation_method': st.session_state.intubation_method
+                        'intubation_method': st.session_state.intubation_method,
+                        'ett_size': st.session_state.selected_ett_size,
+                    'ett_type': st.session_state.ett_type
                     }
                     doc_file = create_word_doc(template_path, data)
                     
