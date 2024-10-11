@@ -8,6 +8,7 @@ import os
 import json
 from datetime import datetime
 import io
+import pytz 
 
 # Define mappings for ETT size, Blade type, and Apneic Oxygenation based on patient age
 age_to_ett_mapping = {
@@ -509,25 +510,30 @@ elif st.session_state.section == 1:
 
     cols = st.columns(2)
     
+    # Set timezone to Eastern Time
+    eastern = pytz.timezone('US/Eastern')
+    
     with cols[0]:
-    # Use a default value and store it in session state directly
-        date = st.date_input("Select Date (MM-DD-YYYY)", value=datetime.today(), key="date")
+        # Use a default value for date in EST
+        now_est = datetime.now(eastern)
+        date = st.date_input("Select Date (MM-DD-YYYY)", value=now_est.date(), key="date")
 
         if date:
             st.session_state['formatted_date'] = date.strftime("%m-%d-%Y")
             
         # Select Patient Age
-        age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),key="age_select",on_change=update_automatic_selections)
-
-    
+        age = st.selectbox("Select Patient Age", options=[""] + list(age_to_ett_mapping.keys()), key="age_select", on_change=update_automatic_selections)
 
     with cols[1]:
-        time = st.time_input("Select Time", value=datetime.now().time(), key="time")
+        # Use the current time in EST for time input
+        current_time_est = datetime.now(eastern).time()
+        time = st.time_input("Select Time", value=current_time_est, key="time")
 
         if time:
             st.session_state['formatted_time'] = time.strftime('%H:%M:%S')
             
-        weight = st.selectbox("Enter Patient Weight (Kilograms)", options=[""] + list(weight_to_atropine_mapping.keys()), key="weight_select",on_change=update_automatic_selections)
+        weight = st.selectbox("Enter Patient Weight (Kilograms)", options=[""] + list(weight_to_atropine_mapping.keys()), key="weight_select", on_change=update_automatic_selections)
+
 
     # Initialize 'ett_size' in session state if it's not already set
     if 'ett_size' not in st.session_state:
