@@ -264,9 +264,9 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('ao_details', ao_details)
             if 'other_planning' in run.text:
                 run.text = run.text.replace('other_planning', other_planning)
-            if 'when_intubate' in run.text:
-                if when_intubate:
-                    run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))  # Join with comma and space, then strip
+            #if 'when_intubate' in run.text:
+            #    if when_intubate:
+            #        run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))  # Join with comma and space, then strip
             if 'when_intubate' in run.text:
                 if when_intubate:
                     # Adjust the list to ensure "Hypoxemia Refractory to CPAP" has no comma after it
@@ -368,7 +368,7 @@ def create_word_doc(template_path, data):
                                         adjusted_list.append(item)
                         
                                 # Join the adjusted list into a formatted string
-                                formatted_string = ' '.join(adjusted_list).rstrip(', ')
+                                formatted_string = ','.join(adjusted_list).rstrip(', ')
                         
                                 # Replace the placeholder in the document
                                 run.text = run.text.replace('when_intubate', formatted_string)
