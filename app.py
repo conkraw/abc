@@ -1247,28 +1247,38 @@ elif st.session_state.section == 6:
                 
                 doc_file = create_word_doc(template_path, data)
                 
-                st.success("Document created successfully!")
                 st.session_state.doc_file_path = doc_file  # Store the file path in session state
+                st.session_state.doc_created = True  # Flag to indicate document creation
                 
             except Exception as e:
                 st.error(f"An error occurred: {e}")
                 st.exception(e)  # This will print the stack trace for debugging
 
-    # Create a new row for the download button
+    # Create a new row for the buttons
     col4, col5, col6 = st.columns(3)
-    with col5:
-        if 'doc_file_path' in st.session_state:
-            with open(st.session_state.doc_file_path, 'rb') as f:
-                st.download_button(
-                    label="Download Word Document",
-                    data=f,
-                    file_name=st.session_state.doc_file_path.split("/")[-1],  # Use only the file name
-                    mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                )
-            os.remove(st.session_state.doc_file_path)  # Clean up the file after download
-
-    with col1:
+    with col4:
         if st.button("Previous", on_click=prev_section):
             pass
+    
+    with col5:
+        if st.button("Submit"):
+            # Button action already handled above; we just need to render it here again if needed
+            pass
+
+    # Add success message below the buttons
+    if 'doc_created' in st.session_state and st.session_state.doc_created:
+        st.success("Document created successfully!")
+
+    # Add download button if the document was created
+    if 'doc_file_path' in st.session_state:
+        with open(st.session_state.doc_file_path, 'rb') as f:
+            st.download_button(
+                label="Download Word Document",
+                data=f,
+                file_name=st.session_state.doc_file_path.split("/")[-1],  # Use only the file name
+                mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            )
+        os.remove(st.session_state.doc_file_path)  # Clean up the file after download
+
 
         
