@@ -1024,7 +1024,7 @@ elif st.session_state.section == 4:
     with col3:
         if st.button("Next"):
             if output:  # Use output instead
-                st.session_state.when_intubate = final_string
+                st.session_state.when_intubate = output
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
