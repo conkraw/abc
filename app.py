@@ -991,14 +991,26 @@ elif st.session_state.section == 4:
     if 'Other' in when_intubate:
         other_when_intubate = st.text_input("Please state an 'other' reason for the timing of intubation:")
 
-    # Prepare the list and add the SpO2 value if provided
+    # Prepare the list
     when_intubate = [person for person in when_intubate if person != 'Other']  # Exclude the placeholder
-    
-    if hypoxemia_spo2:
-        when_intubate.append(f"SpO2 less than {hypoxemia_spo2}%")
-        
+
+    # Final output list
+    output = []
+
+    # Handle the "Hypoxemia Refractory to CPAP" case
+    if 'Hypoxemia Refractory to CPAP' in when_intubate:
+        output.append("Hypoxemia Refractory to CPAP")
+        if hypoxemia_spo2:
+            sanitized_spo2 = hypoxemia_spo2.strip('%')  # Sanitize input
+            output.append(f"SpO2 less than {sanitized_spo2}%")
+    else:
+        output.extend(when_intubate)  # Add other selections
+
     if other_when_intubate:
-        when_intubate.append(other_when_intubate)
+        output.append(other_when_intubate)
+
+    # Join the output into a single string
+    final_string = ', '.join(output)
 
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
@@ -1011,8 +1023,8 @@ elif st.session_state.section == 4:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if when_intubate:
-                st.session_state.when_intubate = when_intubate
+            if output:  # Use output instead
+                st.session_state.when_intubate = final_string
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
