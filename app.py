@@ -564,29 +564,49 @@ elif st.session_state.section == 2:
 # Intubation Plan Section
 elif st.session_state.section == 3:
     st.title("Intubation Plan")
-    who_will_intubate = st.multiselect("Who will intubate?", 
-                                   ['Resident', 'Fellow', 'NP', 'Attending','Anesthesiologist','ENT physician','RT','Other Intubator:'])
+
+    # Multiselect for who will intubate
+    who_will_intubate = st.multiselect(
+        "Who will intubate?", 
+        ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other Intubator:']
+    )
 
     other_intubate = ""
-    
+
+    # Check for 'Other Intubator:' option
     if 'Other Intubator:' in who_will_intubate:
         other_intubate = st.text_input("Please specify the 'other' clinician who will intubate:")
-    
-    who_will_bvm = st.multiselect("Who will bag-mask?", 
-                                   ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:'])
+
+    # Combine selections into who_will_intubate list
+    who_will_intubate = [person for person in who_will_intubate if person != 'Other Intubator:']  # Exclude the placeholder
+    if other_intubate:
+        who_will_intubate.append(other_intubate)  # Add the specified 'other' intubator
+
+    # Multiselect for who will bag-mask
+    who_will_bvm = st.multiselect(
+        "Who will bag-mask?", 
+        ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:']
+    )
+
     other_bvm = ""
-    
+
+    # Check for 'Other BVMer:' option
     if 'Other BVMer:' in who_will_bvm:
         other_bvm = st.text_input("Please specify the 'other' clinician who will perform bag mask valve ventilation:")
-        
+    
+    # Combine selections into who_will_bvm list
+    who_will_bvm = [person for person in who_will_bvm if person != 'Other BVMer:']  # Exclude the placeholder
+    if other_bvm:
+        who_will_bvm.append(other_bvm)  # Add the specified 'other' BVMer
+
     # Create a layout for intubation method
-    intubation_method = st.selectbox("How will we intubate? (Method)", ["Intubation Method","Oral", "Nasal"])
+    intubation_method = st.selectbox("How will we intubate? (Method)", ["Intubation Method", "Oral", "Nasal"])
 
     # Create a layout for ETT Type and ETT Size
     cols = st.columns(2)
 
     with cols[0]:
-        ett_type = st.selectbox("ETT Type", ["Cuffed", "Uncuffed"], key="ett_type")
+        ett_type = st.selectbox("ETT Type", ["Cuffed", "Uncuffed"]
 
     with cols[1]:
 
