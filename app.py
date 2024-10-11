@@ -266,7 +266,8 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('other_planning', other_planning)
             if 'when_intubate' in run.text:
                 if when_intubate:
-                    run.text = run.text.replace('when_intubate', ', '.join(when_intubate) if isinstance(when_intubate, list) else when_intubate)
+                    run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))  # Join with comma and space, then strip
+
                             
 
 
@@ -346,7 +347,8 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('other_planning', other_planning)
                         if 'when_intubate' in run.text:
                             if when_intubate:
-                                run.text = run.text.replace('when_intubate', ', '.join(when_intubate) if isinstance(when_intubate, list) else when_intubate)
+                                run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))  # Join with comma and space, then strip
+
                             
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -989,7 +991,7 @@ elif st.session_state.section == 4:
     if 'Other' in when_intubate:
         other_when_intubate = st.text_input("Please state an 'other' reason for the timing of intubation:")
 
-    other_when_intubate = [person for person in when_intubate if person != 'Other']  # Exclude the placeholder
+    when_intubate = [person for person in when_intubate if person != 'Other']  # Exclude the placeholder
     if other_when_intubate:
         when_intubate.append(other_when_intubate)
         
