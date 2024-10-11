@@ -1132,7 +1132,7 @@ elif st.session_state.section == 6:
                         'ao_details': st.session_state.ao_details,
                         'other_planning': st.session_state.other_planning,
                         'when_intubate': st.session_state.when_intubate,
-                        'advance_airway_provider': st.session_state.advance_airway_provider
+                        'advance_airway_provider': st.session_state.advance_airway_provider,
                         'advance_airway_procedure': st.session_state.advance_airway_procedure
                     }
                     
