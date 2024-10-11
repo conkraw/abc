@@ -534,7 +534,8 @@ def save_data():
 default_values = {
     'section': 0,
     'form_data': {},
-    'selected_age': "", 
+    'selected_age': "",
+    'age_select':"",
     'option': None,
     'completed_by': None,
     'room_number': None,
@@ -643,13 +644,12 @@ elif st.session_state.section == 1:
         if date:
             st.session_state['formatted_date'] = date.strftime("%m-%d-%Y")
 
+        def on_age_change():
+          st.session_state.age_select = age
             
         # Select Patient Age
         #age = st.selectbox("Select Patient Age", options=[""] + list(age_to_ett_mapping.keys()), key="age_select", on_change=update_automatic_selections)
         age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),index=list(age_to_ett_mapping.keys()).index(st.session_state.selected_age) if st.session_state.selected_age in age_to_ett_mapping.keys() else 0,key="age_select",on_change=update_automatic_selections)
-
-        def on_age_change():
-          st.session_state.age_select = age
       
       # Update the session state only when the selection changes
         if age != st.session_state.age_select:
@@ -764,7 +764,7 @@ elif st.session_state.section == 1:
     # Add the 'Previous' button to the first column
     with col1:
         if st.button("Previous", on_click=prev_section):
-            selected_age = st.session_state.age_select
+            st.session_state.previous_page = True
           
     # Add the 'Next' button to the second column
     with col2:
