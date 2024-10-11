@@ -267,8 +267,8 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('vec_dose', vec_dose)
             if 'ao_details' in run.text:
                 run.text = run.text.replace('ao_details', ao_details)
-            if 'other_planning' in run.text:
-                run.text = run.text.replace('other_planning', other_planning)
+            if 'additional_notes' in run.text:
+                run.text = run.text.replace('additional_notes', other_planning)
             if 'when_intubate' in run.text:
                 if when_intubate:
                     run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))  # Join with comma and space, then strip
@@ -351,8 +351,8 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('vec_dose', vec_dose)
                         if 'ao_details' in run.text:
                             run.text = run.text.replace('ao_details', ao_details)
-                        if 'other_planning' in run.text:
-                            run.text = run.text.replace('other_planning', other_planning)
+                        if 'additional_notes' in run.text:
+                            run.text = run.text.replace('additional_notes', other_planning)
                         if 'when_intubate' in run.text:
                             if when_intubate:
                                 run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))  # Join with comma and space, then strip
