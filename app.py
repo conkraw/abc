@@ -1009,12 +1009,11 @@ elif st.session_state.section == 4:
     if other_when_intubate:
         output.append(other_when_intubate)
 
-    # Debugging: Print the output list before joining
-    st.write("Output List:", output)
-
-    # Join the output into a single string
-    final_string = ', '.join(output)
-
+    if output and output[-1] == "Hypoxemia Refractory to CPAP":
+        output = output[:-1] + ' ' + output[-1] 
+    else:
+        output
+        
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
 
