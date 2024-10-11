@@ -972,7 +972,7 @@ elif st.session_state.section == 3:
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
                 st.warning("Please select an option.")
-
+                
 elif st.session_state.section == 4:
     st.title("Timing of Intubation")
     
@@ -991,26 +991,33 @@ elif st.session_state.section == 4:
     if 'Other' in when_intubate:
         other_when_intubate = st.text_input("Please state an 'other' reason for the timing of intubation:")
 
-    # Prepare the list
+    # Prepare the list and add the SpO2 value if provided
     when_intubate = [person for person in when_intubate if person != 'Other']  # Exclude the placeholder
-
-    # Final output list
-    output = []
-
-    # Handle the "Hypoxemia Refractory to CPAP" case
-    if 'Hypoxemia Refractory to CPAP' in when_intubate:
-        output.append("Hypoxemia Refractory to CPAP")
-        if hypoxemia_spo2:
-            sanitized_spo2 = hypoxemia_spo2.strip('%')  # Sanitize input
-            output.append(f"SpO2 less than {sanitized_spo2}%")
-    else:
-        output.extend(when_intubate)  # Add other selections
-
+    
+    if hypoxemia_spo2:
+        when_intubate.append(f"SpO2 less than {hypoxemia_spo2}%")
+        
     if other_when_intubate:
-        output.append(other_when_intubate)
+        when_intubate.append(other_when_intubate)
 
-    # Join the output into a single string
-    final_string = ''.join(output)
+    # Single Next and Previous Buttons
+    col1, col2, col3 = st.columns(3)
+
+    # Add the 'Previous' button to the first column
+    with col1:
+        if st.button("Previous", on_click=prev_section):
+            pass
+    
+    # Add the 'Next' button to the second column
+    with col3:
+        if st.button("Next"):
+            if when_intubate:
+                st.session_state.when_intubate = when_intubate
+                st.session_state.section += 1  # Increment the section
+                st.rerun()  # Force a rerun to reflect changes immediately
+            else:
+                st.warning("Please select an option.")
+
 
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
