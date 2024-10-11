@@ -647,12 +647,15 @@ elif st.session_state.section == 1:
         age = st.selectbox("Select Patient Age", options=[""] + list(age_to_ett_mapping.keys()), key="age_select", on_change=update_automatic_selections)
 
     with cols[1]:
-        # Use the current time in EST for time input
+        # Use the current time in EST for time input, or the previously selected time if available
         current_time_est = datetime.now(eastern).time()
-        time = st.time_input("Select Time", value=current_time_est, key="time")
-
+        time_value = st.session_state.get('formatted_time', current_time_est.strftime('%H:%M:%S'))
+        time = st.time_input("Select Time", value=time_value, key="time")
+    
+        # Save the selected time in session state
         if time:
             st.session_state['formatted_time'] = time.strftime('%H:%M:%S')
+
             
         weight = st.selectbox("Enter Patient Weight (Kilograms)", options=[""] + list(weight_to_atropine_mapping.keys()), key="weight_select", on_change=update_automatic_selections)
 
