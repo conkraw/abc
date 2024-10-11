@@ -1070,7 +1070,7 @@ elif st.session_state.section == 3:
                 midazolam_dose and 
                 ketamine_dose and 
                 propofol_dose and 
-                roc_dose and vec_dose and ao_details and other_planning):
+                roc_dose and vec_dose and ao_details):
                 st.session_state.who_will_intubate = who_will_intubate
                 st.session_state.who_will_bvm = who_will_bvm
                 st.session_state.intubation_method = intubation_method
