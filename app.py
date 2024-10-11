@@ -699,7 +699,7 @@ elif st.session_state.section == 2:
             other_risk_text_input = st.text_input("Please specify the other risk:")
 
     # Single Next and Previous Buttons
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4, col5 = st.columns(5)
 
     # Add the 'Previous' button to the first column
     with col1:
@@ -707,7 +707,7 @@ elif st.session_state.section == 2:
             pass
     
     # Add the 'Next' button to the second column
-    with col4:
+    with col5:
         if st.button("Next"):
             if (difficult_airway_history != "Select Risk Factor 1" and 
                 physical_risk != "Select Risk Factor 2" and 
