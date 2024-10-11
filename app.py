@@ -180,6 +180,7 @@ def create_word_doc(template_path, data):
     mac_details = data.get('mac_details')
     miller_details = data.get('miller_details')
     wis_hipple_details = data.get('wis_hipple_details')
+    atropine_dose = data.get('atropine_dose')
 
     # Check and replace text in paragraphs
     for paragraph in doc.paragraphs:
@@ -233,6 +234,8 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('miller_details', miller_details)
             if 'wis_hipple_details' in run.text:
                 run.text = run.text.replace('wis_hipple_details', wis_hipple_details)
+            if 'atropine_dose' in run.text:
+                run.text = run.text.replace('atropine_dose', atropine_dose)
 
     for table in doc.tables:
         for row in table.rows:
@@ -288,6 +291,8 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('miller_details', miller_details)
                         if 'wis_hipple_details' in run.text:
                             run.text = run.text.replace('wis_hipple_details', wis_hipple_details)
+                        if 'atropine_dose' in run.text:
+                            run.text = run.text.replace('atropine_dose', atropine_dose)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -375,6 +380,7 @@ default_values = {
     'mac_details': None,
     'miller_details': None,
     'wis_hipple_details': None,
+    'atropine_dose': None,
 }
 
 # Initialize session state variables if not already set
@@ -761,7 +767,95 @@ elif st.session_state.section == 3:
 
         wis_hipple_details = st.text_input("Wis-Hipple Details:", disabled=False)
         
-  
+
+    st.write("Medications:")
+    
+    cols = st.columns(3)
+
+    # Column 1: Dropdowns for "X" or empty
+    with cols[0]:
+        # Dropdowns to choose if devices are selected or not (X = selected)
+        med_1_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_8")
+        med_2_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_9")
+        med_3_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_10")
+        med_4_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_11")
+        med_5_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_12")
+        med_6_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_13")
+        med_7_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_14")
+        med_8_selection = st.selectbox("Select Medication", options=["", "X"], key="dropdown_15")
+    
+    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
+    with cols[1]:
+        # These text inputs will reset to their default value if changed and the user moves away
+        med_1_text = reset_input("Atropine", key="atropinex")
+        med_2_text = reset_input("Glycopyrrolate", key="glycox")
+        med_3_text = reset_input("Fentanyl", key="fentanylx")
+        med_4_text = reset_input("Midazolam", key="midazolamx")
+        med_5_text = reset_input("Ketamine", key="ketaminex")
+        med_6_text = reset_input("Propofol", key="propofolx")
+        med_7_text = reset_input("Rocuronium", key="rocx")
+        med_8_text = reset_input("Vecuronium", key="vecx")
+
+    # Column 3: Additional details for each device (uneditable placeholders)
+    with cols[2]:
+        # Text Inputs with uneditable placeholders (details of each device)
+        atropine_dose = list(set(weight_to_atropine_mapping.values()))  # Get unique Atropine doses
+        atropine_dose = st.selectbox("Atropine Dose:", options=atropine_doses, key="atropine_dose_display",index=atropine_doses.index(st.session_state['atropine_dose']) if st.session_state['atropine_dose'] in atropine_doses else 0)
+        st.session_state['atropine_dose'] = atropine_dose
+        
+        glycopyrrolate_dose = list(set(weight_to_glycopyrrolate_mapping.values()))  # Get unique Glycopyrrolate doses
+        glycopyrrolate_dose = st.selectbox("Glycopyrrolate Dose:",options=glycopyrrolate_doses, key="glycopyrrolate_dose_display",index=glycopyrrolate_doses.index(st.session_state['glycopyrrolate_dose']) if st.session_state['glycopyrrolate_dose'] in glycopyrrolate_doses else 0)
+        st.session_state['glycopyrrolate_dose'] = glycopyrrolate_dose
+
+        fentanyl_dose = list(set(weight_to_fentanyl_mapping.values()))  # Get unique Fentanyl doses
+        fentanyl_dose = st.selectbox("Fentanyl Dose:", options=fentanyl_doses, key="fentanyl_dose_display",index=fentanyl_doses.index(st.session_state['fentanyl_dose']) if st.session_state['fentanyl_dose'] in fentanyl_doses else 0)
+        st.session_state['fentanyl_dose'] = fentanyl_dose
+        
+        midazolam_dose = list(set(weight_to_midaz_mapping.values()))  # Get unique Midazolam doses
+        midazolam_dose = st.selectbox("Midazolam Dose:", options=midazolam_doses, key="midazolam_dose_display",index=midazolam_doses.index(st.session_state['midazolam_dose']) if st.session_state['midazolam_dose'] in midazolam_doses else 0)
+        st.session_state['midazolam_dose'] = midazolam_dose
+        
+        ketamine_dose = list(set(weight_to_ketamine_mapping.values()))  # Get unique Ketamine doses
+        ketamine_dose = st.selectbox("Ketamine Dose:", options=ketamine_doses, key="ketamine_dose_display",index=ketamine_doses.index(st.session_state['ketamine_dose']) if st.session_state['ketamine_dose'] in ketamine_doses else 0)
+        st.session_state['ketamine_dose'] = ketamine_dose
+        
+        propofol_dose = list(set(weight_to_propo_mapping.values()))  # Get unique Propofol doses
+        propofol_dose = st.selectbox("Propofol Dose:", options=propofol_doses, key="propofol_dose_display",index=propofol_doses.index(st.session_state['propofol_dose']) if st.session_state['propofol_dose'] in propofol_doses else 0)
+        st.session_state['propofol_dose'] = propofol_dose
+        
+        roc_dose = list(set(weight_to_roc_mapping.values()))  # Get unique Rocuronium doses
+        roc_dose = st.selectbox("Rocuronium Dose:", options=roc_doses, key="roc_dose_display",index=roc_doses.index(st.session_state['roc_dose']) if st.session_state['roc_dose'] in roc_doses else 0)
+        st.session_state['roc_dose'] = roc_dose
+        
+        vec_dose = list(set(weight_to_vec_mapping.values()))  # Get unique Vecuronium doses
+        vec_dose = st.selectbox("Vecuronium Dose:", options=vec_doses, key="vec_dose_display",index=vec_doses.index(st.session_state['vec_dose']) if st.session_state['vec_dose'] in vec_doses else 0)
+        st.session_state['vec_dose'] = vec_dose
+
+    st.write("Apneic Oxygenation:")
+    
+    cols = st.columns(3)
+
+    # Column 1: Dropdowns for "X" or empty
+    with cols[0]:
+        # Dropdowns to choose if devices are selected or not (X = selected)
+        ao_selection = st.selectbox("Select Use", options=["Select if AO to be utilized", "Yes", "No"])
+    
+    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
+    with cols[1]:
+        # These text inputs will reset to their default value if changed and the user moves away
+        ao_text = reset_input("Apneic Oxygenation", key="aox")
+    
+    # Column 3: Additional details for each device (uneditable placeholders)
+    with cols[2]:
+        # Text Inputs with uneditable placeholders (details of each device)
+        #st.text_input("Apneic Oxygenation Details:", key="ao_details", disabled=False)
+
+        ao_details = list(set(age_to_oxygenation_mapping.values()))  # Get unique ETT sizes
+        ao_details = st.selectbox("Apneic Oxygenation:", options=ao_details, key="ao_details_display", index=ao_details.index(st.session_state['ao_details']) if st.session_state['ao_details'] in ao_details else 0)
+        st.session_state['ao_details'] = ao_details
+            
+    other_planning = st.text_input("Other Intubation Planning Details:")
+    
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
 
@@ -774,7 +868,7 @@ elif st.session_state.section == 3:
     with col3:
         if st.button("Next"):
             #if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer"  and intubation_method != "Intubation Method":
-            if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and ett_size and lma_details and glide_details and other_device_details and mac_details and miller_details and wis_hipple_details:
+            if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and ett_size and lma_details and glide_details and other_device_details and mac_details and miller_details and wis_hipple_details and atropine_dose:
                 st.session_state.who_will_intubate = who_will_intubate
                 st.session_state.who_will_bvm = who_will_bvm
                 st.session_state.intubation_method = intubation_method
@@ -786,6 +880,7 @@ elif st.session_state.section == 3:
                 st.session_state.mac_details = mac_details 
                 st.session_state.miller_details = miller_details 
                 st.session_state.wis_hipple_details = wis_hipple_details 
+                st.session_state.atropine_dose = atropine_dose 
                 
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
@@ -827,6 +922,7 @@ elif st.session_state.section == 4:
                         'mac_details': st.session_state.mac_details,
                         'miller_details': st.session_state.miller_details,
                         'wis_hipple_details': st.session_state.wis_hipple_details,
+                        'atropine_dose': st.session_state.atropine_dose,
                     }
                     
                     doc_file = create_word_doc(template_path, data)
