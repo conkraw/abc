@@ -444,7 +444,7 @@ default_values = {
 'vec_dose': None,
 'ao_details': None, 
 'other_planning': None,
-'when_intubate': None
+'when_intubate': [],
 }
 
 # Initialize session state variables if not already set
