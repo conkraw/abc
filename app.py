@@ -764,7 +764,7 @@ elif st.session_state.section == 1:
     # Add the 'Previous' button to the first column
     with col1:
         if st.button("Previous", on_click=prev_section):
-            pass
+            selected_age = st.session_state.age_select
           
     # Add the 'Next' button to the second column
     with col2:
