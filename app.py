@@ -621,130 +621,75 @@ if st.session_state['section'] == 0:
             st.warning("Please select an option.")
 
 # Patient Information Section
+import streamlit as st
+import pytz
+from datetime import datetime
+
+# Section for Patient Information
 elif st.session_state.section == 1:
     st.title("Patient Information")
 
     cols = st.columns(2)
-    
+
     # Set timezone to Eastern Time
     eastern = pytz.timezone('US/Eastern')
-    
+
     with cols[0]:
         # Use a default value for date in EST
         now_est = datetime.now(eastern)
-        date = st.date_input("Select Date (MM-DD-YYYY)", value=now_est.date(), key="date")
 
+        # **Store and retrieve the date input value**
+        date = st.date_input("Select Date (MM-DD-YYYY)", value=st.session_state.get('formatted_date', now_est.date()))
         if date:
-            st.session_state['formatted_date'] = date.strftime("%m-%d-%Y")
+            st.session_state['formatted_date'] = date.strftime("%m-%d-%Y")  # Save formatted date
             
-        # Select Patient Age
-        age = st.selectbox("Select Patient Age", options=[""] + list(age_to_ett_mapping.keys()), key="age_select", on_change=update_automatic_selections)
+        # **Store and retrieve the age input value**
+        age = st.selectbox("Select Patient Age", options=[""] + list(age_to_ett_mapping.keys()), index=list(age_to_ett_mapping.keys()).index(st.session_state.get('age_select', '')) if st.session_state.get('age_select') in age_to_ett_mapping.keys() else 0)
 
     with cols[1]:
         # Use the current time in EST for time input
         current_time_est = datetime.now(eastern).time()
-        time = st.time_input("Select Time", value=current_time_est, key="time")
-
+        # **Store and retrieve the time input value**
+        time = st.time_input("Select Time", value=st.session_state.get('formatted_time', current_time_est))
         if time:
-            st.session_state['formatted_time'] = time.strftime('%H:%M:%S')
+            st.session_state['formatted_time'] = time.strftime('%H:%M:%S')  # Save formatted time
             
-        weight = st.selectbox("Enter Patient Weight (Kilograms)", options=[""] + list(weight_to_atropine_mapping.keys()), key="weight_select", on_change=update_automatic_selections)
+        # **Store and retrieve the weight input value**
+        weight = st.selectbox("Enter Patient Weight (Kilograms)", options=[""] + list(weight_to_atropine_mapping.keys()), index=list(weight_to_atropine_mapping.keys()).index(st.session_state.get('weight_select', '')) if st.session_state.get('weight_select') in weight_to_atropine_mapping.keys() else 0)
 
+    # Initialize 'ett_size' and other details in session state if not already set
+    selected_age = st.session_state.get('age_select', '')
 
-    # Initialize 'ett_size' in session state if it's not already set
-    if 'ett_size' not in st.session_state:
-        st.session_state['ett_size'] = ''  # Default value for ETT size
-    
-    selected_age = st.session_state.age_select
-    
     st.session_state['ett_size'] = age_to_ett_mapping.get(selected_age, '')  # Update the session state with ETT size
-
-    if 'lma_details' not in st.session_state:
-        st.session_state['lma_details'] = ''  # Default value for ETT size
-    
     st.session_state['lma_details'] = age_to_lma_mapping.get(selected_age, '')
-
-    if 'glide_details' not in st.session_state:
-        st.session_state['glide_details'] = ''  # Default value for ETT size
-
     st.session_state['glide_details'] = age_to_glide_mapping.get(selected_age, '')
-    
-    if 'mac_details' not in st.session_state:
-        st.session_state['mac_details'] = ''  # Default value for ETT size
-    
     st.session_state['mac_details'] = age_to_mac_mapping.get(selected_age, '')
-
-    if 'miller_details' not in st.session_state:
-        st.session_state['miller_details'] = ''  # Default value for ETT size
-    
     st.session_state['miller_details'] = age_to_miller_mapping.get(selected_age, '')
-
-    if 'ao_details' not in st.session_state:
-        st.session_state['ao_details'] = ''  # Default value for ETT size
-    
     st.session_state['ao_details'] = age_to_oxygenation_mapping.get(selected_age, '')
 
-    if 'atropine_dose' not in st.session_state:
-        st.session_state['atropine_dose'] = ''  # Default value for Atropine
-
-    #selected_weight = st.session_state.weight_select
-    
-    if 'glycopyrrolate_dose' not in st.session_state:
-        st.session_state['glycopyrrolate_dose'] = ''  # Default value for Glycopyrrolate
-    
-    if 'fentanyl_dose' not in st.session_state:
-        st.session_state['fentanyl_dose'] = ''  # Default value for Fentanyl
-    
-    # Retrieve the selected weight from session state
     selected_weight = st.session_state.get('weight_select', '')
-    
-    # If the weight is selected, update the drug doses accordingly (based on mappings)
+
     if selected_weight:
         st.session_state['atropine_dose'] = weight_to_atropine_mapping.get(selected_weight, '')
         st.session_state['glycopyrrolate_dose'] = weight_to_glycopyrrolate_mapping.get(selected_weight, '')
         st.session_state['fentanyl_dose'] = weight_to_fentanyl_mapping.get(selected_weight, '')
-
-    # Default values for Midazolam, Ketamine, and Propofol if not set in session state
-    if 'midazolam_dose' not in st.session_state:
-        st.session_state['midazolam_dose'] = ''  # Default value for Midazolam
-    
-    if 'ketamine_dose' not in st.session_state:
-        st.session_state['ketamine_dose'] = ''  # Default value for Ketamine
-    
-    if 'propofol_dose' not in st.session_state:
-        st.session_state['propofol_dose'] = ''  # Default value for Propofol
-    
-    # Update doses based on the selected weight
-    if selected_weight:
         st.session_state['midazolam_dose'] = weight_to_midaz_mapping.get(selected_weight, '')
         st.session_state['ketamine_dose'] = weight_to_ketamine_mapping.get(selected_weight, '')
         st.session_state['propofol_dose'] = weight_to_propo_mapping.get(selected_weight, '')
-
-    # Default values for Rocuronium and Vecuronium if not set in session state
-    if 'roc_dose' not in st.session_state:
-        st.session_state['roc_dose'] = ''  # Default value for Rocuronium
-    
-    if 'vec_dose' not in st.session_state:
-        st.session_state['vec_dose'] = ''  # Default value for Vecuronium
-    
-    # Update doses based on the selected weight
-    if selected_weight:
         st.session_state['roc_dose'] = weight_to_roc_mapping.get(selected_weight, '')
         st.session_state['vec_dose'] = weight_to_vec_mapping.get(selected_weight, '')
-    
-    # Single Next and Previous Buttons
+
+    # Navigation Buttons
     col1, col2 = st.columns(2)
 
-    # Add the 'Previous' button to the first column
     with col1:
         if st.button("Previous", on_click=prev_section):
             pass
-          
-    # Add the 'Next' button to the second column
+
     with col2:
         if st.button("Next", on_click=next_section):
             pass
-            
+
 # Intubation Risk Assessment Section
 elif st.session_state.section == 2:
     st.title("Intubation Risk Assessment")
