@@ -266,7 +266,7 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('other_planning', other_planning)
             if 'when_intubate' in run.text:
                 if when_intubate:
-                    run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))
+                    run.text = run.text.replace('when_intubate', ', '.join(when_intubate) if isinstance(when_intubate, list) else when_intubate)
                             
 
 
@@ -346,7 +346,7 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('other_planning', other_planning)
                         if 'when_intubate' in run.text:
                             if when_intubate:
-                                run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))
+                                run.text = run.text.replace('when_intubate', ', '.join(when_intubate) if isinstance(when_intubate, list) else when_intubate)
                             
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
