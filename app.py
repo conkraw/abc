@@ -654,6 +654,7 @@ elif st.session_state.section == 1:
       # Update the session state only when the selection changes
         if age != st.session_state.age_select:
             on_age_change()
+        st.write("Selected Age:", st.session_state.age_select)
 
     with cols[1]:
         # Get the current time in EST for default
