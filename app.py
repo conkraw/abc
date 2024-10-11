@@ -644,7 +644,12 @@ elif st.session_state.section == 1:
 
             
         # Select Patient Age
-        age = st.selectbox("Select Patient Age", options=[""] + list(age_to_ett_mapping.keys()), key="age_select", on_change=update_automatic_selections)
+        #age = st.selectbox("Select Patient Age", options=[""] + list(age_to_ett_mapping.keys()), key="age_select", on_change=update_automatic_selections)
+        age = st.selectbox("Select Patient Age",options=[""] + list(age_to_ett_mapping.keys()),index=list(age_to_ett_mapping.keys()).index(st.session_state.selected_age) if st.session_state.selected_age in age_to_ett_mapping.keys() else 0,key="age_select",on_change=update_automatic_selections)
+
+        if age:
+          st.session_state.age_select = age
+          
 
     with cols[1]:
         # Get the current time in EST for default
@@ -706,8 +711,6 @@ elif st.session_state.section == 1:
     if 'atropine_dose' not in st.session_state:
         st.session_state['atropine_dose'] = ''  # Default value for Atropine
 
-    #selected_weight = st.session_state.weight_select
-    
     if 'glycopyrrolate_dose' not in st.session_state:
         st.session_state['glycopyrrolate_dose'] = ''  # Default value for Glycopyrrolate
     
