@@ -935,7 +935,8 @@ elif st.session_state.section == 3:
         ao_details = list(set(age_to_oxygenation_mapping.values()))  # Get unique ETT sizes
         ao_details = st.selectbox("Apneic Oxygenation:", options=ao_details, key="ao_details_display", index=ao_details.index(st.session_state['ao_details']) if st.session_state['ao_details'] in ao_details else 0)
         st.session_state['ao_details'] = ao_details
-            
+
+    other_planning = "" 
     other_planning = st.text_input("Other Intubation Planning Details:", disabled=False)
     
     # Single Next and Previous Buttons
@@ -949,13 +950,11 @@ elif st.session_state.section == 3:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            #if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer"  and intubation_method != "Intubation Method":
-            #if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and ett_size and lma_details and glide_details and other_device_details and mac_details and miller_details and wis_hipple_details and atropine_dose:
             if (who_will_intubate and who_will_bvm and 
                 intubation_method != "Intubation Method" and 
                 ett_type and ett_size and 
                 lma_details and glide_details and 
-                mac_details and miller_details and 
+                mac_details and miller_details and atropine_dose
                 glycopyrrolate_dose and 
                 fentanyl_dose and 
                 midazolam_dose and 
