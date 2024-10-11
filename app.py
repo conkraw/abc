@@ -630,12 +630,18 @@ elif st.session_state.section == 1:
     eastern = pytz.timezone('US/Eastern')
     
     with cols[0]:
-        # Use a default value for date in EST
-        now_est = datetime.now(eastern)
-        date = st.date_input("Select Date (MM-DD-YYYY)", value=now_est.date(), key="date")
-
+        # Set default value for date from session state or current date in EST
+        if 'formatted_date' in st.session_state:
+            date_value = datetime.strptime(st.session_state['formatted_date'], "%m-%d-%Y").date()
+        else:
+            now_est = datetime.now(eastern)
+            date_value = now_est.date()
+    
+        date = st.date_input("Select Date (MM-DD-YYYY)", value=date_value, key="date")
+    
         if date:
             st.session_state['formatted_date'] = date.strftime("%m-%d-%Y")
+
             
         # Select Patient Age
         age = st.selectbox("Select Patient Age", options=[""] + list(age_to_ett_mapping.keys()), key="age_select", on_change=update_automatic_selections)
