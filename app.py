@@ -174,6 +174,8 @@ def create_word_doc(template_path, data):
     intubation_method = data.get('intubation_method')
     ett_size = data.get('ett_size')
     ett_type = data.get('ett_type')
+    lma_details = data.get('lma_details')
+    glide_details = data.get('glide_details')
 
     # Check and replace text in paragraphs
     for paragraph in doc.paragraphs:
@@ -215,6 +217,10 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('ett_type', ett_type)
             if 'ett_size' in run.text:
                 run.text = run.text.replace('ett_size', ett_size)
+            if 'lma_details' in run.text:
+                run.text = run.text.replace('lma_details', lma_details)
+            if 'glide_details' in run.text:
+                run.text = run.text.replace('glide_details', glide_details)
 
     for table in doc.tables:
         for row in table.rows:
@@ -258,6 +264,10 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('ett_type', ett_type)
                         if 'ett_size' in run.text:
                             run.text = run.text.replace('ett_size', ett_size)
+                        if 'lma_details' in run.text:
+                            run.text = run.text.replace('lma_details', lma_details)
+                        if 'glide_details' in run.text:
+                            run.text = run.text.replace('glide_details', glide_details)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -339,6 +349,8 @@ default_values = {
     'intubation_method': None,
     'ett_size': None,
     'ett_type': None,
+    'lma_details': None,
+    'glide_details': None
 }
 
 # Initialize session state variables if not already set
@@ -682,16 +694,17 @@ elif st.session_state.section == 3:
     with cols[2]:
         # Text Inputs with uneditable placeholders (details of each device)
         st.text_input("Laryngoscope details:", key="laryngoscope_details", disabled=False)
+
+        lma_details = list(set(age_to_lma_mapping.values()))  # Get unique ETT sizes
+        lma_details = st.selectbox("LMA Details:", options=lma_details, key="lma_display", index=lma_details.index(st.session_state['lma_details']) if st.session_state['lma_details'] in lma_details else 0)
+        st.session_state['lma_details'] = lma_details
         
         glide_details = list(set(age_to_glide_mapping.values()))  # Get unique ETT sizes
-        selected_glide_details = st.selectbox("Glidescope Details:", options=glide_details, key="glide_size_display", index=glide_details.index(st.session_state['glide_details']) if st.session_state['glide_details'] in glide_details else 0)
-        st.session_state['glide_details'] = selected_glide_details
-        
-        lma_details = list(set(age_to_lma_mapping.values()))  # Get unique ETT sizes
-        selected_lma_details = st.selectbox("LMA Details:", options=lma_details, key="lma_display", index=lma_details.index(st.session_state['lma_details']) if st.session_state['lma_details'] in lma_details else 0)
-        st.session_state['lma_details'] = selected_lma_details
-        
-        st.text_input("Other Device details:", key="other_device_details", disabled=False)
+        glide_details = st.selectbox("Glidescope Details:", options=glide_details, key="glide_size_display", index=glide_details.index(st.session_state['glide_details']) if st.session_state['glide_details'] in glide_details else 0)
+        st.session_state['glide_details'] = glide_details
+
+        other_device_details = "" 
+        other_device_details = st.text_input("Other Device details:", disabled=False)
   
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
@@ -705,12 +718,16 @@ elif st.session_state.section == 3:
     with col3:
         if st.button("Next"):
             #if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer"  and intubation_method != "Intubation Method":
-            if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and ett_size:
+            if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and ett_size and lma_details and glide_details:
                 st.session_state.who_will_intubate = who_will_intubate
                 st.session_state.who_will_bvm = who_will_bvm
                 st.session_state.intubation_method = intubation_method
                 st.session_state.ett_type = ett_type  # Store ETT type
                 st.session_state.ett_size = ett_size 
+                st.session_state.lma_details = lma_details 
+                st.session_state.glide_details = glide_details 
+
+                
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
@@ -763,12 +780,13 @@ elif st.session_state.section == 4:
                         'other_risk_text_input': st.session_state.other_risk_text_input,
                         'who_will_intubate': st.session_state.who_will_intubate,
                         'who_will_bvm': st.session_state.who_will_bvm,
-                        #'other_intubate': st.session_state.other_intubate,
-                        #'other_bvm': st.session_state.other_bvm,
                         'intubation_method': st.session_state.intubation_method,
                         'ett_size': st.session_state.ett_size,
-                    'ett_type': st.session_state.ett_type
+                        'ett_type': st.session_state.ett_type,
+                        'lma_details': st.session_state.lma_details,
+                        'glide_details': st.session_state.glide_details,
                     }
+                    
                     doc_file = create_word_doc(template_path, data)
                     
                     st.success("Document created successfully!")
