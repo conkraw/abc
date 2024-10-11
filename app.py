@@ -6,9 +6,9 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import os
 import json
-from datetime import datetime
 import io
 import pytz 
+from datetime import time as dt_time
 
 # Define mappings for ETT size, Blade type, and Apneic Oxygenation based on patient age
 age_to_ett_mapping = {'': '', 
@@ -647,18 +647,26 @@ elif st.session_state.section == 1:
         age = st.selectbox("Select Patient Age", options=[""] + list(age_to_ett_mapping.keys()), key="age_select", on_change=update_automatic_selections)
 
     with cols[1]:
-        # Use the current time in EST for time input, or the previously selected time if available
+        # Get the current time in EST for default
         current_time_est = datetime.now(eastern).time()
-        time_value = st.session_state.get('formatted_time', current_time_est.strftime('%H:%M:%S'))
+    
+        # Retrieve previously saved time or default to current time
+        saved_time = st.session_state.get('formatted_time')
+        
+        # If saved_time exists, convert it to a time object
+        if saved_time:
+            # Ensure the saved time is in a proper time format
+            saved_time = dt_time.fromisoformat(saved_time)
+    
+        # Use the current time if there's no saved time
+        time_value = saved_time if saved_time else current_time_est
+    
+        # Set up the time input
         time = st.time_input("Select Time", value=time_value, key="time")
     
         # Save the selected time in session state
         if time:
             st.session_state['formatted_time'] = time.strftime('%H:%M:%S')
-
-            
-        weight = st.selectbox("Enter Patient Weight (Kilograms)", options=[""] + list(weight_to_atropine_mapping.keys()), key="weight_select", on_change=update_automatic_selections)
-
 
     # Initialize 'ett_size' in session state if it's not already set
     if 'ett_size' not in st.session_state:
