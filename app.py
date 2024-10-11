@@ -534,7 +534,7 @@ def save_data():
 default_values = {
     'section': 0,
     'form_data': {},
-    'selected_age': None, 
+    'selected_age': "", 
     'option': None,
     'completed_by': None,
     'room_number': None,
