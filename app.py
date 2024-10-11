@@ -975,7 +975,7 @@ elif st.session_state.section == 4:
     st.title("Timing of Intubation")
     when_intubate = st.multiselect(
         "When will we intubate? (Describe timing of airway management):",
-        ['Select Timing of Intubation','Prior to procedure', 'Mental Status Changes', 
+        ['Prior to procedure', 'Mental Status Changes', 
          'Hypoxemia Refractory to CPAP', 'Ventilation failure refractory to NIV', 
          'Loss of Airway Protection', 'Other'])
 
