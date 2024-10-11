@@ -234,8 +234,8 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('miller_details', miller_details)
             if 'wis_hipple_details' in run.text:
                 run.text = run.text.replace('wis_hipple_details', wis_hipple_details)
-            if 'atropine_dose' in run.text:
-                run.text = run.text.replace('atropine_dose', atropine_dose)
+            if 'other_planning' in run.text:
+                run.text = run.text.replace('other_planning', atropine_dose)
 
     for table in doc.tables:
         for row in table.rows:
@@ -291,8 +291,8 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('miller_details', miller_details)
                         if 'wis_hipple_details' in run.text:
                             run.text = run.text.replace('wis_hipple_details', wis_hipple_details)
-                        if 'atropine_dose' in run.text:
-                            run.text = run.text.replace('atropine_dose', atropine_dose)
+                        if 'other_planning' in run.text:
+                            run.text = run.text.replace('other_planning', atropine_dose)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
