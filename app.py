@@ -740,8 +740,8 @@ elif st.session_state.section == 1:
         if st.button("Previous", on_click=prev_section):
             st.session_state['formatted_date'] = date.strftime("%m-%d-%Y")
             st.session_state['formatted_time'] = time.strftime('%H:%M:%S')
-            st.session_state['age_select'] = selected_age
-            st.session_state['weight_select'] = selected_weight
+            st.session_state['age_select'] = age
+            st.session_state['weight_select'] = weight
           
     # Add the 'Next' button to the second column
     with col2:
