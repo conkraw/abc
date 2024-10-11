@@ -620,12 +620,6 @@ if st.session_state['section'] == 0:
         else:
             st.warning("Please select an option.")
 
-# Patient Information Section
-import streamlit as st
-import pytz
-from datetime import datetime
-
-# Section for Patient Information
 elif st.session_state.section == 1:
     st.title("Patient Information")
 
