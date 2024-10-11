@@ -1004,7 +1004,7 @@ elif st.session_state.section == 4:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if (when_intubate != "Select Timing of Intubation"):
+            if (when_intubate):
                 st.session_state.when_intubate = when_intubate
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
