@@ -214,7 +214,7 @@ def create_word_doc(template_path, data):
             if 'ett_type' in run.text:
                 run.text = run.text.replace('ett_type', ett_type)
             if 'ett_size' in run.text:
-                run.text = run.text.replace('ett_size', selected_ett_size)
+                run.text = run.text.replace('ett_size', ett_size)
 
     for table in doc.tables:
         for row in table.rows:
@@ -257,7 +257,7 @@ def create_word_doc(template_path, data):
                         if 'ett_type' in run.text:
                             run.text = run.text.replace('ett_type', ett_type)
                         if 'ett_size' in run.text:
-                            run.text = run.text.replace('ett_size', selected_ett_size)
+                            run.text = run.text.replace('ett_size', ett_size)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -335,11 +335,9 @@ default_values = {
     'other_risk_yes_no': 'Select Risk Factor 6',
     'other_risk_text_input': '',
     'who_will_intubate': [],  # Change to list if needed
-    #'who_will_bvm': [],       # Change to list if needed
-    #'other_intubate': '',
-    #'other_bvm': '',
+    'who_will_bvm': [],       # Change to list if needed
     'intubation_method': None,
-    'selected_ett_size': None,
+    'ett_size': None,
     'ett_type': None,
 }
 
@@ -657,8 +655,8 @@ elif st.session_state.section == 3:
     with cols[1]:
 
         ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
-        selected_ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
-        st.session_state['ett_size'] = selected_ett_size
+        ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
+        st.session_state['ett_size'] = ett_size
         
   
     # Single Next and Previous Buttons
@@ -678,7 +676,7 @@ elif st.session_state.section == 3:
                 st.session_state.who_will_bvm = who_will_bvm
                 st.session_state.intubation_method = intubation_method
                 st.session_state.ett_type = ett_type  # Store ETT type
-                st.session_state.ett_size = selected_ett_size 
+                st.session_state.ett_size = ett_size 
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
@@ -734,7 +732,7 @@ elif st.session_state.section == 4:
                         #'other_intubate': st.session_state.other_intubate,
                         #'other_bvm': st.session_state.other_bvm,
                         'intubation_method': st.session_state.intubation_method,
-                        'selected_ett_size': st.session_state.ett_size,
+                        'ett_size': st.session_state.ett_size,
                     'ett_type': st.session_state.ett_type
                     }
                     doc_file = create_word_doc(template_path, data)
