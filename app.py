@@ -650,6 +650,7 @@ elif st.session_state.section == 1:
             index=age_index,
             key="age_select", on_change=update_automatic_selections
         )
+      
         if age != st.session_state.selected_age:
             st.session_state.selected_age = age
         
