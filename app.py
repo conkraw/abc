@@ -190,6 +190,7 @@ def create_word_doc(template_path, data):
     vec_dose = data.get('vec_dose')
     ao_details = data.get('ao_details')
     other_planning = data.get('other_planning')
+    when_intubate = data.get('when_intubate')
 
     # Check and replace text in paragraphs
     for paragraph in doc.paragraphs:
@@ -263,6 +264,8 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('ao_details', ao_details)
             if 'other_planning' in run.text:
                 run.text = run.text.replace('other_planning', other_planning)
+            if 'when_intubate' in run.text:
+                run.text = run.text.replace('when_intubate', when_intubate)
                             
 
 
@@ -340,6 +343,8 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('ao_details', ao_details)
                         if 'other_planning' in run.text:
                             run.text = run.text.replace('other_planning', other_planning)
+                        if 'when_intubate' in run.text:
+                            run.text = run.text.replace('when_intubate', when_intubate)
                             
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -436,7 +441,8 @@ default_values = {
 'roc_dose': None,
 'vec_dose': None,
 'ao_details': None, 
-'other_planning': None
+'other_planning': None,
+'when_intubate': None
 }
 
 # Initialize session state variables if not already set
@@ -962,9 +968,48 @@ elif st.session_state.section == 3:
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
                 st.warning("Please select an option.")
-                
 
 elif st.session_state.section == 4:
+    st.title("Timing of Intubation")
+    when_intubate = st.multiselect(
+        "When will we intubate? (Describe timing of airway management):",
+        ['Select Timing of Intubation','Prior to procedure', 'Mental Status Changes', 
+         'Hypoxemia Refractory to CPAP', 'Ventilation failure refractory to NIV', 
+         'Loss of Airway Protection', 'Other'])
+
+    hypoxemia = ""
+    
+    if 'Hypoxemia Refractory to CPAP' in when_intubate:
+        hypoxemia = st.text_input("If the patient has refractory hypoxemia refractory to CPAP, it will be defined as a SPO2 Level Less than:")
+
+    other_when_intubate = ""
+    
+    if 'Other' in when_intubate:
+        other_when_intubate = st.text_input("Please state an 'other' reason for the timing of intubation:")
+
+    other_when_intubate = [person for person in when_intubate if person != 'Other']  # Exclude the placeholder
+    if other_when_intubate:
+        when_intubate.append(other_when_intubate)
+        
+    # Single Next and Previous Buttons
+    col1, col2, col3 = st.columns(3)
+
+    # Add the 'Previous' button to the first column
+    with col1:
+        if st.button("Previous", on_click=prev_section):
+            pass
+    
+    # Add the 'Next' button to the second column
+    with col3:
+        if st.button("Next"):
+            if (when_intubate != "Select Timing of Intubation"):
+                st.session_state.when_intubate = when_intubate
+                st.session_state.section += 1  # Increment the section
+                st.rerun()  # Force a rerun to reflect changes immediately
+            else:
+                st.warning("Please select an option.")
+                
+elif st.session_state.section == 5:
     st.title("Fill in Template Document")
     
     col1, col2, col3 = st.columns(3)
@@ -1008,6 +1053,7 @@ elif st.session_state.section == 4:
                         'vec_dose': st.session_state.vec_dose,
                         'ao_details': st.session_state.ao_details,
                         'other_planning': st.session_state.other_planning,
+                        'when_intubate': st.session_state.when_intubate,
                     }
                     
                     doc_file = create_word_doc(template_path, data)
