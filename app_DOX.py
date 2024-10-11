@@ -125,7 +125,7 @@ elif st.session_state.page == 'who_will_intubate':
 
 # Other planning page
 elif st.session_state.page == 'other_planning':
-    other_planning = st.text_area("Enter additional planning details")
+    other_planning = st.text_input("Enter additional planning details")
 
     if st.button("Next"):
         if other_planning:
