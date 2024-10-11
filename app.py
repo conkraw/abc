@@ -954,7 +954,7 @@ elif st.session_state.section == 3:
                 intubation_method != "Intubation Method" and 
                 ett_type and ett_size and 
                 lma_details and glide_details and 
-                mac_details and miller_details and atropine_dose
+                mac_details and miller_details and atropine_dose and
                 glycopyrrolate_dose and 
                 fentanyl_dose and 
                 midazolam_dose and 
