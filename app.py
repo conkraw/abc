@@ -981,10 +981,10 @@ elif st.session_state.section == 4:
          'Hypoxemia Refractory to CPAP', 'Ventilation failure refractory to NIV', 
          'Loss of Airway Protection', 'Other'])
 
-    hypoxemia = ""
+    hypoxemia_spo2 = None
     
     if 'Hypoxemia Refractory to CPAP' in when_intubate:
-        hypoxemia = st.text_input("If the patient has refractory hypoxemia refractory to CPAP, it will be defined as a SPO2 Level Less than:")
+        hypoxemia_spo2 = st.text_input("If the patient has hypoxemia refractory to CPAP, please define the SPO2 Level as less than:")
 
     other_when_intubate = ""
     
@@ -992,6 +992,10 @@ elif st.session_state.section == 4:
         other_when_intubate = st.text_input("Please state an 'other' reason for the timing of intubation:")
 
     when_intubate = [person for person in when_intubate if person != 'Other']  # Exclude the placeholder
+
+    if hypoxemia_spo2:
+        when_intubate.append(f"SpO2 less than {hypoxemia_spo2}%")
+        
     if other_when_intubate:
         when_intubate.append(other_when_intubate)
         
