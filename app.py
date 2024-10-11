@@ -734,7 +734,7 @@ elif st.session_state.section == 4:
                         #'other_intubate': st.session_state.other_intubate,
                         #'other_bvm': st.session_state.other_bvm,
                         'intubation_method': st.session_state.intubation_method,
-                        'ett_size': st.session_state.ett_size,
+                        'selected_ett_size': st.session_state.ett_size,
                     'ett_type': st.session_state.ett_type
                     }
                     doc_file = create_word_doc(template_path, data)
