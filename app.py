@@ -141,12 +141,12 @@ def update_automatic_selections():
     if "weight_select" in st.session_state and st.session_state.weight_select:
         selected_weight = st.session_state.weight_select
         # Update drug dosages based on the selected weight
-        st.session_state.atropine_dose = weight_to_atropine_mapping[selected_weight]
-        st.session_state.glycopyrrolate_dose = weight_to_glycopyrrolate_mapping[selected_weight]
-        st.session_state.fentanyl_dose = weight_to_fentanyl_mapping[selected_weight]
-        st.session_state.midazolam_dose = weight_to_midaz_mapping[selected_weight]
-        st.session_state.ketamine_dose = weight_to_ketamine_mapping[selected_weight]
-        st.session_state.propofol_dose = weight_to_propo_mapping[selected_weight]
+        st.session_state.atr_dose = weight_to_atropine_mapping[selected_weight]
+        st.session_state.gly_dose = weight_to_glycopyrrolate_mapping[selected_weight]
+        st.session_state.fen_dose = weight_to_fentanyl_mapping[selected_weight]
+        st.session_state.mid_dose = weight_to_midaz_mapping[selected_weight]
+        st.session_state.ket_dose = weight_to_ketamine_mapping[selected_weight]
+        st.session_state.pro_dose = weight_to_propo_mapping[selected_weight]
         st.session_state.roc_dose = weight_to_roc_mapping[selected_weight]
         st.session_state.vec_dose = weight_to_vec_mapping[selected_weight]
 
@@ -177,6 +177,9 @@ def create_word_doc(template_path, data):
     lma_details = data.get('lma_details')
     glide_details = data.get('glide_details')
     other_device_details = data.get('other_device_details')
+    mac_details = data.get('mac_details')
+    miller_details = data.get('miller_details')
+    wis_hipple_details = data.get('wis_hipple_details')
 
     # Check and replace text in paragraphs
     for paragraph in doc.paragraphs:
@@ -224,6 +227,12 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('glide_details', glide_details)
             if 'other_device_details' in run.text:
                 run.text = run.text.replace('other_device_details', other_device_details)
+            if 'mac_details' in run.text:
+                run.text = run.text.replace('mac_details', mac_details)
+            if 'miller_details' in run.text:
+                run.text = run.text.replace('miller_details', miller_details)
+            if 'wis_hipple_details' in run.text:
+                run.text = run.text.replace('wis_hipple_details', wis_hipple_details)
 
     for table in doc.tables:
         for row in table.rows:
@@ -273,6 +282,12 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('glide_details', glide_details)
                         if 'other_device_details' in run.text:
                             run.text = run.text.replace('other_device_details', other_device_details)
+                        if 'mac_details' in run.text:
+                            run.text = run.text.replace('mac_details', mac_details)
+                        if 'miller_details' in run.text:
+                            run.text = run.text.replace('miller_details', miller_details)
+                        if 'wis_hipple_details' in run.text:
+                            run.text = run.text.replace('wis_hipple_details', wis_hipple_details)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -357,6 +372,9 @@ default_values = {
     'lma_details': None,
     'glide_details': None,
     'other_device_details': None,
+    'mac_details': None,
+    'miller_details': None,
+    'wis_hipple_details': None,
 }
 
 # Initialize session state variables if not already set
@@ -711,6 +729,38 @@ elif st.session_state.section == 3:
 
         other_device_details = "" 
         other_device_details = st.text_input("Other Device details:", disabled=False)
+    
+    st.write("Blade:")
+    
+    cols = st.columns(3)
+
+    # Column 1: Dropdowns for "X" or empty
+    with cols[0]:
+        # Dropdowns to choose if devices are selected or not (X = selected)
+        blade_1_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_5")
+        blade_2_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_6")
+        blade_3_selection = st.selectbox("Select Device", options=["", "X"], key="dropdown_7")
+        
+    
+    # Column 2: Editable text inputs (reverts to the original value after the user moves away)
+    with cols[1]:
+        # These text inputs will reset to their default value if changed and the user moves away
+        blade_1_text = reset_input("Mac", key="macx")
+        blade_2_text = reset_input("Miller", key="millerx")
+        blade_3_text = reset_input("Wis-Hipple", key="wis_hipplex")
+    
+    # Column 3: Additional details for each device (uneditable placeholders)
+    with cols[2]:
+        mac_details = list(set(age_to_mac_mapping.values()))  # Get unique ETT sizes
+        mac_details = st.selectbox("Mac Details:", options=mac_details, key="mac_size_display", index=mac_details.index(st.session_state['mac_details']) if st.session_state['mac_details'] in mac_details else 0)
+        st.session_state['mac_details'] = mac_details
+
+        miller_details = list(set(age_to_miller_mapping.values()))  # Get unique ETT sizes
+        miller_details = st.selectbox("Miller Details:", options=miller_details, key="miller_size_display", index=miller_details.index(st.session_state['miller_details']) if st.session_state['miller_details'] in miller_details else 0)
+        st.session_state['miller_details'] = miller_details
+
+        wis_hipple_details = st.text_input("Wis-Hipple Details:", disabled=False)
+        
   
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
@@ -724,7 +774,7 @@ elif st.session_state.section == 3:
     with col3:
         if st.button("Next"):
             #if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer"  and intubation_method != "Intubation Method":
-            if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and ett_size and lma_details and glide_details and other_device_details:
+            if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and ett_size and lma_details and glide_details and other_device_details and mac_details and miller_details and wis_hipple_details:
                 st.session_state.who_will_intubate = who_will_intubate
                 st.session_state.who_will_bvm = who_will_bvm
                 st.session_state.intubation_method = intubation_method
@@ -733,7 +783,9 @@ elif st.session_state.section == 3:
                 st.session_state.lma_details = lma_details 
                 st.session_state.glide_details = glide_details 
                 st.session_state.other_device_details = other_device_details 
-
+                st.session_state.mac_details = mac_details 
+                st.session_state.miller_details = miller_details 
+                st.session_state.wis_hipple_details = wis_hipple_details 
                 
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
@@ -749,27 +801,6 @@ elif st.session_state.section == 4:
     with col3: 
             if st.button("Submit"):
                 template_path = 'airway_bundlez.docx'  # Ensure this is the correct path
-    
-                # Debugging output
-                st.write(f"Using template: {template_path}")
-                st.write(f"Date entered: {st.session_state.formatted_date}")
-                st.write(f"Time entered: {st.session_state.formatted_time}")
-                st.write(f"Option selected: {st.session_state.option}")
-                st.write(f"Completed by: {st.session_state.completed_by}")
-                st.write(f"Room number: {st.session_state.room_number}")
-                st.write(f"Difficult airway history: {st.session_state.difficult_airway_history}")
-                st.write(f"Physical Risk: {st.session_state.physical_risk}")
-                st.write(f"High Risk Desaturation: {st.session_state.high_risk_desaturation}")
-                st.write(f"high_risk_ICP: {st.session_state.high_risk_ICP}")
-                st.write(f"unstable_hemodynamics: {st.session_state.unstable_hemodynamics}")
-                st.write(f"other_risk_yes_no: {st.session_state.other_risk_yes_no}")
-                st.write(f"other_risk_text_input: {st.session_state.other_risk_text_input}")
-                st.write(f"Who will Intubate: {st.session_state.who_will_intubate}")
-                st.write(f"Who will BVM: {st.session_state.who_will_bvm}")
-                #st.write(f"Other Intubator: {st.session_state.other_intubate}")
-                #st.write(f"Other BVMer: {st.session_state.other_bvm}")
-                st.write(f"Method: {st.session_state.intubation_method}")
-                
                 
                 try:
                     data = {
@@ -793,6 +824,9 @@ elif st.session_state.section == 4:
                         'lma_details': st.session_state.lma_details,
                         'glide_details': st.session_state.glide_details,
                         'other_device_details': st.session_state.other_device_details,
+                        'mac_details': st.session_state.mac_details,
+                        'miller_details': st.session_state.miller_details,
+                        'wis_hipple_details': st.session_state.wis_hipple_details,
                     }
                     
                     doc_file = create_word_doc(template_path, data)
