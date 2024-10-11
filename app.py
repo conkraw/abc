@@ -191,6 +191,11 @@ def create_word_doc(template_path, data):
     ao_details = data.get('ao_details')
     other_planning = data.get('other_planning')
     when_intubate = data.get('when_intubate')
+    advance_airway_provider = data.get('advance_airway_provider')
+    advance_airway_procedure = data.get('advance_airway_procedure')
+
+
+
 
     # Check and replace text in paragraphs
     for paragraph in doc.paragraphs:
@@ -267,7 +272,12 @@ def create_word_doc(template_path, data):
             if 'when_intubate' in run.text:
                 if when_intubate:
                     run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))  # Join with comma and space, then strip
-
+            if 'advance_airway_provider' in run.text:
+                if advance_airway_provider:
+                    run.text = run.text.replace('advance_airway_provider', ', '.join(advance_airway_provider).rstrip(', '))  # Join with comma and space, then strip
+            if 'advance_airway_procedure' in run.text:
+                if advance_airway_procedure:
+                    run.text = run.text.replace('advance_airway_procedure', ', '.join(advance_airway_procedure).rstrip(', '))  # Join with comma and space, then strip
 
     for table in doc.tables:
         for row in table.rows:
@@ -346,6 +356,13 @@ def create_word_doc(template_path, data):
                         if 'when_intubate' in run.text:
                             if when_intubate:
                                 run.text = run.text.replace('when_intubate', ', '.join(when_intubate).rstrip(', '))  # Join with comma and space, then strip
+                        if 'advance_airway_provider' in run.text:
+                            if advance_airway_provider:
+                                run.text = run.text.replace('advance_airway_provider', ', '.join(advance_airway_provider).rstrip(', '))  # Join with comma and space, then strip
+                        if 'advance_airway_procedure' in run.text:
+                            if advance_airway_procedure:
+                                run.text = run.text.replace('advance_airway_procedure', ', '.join(advance_airway_procedure).rstrip(', '))  # Join with comma and space, then strip
+
                                         
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -444,6 +461,8 @@ default_values = {
 'ao_details': None, 
 'other_planning': None,
 'when_intubate': [],
+'advance_airway_provider': [],
+'advance_airway_procedure': [],
 }
 
 # Initialize session state variables if not already set
@@ -1017,9 +1036,59 @@ elif st.session_state.section == 4:
             else:
                 st.warning("Please select an option.")
 
-                
 elif st.session_state.section == 5:
-    st.title("Fill in Template Document")
+    st.title("Backup")
+
+    # Multi-select for Advance Airway Provider
+    advance_airway_provider = st.multiselect("Advance Airway Provider:", 
+                                   ['Attending', 'Anesthesia', 'ENT', 'Fellow', 'Other'])
+    
+    advance_airway_procedure = st.multiselect("Difficult Airway Procedure:", 
+                                   ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other'])
+
+    other_advance_airway_provider = ""
+    
+    if 'Other' in advance_airway_provider:
+        other_advance_airway_provider = st.text_input("Please state an 'other' Advanced Airway Provider")
+
+    advance_airway_provider = [person for person in advance_airway_provider if person != 'Other']  # Exclude the placeholder
+    
+    if other_advance_airway_provider:
+        advance_airway_provider.append(other_advance_airway_provider) 
+
+    other_advance_airway_procedure = ""
+    
+    if 'Other' in advance_airway_procedure:
+        other_advance_airway_procedure = st.text_input("Please state an 'other' protocol for Difficult Airway Protocol Initiation:")
+
+    advance_airway_procedure = [person for person in advance_airway_procedure if person != 'Other']  # Exclude the placeholder
+    
+    if other_advance_airway_procedure:
+        advance_airway_procedure.append(other_advance_airway_procedure) 
+        
+    # Single Next and Previous Buttons
+    col1, col2, col3 = st.columns(3)
+
+    # Add the 'Previous' button to the first column
+    with col1:
+        if st.button("Previous", on_click=prev_section):
+            pass
+    
+    # Add the 'Next' button to the second column
+    with col3:
+        if st.button("Next"):
+            if advance_airway_provider and advance_airway_procedure:
+                st.session_state.advance_airway_provider = advance_airway_provider
+                st.session_state.advance_airway_procedure = advance_airway_procedure
+                
+                st.session_state.section += 1  # Increment the section
+                st.rerun()  # Force a rerun to reflect changes immediately
+            else:
+                st.warning("Please select an option.")
+
+
+elif st.session_state.section == 6:
+    st.title("Download ABC Form")
     
     col1, col2, col3 = st.columns(3)
 
@@ -1063,6 +1132,8 @@ elif st.session_state.section == 5:
                         'ao_details': st.session_state.ao_details,
                         'other_planning': st.session_state.other_planning,
                         'when_intubate': st.session_state.when_intubate,
+                        'advance_airway_provider': st.session_state.advance_airway_provider
+                        'advance_airway_procedure': st.session_state.advance_airway_procedure
                     }
                     
                     doc_file = create_word_doc(template_path, data)
