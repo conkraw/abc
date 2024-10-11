@@ -975,30 +975,49 @@ elif st.session_state.section == 3:
 
 elif st.session_state.section == 4:
     st.title("Timing of Intubation")
+    
     when_intubate = st.multiselect(
         "When will we intubate? (Describe timing of airway management):",
         ['Prior to procedure', 'Mental Status Changes', 
          'Hypoxemia Refractory to CPAP', 'Ventilation failure refractory to NIV', 
-         'Loss of Airway Protection', 'Other'])
+         'Loss of Airway Protection', 'Other']
+    )
 
-    hypoxemia_spo2 = None
-    
+    hypoxemia_spo2 = None  # Variable to hold the SpO2 value
     if 'Hypoxemia Refractory to CPAP' in when_intubate:
-        hypoxemia_spo2 = st.text_input("If the patient has hypoxemia refractory to CPAP, please define the SPO2 Level as less than:")
+        hypoxemia_spo2 = st.text_input("If the patient has refractory hypoxemia, please define the SpO2 Level as less than:")
 
     other_when_intubate = ""
-    
     if 'Other' in when_intubate:
         other_when_intubate = st.text_input("Please state an 'other' reason for the timing of intubation:")
 
+    # Prepare the list
     when_intubate = [person for person in when_intubate if person != 'Other']  # Exclude the placeholder
 
     if hypoxemia_spo2:
-        when_intubate.append(f"SpO2 less than {hypoxemia_spo2}%")
-        
+        # Sanitize the input
+        sanitized_spo2 = hypoxemia_spo2.strip('%')  # Remove any existing % sign
+        when_intubate.append(f"SpO2 less than {sanitized_spo2}%")  # Append with a single % sign
+    
     if other_when_intubate:
         when_intubate.append(other_when_intubate)
-        
+
+    # Build the final string without trailing commas
+    final_output = []
+    if "Hypoxemia Refractory to CPAP" in when_intubate:
+        # Add the 'Hypoxemia Refractory to CPAP' first, followed by the SpO2 value if present
+        final_output.append("Hypoxemia Refractory to CPAP")
+        if hypoxemia_spo2:
+            final_output.append(f"SpO2 less than {sanitized_spo2}%")
+    else:
+        final_output.extend(when_intubate)
+
+    # If "Other" was selected, append it
+    final_output.extend([x for x in when_intubate if x not in final_output])
+
+    # Join the output
+    final_string = ', '.join(final_output)
+    
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
 
@@ -1010,8 +1029,8 @@ elif st.session_state.section == 4:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            if (when_intubate):
-                st.session_state.when_intubate = when_intubate
+            if final_output:  # Use final_output instead
+                st.session_state.when_intubate = final_string
                 st.session_state.section += 1  # Increment the section
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
