@@ -526,7 +526,6 @@ def next_section():
 def prev_section():
     if st.session_state.section > 0:
         st.session_state.section -= 1
-        st.rerun()
     
 def save_data():
     data = {key: st.session_state.form_data.get(key, '') for key in st.session_state.form_data.keys()}
@@ -726,16 +725,16 @@ elif st.session_state.section == 1:
 
     # Add the 'Previous' button to the first column
     with col1:
-        if st.button("Previous", on_click=prev_section):
-            pass
+        if st.button("Previous"):
+            st.session_state['section'] = 0 
     
     # Add the 'Next' button to the second column
     with col2:
-        if st.button("Next", on_click=next_section):
-            pass
+        if st.button("Next"):
+            st.session_state['section'] = 2
             
 # Intubation Risk Assessment Section
-elif st.session_state.section == 2:
+elif st.session_state.get('section', 1) == 2:
     st.title("Intubation Risk Assessment")
     st.write("#### Difficult Airway:")
     
