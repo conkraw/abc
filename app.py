@@ -606,7 +606,7 @@ elif st.session_state.section == 3:
     cols = st.columns(2)
 
     with cols[0]:
-        ett_type = st.selectbox("ETT Type", ["Cuffed", "Uncuffed"]
+        ett_type = st.selectbox("ETT Type", ["Cuffed", "Uncuffed"])
 
     with cols[1]:
 
