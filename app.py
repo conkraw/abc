@@ -213,7 +213,7 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('intubation_method', intubation_method)
             if 'ett_type' in run.text:
                 run.text = run.text.replace('ett_type', ett_type)
-            if 'selected_ett_size' in run.text:
+            if 'ett_size' in run.text:
                 run.text = run.text.replace('ett_size', selected_ett_size)
 
     for table in doc.tables:
