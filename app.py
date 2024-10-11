@@ -214,7 +214,7 @@ def create_word_doc(template_path, data):
             if 'ett_type' in run.text:
                 run.text = run.text.replace('ett_type', ett_type)
             if 'ett_size' in run.text:
-                run.text = run.text.replace('ett_size', selected_ett_size)
+                run.text = run.text.replace('ett_size', ett_size)
 
     for table in doc.tables:
         for row in table.rows:
@@ -257,7 +257,7 @@ def create_word_doc(template_path, data):
                         if 'ett_type' in run.text:
                             run.text = run.text.replace('ett_type', ett_type)
                         if 'ett_size' in run.text:
-                            run.text = run.text.replace('ett_size', selected_ett_size)
+                            run.text = run.text.replace('ett_size', ett_size)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
