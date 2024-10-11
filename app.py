@@ -176,6 +176,7 @@ def create_word_doc(template_path, data):
     ett_type = data.get('ett_type')
     lma_details = data.get('lma_details')
     glide_details = data.get('glide_details')
+    other_device_details = data.get('other_device_details')
 
     # Check and replace text in paragraphs
     for paragraph in doc.paragraphs:
@@ -221,6 +222,8 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('lma_details', lma_details)
             if 'glide_details' in run.text:
                 run.text = run.text.replace('glide_details', glide_details)
+            if 'other_device_details' in run.text:
+                run.text = run.text.replace('other_device_details', other_device_details)
 
     for table in doc.tables:
         for row in table.rows:
@@ -268,6 +271,8 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('lma_details', lma_details)
                         if 'glide_details' in run.text:
                             run.text = run.text.replace('glide_details', glide_details)
+                        if 'other_device_details' in run.text:
+                            run.text = run.text.replace('other_device_details', other_device_details)
 
     # Save the modified document
     doc_file = 'airway_bundle_form.docx'
@@ -350,7 +355,8 @@ default_values = {
     'ett_size': None,
     'ett_type': None,
     'lma_details': None,
-    'glide_details': None
+    'glide_details': None,
+    'other_device_details': None,
 }
 
 # Initialize session state variables if not already set
@@ -718,7 +724,7 @@ elif st.session_state.section == 3:
     with col3:
         if st.button("Next"):
             #if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer"  and intubation_method != "Intubation Method":
-            if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and ett_size and lma_details and glide_details:
+            if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and ett_size and lma_details and glide_details and other_device_details:
                 st.session_state.who_will_intubate = who_will_intubate
                 st.session_state.who_will_bvm = who_will_bvm
                 st.session_state.intubation_method = intubation_method
@@ -726,6 +732,7 @@ elif st.session_state.section == 3:
                 st.session_state.ett_size = ett_size 
                 st.session_state.lma_details = lma_details 
                 st.session_state.glide_details = glide_details 
+                st.session_state.other_device_details = other_device_details 
 
                 
                 st.session_state.section += 1  # Increment the section
@@ -785,6 +792,7 @@ elif st.session_state.section == 4:
                         'ett_type': st.session_state.ett_type,
                         'lma_details': st.session_state.lma_details,
                         'glide_details': st.session_state.glide_details,
+                        'other_device_details': st.session_state.other_device_details,
                     }
                     
                     doc_file = create_word_doc(template_path, data)
