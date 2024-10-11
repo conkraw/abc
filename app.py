@@ -1202,66 +1202,73 @@ elif st.session_state.section == 6:
     col1, col2, col3 = st.columns(3)
 
     with col3: 
-            if st.button("Submit"):
-                template_path = 'airway_bundlez.docx'  # Ensure this is the correct path
-                
-                try:
-                    data = {
-                        'date': st.session_state.formatted_date,
-                        'time': st.session_state.formatted_time,
-                        'option': st.session_state.option,
-                        'completed_by': st.session_state.completed_by,
-                        'room_number': st.session_state.room_number,
-                        'difficult_airway_history': st.session_state.difficult_airway_history,
-                        'physical_risk': st.session_state.physical_risk,
-                        'high_risk_desaturation': st.session_state.high_risk_desaturation,
-                        'high_risk_ICP': st.session_state.high_risk_ICP,
-                        'unstable_hemodynamics': st.session_state.unstable_hemodynamics,
-                        'other_risk_yes_no': st.session_state.other_risk_yes_no,
-                        'other_risk_text_input': st.session_state.other_risk_text_input,
-                        'who_will_intubate': st.session_state.who_will_intubate,
-                        'who_will_bvm': st.session_state.who_will_bvm,
-                        'intubation_method': st.session_state.intubation_method,
-                        'ett_size': st.session_state.ett_size,
-                        'ett_type': st.session_state.ett_type,
-                        'lma_details': st.session_state.lma_details,
-                        'glide_details': st.session_state.glide_details,
-                        'other_device_details': st.session_state.other_device_details,
-                        'mac_details': st.session_state.mac_details,
-                        'miller_details': st.session_state.miller_details,
-                        'wis_hipple_details': st.session_state.wis_hipple_details,
-                        'atropine_dose': st.session_state.atropine_dose,
-                        'glycopyrrolate_dose': st.session_state.glycopyrrolate_dose,
-                        'fentanyl_dose': st.session_state.fentanyl_dose,
-                        'midazolam_dose': st.session_state.midazolam_dose,
-                        'ketamine_dose': st.session_state.ketamine_dose,
-                        'propofol_dose': st.session_state.propofol_dose,
-                        'roc_dose': st.session_state.roc_dose,
-                        'vec_dose': st.session_state.vec_dose,
-                        'ao_details': st.session_state.ao_details,
-                        'other_planning': st.session_state.other_planning,
-                        'when_intubate': st.session_state.when_intubate,
-                        'advance_airway_provider': st.session_state.advance_airway_provider,
-                        'advance_airway_procedure': st.session_state.advance_airway_procedure
-                    }
-                    
-                    doc_file = create_word_doc(template_path, data)
-                    
-                    st.success("Document created successfully!")
-    
-                    with open(doc_file, 'rb') as f:
-                        st.download_button(
-                            label="Download Word Document",
-                            data=f,
-                            file_name=doc_file.split("/")[-1],  # Use only the file name
-                            mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                        )
-                    os.remove(doc_file)  # Clean up the file after download
-                except Exception as e:
-                    st.error(f"An error occurred: {e}")
-                    st.exception(e)  # This will print the stack trace for debugging
+        if st.button("Submit"):
+            template_path = 'airway_bundlez.docx'  # Ensure this is the correct path
             
+            try:
+                data = {
+                    'date': st.session_state.formatted_date,
+                    'time': st.session_state.formatted_time,
+                    'option': st.session_state.option,
+                    'completed_by': st.session_state.completed_by,
+                    'room_number': st.session_state.room_number,
+                    'difficult_airway_history': st.session_state.difficult_airway_history,
+                    'physical_risk': st.session_state.physical_risk,
+                    'high_risk_desaturation': st.session_state.high_risk_desaturation,
+                    'high_risk_ICP': st.session_state.high_risk_ICP,
+                    'unstable_hemodynamics': st.session_state.unstable_hemodynamics,
+                    'other_risk_yes_no': st.session_state.other_risk_yes_no,
+                    'other_risk_text_input': st.session_state.other_risk_text_input,
+                    'who_will_intubate': st.session_state.who_will_intubate,
+                    'who_will_bvm': st.session_state.who_will_bvm,
+                    'intubation_method': st.session_state.intubation_method,
+                    'ett_size': st.session_state.ett_size,
+                    'ett_type': st.session_state.ett_type,
+                    'lma_details': st.session_state.lma_details,
+                    'glide_details': st.session_state.glide_details,
+                    'other_device_details': st.session_state.other_device_details,
+                    'mac_details': st.session_state.mac_details,
+                    'miller_details': st.session_state.miller_details,
+                    'wis_hipple_details': st.session_state.wis_hipple_details,
+                    'atropine_dose': st.session_state.atropine_dose,
+                    'glycopyrrolate_dose': st.session_state.glycopyrrolate_dose,
+                    'fentanyl_dose': st.session_state.fentanyl_dose,
+                    'midazolam_dose': st.session_state.midazolam_dose,
+                    'ketamine_dose': st.session_state.ketamine_dose,
+                    'propofol_dose': st.session_state.propofol_dose,
+                    'roc_dose': st.session_state.roc_dose,
+                    'vec_dose': st.session_state.vec_dose,
+                    'ao_details': st.session_state.ao_details,
+                    'other_planning': st.session_state.other_planning,
+                    'when_intubate': st.session_state.when_intubate,
+                    'advance_airway_provider': st.session_state.advance_airway_provider,
+                    'advance_airway_procedure': st.session_state.advance_airway_procedure
+                }
+                
+                doc_file = create_word_doc(template_path, data)
+                
+                st.success("Document created successfully!")
+                st.session_state.doc_file_path = doc_file  # Store the file path in session state
+                
+            except Exception as e:
+                st.error(f"An error occurred: {e}")
+                st.exception(e)  # This will print the stack trace for debugging
+
+    # Create a new row for the download button
+    col4, col5, col6 = st.columns(3)
+    with col5:
+        if 'doc_file_path' in st.session_state:
+            with open(st.session_state.doc_file_path, 'rb') as f:
+                st.download_button(
+                    label="Download Word Document",
+                    data=f,
+                    file_name=st.session_state.doc_file_path.split("/")[-1],  # Use only the file name
+                    mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                )
+            os.remove(st.session_state.doc_file_path)  # Clean up the file after download
+
     with col1:
         if st.button("Previous", on_click=prev_section):
             pass
+
         
