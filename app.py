@@ -1017,26 +1017,6 @@ elif st.session_state.section == 4:
                 st.rerun()  # Force a rerun to reflect changes immediately
             else:
                 st.warning("Please select an option.")
-
-
-    # Single Next and Previous Buttons
-    col1, col2, col3 = st.columns(3)
-
-    # Add the 'Previous' button to the first column
-    with col1:
-        if st.button("Previous", on_click=prev_section):
-            pass
-    
-    # Add the 'Next' button to the second column
-    with col3:
-        if st.button("Next"):
-            if output:  # Use output instead
-                st.session_state.when_intubate = final_string
-                st.session_state.section += 1  # Increment the section
-                st.rerun()  # Force a rerun to reflect changes immediately
-            else:
-                st.warning("Please select an option.")
-
                 
 elif st.session_state.section == 5:
     st.title("Fill in Template Document")
