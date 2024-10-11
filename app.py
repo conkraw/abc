@@ -705,7 +705,7 @@ elif st.session_state.section == 3:
     with col3:
         if st.button("Next"):
             #if who_will_intubate != "Select_Intubator" and who_will_bvm != "Select_BVMer"  and intubation_method != "Intubation Method":
-            if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and selected_ett_size:
+            if who_will_intubate and who_will_bvm and intubation_method != "Intubation Method" and ett_type and ett_size:
                 st.session_state.who_will_intubate = who_will_intubate
                 st.session_state.who_will_bvm = who_will_bvm
                 st.session_state.intubation_method = intubation_method
