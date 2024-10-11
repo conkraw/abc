@@ -368,7 +368,7 @@ def create_word_doc(template_path, data):
                                         adjusted_list.append(item)
                         
                                 # Join the adjusted list into a formatted string
-                                formatted_string = ','.join(adjusted_list).rstrip(', ')
+                                formatted_string = ': '.join(adjusted_list).rstrip(', ')
                         
                                 # Replace the placeholder in the document
                                 run.text = run.text.replace('when_intubate', formatted_string)
