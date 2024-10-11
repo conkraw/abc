@@ -436,7 +436,7 @@ default_values = {
 'roc_dose': None,
 'vec_dose': None,
 'ao_details': None, 
-'other_planning': other_planning
+'other_planning': None
 }
 
 # Initialize session state variables if not already set
