@@ -935,9 +935,36 @@ elif st.session_state.section == 3:
 
     with cols[1]:
 
-        ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
-        ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
+        #ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
+        #ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
+        #st.session_state['ett_size'] = ett_size
+
+      # Get the ETT sizes from a mapping or some source
+        ett_sizes = list(set(age_to_ett_mapping.values()))  # Assuming age_to_ett_mapping is defined
+        
+        # Add a blank option (e.g., "Select an ETT Size" or "")
+        ett_sizes = ["Select an ETT Size"] + ett_sizes  # Prepend a "Select" option
+        
+        # Check if 'ett_size' exists and is valid in session state
+        if 'ett_size' in st.session_state and st.session_state['ett_size'] in ett_sizes:
+            ett_size = st.selectbox(
+                "ETT Size", 
+                options=ett_sizes, 
+                key="ett_size_display", 
+                index=ett_sizes.index(st.session_state['ett_size'])
+            )
+        else:
+            # Set a default value (e.g., first available size or blank if not found)
+            ett_size = st.selectbox(
+                "ETT Size", 
+                options=ett_sizes, 
+                key="ett_size_display",
+                index=0  # Default to "Select an ETT Size"
+            )
+        
+        # Save the selected ETT size in the session state
         st.session_state['ett_size'] = ett_size
+
     
     st.write("Device:")
     
