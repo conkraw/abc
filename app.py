@@ -743,8 +743,8 @@ elif st.session_state.section == 1:
     # Update doses based on the selected weight
     if selected_weight:
         st.session_state['midazolam_dose'] = weight_to_midaz_mapping.get(selected_weight, '')
-        st.session_state['ketamine_dose'] = weight_to_ketamine_mapping.get(selected_weight, '')
-        st.session_state['propofol_dose'] = weight_to_propo_mapping.get(selected_weight, '')
+        #st.session_state['ketamine_dose'] = weight_to_ketamine_mapping.get(selected_weight, '')
+        #st.session_state['propofol_dose'] = weight_to_propo_mapping.get(selected_weight, '')
 
     # Default values for Rocuronium and Vecuronium if not set in session state
     if 'roc_dose' not in st.session_state:
