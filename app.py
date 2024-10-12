@@ -782,7 +782,8 @@ elif st.session_state.section == 2:
         st.markdown("")
         st.write("History of difficult airway?")
     with cols[1]:
-        difficult_airway_history = st.selectbox("", options=['Select Risk Factor 1', 'YES', 'NO'])
+        #difficult_airway_history = st.selectbox("", options=['Select Risk Factor 1', 'YES', 'NO'])
+        difficult_airway_history = st.selectbox("", options=['Select Risk Factor 1', 'YES', 'NO'], index=['Select Risk Factor 1', 'YES', 'NO'].index(st.session_state.difficult_airway_history))
 
     cols = st.columns([4, 1])
     with cols[0]:
@@ -791,7 +792,8 @@ elif st.session_state.section == 2:
         st.write("Physical (e.g. small mouth, small jaw, large tongue, or short neck)?")
     
     with cols[1]:
-        physical_risk = st.selectbox("", options=['Select Risk Factor 2', 'YES', 'NO'])
+        #physical_risk = st.selectbox("", options=['Select Risk Factor 2', 'YES', 'NO'])
+        physical_risk = st.selectbox("", options=['Select Risk Factor 2', 'YES', 'NO'], index=['Select Risk Factor 2', 'YES', 'NO'].index(st.session_state.physical_risk))
 
     st.write("#### At Risk For:")
     
@@ -802,7 +804,8 @@ elif st.session_state.section == 2:
         st.write("High risk for rapid desaturation during intubation?")
     
     with cols[1]:
-        high_risk_desaturation = st.selectbox("", options=['Select Risk Factor 3', 'YES', 'NO'])
+        #high_risk_desaturation = st.selectbox("", options=['Select Risk Factor 3', 'YES', 'NO'])
+        high_risk_desaturation = st.selectbox("", options=['Select Risk Factor 3', 'YES', 'NO'], index=['Select Risk Factor 3', 'YES', 'NO'].index(st.session_state.high_risk_desaturation))
 
     cols = st.columns([4, 1])
     with cols[0]:
@@ -811,7 +814,8 @@ elif st.session_state.section == 2:
         st.write("Increased ICP, pulmonary hypertension, need to avoid hypercarbia?")
     
     with cols[1]:
-        high_risk_ICP = st.selectbox("", options=['Select Risk Factor 4', 'YES', 'NO'])
+        #high_risk_ICP = st.selectbox("", options=['Select Risk Factor 4', 'YES', 'NO'])
+        high_risk_ICP = st.selectbox("", options=['Select Risk Factor 4', 'YES', 'NO'], index=['Select Risk Factor 4', 'YES', 'NO'].index(st.session_state.high_risk_ICP))
 
     cols = st.columns([4, 1])
     with cols[0]:
@@ -820,7 +824,8 @@ elif st.session_state.section == 2:
         st.write("Unstable hemodynamics (e.g., hypovolemia, potential need for fluid bolus, vasopressor, CPR)?")
     
     with cols[1]:
-        unstable_hemodynamics = st.selectbox("", options=['Select Risk Factor 5', 'YES', 'NO'])
+        #unstable_hemodynamics = st.selectbox("", options=['Select Risk Factor 5', 'YES', 'NO'])
+        unstable_hemodynamics = st.selectbox("", options=['Select Risk Factor 5', 'YES', 'NO'], index=['Select Risk Factor 5', 'YES', 'NO'].index(st.session_state.unstable_hemodynamics))
 
     cols = st.columns([4, 1])
     
@@ -832,13 +837,15 @@ elif st.session_state.section == 2:
     
     # Second column for the selectbox
     with cols[1]:
-        other_risk_yes_no = st.selectbox("", options=['Select Risk Factor 6', 'YES', 'NO'])
+        #other_risk_yes_no = st.selectbox("", options=['Select Risk Factor 6', 'YES', 'NO'])
+        other_risk_yes_no = st.selectbox("", options=['Select Risk Factor 6', 'YES', 'NO'], index=['Select Risk Factor 6', 'YES', 'NO'].index(st.session_state.other_risk_yes_no))
 
     with cols[0]:
         other_risk_text_input = ""
     
         if other_risk_yes_no == 'YES':
-            other_risk_text_input = st.text_input("Please specify the other risk:")
+            #other_risk_text_input = st.text_input("Please specify the other risk:")
+            other_risk_text_input = st.text_input("Please specify the other risk:", value=st.session_state.other_risk_text_input)
 
     # Single Next and Previous Buttons
     col1, col2, col3, col4, col5 = st.columns(5)
