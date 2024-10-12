@@ -662,9 +662,20 @@ elif st.session_state.section == 1:
         if time:
             st.session_state['formatted_time'] = time.strftime('%H:%M:%S')
             
-        weight = st.selectbox("Enter Patient Weight (Kilograms)", options=[""] + list(weight_to_atropine_mapping.keys()), key="weight_select", on_change=update_automatic_selections)
+        #weight = st.selectbox("Enter Patient Weight (Kilograms)", options=[""] + list(weight_to_atropine_mapping.keys()), key="weight_select", on_change=update_automatic_selections)
 
+        weight_options = [""] + list(weight_to_atropine_mapping.keys())
+        weight_index = weight_options.index(st.session_state.selected_weight) if st.session_state.selected_weight in weight_options else 0
+        weight = st.selectbox(
+            "Select Patient Weight (Kilograms)",
+            options=weight_options,
+            index=weight_index,
+            key="weight_select", on_change=update_automatic_selections
+        )
 
+        if weight != st.session_state.selected_weight:
+            st.session_state.selected_weight = weight
+          
     # Initialize 'ett_size' in session state if it's not already set
     if 'ett_size' not in st.session_state:
         st.session_state['ett_size'] = ''  # Default value for ETT size
