@@ -1304,12 +1304,12 @@ elif st.session_state.section == 4:
 
 elif st.session_state.section == 5:
     st.title("Backup")
-    
+
       # Define the options for 'Advanced Airway Provider' and 'Difficult Airway Procedure'
     advance_airway_provider_options = ['Attending', 'Anesthesia', 'ENT', 'Fellow', 'Other']
     advance_airway_procedure_options = ['Difficult Airway Cart', 'Difficult Airway Emergency Page', 'Other']
     
-    # Get default values from session_state, ensuring they are in the options list
+    # Store the multiselect selections from session state
     default_advance_airway_provider = st.session_state.get('advance_airway_provider', [])
     # Filter out 'Other' and any invalid default values that are not in the options
     filtered_advance_airway_provider = [value for value in default_advance_airway_provider if value in advance_airway_provider_options]
@@ -1324,7 +1324,7 @@ elif st.session_state.section == 5:
     # Handle "Other" input for Advanced Airway Provider
     other_advance_airway_provider = ""
     if 'Other' in advance_airway_provider:
-        other_advance_airway_provider = st.text_input("Please state an 'other' Advanced Airway Provider")
+        other_advance_airway_provider = st.text_input("Please state an 'other' Advanced Airway Provider", value=st.session_state.get('other_advance_airway_provider', ""))
         # Append the "Other" input to the selected list if it exists and is not empty
         if other_advance_airway_provider:
             advance_airway_provider.append(other_advance_airway_provider)
@@ -1333,6 +1333,7 @@ elif st.session_state.section == 5:
     
     # Save the selected values in session state
     st.session_state.advance_airway_provider = advance_airway_provider
+    st.session_state.other_advance_airway_provider = other_advance_airway_provider
     
     # Multiselect for Difficult Airway Procedure
     default_advance_airway_procedure = st.session_state.get('advance_airway_procedure', [])
@@ -1348,7 +1349,7 @@ elif st.session_state.section == 5:
     # Handle "Other" input for Difficult Airway Procedure
     other_advance_airway_procedure = ""
     if 'Other' in advance_airway_procedure:
-        other_advance_airway_procedure = st.text_input("Please state an 'other' protocol for Difficult Airway Protocol Initiation")
+        other_advance_airway_procedure = st.text_input("Please state an 'other' protocol for Difficult Airway Protocol Initiation", value=st.session_state.get('other_advance_airway_procedure', ""))
         # Append the "Other" input to the selected list if it exists and is not empty
         if other_advance_airway_procedure:
             advance_airway_procedure.append(other_advance_airway_procedure)
@@ -1357,7 +1358,7 @@ elif st.session_state.section == 5:
     
     # Save the selected values in session state
     st.session_state.advance_airway_procedure = advance_airway_procedure
-
+    st.session_state.other_advance_airway_procedure = other_advance_airway_procedure
 
         
     # Single Next and Previous Buttons
