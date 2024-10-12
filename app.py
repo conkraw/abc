@@ -891,7 +891,9 @@ elif st.session_state.section == 3:
     # Multiselect for who will intubate
     who_will_intubate = st.multiselect(
         "Who will intubate?", 
-        ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other Intubator:'],default=st.session_state.get('who_will_intubate', [])
+        options=['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other Intubator:'],
+        default=st.session_state.get('who_will_intubate', [])
+    )
 
     other_intubate = ""
 
@@ -907,7 +909,8 @@ elif st.session_state.section == 3:
     # Multiselect for who will bag-mask
     who_will_bvm = st.multiselect(
         "Who will bag-mask?", 
-        ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:'],default=st.session_state.get('who_will_bvm', [])
+        ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:'],
+      default=st.session_state.get('who_will_bvm', [])
 
     other_bvm = ""
 
