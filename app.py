@@ -535,6 +535,7 @@ default_values = {
     'section': 0,
     'form_data': {},
     'selected_age': "",
+    'selected_weight': "",
     'option': None,
     'completed_by': None,
     'room_number': None,
