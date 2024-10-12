@@ -548,7 +548,7 @@ default_values = {
     'other_risk_text_input': '',
     'who_will_intubate': [],  # Change to list if needed
     'who_will_bvm': [],       # Change to list if needed
-    'intubation_method': None,
+    'intubation_method': "Intubation Method",
     'ett_size': None,
     'ett_type': None,
     'lma_details': None,
