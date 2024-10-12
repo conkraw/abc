@@ -925,7 +925,28 @@ elif st.session_state.section == 3:
         who_will_bvm.append(other_bvm)  # Add the specified 'other' BVMer
 
     # Create a layout for intubation method
-    intubation_method = st.selectbox("How will we intubate? (Method)", ["Intubation Method", "Oral", "Nasal"].index(st.session_state.intubation_method))
+    #intubation_method = st.selectbox("How will we intubate? (Method)", ["Intubation Method", "Oral", "Nasal"].index(st.session_state.intubation_method))
+
+    intubation_options = ["Intubation Method", "Oral", "Nasal"]
+
+# Check if 'intubation_method' exists in session state and is a valid value
+    if 'intubation_method' in st.session_state and st.session_state.intubation_method in intubation_options:
+        # Use the index of the saved value
+        intubation_method = st.selectbox(
+            "How will we intubate? (Method)", 
+            options=intubation_options,
+            index=intubation_options.index(st.session_state.intubation_method)  # Set the index of the saved value
+        )
+    else:
+        # Default to the first option ("Intubation Method")
+        intubation_method = st.selectbox(
+            "How will we intubate? (Method)", 
+            options=intubation_options,
+            index=0  # Default to the first option if no valid session state value exists
+        )
+    
+    # Save the selected intubation method in the session state
+    st.session_state.intubation_method = intubation_method
 
     # Create a layout for ETT Type and ETT Size
     cols = st.columns(2)
