@@ -1070,7 +1070,7 @@ elif st.session_state.section == 3:
         miller_details = st.selectbox("Miller Details:", options=miller_details, key="miller_size_display", index=miller_details.index(st.session_state['miller_details']) if st.session_state['miller_details'] in miller_details else 0)
         st.session_state['miller_details'] = miller_details
 
-        wis_hipple_details = st.text_input("Wis-Hipple Details:", disabled=False, value=st.session_state['wis_hipple_details']))
+        wis_hipple_details = st.text_input("Wis-Hipple Details:", disabled=False, value=st.session_state['wis_hipple_details'])
         
 
     st.write("Medications:")
