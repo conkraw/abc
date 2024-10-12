@@ -908,9 +908,10 @@ elif st.session_state.section == 3:
 
     # Multiselect for who will bag-mask
     who_will_bvm = st.multiselect(
-        "Who will bag-mask?", 
-        ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:'],
+      "Who will bag-mask?", 
+      options=['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:'],
       default=st.session_state.get('who_will_bvm', [])
+    )
 
     other_bvm = ""
 
