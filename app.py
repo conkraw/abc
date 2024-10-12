@@ -970,15 +970,15 @@ elif st.session_state.section == 3:
                 index=0  # Default to the first option if no valid session state value exists
             )
 
-# Save the selected ETT type in the session state
-st.session_state.ett_type = ett_type
+        # Save the selected ETT type in the session state
+        st.session_state.ett_type = ett_type
+      
     with cols[1]:
-
         #ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
         #ett_size = st.selectbox("ETT Size", options=ett_sizes, key="ett_size_display", index=ett_sizes.index(st.session_state['ett_size']) if st.session_state['ett_size'] in ett_sizes else 0)
         #st.session_state['ett_size'] = ett_size
 
-      # Get the ETT sizes from a mapping or some source
+        # Get the ETT sizes from a mapping or some source
         ett_sizes = list(set(age_to_ett_mapping.values()))  # Assuming age_to_ett_mapping is defined
         
         # Add a blank option (e.g., "Select an ETT Size" or "")
