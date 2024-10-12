@@ -1070,7 +1070,7 @@ elif st.session_state.section == 3:
         miller_details = st.selectbox("Miller Details:", options=miller_details, key="miller_size_display", index=miller_details.index(st.session_state['miller_details']) if st.session_state['miller_details'] in miller_details else 0)
         st.session_state['miller_details'] = miller_details
 
-        wis_hipple_details = st.text_input("Wis-Hipple Details:", disabled=False)
+        wis_hipple_details = st.text_input("Wis-Hipple Details:", disabled=False, value=st.session_state['wis_hipple_details']))
         
 
     st.write("Medications:")
@@ -1120,12 +1120,15 @@ elif st.session_state.section == 3:
         midazolam_dose = st.selectbox("Midazolam Dose:", options=midazolam_dose, key="midazolam_dose_display",index=midazolam_dose.index(st.session_state['midazolam_dose']) if st.session_state['midazolam_dose'] in midazolam_dose else 0)
         st.session_state['midazolam_dose'] = midazolam_dose
         
-        ketamine_dose = list(set(weight_to_ketamine_mapping.values()))  # Get unique Ketamine doses
-        ketamine_dose = st.selectbox("Ketamine Dose:", options=ketamine_dose, key="ketamine_dose_display",index=ketamine_dose.index(st.session_state['ketamine_dose']) if st.session_state['ketamine_dose'] in ketamine_dose else 0)
+        #ketamine_dose = list(set(weight_to_ketamine_mapping.values()))  # Get unique Ketamine doses
+        #ketamine_dose = st.selectbox("Ketamine Dose:", options=ketamine_dose, key="ketamine_dose_display",index=ketamine_dose.index(st.session_state['ketamine_dose']) if st.session_state['ketamine_dose'] in ketamine_dose else 0)
+        
+        ketamine_dose = st.text_input("Ketamine Dose:", disabled=False, value=st.session_state['ketamine_dose'])
         st.session_state['ketamine_dose'] = ketamine_dose
         
-        propofol_dose = list(set(weight_to_propo_mapping.values()))  # Get unique Propofol doses
-        propofol_dose = st.selectbox("Propofol Dose:", options=propofol_dose, key="propofol_dose_display",index=propofol_dose.index(st.session_state['propofol_dose']) if st.session_state['propofol_dose'] in propofol_dose else 0)
+        #propofol_dose = list(set(weight_to_propo_mapping.values()))  # Get unique Propofol doses
+        #propofol_dose = st.selectbox("Propofol Dose:", options=propofol_dose, key="propofol_dose_display",index=propofol_dose.index(st.session_state['propofol_dose']) if st.session_state['propofol_dose'] in propofol_dose else 0)
+        propofol_dose = st.text_input("Propofol Dose:", disabled=False, value=st.session_state['propofol_dose'])
         st.session_state['propofol_dose'] = propofol_dose
         
         roc_dose = list(set(weight_to_roc_mapping.values()))  # Get unique Rocuronium doses
