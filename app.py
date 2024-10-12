@@ -1028,8 +1028,8 @@ elif st.session_state.section == 3:
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[1]:
         # Text Inputs with uneditable placeholders (details of each device)
-        #st.text_input("Laryngoscope details:", key="laryngoscope_details", disabled=False)
-        st.text_input("", key="laryngoscope_details", disabled=False)
+        st.text_input("Laryngoscope details:", key="laryngoscope_details", disabled=False)
+        #st.text_input("", key="laryngoscope_details", disabled=False)
       
         lma_details = list(set(age_to_lma_mapping.values()))  # Get unique ETT sizes
         lma_details = st.selectbox("LMA Details:", options=lma_details, key="lma_display", index=lma_details.index(st.session_state['lma_details']) if st.session_state['lma_details'] in lma_details else 0)
