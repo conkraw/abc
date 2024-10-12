@@ -952,8 +952,26 @@ elif st.session_state.section == 3:
     cols = st.columns(2)
 
     with cols[0]:
-        ett_type = st.selectbox("ETT Type", ["Cuffed", "Uncuffed"].index(st.session_state.ett_type))
+        ett_type_options = ["Cuffed", "Uncuffed"]
 
+        # Check if 'ett_type' exists in session state and is a valid value
+        if 'ett_type' in st.session_state and st.session_state.ett_type in ett_type_options:
+            # Use the index of the saved value
+            ett_type = st.selectbox(
+                "ETT Type", 
+                options=ett_type_options,
+                index=ett_type_options.index(st.session_state.ett_type)  # Set the index of the saved value
+            )
+        else:
+            # Default to the first option ("Cuffed") if no valid session state value exists
+            ett_type = st.selectbox(
+                "ETT Type", 
+                options=ett_type_options,
+                index=0  # Default to the first option if no valid session state value exists
+            )
+
+# Save the selected ETT type in the session state
+st.session_state.ett_type = ett_type
     with cols[1]:
 
         #ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
