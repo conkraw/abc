@@ -1218,31 +1218,71 @@ elif st.session_state.section == 3:
 elif st.session_state.section == 4:
     st.title("Timing of Intubation")
     
-    when_intubate = st.multiselect(
-        "When will we intubate? (Describe timing of airway management):",
-        ['Prior to procedure', 'Mental Status Changes', 
-         'Hypoxemia Refractory to CPAP', 'Ventilation failure refractory to NIV', 
-         'Loss of Airway Protection', 'Other']
-    )
+    #when_intubate = st.multiselect(
+    #    "When will we intubate? (Describe timing of airway management):",
+    #    ['Prior to procedure', 'Mental Status Changes', 
+    #     'Hypoxemia Refractory to CPAP', 'Ventilation failure refractory to NIV', 
+    #     'Loss of Airway Protection', 'Other']
+    #)
+    when_intubate_options = [
+      'Prior to procedure', 
+      'Mental Status Changes', 
+      'Hypoxemia Refractory to CPAP', 
+      'Ventilation failure refractory to NIV', 
+      'Loss of Airway Protection', 
+      'Other'
+  ]
+  
+  # Load previously saved selection from session state if it exists, otherwise default to an empty list
+    if 'when_intubate' in st.session_state:
+        when_intubate = st.multiselect(
+            "When will we intubate? (Describe timing of airway management):",
+            options=when_intubate_options,
+            default=st.session_state.when_intubate  # Use the saved value from session state as default
+        )
+    else:
+        when_intubate = st.multiselect(
+            "When will we intubate? (Describe timing of airway management):",
+            options=when_intubate_options
+        )
+    
+    # Save the selected options in session state for future use
+    st.session_state.when_intubate = when_intubate
 
-    hypoxemia_spo2 = None  # Variable to hold the SpO2 value
+
+    # Hypoxemia SpO2 input (only show if 'Hypoxemia Refractory to CPAP' is selected)
+    hypoxemia_spo2 = None
     if 'Hypoxemia Refractory to CPAP' in when_intubate:
-        hypoxemia_spo2 = st.text_input("If the patient has refractory hypoxemia, please define the SpO2 Level as less than:")
-
+        # Load saved SpO2 value from session state if it exists
+        if 'hypoxemia_spo2' in st.session_state:
+            hypoxemia_spo2 = st.text_input(
+                "If the patient has refractory hypoxemia, please define the SpO2 Level as less than:", 
+                value=st.session_state.hypoxemia_spo2  # Use saved SpO2 value as default
+            )
+        else:
+            hypoxemia_spo2 = st.text_input(
+                "If the patient has refractory hypoxemia, please define the SpO2 Level as less than:"
+            )
+    
+        # Save the SpO2 value in session state
+        st.session_state.hypoxemia_spo2 = hypoxemia_spo2
+    
+    # Other reason input (only show if 'Other' is selected)
     other_when_intubate = ""
     if 'Other' in when_intubate:
-        other_when_intubate = st.text_input("Please state an 'other' reason for the timing of intubation:")
-
-    # Prepare the list and add the SpO2 value if provided
-    when_intubate = [person for person in when_intubate if person != 'Other']  # Exclude the placeholder
+        # Load saved 'other' reason from session state if it exists
+        if 'other_when_intubate' in st.session_state:
+            other_when_intubate = st.text_input(
+                "Please state an 'other' reason for the timing of intubation:", 
+                value=st.session_state.other_when_intubate  # Use saved value as default
+            )
+        else:
+            other_when_intubate = st.text_input(
+                "Please state an 'other' reason for the timing of intubation:"
+            )
     
-    if hypoxemia_spo2:
-        # Sanitize the input
-        sanitized_spo2 = hypoxemia_spo2.strip('%')  # Remove any existing % sign
-        when_intubate.append(f"SpO2 less than {sanitized_spo2}%") 
-        
-    if other_when_intubate:
-        when_intubate.append(other_when_intubate)
+        # Save the 'other' reason in session state
+        st.session_state.other_when_intubate = other_when_intubate
 
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
@@ -1265,32 +1305,80 @@ elif st.session_state.section == 4:
 elif st.session_state.section == 5:
     st.title("Backup")
 
-    # Multi-select for Advance Airway Provider
-    advance_airway_provider = st.multiselect("Advance Airway Provider:", 
-                                   ['Attending', 'Anesthesia', 'ENT', 'Fellow', 'Other'])
+    # Load previously saved selections from session state, or use defaults
+    if 'advance_airway_provider' in st.session_state:
+        advance_airway_provider = st.multiselect(
+            "Advanced Airway Provider:", 
+            ['Attending', 'Anesthesia', 'ENT', 'Fellow', 'Other'],
+            default=st.session_state.advance_airway_provider  # Use saved selections if they exist
+        )
+    else:
+        advance_airway_provider = st.multiselect(
+            "Advanced Airway Provider:", 
+            ['Attending', 'Anesthesia', 'ENT', 'Fellow', 'Other']
+        )
     
-    advance_airway_procedure = st.multiselect("Difficult Airway Procedure:", 
-                                   ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other'])
-
+    # Save the selected advanced airway providers to session state
+    st.session_state.advance_airway_provider = advance_airway_provider
+    
+    # Handle "Other" option for Advanced Airway Provider
     other_advance_airway_provider = ""
-    
     if 'Other' in advance_airway_provider:
-        other_advance_airway_provider = st.text_input("Please state an 'other' Advanced Airway Provider")
-
-    advance_airway_provider = [person for person in advance_airway_provider if person != 'Other']  # Exclude the placeholder
+        if 'other_advance_airway_provider' in st.session_state:
+            other_advance_airway_provider = st.text_input(
+                "Please state an 'other' Advanced Airway Provider", 
+                value=st.session_state.other_advance_airway_provider  # Use saved value if it exists
+            )
+        else:
+            other_advance_airway_provider = st.text_input(
+                "Please state an 'other' Advanced Airway Provider"
+            )
     
+        # Save the "other" advanced airway provider to session state
+        st.session_state.other_advance_airway_provider = other_advance_airway_provider
+    
+    # Exclude 'Other' and append the custom value if provided
+    advance_airway_provider = [person for person in advance_airway_provider if person != 'Other']
     if other_advance_airway_provider:
-        advance_airway_provider.append(other_advance_airway_provider) 
-
+        advance_airway_provider.append(other_advance_airway_provider)
+    
+    # Load previously saved selections for "Difficult Airway Procedure", or use defaults
+    if 'advance_airway_procedure' in st.session_state:
+        advance_airway_procedure = st.multiselect(
+            "Difficult Airway Procedure:", 
+            ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other'],
+            default=st.session_state.advance_airway_procedure  # Use saved selections if they exist
+        )
+    else:
+        advance_airway_procedure = st.multiselect(
+            "Difficult Airway Procedure:", 
+            ['Difficult Airway Cart','Difficult Airway Emergency Page', 'Other']
+        )
+    
+    # Save the selected difficult airway procedures to session state
+    st.session_state.advance_airway_procedure = advance_airway_procedure
+    
+    # Handle "Other" option for Difficult Airway Procedure
     other_advance_airway_procedure = ""
-    
     if 'Other' in advance_airway_procedure:
-        other_advance_airway_procedure = st.text_input("Please state an 'other' protocol for Difficult Airway Protocol Initiation:")
-
-    advance_airway_procedure = [person for person in advance_airway_procedure if person != 'Other']  # Exclude the placeholder
+        if 'other_advance_airway_procedure' in st.session_state:
+            other_advance_airway_procedure = st.text_input(
+                "Please state an 'other' protocol for Difficult Airway Protocol Initiation:",
+                value=st.session_state.other_advance_airway_procedure  # Use saved value if it exists
+            )
+        else:
+            other_advance_airway_procedure = st.text_input(
+                "Please state an 'other' protocol for Difficult Airway Protocol Initiation:"
+            )
     
+        # Save the "other" difficult airway procedure to session state
+        st.session_state.other_advance_airway_procedure = other_advance_airway_procedure
+    
+    # Exclude 'Other' and append the custom value if provided
+    advance_airway_procedure = [procedure for procedure in advance_airway_procedure if procedure != 'Other']
     if other_advance_airway_procedure:
-        advance_airway_procedure.append(other_advance_airway_procedure) 
+        advance_airway_procedure.append(other_advance_airway_procedure)
+
         
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
