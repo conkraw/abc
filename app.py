@@ -893,7 +893,7 @@ elif st.session_state.section == 3:
         "Who will intubate?", 
         options=['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other Intubator:'],
         default=st.session_state.get('who_will_intubate', [])
-    
+    )
 
     other_intubate = ""
 
