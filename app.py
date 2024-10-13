@@ -927,7 +927,7 @@ elif st.session_state.section == 3:
     # Create a layout for intubation method
     #intubation_method = st.selectbox("How will we intubate? (Method)", ["Intubation Method", "Oral", "Nasal"].index(st.session_state.intubation_method))
 
-    intubation_options = ["Intubation Method", "Oral", "Nasal"]
+    intubation_options = ["Oral", "Nasal"]
 
 # Check if 'intubation_method' exists in session state and is a valid value
     if 'intubation_method' in st.session_state and st.session_state.intubation_method in intubation_options:
@@ -1178,7 +1178,6 @@ elif st.session_state.section == 3:
     with col3:
         if st.button("Next"):
             if (who_will_intubate and who_will_bvm and 
-                intubation_method != "Intubation Method" and 
                 ett_type and ett_size and 
                 lma_details and glide_details and 
                 mac_details and miller_details and atropine_dose and
