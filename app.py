@@ -54,7 +54,7 @@ age_to_ett_mapping = {'': '',
 age_to_lma_mapping = {
     '': '', 
     '0 months': 'LMA Mask Size 1.0',
-    '1 month': 'LMA Mask Size 1.0',
+    '1 months': 'LMA Mask Size 1.0',
     '2 months': 'LMA Mask Size 1.0',
     '3 months': 'LMA Mask Size 1.0',
     '4 months': 'LMA Mask Size 1.0',
@@ -96,7 +96,7 @@ age_to_lma_mapping = {
 age_to_glide_mapping = {
     '': '', 
     '0 months': 'Glidescope Size 0',
-    '1 month': 'Glidescope Size 0',
+    '1 months': 'Glidescope Size 0',
     '2 months': 'Glidescope Size 0',
     '3 months': 'Glidescope Size 0',
     '4 months': 'Glidescope Size 0',
@@ -140,7 +140,7 @@ age_to_glide_mapping = {
 age_to_mac_mapping = {
     '': '', 
     '0 months': 'Mac Blade Size 0',
-    '1 month': 'Mac Blade Size 0',
+    '1 months': 'Mac Blade Size 0',
     '2 months': 'Mac Blade Size 0',
     '3 months': 'Mac Blade Size 0',
     '4 months': 'Mac Blade Size 0',
@@ -182,7 +182,7 @@ age_to_mac_mapping = {
 age_to_miller_mapping = {
     '': '', 
     '0 months': 'Miller Blade Size 0',
-    '1 month': 'Miller Blade Size 0',
+    '1 months': 'Miller Blade Size 0',
     '2 months': 'Miller Blade Size 0',
     '3 months': 'Miller Blade Size 0',
     '4 months': 'Miller Blade Size 0',
