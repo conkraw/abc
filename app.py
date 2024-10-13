@@ -991,21 +991,18 @@ elif st.session_state.section == 3:
 
     # Initialize saved values in session state if they don't exist
     if 'who_will_intubate' not in st.session_state:
-        st.session_state['who_will_intubate'] = []
+        st.session_state.who_will_intubate = []
     if 'who_will_bvm' not in st.session_state:
-        st.session_state['who_will_bvm'] = []
+        st.session_state.who_will_bvm = []
     
     # Options for who will intubate
     who_will_intubate_options = ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT']
     
-    # Prepare filtered defaults, excluding invalid entries
-    filtered_default_intubate = [person for person in st.session_state.who_will_intubate if person in who_will_intubate_options]
-
     # Render multiselect for who will intubate
     who_will_intubate = st.multiselect(
         "Who will intubate?", 
         options=who_will_intubate_options,
-        default=filtered_default_intubate
+        default=st.session_state.who_will_intubate  # Use saved selections directly
     )
 
     # Save the updated list in session state
@@ -1014,14 +1011,11 @@ elif st.session_state.section == 3:
     # Options for who will bag-mask
     who_will_bvm_options = ['Resident', 'Fellow', 'NP', 'Attending', 'RT']
     
-    # Prepare filtered defaults for BVM
-    filtered_default_bvm = [person for person in st.session_state.who_will_bvm if person in who_will_bvm_options]
-
     # Render multiselect for who will bag-mask
     who_will_bvm = st.multiselect(
         "Who will bag-mask?", 
         options=who_will_bvm_options,
-        default=filtered_default_bvm
+        default=st.session_state.who_will_bvm  # Use saved selections directly
     )
 
     # Save the updated list in session state
