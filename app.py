@@ -1354,7 +1354,9 @@ elif st.session_state.section == 3:
             else:
                 st.warning("Please select an option.")
                 
-elif st.session_state.section == 4:
+import streamlit as st
+
+if st.session_state.section == 4:
     st.title("Timing of Intubation")
     
     when_intubate_options = [
@@ -1373,7 +1375,7 @@ elif st.session_state.section == 4:
         when_intubate = []
     
     # Hypoxemia SpO2 input (only show if 'Hypoxemia Refractory to CPAP' is selected)
-    hypoxemia_spo2 = None
+    hypoxemia_text = None
     if 'Hypoxemia Refractory to CPAP' in when_intubate:
         # Load saved SpO2 value from session state if it exists
         if 'hypoxemia_spo2' in st.session_state:
@@ -1398,16 +1400,16 @@ elif st.session_state.section == 4:
                 when_intubate.append(hypoxemia_text)
                 # Update session state to include the new list with the added item
                 st.session_state.when_intubate = when_intubate
-    else:
-        hypoxemia_spo2 = None  # If not selected, reset the SpO2 value
 
     # Prepare options for the multiselect, ensuring no duplication
-    when_intubate_options_with_spo2 = list(set(when_intubate_options + [hypoxemia_text] if hypoxemia_spo2 else when_intubate_options))
+    options_with_hypoxemia = when_intubate_options.copy()
+    if hypoxemia_text and hypoxemia_text not in options_with_hypoxemia:
+        options_with_hypoxemia.append(hypoxemia_text)
 
     # Render the multiselect with the correct options and defaults
     when_intubate = st.multiselect(
         "When will we intubate? (Describe timing of airway management):",
-        options=when_intubate_options_with_spo2,
+        options=options_with_hypoxemia,
         default=when_intubate  # Use the saved list as the default
     )
 
@@ -1430,6 +1432,7 @@ elif st.session_state.section == 4:
     
         # Save the 'other' reason in session state
         st.session_state.other_when_intubate = other_when_intubate
+
 
 
     # Single Next and Previous Buttons
