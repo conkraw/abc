@@ -1288,12 +1288,6 @@ elif st.session_state.section == 3:
 elif st.session_state.section == 4:
     st.title("Timing of Intubation")
     
-    #when_intubate = st.multiselect(
-    #    "When will we intubate? (Describe timing of airway management):",
-    #    ['Prior to procedure', 'Mental Status Changes', 
-    #     'Hypoxemia Refractory to CPAP', 'Ventilation failure refractory to NIV', 
-    #     'Loss of Airway Protection', 'Other']
-    #)
     when_intubate_options = [
       'Prior to procedure', 
       'Mental Status Changes', 
@@ -1301,9 +1295,9 @@ elif st.session_state.section == 4:
       'Ventilation failure refractory to NIV', 
       'Loss of Airway Protection', 
       'Other'
-  ]
+    ]
   
-  # Load previously saved selection from session state if it exists, otherwise default to an empty list
+    # Load previously saved selection from session state if it exists, otherwise default to an empty list
     if 'when_intubate' in st.session_state:
         when_intubate = st.multiselect(
             "When will we intubate? (Describe timing of airway management):",
@@ -1318,7 +1312,6 @@ elif st.session_state.section == 4:
     
     # Save the selected options in session state for future use
     st.session_state.when_intubate = when_intubate
-
 
     # Hypoxemia SpO2 input (only show if 'Hypoxemia Refractory to CPAP' is selected)
     hypoxemia_spo2 = None
@@ -1336,7 +1329,17 @@ elif st.session_state.section == 4:
     
         # Save the SpO2 value in session state
         st.session_state.hypoxemia_spo2 = hypoxemia_spo2
-    
+
+        # If SpO2 is entered, add the corresponding item to the when_intubate list
+        if hypoxemia_spo2:
+            hypoxemia_text = f"Hypoxemia Refractory to CPAP, SpO2 less than {hypoxemia_spo2}%"
+            
+            # Add the new text to the list (it won't add again if the list already contains it)
+            if hypoxemia_text not in when_intubate:
+                when_intubate.append(hypoxemia_text)
+                # Update session state to include the new list with the added item
+                st.session_state.when_intubate = when_intubate
+
     # Other reason input (only show if 'Other' is selected)
     other_when_intubate = ""
     if 'Other' in when_intubate:
