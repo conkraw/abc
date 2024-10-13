@@ -588,27 +588,27 @@ for key, value in default_values.items():
         st.session_state[key] = value
 
 # Page title and layout
-st.set_page_config(page_title="NEAR4KIDS ABC BUNDLE FORM", page_icon=":guardsman:", layout="wide")
+#st.set_page_config(page_title="NEAR4KIDS ABC BUNDLE FORM", page_icon=":guardsman:", layout="wide")
 
 # Upload or display image (can either be uploaded or linked from the web)
 #st.image('picture.png', use_column_width=True)
 
 # Title
-st.title("NEAR4KIDS ABC BUNDLE FORM")
+#st.title("NEAR4KIDS ABC BUNDLE FORM")
 
-if st.session_state['section'] == 0:
+#if st.session_state['section'] == 0:
 
   # General Instructions
-  st.markdown("""
-      ### General Instructions:
-      1. This form is part of the NEAR4KIDS ABC Bundle, which includes critical information for pediatric resuscitation.
-      2. Please fill out all required fields carefully.
-      3. If you have any questions or issues with the form, please contact the support team at **xxx@xyz.com****.
-      4. After filling out the form, click the **Next** button to proceed to the next section.
-  """)
+  #st.markdown("""
+  #    ### General Instructions:
+  #    1. This form is part of the NEAR4KIDS ABC Bundle, which includes critical information for pediatric resuscitation.
+  #    2. Please fill out all required fields carefully.
+  #    3. If you have any questions or issues with the form, please contact the support team at **xxx@xyz.com****.
+  #    4. After filling out the form, click the **Next** button to proceed to the next section.
+  #""")
   
-  if st.button("Next", on_click=next_section):
-          pass
+  #if st.button("Next", on_click=next_section):
+  #        pass
 
 # Front Page Completed Section
 elif st.session_state['section'] == 1:
