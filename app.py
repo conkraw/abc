@@ -594,7 +594,7 @@ import streamlit as st
 st.set_page_config(page_title="NEAR4KIDS ABC BUNDLE FORM", page_icon=":guardsman:", layout="wide")
 
 # Upload or display image (can either be uploaded or linked from the web)
-st.image('picture.png', use_column_width=True)
+#st.image('picture.png', use_column_width=True)
 
 # Title
 st.title("NEAR4KIDS ABC BUNDLE FORM")
