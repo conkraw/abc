@@ -914,7 +914,7 @@ elif st.session_state.section == 3:
     filtered_default = [person for person in filtered_default if person in who_will_intubate_options]
 
     # Debugging: Check what default values are being passed
-    st.write("Filtered default values (intubate):", filtered_default)
+    #st.write("Filtered default values (intubate):", filtered_default)
 
     # Render multiselect for who will intubate with valid default options
     who_will_intubate = st.multiselect(
