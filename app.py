@@ -51,47 +51,116 @@ age_to_ett_mapping = {'': '',
  '24 years': '7.5 mm',
  '25 years': '7.5 mm'}
 
-age_to_lma_mapping = {
-    '': '', 
-    '0 months': 'LMA Mask Size 1.0',
-    '1 months': 'LMA Mask Size 1.0',
-    '2 months': 'LMA Mask Size 1.0',
-    '3 months': 'LMA Mask Size 1.0',
-    '4 months': 'LMA Mask Size 1.0',
-    '5 months': 'LMA Mask Size 1.0',
-    '6 months': 'LMA Mask Size 1.0',
-    '7 months': 'LMA Mask Size 1.0',
-    '8 months': 'LMA Mask Size 1.0',
-    '9 months': 'LMA Mask Size 1.0',
-    '10 months': 'LMA Mask Size 1.0',
-    '11 months': 'LMA Mask Size 1.0',
-    '12 months': 'LMA Mask Size 1.5',
-    '1 year': 'LMA Mask Size 1.5',
-    '2 years': 'LMA Mask Size 2.0',
-    '3 years': 'LMA Mask Size 2.0',
-    '4 years': 'LMA Mask Size 2.0',
-    '5 years': 'LMA Mask Size 2.0',
-    '6 years': 'LMA Mask Size 2.5',
-    '7 years': 'LMA Mask Size 2.5',
-    '8 years': 'LMA Mask Size 2.5',
-    '9 years': 'LMA Mask Size 2.5',
-    '10 years': 'LMA Mask Size 3.0',
-    '11 years': 'LMA Mask Size 3.0',
-    '12 years': 'LMA Mask Size 3.0',
-    '13 years': 'LMA Mask Size 3.0',
-    '14 years': 'LMA Mask Size 3.5',
-    '15 years': 'LMA Mask Size 3.5',
-    '16 years': 'LMA Mask Size 3.5',
-    '17 years': 'LMA Mask Size 3.5',
-    '18 years': 'LMA Mask Size 3.5',
-    '19 years': 'LMA Mask Size 3.5',
-    '20 years': 'LMA Mask Size 3.5',
-    '21 years': 'LMA Mask Size 3.5',
-    '22 years': 'LMA Mask Size 3.5',
-    '23 years': 'LMA Mask Size 3.5',
-    '24 years': 'LMA Mask Size 3.5',
-    '25 years': 'LMA Mask Size 3.5'
+lma_size_mapping = {
+    '2.0 kg': 'LMA Size 1',
+    '2.5 kg': 'LMA Size 1',
+    '3.0 kg': 'LMA Size 1',
+    '3.5 kg': 'LMA Size 1',
+    '4.0 kg': 'LMA Size 1',
+    '4.5 kg': 'LMA Size 1',
+    '5.0 kg': 'LMA Size 1',
+    '5.5 kg': 'LMA Size 2',
+    '6.0 kg': 'LMA Size 2',
+    '6.5 kg': 'LMA Size 2',
+    '7.0 kg': 'LMA Size 2',
+    '7.5 kg': 'LMA Size 2',
+    '8.0 kg': 'LMA Size 2',
+    '8.5 kg': 'LMA Size 2',
+    '9.0 kg': 'LMA Size 2',
+    '9.5 kg': 'LMA Size 2',
+    '10.0 kg': 'LMA Size 3',
+    '11.0 kg': 'LMA Size 3',
+    '12.0 kg': 'LMA Size 3',
+    '13.0 kg': 'LMA Size 3',
+    '14.0 kg': 'LMA Size 3',
+    '15.0 kg': 'LMA Size 3',
+    '16.0 kg': 'LMA Size 4',
+    '17.0 kg': 'LMA Size 4',
+    '18.0 kg': 'LMA Size 4',
+    '19.0 kg': 'LMA Size 4',
+    '20.0 kg': 'LMA Size 4',
+    '21.0 kg': 'LMA Size 5',
+    '22.0 kg': 'LMA Size 5',
+    '23.0 kg': 'LMA Size 5',
+    '24.0 kg': 'LMA Size 5',
+    '25.0 kg': 'LMA Size 5',
+    '26.0 kg': 'LMA Size 6',
+    '27.0 kg': 'LMA Size 6',
+    '28.0 kg': 'LMA Size 6',
+    '29.0 kg': 'LMA Size 6',
+    '30.0 kg': 'LMA Size 6',
+    '31.0 kg': 'LMA Size 6',
+    '32.0 kg': 'LMA Size 6',
+    '33.0 kg': 'LMA Size 6',
+    '34.0 kg': 'LMA Size 6',
+    '35.0 kg': 'LMA Size 6',
+    '36.0 kg': 'LMA Size 6',
+    '37.0 kg': 'LMA Size 6',
+    '38.0 kg': 'LMA Size 6',
+    '39.0 kg': 'LMA Size 6',
+    '40.0 kg': 'LMA Size 6',
+    '41.0 kg': 'LMA Size 6',
+    '42.0 kg': 'LMA Size 6',
+    '43.0 kg': 'LMA Size 6',
+    '44.0 kg': 'LMA Size 6',
+    '45.0 kg': 'LMA Size 6',
+    '46.0 kg': 'LMA Size 6',
+    '47.0 kg': 'LMA Size 6',
+    '48.0 kg': 'LMA Size 6',
+    '49.0 kg': 'LMA Size 6',
+    '50.0 kg': 'LMA Size 6',
+    '51.0 kg': 'LMA Size 6',
+    '52.0 kg': 'LMA Size 6',
+    '53.0 kg': 'LMA Size 6',
+    '54.0 kg': 'LMA Size 6',
+    '55.0 kg': 'LMA Size 6',
+    '56.0 kg': 'LMA Size 6',
+    '57.0 kg': 'LMA Size 6',
+    '58.0 kg': 'LMA Size 6',
+    '59.0 kg': 'LMA Size 6',
+    '60.0 kg': 'LMA Size 6',
+    '61.0 kg': 'LMA Size 6',
+    '62.0 kg': 'LMA Size 6',
+    '63.0 kg': 'LMA Size 6',
+    '64.0 kg': 'LMA Size 6',
+    '65.0 kg': 'LMA Size 6',
+    '66.0 kg': 'LMA Size 6',
+    '67.0 kg': 'LMA Size 6',
+    '68.0 kg': 'LMA Size 6',
+    '69.0 kg': 'LMA Size 6',
+    '70.0 kg': 'LMA Size 6',
+    '71.0 kg': 'LMA Size 6',
+    '72.0 kg': 'LMA Size 6',
+    '73.0 kg': 'LMA Size 6',
+    '74.0 kg': 'LMA Size 6',
+    '75.0 kg': 'LMA Size 6',
+    '76.0 kg': 'LMA Size 6',
+    '77.0 kg': 'LMA Size 6',
+    '78.0 kg': 'LMA Size 6',
+    '79.0 kg': 'LMA Size 6',
+    '80.0 kg': 'LMA Size 6',
+    '81.0 kg': 'LMA Size 6',
+    '82.0 kg': 'LMA Size 6',
+    '83.0 kg': 'LMA Size 6',
+    '84.0 kg': 'LMA Size 6',
+    '85.0 kg': 'LMA Size 6',
+    '86.0 kg': 'LMA Size 6',
+    '87.0 kg': 'LMA Size 6',
+    '88.0 kg': 'LMA Size 6',
+    '89.0 kg': 'LMA Size 6',
+    '90.0 kg': 'LMA Size 6',
+    '91.0 kg': 'LMA Size 6',
+    '92.0 kg': 'LMA Size 6',
+    '93.0 kg': 'LMA Size 6',
+    '94.0 kg': 'LMA Size 6',
+    '95.0 kg': 'LMA Size 6',
+    '96.0 kg': 'LMA Size 6',
+    '97.0 kg': 'LMA Size 6',
+    '98.0 kg': 'LMA Size 6',
+    '99.0 kg': 'LMA Size 6',
+    '100.0 kg': 'LMA Size 6'
 }
+
 
 age_to_glide_mapping = {
     '': '', 
@@ -718,11 +787,6 @@ elif st.session_state.section == 1:
     
     st.session_state['ett_size'] = age_to_ett_mapping.get(selected_age, '')  # Update the session state with ETT size
 
-    if 'lma_details' not in st.session_state:
-        st.session_state['lma_details'] = ''  # Default value for ETT size
-    
-    st.session_state['lma_details'] = age_to_lma_mapping.get(selected_age, '')
-
     if 'glide_details' not in st.session_state:
         st.session_state['glide_details'] = ''  # Default value for ETT size
 
@@ -753,12 +817,17 @@ elif st.session_state.section == 1:
     
     if 'fentanyl_dose' not in st.session_state:
         st.session_state['fentanyl_dose'] = ''  # Default value for Fentanyl
+
+    if 'lma_details' not in st.session_state:
+        st.session_state['lma_details'] = ''  # Default value for ETT size
+
     
     # Retrieve the selected weight from session state
     selected_weight = st.session_state.get('weight_select', '')
     
     # If the weight is selected, update the drug doses accordingly (based on mappings)
     if selected_weight:
+        st.session_state['lma_details'] = lma_size_mapping.get(selected_age, '')
         st.session_state['atropine_dose'] = weight_to_atropine_mapping.get(selected_weight, '')
         st.session_state['glycopyrrolate_dose'] = weight_to_glycopyrrolate_mapping.get(selected_weight, '')
         st.session_state['fentanyl_dose'] = weight_to_fentanyl_mapping.get(selected_weight, '')
@@ -1104,7 +1173,7 @@ elif st.session_state.section == 3:
         st.text_input("Laryngoscope details:", key="laryngoscope_details", disabled=False)
         #st.text_input("", key="laryngoscope_details", disabled=False)
       
-        lma_details = list(set(age_to_lma_mapping.values()))  # Get unique ETT sizes
+        lma_details = list(set(lma_size_mapping.values()))  # Get unique ETT sizes
         lma_details = st.selectbox("LMA Details:", options=lma_details, key="lma_display", index=lma_details.index(st.session_state['lma_details']) if st.session_state['lma_details'] in lma_details else 0)
         st.session_state['lma_details'] = lma_details
         
