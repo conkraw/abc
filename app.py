@@ -1289,30 +1289,20 @@ elif st.session_state.section == 4:
     st.title("Timing of Intubation")
     
     when_intubate_options = [
-      'Prior to procedure', 
-      'Mental Status Changes', 
-      'Hypoxemia Refractory to CPAP', 
-      'Ventilation failure refractory to NIV', 
-      'Loss of Airway Protection', 
-      'Other'
+        'Prior to procedure', 
+        'Mental Status Changes', 
+        'Hypoxemia Refractory to CPAP', 
+        'Ventilation failure refractory to NIV', 
+        'Loss of Airway Protection', 
+        'Other'
     ]
   
     # Load previously saved selection from session state if it exists, otherwise default to an empty list
     if 'when_intubate' in st.session_state:
-        when_intubate = st.multiselect(
-            "When will we intubate? (Describe timing of airway management):",
-            options=when_intubate_options,
-            default=st.session_state.when_intubate  # Use the saved value from session state as default
-        )
+        when_intubate = st.session_state.when_intubate
     else:
-        when_intubate = st.multiselect(
-            "When will we intubate? (Describe timing of airway management):",
-            options=when_intubate_options
-        )
+        when_intubate = []
     
-    # Save the selected options in session state for future use
-    st.session_state.when_intubate = when_intubate
-
     # Hypoxemia SpO2 input (only show if 'Hypoxemia Refractory to CPAP' is selected)
     hypoxemia_spo2 = None
     if 'Hypoxemia Refractory to CPAP' in when_intubate:
@@ -1330,25 +1320,30 @@ elif st.session_state.section == 4:
         # Save the SpO2 value in session state
         st.session_state.hypoxemia_spo2 = hypoxemia_spo2
 
-        # If SpO2 is entered, add the corresponding item to the when_intubate list
+        # If SpO2 is entered, generate the dynamic text
         if hypoxemia_spo2:
             hypoxemia_text = f"Hypoxemia Refractory to CPAP, SpO2 less than {hypoxemia_spo2}%"
             
-            # Add the new text to the list (it won't add again if the list already contains it)
+            # Add the new text to the list only if it's not already there
             if hypoxemia_text not in when_intubate:
                 when_intubate.append(hypoxemia_text)
                 # Update session state to include the new list with the added item
                 st.session_state.when_intubate = when_intubate
+    else:
+        hypoxemia_spo2 = None  # If not selected, reset the SpO2 value
 
-        # Update the multiselect options to include the newly generated hypoxemia text
-        when_intubate_options_with_spo2 = when_intubate_options + [hypoxemia_text] if hypoxemia_spo2 else when_intubate_options
+    # Prepare options for the multiselect, ensuring no duplication
+    when_intubate_options_with_spo2 = list(set(when_intubate_options + [hypoxemia_text] if hypoxemia_spo2 else when_intubate_options))
 
-        # Now load the multiselect again with updated options
-        st.session_state.when_intubate = st.multiselect(
-            "When will we intubate? (Describe timing of airway management):",
-            options=when_intubate_options_with_spo2,
-            default=when_intubate  # Make sure the default list matches the updated options
-        )
+    # Render the multiselect with the correct options and defaults
+    when_intubate = st.multiselect(
+        "When will we intubate? (Describe timing of airway management):",
+        options=when_intubate_options_with_spo2,
+        default=when_intubate  # Use the saved list as the default
+    )
+
+    # Save the selected options in session state for future use
+    st.session_state.when_intubate = when_intubate
 
     # Other reason input (only show if 'Other' is selected)
     other_when_intubate = ""
@@ -1366,6 +1361,7 @@ elif st.session_state.section == 4:
     
         # Save the 'other' reason in session state
         st.session_state.other_when_intubate = other_when_intubate
+
 
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
