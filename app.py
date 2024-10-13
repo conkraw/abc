@@ -1322,11 +1322,8 @@ if st.session_state.section == 4:
         'Loss of Airway Protection'
     ]
   
-    # Load previously saved selection from session state if it exists, otherwise default to an empty list
-    if 'when_intubate' in st.session_state:
-        when_intubate = st.session_state.when_intubate
-    else:
-        when_intubate = []
+    # Load previously saved selection from session state, default to an empty list if it doesn't exist
+    when_intubate = st.session_state.get('when_intubate', [])
 
     # Render the multiselect with the correct options and defaults
     when_intubate = st.multiselect(
