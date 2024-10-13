@@ -608,26 +608,7 @@ st.markdown("""
     4. After filling out the form, click the **Next** button to proceed to the next section.
 """)
 
-# Define the layout for previous and next buttons
-col1, col2 = st.columns([1, 1])  # Two equal width columns
-
-# Define the previous and next section functions
-def prev_section():
-    if 'section' in st.session_state and st.session_state['section'] > 0:
-        st.session_state['section'] -= 1
-
-def next_section():
-    if 'section' in st.session_state:
-        st.session_state['section'] += 1
-
-# Add the 'Previous' button to the first column
-with col1:
-    if st.button("Previous", on_click=prev_section):
-        pass
-
-# Add the 'Next' button to the second column
-with col2:
-    if st.button("Next", on_click=next_section):
+if st.button("Next", on_click=next_section):
         pass
 
 # Front Page Completed Section
