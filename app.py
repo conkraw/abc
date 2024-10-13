@@ -895,6 +895,7 @@ elif st.session_state.section == 2:
                 st.warning("Please select all options.")
     
 # Intubation Plan Section
+# Intubation Plan Section
 elif st.session_state.section == 3:
     st.title("Intubation Plan")
 
@@ -902,37 +903,48 @@ elif st.session_state.section == 3:
     who_will_intubate = st.multiselect(
         "Who will intubate?", 
         options=['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other Intubator:'],
-        default=st.session_state.get('who_will_intubate', [])
+        default=st.session_state.get('who_will_intubate', [])  # Use session state if available
     )
 
     other_intubate = ""
 
     # Check for 'Other Intubator:' option
     if 'Other Intubator:' in who_will_intubate:
-        other_intubate = st.text_input("Please specify the 'other' clinician who will intubate:",value=other_intubate)
+        other_intubate = st.text_input("Please specify the 'other' clinician who will intubate:", value=other_intubate)
 
-    # Combine selections into who_will_intubate list
+    # Remove 'Other Intubator:' from the multiselect list
     who_will_intubate = [person for person in who_will_intubate if person != 'Other Intubator:']  # Exclude the placeholder
+
+    # If the user has entered a custom value for 'Other Intubator:', add it to the list
     if other_intubate:
         who_will_intubate.append(other_intubate)  # Add the specified 'other' intubator
 
+    # Save the updated list in session state
+    st.session_state.who_will_intubate = who_will_intubate
+
     # Multiselect for who will bag-mask
     who_will_bvm = st.multiselect(
-      "Who will bag-mask?", 
-      options=['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:'],
-      default=st.session_state.get('who_will_bvm', [])
+        "Who will bag-mask?", 
+        options=['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:'],
+        default=st.session_state.get('who_will_bvm', [])
     )
 
     other_bvm = ""
 
     # Check for 'Other BVMer:' option
     if 'Other BVMer:' in who_will_bvm:
-        other_bvm = st.text_input("Please specify the 'other' clinician who will perform bag mask valve ventilation:",value=other_bvm)
-    
-    # Combine selections into who_will_bvm list
+        other_bvm = st.text_input("Please specify the 'other' clinician who will perform bag mask valve ventilation:", value=other_bvm)
+
+    # Remove 'Other BVMer:' from the multiselect list
     who_will_bvm = [person for person in who_will_bvm if person != 'Other BVMer:']  # Exclude the placeholder
+
+    # If the user has entered a custom value for 'Other BVMer:', add it to the list
     if other_bvm:
         who_will_bvm.append(other_bvm)  # Add the specified 'other' BVMer
+
+    # Save the updated list in session state
+    st.session_state.who_will_bvm = who_will_bvm
+
 
     # Create a layout for intubation method
     #intubation_method = st.selectbox("How will we intubate? (Method)", ["Intubation Method", "Oral", "Nasal"].index(st.session_state.intubation_method))
