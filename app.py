@@ -1318,6 +1318,7 @@ if st.session_state.section == 4:
     when_intubate_options = [
         'Prior to procedure', 
         'Mental Status Changes', 
+        'Hypoxemia Refractory to CPAP',
         'Ventilation failure refractory to NIV', 
         'Loss of Airway Protection'
     ]
