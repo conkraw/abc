@@ -1317,7 +1317,6 @@ elif st.session_state.section == 3:
             else:
                 st.warning("Please select an option.")
                 
-import streamlit as st
 
 if st.session_state.section == 4:
     st.title("Timing of Intubation")
@@ -1325,10 +1324,8 @@ if st.session_state.section == 4:
     when_intubate_options = [
         'Prior to procedure', 
         'Mental Status Changes', 
-        'Hypoxemia Refractory to CPAP', 
         'Ventilation failure refractory to NIV', 
-        'Loss of Airway Protection', 
-        'Other'
+        'Loss of Airway Protection'
     ]
   
     # Load previously saved selection from session state if it exists, otherwise default to an empty list
@@ -1336,66 +1333,16 @@ if st.session_state.section == 4:
         when_intubate = st.session_state.when_intubate
     else:
         when_intubate = []
-    
-    # Hypoxemia SpO2 input (only show if 'Hypoxemia Refractory to CPAP' is selected)
-    hypoxemia_text = None
-    if 'Hypoxemia Refractory to CPAP' in when_intubate:
-        # Load saved SpO2 value from session state if it exists
-        if 'hypoxemia_spo2' in st.session_state:
-            hypoxemia_spo2 = st.text_input(
-                "If the patient has refractory hypoxemia, please define the SpO2 Level as less than:", 
-                value=st.session_state.hypoxemia_spo2  # Use saved SpO2 value as default
-            )
-        else:
-            hypoxemia_spo2 = st.text_input(
-                "If the patient has refractory hypoxemia, please define the SpO2 Level as less than:"
-            )
-    
-        # Save the SpO2 value in session state
-        st.session_state.hypoxemia_spo2 = hypoxemia_spo2
-
-        # If SpO2 is entered, generate the dynamic text
-        if hypoxemia_spo2:
-            hypoxemia_text = f"Hypoxemia Refractory to CPAP, SpO2 less than {hypoxemia_spo2}%"
-            
-            # Add the new text to the list only if it's not already there
-            if hypoxemia_text not in when_intubate:
-                when_intubate.append(hypoxemia_text)
-                # Update session state to include the new list with the added item
-                st.session_state.when_intubate = when_intubate
-
-    # Prepare options for the multiselect, ensuring no duplication
-    options_with_hypoxemia = when_intubate_options.copy()
-    if hypoxemia_text and hypoxemia_text not in options_with_hypoxemia:
-        options_with_hypoxemia.append(hypoxemia_text)
 
     # Render the multiselect with the correct options and defaults
     when_intubate = st.multiselect(
         "When will we intubate? (Describe timing of airway management):",
-        options=options_with_hypoxemia,
+        options=when_intubate_options,
         default=when_intubate  # Use the saved list as the default
     )
 
     # Save the selected options in session state for future use
     st.session_state.when_intubate = when_intubate
-
-    # Other reason input (only show if 'Other' is selected)
-    other_when_intubate = ""
-    if 'Other' in when_intubate:
-        # Load saved 'other' reason from session state if it exists
-        if 'other_when_intubate' in st.session_state:
-            other_when_intubate = st.text_input(
-                "Please state an 'other' reason for the timing of intubation:", 
-                value=st.session_state.other_when_intubate  # Use saved value as default
-            )
-        else:
-            other_when_intubate = st.text_input(
-                "Please state an 'other' reason for the timing of intubation:"
-            )
-    
-        # Save the 'other' reason in session state
-        st.session_state.other_when_intubate = other_when_intubate
-
 
 
     # Single Next and Previous Buttons
@@ -1419,13 +1366,13 @@ if st.session_state.section == 4:
 elif st.session_state.section == 5:
     st.title("Backup")
 
-      # Define the options for 'Advanced Airway Provider' and 'Difficult Airway Procedure'
-    advance_airway_provider_options = ['Attending', 'Anesthesia', 'ENT', 'Fellow', 'Other']
-    advance_airway_procedure_options = ['Difficult Airway Cart', 'Difficult Airway Emergency Page', 'Other']
+    # Define the options for 'Advanced Airway Provider' and 'Difficult Airway Procedure'
+    advance_airway_provider_options = ['Attending', 'Anesthesia', 'ENT', 'Fellow']
+    advance_airway_procedure_options = ['Difficult Airway Cart', 'Difficult Airway Emergency Page']
     
     # Store the multiselect selections from session state
     default_advance_airway_provider = st.session_state.get('advance_airway_provider', [])
-    # Filter out 'Other' and any invalid default values that are not in the options
+    # Filter out any invalid default values that are not in the options
     filtered_advance_airway_provider = [value for value in default_advance_airway_provider if value in advance_airway_provider_options]
     
     # Multiselect for Advanced Airway Provider
@@ -1435,23 +1382,12 @@ elif st.session_state.section == 5:
         default=filtered_advance_airway_provider
     )
     
-    # Handle "Other" input for Advanced Airway Provider
-    other_advance_airway_provider = ""
-    if 'Other' in advance_airway_provider:
-        other_advance_airway_provider = st.text_input("Please state an 'other' Advanced Airway Provider", value=st.session_state.get('other_advance_airway_provider', ""))
-        # Append the "Other" input to the selected list if it exists and is not empty
-        if other_advance_airway_provider:
-            advance_airway_provider.append(other_advance_airway_provider)
-        # Remove 'Other' from the list of selected options
-        advance_airway_provider = [provider for provider in advance_airway_provider if provider != 'Other']
-    
     # Save the selected values in session state
     st.session_state.advance_airway_provider = advance_airway_provider
-    st.session_state.other_advance_airway_provider = other_advance_airway_provider
     
     # Multiselect for Difficult Airway Procedure
     default_advance_airway_procedure = st.session_state.get('advance_airway_procedure', [])
-    # Filter out 'Other' and any invalid default values that are not in the options
+    # Filter out any invalid default values that are not in the options
     filtered_advance_airway_procedure = [value for value in default_advance_airway_procedure if value in advance_airway_procedure_options]
     
     advance_airway_procedure = st.multiselect(
@@ -1460,19 +1396,8 @@ elif st.session_state.section == 5:
         default=filtered_advance_airway_procedure
     )
     
-    # Handle "Other" input for Difficult Airway Procedure
-    other_advance_airway_procedure = ""
-    if 'Other' in advance_airway_procedure:
-        other_advance_airway_procedure = st.text_input("Please state an 'other' protocol for Difficult Airway Protocol Initiation", value=st.session_state.get('other_advance_airway_procedure', ""))
-        # Append the "Other" input to the selected list if it exists and is not empty
-        if other_advance_airway_procedure:
-            advance_airway_procedure.append(other_advance_airway_procedure)
-        # Remove 'Other' from the list of selected options
-        advance_airway_procedure = [procedure for procedure in advance_airway_procedure if procedure != 'Other']
-    
     # Save the selected values in session state
     st.session_state.advance_airway_procedure = advance_airway_procedure
-    st.session_state.other_advance_airway_procedure = other_advance_airway_procedure
 
         
     # Single Next and Previous Buttons
