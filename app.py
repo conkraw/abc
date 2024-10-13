@@ -614,7 +614,7 @@ if st.session_state['section'] == 0:
           pass
 
 # Front Page Completed Section
-if st.session_state['section'] == 0:
+elif st.session_state['section'] == 0:
     st.title("Front Page Completed")
     
     # Selectbox for front page completion
