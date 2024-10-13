@@ -599,20 +599,22 @@ st.set_page_config(page_title="NEAR4KIDS ABC BUNDLE FORM", page_icon=":guardsman
 # Title
 st.title("NEAR4KIDS ABC BUNDLE FORM")
 
-# General Instructions
-st.markdown("""
-    ### General Instructions:
-    1. This form is part of the NEAR4KIDS ABC Bundle, which includes critical information for pediatric resuscitation.
-    2. Please fill out all required fields carefully.
-    3. If you have any questions or issues with the form, please contact the support team at **xxx@xyz.com****.
-    4. After filling out the form, click the **Next** button to proceed to the next section.
-""")
+if st.session_state['section'] == 0:
 
-if st.button("Next", on_click=next_section):
-        pass
+  # General Instructions
+  st.markdown("""
+      ### General Instructions:
+      1. This form is part of the NEAR4KIDS ABC Bundle, which includes critical information for pediatric resuscitation.
+      2. Please fill out all required fields carefully.
+      3. If you have any questions or issues with the form, please contact the support team at **xxx@xyz.com****.
+      4. After filling out the form, click the **Next** button to proceed to the next section.
+  """)
+  
+  if st.button("Next", on_click=next_section):
+          pass
 
 # Front Page Completed Section
-if st.session_state.get('section', 0) == 0:
+if st.session_state['section'] == 0:
     st.title("Front Page Completed")
     
     # Selectbox for front page completion
