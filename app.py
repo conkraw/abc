@@ -611,7 +611,7 @@ for key, value in default_values.items():
   #        pass
 
 # Front Page Completed Section
-elif st.session_state['section'] == 1:
+if st.session_state['section'] == 1:
     st.title("Front Page Completed")
     
     # Selectbox for front page completion
