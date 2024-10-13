@@ -895,25 +895,26 @@ elif st.session_state.section == 2:
                 st.warning("Please select all options.")
     
 # Intubation Plan Section
-# Intubation Plan Section
-# Intubation Plan Section
 elif st.session_state.section == 3:
     st.title("Intubation Plan")
 
-    # Get the previously saved selections from session state
-    saved_who_will_intubate = st.session_state.get('who_will_intubate', [])
+    # Initialize saved values in session state if they don't exist
+    if 'who_will_intubate' not in st.session_state:
+        st.session_state['who_will_intubate'] = []
+    if 'who_will_bvm' not in st.session_state:
+        st.session_state['who_will_bvm'] = []
     
     # Multiselect for who will intubate
     who_will_intubate_options = ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other Intubator:']
     
     # Remove 'Other Intubator:' from the saved selections for default
-    filtered_default = [person for person in saved_who_will_intubate if person != 'Other Intubator:']
-
-    # Pass only valid options (exclude custom values and 'Other Intubator:')
+    filtered_default = [person for person in st.session_state.who_will_intubate if person != 'Other Intubator:']
+    
+    # Render multiselect for who will intubate with valid default options
     who_will_intubate = st.multiselect(
         "Who will intubate?", 
         options=who_will_intubate_options,
-        default=filtered_default  # Set default without the placeholder
+        default=filtered_default  # Only include valid options, no 'Other Intubator:'
     )
 
     other_intubate = ""
@@ -922,7 +923,7 @@ elif st.session_state.section == 3:
     if 'Other Intubator:' in who_will_intubate:
         other_intubate = st.text_input("Please specify the 'other' clinician who will intubate:", value=other_intubate)
 
-    # Remove 'Other Intubator:' from the multiselect list
+    # Remove 'Other Intubator:' from the multiselect list (to avoid saving it)
     who_will_intubate = [person for person in who_will_intubate if person != 'Other Intubator:']
 
     # If the user has entered a custom value for 'Other Intubator:', add it to the list
@@ -933,17 +934,16 @@ elif st.session_state.section == 3:
     st.session_state.who_will_intubate = who_will_intubate
 
     # Multiselect for who will bag-mask
-    saved_who_will_bvm = st.session_state.get('who_will_bvm', [])
-    
     who_will_bvm_options = ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:']
     
     # Remove 'Other BVMer:' from default values if present
-    filtered_default_bvm = [person for person in saved_who_will_bvm if person != 'Other BVMer:']
+    filtered_default_bvm = [person for person in st.session_state.who_will_bvm if person != 'Other BVMer:']
     
+    # Render multiselect for who will bag-mask with valid default options
     who_will_bvm = st.multiselect(
         "Who will bag-mask?", 
         options=who_will_bvm_options,
-        default=filtered_default_bvm  # Set default without the placeholder
+        default=filtered_default_bvm  # Only include valid options, no 'Other BVMer:'
     )
 
     other_bvm = ""
