@@ -999,14 +999,16 @@ elif st.session_state.section == 3:
     who_will_intubate_options = ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT', 'Other Intubator:']
     
     # Prepare the default values for the multiselect
-    filtered_default = [person for person in st.session_state.who_will_intubate if person != 'Other Intubator:']
-
+    filtered_default = [person for person in st.session_state.who_will_intubate if person in who_will_intubate_options]
+    
     # Render multiselect for who will intubate
     who_will_intubate = st.multiselect(
         "Who will intubate?", 
         options=who_will_intubate_options,
         default=filtered_default
     )
+
+    other_intubate = ""
 
     # Text input for 'Other Intubator:'
     if 'Other Intubator:' in who_will_intubate:
@@ -1023,7 +1025,7 @@ elif st.session_state.section == 3:
     who_will_bvm_options = ['Resident', 'Fellow', 'NP', 'Attending', 'RT', 'Other BVMer:']
     
     # Prepare the default values for the multiselect
-    filtered_default_bvm = [person for person in st.session_state.who_will_bvm if person != 'Other BVMer:']
+    filtered_default_bvm = [person for person in st.session_state.who_will_bvm if person in who_will_bvm_options]
 
     # Render multiselect for who will bag-mask
     who_will_bvm = st.multiselect(
@@ -1031,6 +1033,8 @@ elif st.session_state.section == 3:
         options=who_will_bvm_options,
         default=filtered_default_bvm
     )
+
+    other_bvm = ""
 
     # Text input for 'Other BVMer:'
     if 'Other BVMer:' in who_will_bvm:
