@@ -1340,6 +1340,16 @@ elif st.session_state.section == 4:
                 # Update session state to include the new list with the added item
                 st.session_state.when_intubate = when_intubate
 
+        # Update the multiselect options to include the newly generated hypoxemia text
+        when_intubate_options_with_spo2 = when_intubate_options + [hypoxemia_text] if hypoxemia_spo2 else when_intubate_options
+
+        # Now load the multiselect again with updated options
+        st.session_state.when_intubate = st.multiselect(
+            "When will we intubate? (Describe timing of airway management):",
+            options=when_intubate_options_with_spo2,
+            default=when_intubate  # Make sure the default list matches the updated options
+        )
+
     # Other reason input (only show if 'Other' is selected)
     other_when_intubate = ""
     if 'Other' in when_intubate:
