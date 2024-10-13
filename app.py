@@ -986,7 +986,6 @@ elif st.session_state.section == 2:
             else:
                 st.warning("Please select all options.")
 
-  import streamlit as st
 
 elif st.session_state.section == 3:
     st.title("Intubation Plan")
