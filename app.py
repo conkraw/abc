@@ -910,6 +910,12 @@ elif st.session_state.section == 3:
     # Remove 'Other Intubator:' from the saved selections for default
     filtered_default = [person for person in st.session_state.who_will_intubate if person != 'Other Intubator:']
     
+    # Remove any invalid values from filtered_default
+    filtered_default = [person for person in filtered_default if person in who_will_intubate_options]
+
+    # Debugging: Check what default values are being passed
+    st.write("Filtered default values (intubate):", filtered_default)
+
     # Render multiselect for who will intubate with valid default options
     who_will_intubate = st.multiselect(
         "Who will intubate?", 
@@ -939,6 +945,9 @@ elif st.session_state.section == 3:
     # Remove 'Other BVMer:' from default values if present
     filtered_default_bvm = [person for person in st.session_state.who_will_bvm if person != 'Other BVMer:']
     
+    # Remove any invalid values from filtered_default_bvm
+    filtered_default_bvm = [person for person in filtered_default_bvm if person in who_will_bvm_options]
+
     # Render multiselect for who will bag-mask with valid default options
     who_will_bvm = st.multiselect(
         "Who will bag-mask?", 
@@ -962,7 +971,6 @@ elif st.session_state.section == 3:
 
     # Save the updated list in session state
     st.session_state.who_will_bvm = who_will_bvm
-
 
 
 
