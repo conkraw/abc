@@ -611,7 +611,7 @@ for key, value in default_values.items():
   #        pass
 
 # Front Page Completed Section
-if st.session_state['section'] == 1:
+elif st.session_state['section'] == 0:
     st.title("Front Page Completed")
     
     # Selectbox for front page completion
@@ -656,7 +656,7 @@ if st.session_state['section'] == 1:
             st.warning("Please select an option.")
 
 # Patient Information Section
-elif st.session_state.section == 2:
+elif st.session_state.section == 1:
     st.title("Patient Information")
 
     cols = st.columns(2)
@@ -805,7 +805,7 @@ elif st.session_state.section == 2:
             pass
             
 # Intubation Risk Assessment Section
-elif st.session_state.section == 3:
+elif st.session_state.section == 2:
     st.title("Intubation Risk Assessment")
     st.write("#### Difficult Airway:")
     
@@ -918,7 +918,7 @@ elif st.session_state.section == 3:
                 st.warning("Please select all options.")
     
 # Intubation Plan Section
-elif st.session_state.section == 4:
+elif st.session_state.section == 3:
     st.title("Intubation Plan")
 
     # Initialize saved values in session state if they don't exist
@@ -1285,7 +1285,7 @@ elif st.session_state.section == 4:
             else:
                 st.warning("Please select an option.")
                 
-elif st.session_state.section == 5:
+elif st.session_state.section == 4:
     st.title("Timing of Intubation")
     
     #when_intubate = st.multiselect(
@@ -1372,7 +1372,7 @@ elif st.session_state.section == 5:
             else:
                 st.warning("Please select an option.")
 
-elif st.session_state.section == 6:
+elif st.session_state.section == 5:
     st.title("Backup")
 
       # Define the options for 'Advanced Airway Provider' and 'Difficult Airway Procedure'
@@ -1452,7 +1452,7 @@ elif st.session_state.section == 6:
                 st.warning("Please select an option.")
 
 
-elif st.session_state.section == 7:
+elif st.session_state.section == 6:
     st.title("Download ABC Form")
     
     col1, col2, col3 = st.columns(3)
