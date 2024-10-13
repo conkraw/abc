@@ -93,7 +93,7 @@ age_to_lma_mapping = {
     '25 years': 'LMA Mask Size 3.5'
 }
 
-age_to_glidescope_mapping = {
+age_to_glide_mapping = {
     '': '', 
     '0 months': 'Glidescope Size 0',
     '1 month': 'Glidescope Size 0',
