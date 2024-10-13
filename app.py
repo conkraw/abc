@@ -529,7 +529,7 @@ def fill_word_template(template_path, data):
     return buffer
 
 def next_section():
-    if st.session_state.section < 6:
+    if st.session_state.section < 7:
         st.session_state.section += 1
         save_data()
 
@@ -587,9 +587,6 @@ for key, value in default_values.items():
     if key not in st.session_state:
         st.session_state[key] = value
 
-
-import streamlit as st
-
 # Page title and layout
 st.set_page_config(page_title="NEAR4KIDS ABC BUNDLE FORM", page_icon=":guardsman:", layout="wide")
 
@@ -614,7 +611,7 @@ if st.session_state['section'] == 0:
           pass
 
 # Front Page Completed Section
-elif st.session_state['section'] == 0:
+elif st.session_state['section'] == 1:
     st.title("Front Page Completed")
     
     # Selectbox for front page completion
@@ -659,7 +656,7 @@ elif st.session_state['section'] == 0:
             st.warning("Please select an option.")
 
 # Patient Information Section
-elif st.session_state.section == 1:
+elif st.session_state.section == 2:
     st.title("Patient Information")
 
     cols = st.columns(2)
@@ -808,7 +805,7 @@ elif st.session_state.section == 1:
             pass
             
 # Intubation Risk Assessment Section
-elif st.session_state.section == 2:
+elif st.session_state.section == 3:
     st.title("Intubation Risk Assessment")
     st.write("#### Difficult Airway:")
     
@@ -921,7 +918,7 @@ elif st.session_state.section == 2:
                 st.warning("Please select all options.")
     
 # Intubation Plan Section
-elif st.session_state.section == 3:
+elif st.session_state.section == 4:
     st.title("Intubation Plan")
 
     # Initialize saved values in session state if they don't exist
@@ -1288,7 +1285,7 @@ elif st.session_state.section == 3:
             else:
                 st.warning("Please select an option.")
                 
-elif st.session_state.section == 4:
+elif st.session_state.section == 5:
     st.title("Timing of Intubation")
     
     #when_intubate = st.multiselect(
@@ -1375,7 +1372,7 @@ elif st.session_state.section == 4:
             else:
                 st.warning("Please select an option.")
 
-elif st.session_state.section == 5:
+elif st.session_state.section == 6:
     st.title("Backup")
 
       # Define the options for 'Advanced Airway Provider' and 'Difficult Airway Procedure'
@@ -1455,7 +1452,7 @@ elif st.session_state.section == 5:
                 st.warning("Please select an option.")
 
 
-elif st.session_state.section == 6:
+elif st.session_state.section == 7:
     st.title("Download ABC Form")
     
     col1, col2, col3 = st.columns(3)
