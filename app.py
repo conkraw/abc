@@ -1123,8 +1123,8 @@ elif st.session_state.section == 3:
     with cols[0]:
         # These text inputs will reset to their default value if changed and the user moves away
         device_1_text = reset_input("Laryngoscope", key="laryngoscope_textx")
-        device_2_text = reset_input("Glidescope", key="glidescope_textx")
-        device_3_text = reset_input("LMA", key="lma_textx")
+        device_2_text = reset_input("LMA", key="lma_textx")
+        device_3_text = reset_input("Glidescope", key="glidescope_textx")
         device_4_text = reset_input("Other Device", key="other_device_textx")
     
     # Column 3: Additional details for each device (uneditable placeholders)
