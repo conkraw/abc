@@ -1296,7 +1296,7 @@ if st.session_state.section == 4:
 
     when_intubate = st.multiselect(
     "When will we intubate? (Describe timing of airway management", 
-    when_intubate_options = ['Prior to procedure', 'Mental Status Changes', 'Hypoxemia Refractory to CPAP','Ventilation failure refractory to NIV', 'Loss of Airway Protection'],
+    options = ['Prior to procedure', 'Mental Status Changes', 'Hypoxemia Refractory to CPAP','Ventilation failure refractory to NIV', 'Loss of Airway Protection'],
     default=st.session_state.get('when_intubate', [])
     )
     
