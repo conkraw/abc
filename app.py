@@ -1001,6 +1001,9 @@ elif st.session_state.section == 3:
         default=st.session_state.get('who_will_bvm', [])
     )
 
+    st.write("who_will_intubate:", who_will_intubate)
+    st.write("who_will_bvm:", who_will_bvm)
+
 
     # Create a layout for intubation method
     #intubation_method = st.selectbox("How will we intubate? (Method)", ["Intubation Method", "Oral", "Nasal"].index(st.session_state.intubation_method))
