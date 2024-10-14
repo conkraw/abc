@@ -1287,8 +1287,8 @@ elif st.session_state.section == 3:
                 fentanyl_dose and 
                 midazolam_dose and 
                 roc_dose and vec_dose and ao_details):
-                #st.session_state.who_will_intubate = who_will_intubate
-                #st.session_state.who_will_bvm = who_will_bvm
+                st.session_state.who_will_intubate = who_will_intubate
+                st.session_state.who_will_bvm = who_will_bvm
                 st.session_state.intubation_method = intubation_method
                 st.session_state.ett_type = ett_type  # Store ETT type
                 st.session_state.ett_size = ett_size 
