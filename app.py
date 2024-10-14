@@ -665,7 +665,8 @@ if st.session_state['section'] == 0:
             pass
 
     with cols[1]: 
-      if st.button("Next"):
+        if st.button("Next", on_click=next_section):
+              pass
 
 #Front Page Completed Section
 if st.session_state['section'] == 1:
