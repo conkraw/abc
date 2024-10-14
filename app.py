@@ -1322,40 +1322,18 @@ if st.session_state.section == 4:
 if st.session_state.section == 5:
     st.title("Advanced Airway Provider and Procedure")
 
-    # Define the options for 'Advanced Airway Provider' and 'Difficult Airway Procedure'
-    advance_airway_provider_options = ['Attending', 'Anesthesia', 'ENT', 'Fellow']
-    advance_airway_procedure_options = ['Difficult Airway Cart', 'Difficult Airway Emergency Page']
-
-    # Load previously saved selection for 'Advanced Airway Provider' from session state
-    default_advance_airway_provider = st.session_state.get('advance_airway_provider', [])
-    # Filter out any invalid default values that are not in the options
-    filtered_advance_airway_provider = [value for value in default_advance_airway_provider if value in advance_airway_provider_options]
-
-    # Multiselect for Advanced Airway Provider
     advance_airway_provider = st.multiselect(
-        "Advanced Airway Provider:", 
-        advance_airway_provider_options, 
-        default=filtered_advance_airway_provider
+    "When will we intubate? (Describe timing of airway management", 
+    options = ['Attending', 'Anesthesia', 'ENT', 'Fellow'],
+    default=st.session_state.get('advance_airway_provider', [])
     )
-    
-    # Save the selected values for Advanced Airway Provider in session state
-    st.session_state.advance_airway_provider = advance_airway_provider
 
-    # Load previously saved selection for 'Difficult Airway Procedure' from session state
-    default_advance_airway_procedure = st.session_state.get('advance_airway_procedure', [])
-    # Filter out any invalid default values that are not in the options
-    filtered_advance_airway_procedure = [value for value in default_advance_airway_procedure if value in advance_airway_procedure_options]
-
-    # Multiselect for Difficult Airway Procedure
     advance_airway_procedure = st.multiselect(
-        "Difficult Airway Procedure:", 
-        advance_airway_procedure_options, 
-        default=filtered_advance_airway_procedure
+    "When will we intubate? (Describe timing of airway management", 
+    options = ['Difficult Airway Cart', 'Difficult Airway Emergency Page'],
+    default=st.session_state.get('advance_airway_procedure', [])
     )
-    
-    # Save the selected values for Difficult Airway Procedure in session state
-    st.session_state.advance_airway_procedure = advance_airway_procedure
-        
+
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
 
