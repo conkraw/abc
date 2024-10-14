@@ -659,6 +659,8 @@ for key, value in default_values.items():
 #Title
 st.title("NEAR4KIDS ABC BUNDLE FORM")
 
+cols = st.columns(2)
+
 if st.session_state['section'] == 0:
     with cols[0]:
         if st.button("Previous", on_click=prev_section):
