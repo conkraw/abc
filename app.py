@@ -1286,7 +1286,7 @@ elif st.session_state.section == 3:
                 st.session_state.other_planning = other_planning
 
                 st.session_state.section += 1  # Increment the section
-                #st.rerun()  # Force a rerun to reflect changes immediately
+                st.rerun()  # Force a rerun to reflect changes immediately
             else:
                 st.warning("Please select an option.")
                 
