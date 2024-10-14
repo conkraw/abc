@@ -1255,23 +1255,6 @@ elif st.session_state.section == 3:
     # Add the 'Next' button to the second column
     with col3:
         if st.button("Next"):
-            who_will_intubate = st.session_state.get('who_will_intubate', [])
-            who_will_bvm = st.session_state.get('who_will_bvm', [])
-            intubation_method = st.session_state.get('intubation_method', None)
-            ett_type = st.session_state.get('ett_type', None)
-            ett_size = st.session_state.get('ett_size', None)
-            lma_details = st.session_state.get('lma_details', None)
-            glide_details = st.session_state.get('glide_details', None)
-            mac_details = st.session_state.get('mac_details', None)
-            miller_details = st.session_state.get('miller_details', None)
-            atropine_dose = st.session_state.get('atropine_dose', None)
-            glycopyrrolate_dose = st.session_state.get('glycopyrrolate_dose', None)
-            fentanyl_dose = st.session_state.get('fentanyl_dose', None)
-            midazolam_dose = st.session_state.get('midazolam_dose', None)
-            roc_dose = st.session_state.get('roc_dose', None)
-            vec_dose = st.session_state.get('vec_dose', None)
-            ao_details = st.session_state.get('ao_details', None)
-            other_planning = st.session_state.get('other_planning', None)
             if (who_will_intubate and who_will_bvm and 
                 ett_type and ett_size and 
                 lma_details and glide_details and 
