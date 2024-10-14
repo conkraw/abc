@@ -1001,9 +1001,6 @@ elif st.session_state.section == 3:
         default=st.session_state.get('who_will_bvm', [])
     )
 
-    st.write("who_will_intubate:", who_will_intubate)
-    st.write("who_will_bvm:", who_will_bvm)
-
 
     # Create a layout for intubation method
     #intubation_method = st.selectbox("How will we intubate? (Method)", ["Intubation Method", "Oral", "Nasal"].index(st.session_state.intubation_method))
@@ -1054,7 +1051,6 @@ elif st.session_state.section == 3:
         # Save the selected ETT type in the session state
         st.session_state.ett_type = ett_type
 
-        st.write("Ett Type:", ett_type)
       
     with cols[1]:
         #ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
@@ -1086,7 +1082,6 @@ elif st.session_state.section == 3:
         
         # Save the selected ETT size in the session state
         st.session_state['ett_size'] = ett_size
-        st.write("Ett Size:", ett_size)
     
     st.write("Device:")
     
@@ -1308,7 +1303,7 @@ elif st.session_state.section == 3:
                 st.session_state.other_planning = other_planning
 
                 st.session_state.section += 1  # Increment the section
-                st.rerun()  # Force a rerun to reflect changes immediately
+                #st.rerun()  # Force a rerun to reflect changes immediately
             else:
                 st.warning("Please select an option.")
                 
