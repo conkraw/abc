@@ -1006,8 +1006,9 @@ elif st.session_state.section == 3:
         key="who_will_intubate"  # Unique key for this widget
     )
 
-    # Save the updated list in session state
-    st.session_state.who_will_intubate = who_will_intubate
+    # Only update session state with the value returned by the widget (not manually setting it)
+    if who_will_intubate != st.session_state.who_will_intubate:
+        st.session_state.who_will_intubate = who_will_intubate
 
     # Options for who will bag-mask
     who_will_bvm_options = ['Resident', 'Fellow', 'NP', 'Attending', 'RT']
@@ -1020,8 +1021,9 @@ elif st.session_state.section == 3:
         key="who_will_bvm"  # Unique key for this widget
     )
 
-    # Save the updated list in session state
-    st.session_state.who_will_bvm = who_will_bvm
+    # Only update session state with the value returned by the widget (not manually setting it)
+    if who_will_bvm != st.session_state.who_will_bvm:
+        st.session_state.who_will_bvm = who_will_bvm
 
 
     # Create a layout for intubation method
