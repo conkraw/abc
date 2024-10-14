@@ -1293,7 +1293,7 @@ elif st.session_state.section == 3:
 
 if st.session_state.section == 4:
     st.title("Timing of Intubation")
-    
+
     when_intubate_options = [
         'Prior to procedure', 
         'Mental Status Changes', 
@@ -1301,7 +1301,7 @@ if st.session_state.section == 4:
         'Ventilation failure refractory to NIV', 
         'Loss of Airway Protection'
     ]
-  
+
     # Load previously saved selection from session state, default to an empty list if it doesn't exist
     when_intubate = st.session_state.get('when_intubate', [])
 
@@ -1314,7 +1314,6 @@ if st.session_state.section == 4:
 
     # Save the selected options in session state for future use
     st.session_state.when_intubate = when_intubate
-
 
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
@@ -1334,18 +1333,18 @@ if st.session_state.section == 4:
             else:
                 st.warning("Please select an option.")
 
-elif st.session_state.section == 5:
-    st.title("Backup")
+if st.session_state.section == 5:
+    st.title("Advanced Airway Provider and Procedure")
 
     # Define the options for 'Advanced Airway Provider' and 'Difficult Airway Procedure'
     advance_airway_provider_options = ['Attending', 'Anesthesia', 'ENT', 'Fellow']
     advance_airway_procedure_options = ['Difficult Airway Cart', 'Difficult Airway Emergency Page']
-    
-    # Store the multiselect selections from session state
+
+    # Load previously saved selection for 'Advanced Airway Provider' from session state
     default_advance_airway_provider = st.session_state.get('advance_airway_provider', [])
     # Filter out any invalid default values that are not in the options
     filtered_advance_airway_provider = [value for value in default_advance_airway_provider if value in advance_airway_provider_options]
-    
+
     # Multiselect for Advanced Airway Provider
     advance_airway_provider = st.multiselect(
         "Advanced Airway Provider:", 
@@ -1353,23 +1352,23 @@ elif st.session_state.section == 5:
         default=filtered_advance_airway_provider
     )
     
-    # Save the selected values in session state
+    # Save the selected values for Advanced Airway Provider in session state
     st.session_state.advance_airway_provider = advance_airway_provider
-    
-    # Multiselect for Difficult Airway Procedure
+
+    # Load previously saved selection for 'Difficult Airway Procedure' from session state
     default_advance_airway_procedure = st.session_state.get('advance_airway_procedure', [])
     # Filter out any invalid default values that are not in the options
     filtered_advance_airway_procedure = [value for value in default_advance_airway_procedure if value in advance_airway_procedure_options]
-    
+
+    # Multiselect for Difficult Airway Procedure
     advance_airway_procedure = st.multiselect(
         "Difficult Airway Procedure:", 
         advance_airway_procedure_options, 
         default=filtered_advance_airway_procedure
     )
     
-    # Save the selected values in session state
+    # Save the selected values for Difficult Airway Procedure in session state
     st.session_state.advance_airway_procedure = advance_airway_procedure
-
         
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
