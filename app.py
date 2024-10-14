@@ -598,7 +598,7 @@ def fill_word_template(template_path, data):
     return buffer
 
 def next_section():
-    if st.session_state.section < 7:
+    if st.session_state.section < 8:
         st.session_state.section += 1
         save_data()
 
