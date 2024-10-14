@@ -1053,6 +1053,9 @@ elif st.session_state.section == 3:
 
         # Save the selected ETT type in the session state
         st.session_state.ett_type = ett_type
+
+        st.write("Ett Type:", ett_type)
+        st.write("Ett Size:", ett_size)
       
     with cols[1]:
         #ett_sizes = list(set(age_to_ett_mapping.values()))  # Get unique ETT sizes
