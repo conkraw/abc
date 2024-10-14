@@ -998,11 +998,12 @@ elif st.session_state.section == 3:
     # Options for who will intubate
     who_will_intubate_options = ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT']
     
-    # Render multiselect for who will intubate
+    # Render multiselect for who will intubate with a unique key
     who_will_intubate = st.multiselect(
         "Who will intubate?", 
         options=who_will_intubate_options,
-        default=st.session_state.who_will_intubate  # Use saved selections directly
+        default=st.session_state.who_will_intubate,  # Use saved selections directly
+        key="who_will_intubate"  # Unique key for this widget
     )
 
     # Save the updated list in session state
@@ -1011,16 +1012,16 @@ elif st.session_state.section == 3:
     # Options for who will bag-mask
     who_will_bvm_options = ['Resident', 'Fellow', 'NP', 'Attending', 'RT']
     
-    # Render multiselect for who will bag-mask
+    # Render multiselect for who will bag-mask with a unique key
     who_will_bvm = st.multiselect(
         "Who will bag-mask?", 
         options=who_will_bvm_options,
-        default=st.session_state.who_will_bvm  # Use saved selections directly
+        default=st.session_state.who_will_bvm,  # Use saved selections directly
+        key="who_will_bvm"  # Unique key for this widget
     )
 
     # Save the updated list in session state
     st.session_state.who_will_bvm = who_will_bvm
-
 
 
     # Create a layout for intubation method
