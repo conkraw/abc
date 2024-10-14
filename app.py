@@ -1294,26 +1294,12 @@ elif st.session_state.section == 3:
 if st.session_state.section == 4:
     st.title("Timing of Intubation")
 
-    when_intubate_options = [
-        'Prior to procedure', 
-        'Mental Status Changes', 
-        'Hypoxemia Refractory to CPAP',
-        'Ventilation failure refractory to NIV', 
-        'Loss of Airway Protection'
-    ]
-
-    # Load previously saved selection from session state, default to an empty list if it doesn't exist
-    when_intubate = st.session_state.get('when_intubate', [])
-
-    # Render the multiselect with the correct options and defaults
     when_intubate = st.multiselect(
-        "When will we intubate? (Describe timing of airway management):",
-        options=when_intubate_options,
-        default=when_intubate  # Use the saved list as the default
+    "When will we intubate? (Describe timing of airway management", 
+    when_intubate_options = ['Prior to procedure', 'Mental Status Changes', 'Hypoxemia Refractory to CPAP','Ventilation failure refractory to NIV', 'Loss of Airway Protection'],
+    default=st.session_state.get('when_intubate', [])
     )
-
-    # Save the selected options in session state for future use
-    st.session_state.when_intubate = when_intubate
+    
 
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
