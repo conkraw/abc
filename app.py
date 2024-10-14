@@ -1323,13 +1323,13 @@ if st.session_state.section == 5:
     st.title("Advanced Airway Provider and Procedure")
 
     advance_airway_provider = st.multiselect(
-    "When will we intubate? (Describe timing of airway management", 
+    "Backup Advanced Airway Provider:", 
     options = ['Attending', 'Anesthesia', 'ENT', 'Fellow'],
     default=st.session_state.get('advance_airway_provider', [])
     )
 
     advance_airway_procedure = st.multiselect(
-    "When will we intubate? (Describe timing of airway management", 
+    "Difficult Airway Alert Procedure:", 
     options = ['Difficult Airway Cart', 'Difficult Airway Emergency Page'],
     default=st.session_state.get('advance_airway_procedure', [])
     )
