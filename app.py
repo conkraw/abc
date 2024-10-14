@@ -661,8 +661,6 @@ if st.session_state['section'] == 0:
     st.title("NEARS4KIDS BUNDLE FORM")
     st.markdown("")
     st.markdown("Front Page")
-
-    cols = st.columns(2)
     
     # Selectbox for front page completion
     option = st.selectbox(
@@ -696,6 +694,9 @@ if st.session_state['section'] == 0:
                '4219', '4221', '4223'].index(st.session_state['room_number']) if st.session_state['room_number'] else 0
     )
         # Add the 'Previous' button to the first column
+
+    cols = st.columns(2)
+  
     with cols[0]:
         if st.button("Previous", on_click=prev_section):
             pass
