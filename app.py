@@ -989,41 +989,17 @@ elif st.session_state.section == 2:
 elif st.session_state.section == 3:
     st.title("Intubation Plan")
 
-    # Initialize saved values in session state if they don't exist
-    if 'who_will_intubate' not in st.session_state:
-        st.session_state.who_will_intubate = []
-    if 'who_will_bvm' not in st.session_state:
-        st.session_state.who_will_bvm = []
-    
-    # Options for who will intubate
-    who_will_intubate_options = ['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT']
-    
-    # Render multiselect for who will intubate with a unique key
     who_will_intubate = st.multiselect(
-        "Who will intubate?", 
-        options=who_will_intubate_options,
-        default=st.session_state.who_will_intubate,  # Use saved selections directly
-        key="who_will_intubate"  # Unique key for this widget
+    "Who will intubate?", 
+    options=['Resident', 'Fellow', 'NP', 'Attending', 'Anesthesiologist', 'ENT physician', 'RT'],
+    default=st.session_state.get('who_will_intubate', [])
     )
-
-    # Only update session state with the value returned by the widget (not manually setting it)
-    if who_will_intubate != st.session_state.who_will_intubate:
-        st.session_state.who_will_intubate = who_will_intubate
-
-    # Options for who will bag-mask
-    who_will_bvm_options = ['Resident', 'Fellow', 'NP', 'Attending', 'RT']
     
-    # Render multiselect for who will bag-mask with a unique key
     who_will_bvm = st.multiselect(
         "Who will bag-mask?", 
-        options=who_will_bvm_options,
-        default=st.session_state.who_will_bvm,  # Use saved selections directly
-        key="who_will_bvm"  # Unique key for this widget
+        options=['Resident', 'Fellow', 'NP', 'Attending', 'RT'],
+        default=st.session_state.get('who_will_bvm', [])
     )
-
-    # Only update session state with the value returned by the widget (not manually setting it)
-    if who_will_bvm != st.session_state.who_will_bvm:
-        st.session_state.who_will_bvm = who_will_bvm
 
 
     # Create a layout for intubation method
