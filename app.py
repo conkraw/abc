@@ -656,32 +656,22 @@ for key, value in default_values.items():
     if key not in st.session_state:
         st.session_state[key] = value
 
-# Page title and layout
-#st.set_page_config(page_title="NEAR4KIDS ABC BUNDLE FORM", page_icon=":guardsman:", layout="wide")
+#Title
+st.title("NEAR4KIDS ABC BUNDLE FORM")
 
-# Upload or display image (can either be uploaded or linked from the web)
-#st.image('picture.png', use_column_width=True)
-
-# Title
-#st.title("NEAR4KIDS ABC BUNDLE FORM")
-
-#if st.session_state['section'] == 0:
-
-  # General Instructions
-  #st.markdown("""
-  #    ### General Instructions:
-  #    1. This form is part of the NEAR4KIDS ABC Bundle, which includes critical information for pediatric resuscitation.
-  #    2. Please fill out all required fields carefully.
-  #    3. If you have any questions or issues with the form, please contact the support team at **xxx@xyz.com****.
-  #    4. After filling out the form, click the **Next** button to proceed to the next section.
-  #""")
-  
-  #if st.button("Next", on_click=next_section):
-  #        pass
-
-# Front Page Completed Section
 if st.session_state['section'] == 0:
+    with cols[0]:
+        if st.button("Previous", on_click=prev_section):
+            pass
+
+    with cols[1]: 
+      if st.button("Next"):
+
+#Front Page Completed Section
+if st.session_state['section'] == 1:
     st.title("Front Page Completed")
+
+    cols = st.columns(2)
     
     # Selectbox for front page completion
     option = st.selectbox(
@@ -714,18 +704,24 @@ if st.session_state['section'] == 0:
                '4209', '4211', '4213', '4215', '4217', 
                '4219', '4221', '4223'].index(st.session_state['room_number']) if st.session_state['room_number'] else 0
     )
-    if st.button("Next"):
-        if option != "Select an option" and room_number != "Select Room Number" and completed_by:
-            st.session_state.option = option
-            st.session_state.completed_by = completed_by
-            st.session_state.room_number = room_number
-            st.session_state.section += 1  # Increment the section
-            st.rerun()  # Force a rerun to reflect changes immediately
-        else:
-            st.warning("Please select an option.")
+        # Add the 'Previous' button to the first column
+    with cols[0]:
+        if st.button("Previous", on_click=prev_section):
+            pass
+
+    with cols[1]: 
+      if st.button("Next"):
+          if option != "Select an option" and room_number != "Select Room Number" and completed_by:
+              st.session_state.option = option
+              st.session_state.completed_by = completed_by
+              st.session_state.room_number = room_number
+              st.session_state.section += 1  # Increment the section
+              st.rerun()  # Force a rerun to reflect changes immediately
+          else:
+              st.warning("Please select an option.")
 
 # Patient Information Section
-elif st.session_state.section == 1:
+elif st.session_state.section == 2:
     st.title("Patient Information")
 
     cols = st.columns(2)
@@ -874,7 +870,7 @@ elif st.session_state.section == 1:
             pass
             
 # Intubation Risk Assessment Section
-elif st.session_state.section == 2:
+elif st.session_state.section == 3:
     st.title("Intubation Risk Assessment")
     st.write("#### Difficult Airway:")
     
@@ -986,7 +982,7 @@ elif st.session_state.section == 2:
             else:
                 st.warning("Please select all options.")
 
-elif st.session_state.section == 3:
+elif st.session_state.section == 4:
     st.title("Intubation Plan")
 
     who_will_intubate = st.multiselect(
@@ -1291,7 +1287,7 @@ elif st.session_state.section == 3:
                 st.warning("Please select an option.")
                 
 
-if st.session_state.section == 4:
+if st.session_state.section == 5:
     st.title("Timing of Intubation")
 
     when_intubate = st.multiselect(
@@ -1319,7 +1315,7 @@ if st.session_state.section == 4:
             else:
                 st.warning("Please select an option.")
 
-if st.session_state.section == 5:
+if st.session_state.section == 6:
     st.title("Advanced Airway Provider and Procedure")
 
     advance_airway_provider = st.multiselect(
@@ -1355,7 +1351,7 @@ if st.session_state.section == 5:
                 st.warning("Please select an option.")
 
 
-elif st.session_state.section == 6:
+elif st.session_state.section == 7:
     st.title("Download ABC Form")
     
     col1, col2, col3 = st.columns(3)
