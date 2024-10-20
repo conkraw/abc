@@ -208,18 +208,18 @@ age_to_glide_mapping = {
 # Define other mappings based on age
 age_to_mac_mapping = {
     '': '', 
-    '0 months': 'Not Applicable',
-    '1 months': 'Not Applicable',
-    '2 months': 'Not Applicable',
-    '3 months': 'Not Applicable',
-    '4 months': 'Not Applicable',
-    '5 months': 'Not Applicable',
-    '6 months': 'Not Applicable',
-    '7 months': 'Not Applicable',
-    '8 months': 'Not Applicable',
-    '9 months': 'Not Applicable',
-    '10 months': 'Not Applicable',
-    '11 months': 'Not Applicable',
+    '0 months': '',
+    '1 months': '',
+    '2 months': '',
+    '3 months': '',
+    '4 months': '',
+    '5 months': '',
+    '6 months': '',
+    '7 months': '',
+    '8 months': '',
+    '9 months': '',
+    '10 months': '',
+    '11 months': '',
     '12 months': 'Mac Blade Size 2',
     '1 year': 'Mac Blade Size 2',
     '2 years': 'Mac Blade Size 2',
@@ -1242,11 +1242,9 @@ elif st.session_state.section == 3:
     
     # Add the 'Next' button to the second column
     with col3:
-        if st.button("Next"):
+        if st.button("Next"): #and lma_details and glide_details and mac_details and miller_details
             if (who_will_intubate and who_will_bvm and 
-                ett_type and ett_size and 
-                lma_details and glide_details and 
-                mac_details and miller_details and atropine_dose and
+                ett_type and ett_size and atropine_dose and
                 glycopyrrolate_dose and 
                 fentanyl_dose and 
                 midazolam_dose and 
