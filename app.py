@@ -1265,12 +1265,9 @@ elif st.session_state.section == 3:
             '0.84 mg', '0.86 mg', '0.88 mg', '0.9 mg', '0.92 mg', '0.94 mg',
             '0.96 mg', '0.98 mg', '1.0 mg'
         ]
-
-print(unique_doses)
-
         
         # Ensure custom order is respected
-        atropine_dose = ["Select an Atropine Dose"] + [dose for dose in custom_order_atropine if dose in atropine_dose]
+      atropine_dose = ["Select an Atropine Dose"] + [dose for dose in custom_order_atropine if dose in atropine_dose]
         
         # Check session state for existing atropine_dose
         if 'atropine_dose' in st.session_state and st.session_state['atropine_dose'] in atropine_dose:
