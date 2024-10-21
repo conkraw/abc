@@ -1047,8 +1047,11 @@ elif st.session_state.section == 3:
         # Add a blank option (e.g., "Select an ETT Size" or "")
         ett_sizes = ["Select an ETT Size"] + ett_sizes  # Prepend a "Select" option
 
-        ett_sizes = sorted(ett_sizes[1:]) #new line
-        ett_sizes = ["Select an ETT Size"] + ett_sizes #newline
+        def extract_size(size_str): #new line
+          return float(size_str.split()[0]) #newline
+
+        ett_sizes = sorted(ett_sizes[1:], key=extract_size) #new line
+        ett_sizes = ["Select an ETT Size"] + ett_sizes #newline 
       
         # Check if 'ett_size' exists and is valid in session state
         if 'ett_size' in st.session_state and st.session_state['ett_size'] in ett_sizes:
