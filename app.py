@@ -1123,6 +1123,7 @@ elif st.session_state.section == 3:
         st.session_state['lma_details'] = lma_details
         
         glide_details = list(set(age_to_glide_mapping.values()))  # Get unique ETT sizes
+        
         glide_details = ["Select a GlideScope Size"] + glide_details
 
         glide_custom_order = ["GlideScope Size 1", "GlideScope Size 1 or 2", "GlideScope Size 2", "GlideScope Size 2 or 3"
