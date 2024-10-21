@@ -324,7 +324,7 @@ def update_automatic_selections():
     if "weight_select" in st.session_state and st.session_state.weight_select:
         selected_weight = st.session_state.weight_select
         # Update drug dosages based on the selected weight
-        st.session_state.lma_details = lma_size_mapping[selected_weight]
+        st.session_state.lma_details = lma_size_mapping[selected_age]
         st.session_state.atr_dose = weight_to_atropine_mapping[selected_weight]
         st.session_state.gly_dose = weight_to_glycopyrrolate_mapping[selected_weight]
         st.session_state.fen_dose = weight_to_fentanyl_mapping[selected_weight]
