@@ -1119,14 +1119,33 @@ elif st.session_state.section == 3:
             key = "lma_display",
             index=0
           )
-
-        #lma_details = st.selectbox("LMA Details:", options=lma_details, key="lma_display", index=lma_details.index(st.session_state['lma_details']) if st.session_state['lma_details'] in lma_details else 0)
-
-      
+          
         st.session_state['lma_details'] = lma_details
         
         glide_details = list(set(age_to_glide_mapping.values()))  # Get unique ETT sizes
-        glide_details = st.selectbox("Glidescope Details:", options=glide_details, key="glide_size_display", index=glide_details.index(st.session_state['glide_details']) if st.session_state['glide_details'] in glide_details else 0)
+        glide_details = ["Select a GlideScope Size"] + glide_details
+
+        glide_custom_order = ["GlideScope Size 1", "GlideScope Size 1 or 2", "GlideScope Size 2", "GlideScope Size 2 or 3"
+                              "GlideScope Size 3", "Glidescope 3 or 4", "Glidescope 4"]
+      
+        glide_details = ["Select a GlideScope Size"] + [size for size in glide_custom_order if size in glide_details]
+
+        if 'glide_details' in st.session_state and st.session_state['glide_details'] in glide_details:
+        glide_details = st.selectbox(
+            "Glidescope Details:", 
+            options=glide_details, 
+            key="glide_size_display", 
+            index=glide_details.index(st.session_state['glide_details'])
+        )
+        else:
+            glide_details = st.selectbox(
+                "Glidescope Details:",
+                options=glide_details,
+                key="glide_size_display",
+                index=0
+            )
+          
+        #glide_details = st.selectbox("Glidescope Details:", options=glide_details, key="glide_size_display", index=glide_details.index(st.session_state['glide_details']) if st.session_state['glide_details'] in glide_details else 0)
         st.session_state['glide_details'] = glide_details
 
         other_device_details = "" 
