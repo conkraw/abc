@@ -1131,12 +1131,12 @@ elif st.session_state.section == 3:
         glide_details = ["Select a GlideScope Size"] + [size for size in glide_custom_order if size in glide_details]
 
         if 'glide_details' in st.session_state and st.session_state['glide_details'] in glide_details:
-        glide_details = st.selectbox(
-            "Glidescope Details:", 
-            options=glide_details, 
-            key="glide_size_display", 
-            index=glide_details.index(st.session_state['glide_details'])
-        )
+          glide_details = st.selectbox(
+              "Glidescope Details:", 
+              options=glide_details, 
+              key="glide_size_display", 
+              index=glide_details.index(st.session_state['glide_details'])
+          )
         else:
             glide_details = st.selectbox(
                 "Glidescope Details:",
