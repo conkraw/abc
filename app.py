@@ -1122,7 +1122,7 @@ elif st.session_state.section == 3:
         #    "LMA Details:",
         #    options = lma_details,
         #    key = "lma_display",
-            index=0
+        #    index=0
         #  )
           
         st.session_state['lma_details'] = lma_details
