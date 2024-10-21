@@ -1118,7 +1118,7 @@ elif st.session_state.section == 3:
             )
         
         #lma_details = st.selectbox("LMA Size Details:", options=lma_details, key="lma_size_display", index=lma_details.index(st.session_state['lma_details']) if st.session_state['lma_details'] in lma_details else 0)
-        #st.session_state['lma_details'] = lma_details
+        st.session_state['lma_details'] = lma_details
         
         glide_details = list(set(age_to_glide_mapping.values()))  # Get unique ETT sizes
         glide_details = st.selectbox("Glidescope Details:", options=glide_details, key="glide_size_display", index=glide_details.index(st.session_state['glide_details']) if st.session_state['glide_details'] in glide_details else 0)
