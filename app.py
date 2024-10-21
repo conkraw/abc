@@ -324,7 +324,7 @@ def update_automatic_selections():
     if "weight_select" in st.session_state and st.session_state.weight_select:
         selected_weight = st.session_state.weight_select
         # Update drug dosages based on the selected weight
-        st.session_state.lma_details = lma_size_mapping[selected_age]
+        st.session_state.lma_details = lma_size_mapping[selected_weight]
         st.session_state.atr_dose = weight_to_atropine_mapping[selected_weight]
         st.session_state.gly_dose = weight_to_glycopyrrolate_mapping[selected_weight]
         st.session_state.fen_dose = weight_to_fentanyl_mapping[selected_weight]
@@ -421,8 +421,8 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('ett_type', ett_type)
             if 'ett_size' in run.text:
                 run.text = run.text.replace('ett_size', ett_size)
-            if 'lma_details' in run.text:
-                run.text = run.text.replace('lma_details', lma_details)
+            #if 'lma_details' in run.text:
+            #    run.text = run.text.replace('lma_details', lma_details)
             if 'glide_details' in run.text:
                 run.text = run.text.replace('glide_details', glide_details)
             if 'other_device_details' in run.text:
@@ -505,8 +505,8 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('ett_type', ett_type)
                         if 'ett_size' in run.text:
                             run.text = run.text.replace('ett_size', ett_size)
-                        if 'lma_details' in run.text:
-                            run.text = run.text.replace('lma_details', lma_details)
+                        #if 'lma_details' in run.text:
+                        #    run.text = run.text.replace('lma_details', lma_details)
                         if 'glide_details' in run.text:
                             run.text = run.text.replace('glide_details', glide_details)
                         if 'other_device_details' in run.text:
