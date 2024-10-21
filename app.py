@@ -1114,7 +1114,8 @@ elif st.session_state.section == 3:
           "LMA Details:", 
           options=lma_details, 
           key="lma_display", 
-          index=lma_details.index(st.session_state['lma_details'])
+          #index=lma_details.index(st.session_state['lma_details'])
+          index = index
         )
           
         #else:
