@@ -421,8 +421,8 @@ def create_word_doc(template_path, data):
                 run.text = run.text.replace('ett_type', ett_type)
             if 'ett_size' in run.text:
                 run.text = run.text.replace('ett_size', ett_size)
-            #if 'lma_details' in run.text:
-            #    run.text = run.text.replace('lma_details', lma_details)
+            if 'lma_details' in run.text:
+                run.text = run.text.replace('lma_details', lma_details)
             if 'glide_details' in run.text:
                 run.text = run.text.replace('glide_details', glide_details)
             if 'other_device_details' in run.text:
@@ -505,8 +505,8 @@ def create_word_doc(template_path, data):
                             run.text = run.text.replace('ett_type', ett_type)
                         if 'ett_size' in run.text:
                             run.text = run.text.replace('ett_size', ett_size)
-                        #if 'lma_details' in run.text:
-                        #    run.text = run.text.replace('lma_details', lma_details)
+                        if 'lma_details' in run.text:
+                            run.text = run.text.replace('lma_details', lma_details)
                         if 'glide_details' in run.text:
                             run.text = run.text.replace('glide_details', glide_details)
                         if 'other_device_details' in run.text:
@@ -1098,32 +1098,32 @@ elif st.session_state.section == 3:
         #st.text_input("", key="laryngoscope_details", disabled=False)
       
         lma_details = list(set(lma_size_mapping.values()))  # Get unique ETT sizes
-        #lma_details = ["Select an LMA Size"] + lma_details
-        #custom_order = ['LMA Size 1', 'LMA Size 1.5', 'LMA Size 2', 'LMA Size 2.5', 'LMA Size 3', 'LMA Size 4', 'LMA Size 5']
-        #lma_details = ["Select an LMA Size"] + [size for size in custom_order if size in lma_details]
-        #if 'lma_details' in st.session_state and st.session_state['lma_details'] in lma_details:
-        #  lma_details = st.selectbox(
-        #    "LMA Size Details:",
-        #    options = lma_details,
-        #    key="lma_size_display",
-        #    index=lma_details.index(st.session_state['lma_details'])
-        #  )
+        lma_details = ["Select an LMA Size"] + lma_details
+        custom_order = ['LMA Size 1', 'LMA Size 1.5', 'LMA Size 2', 'LMA Size 2.5', 'LMA Size 3', 'LMA Size 4', 'LMA Size 5']
+        lma_details = ["Select an LMA Size"] + [size for size in custom_order if size in lma_details]
+        if 'lma_details' in st.session_state and st.session_state['lma_details'] in lma_details:
+          lma_details = st.selectbox(
+            "LMA Size Details:",
+            options = lma_details,
+            key="lma_size_display",
+            index=lma_details.index(st.session_state['lma_details'])
+          )
 
-        #else: 
-        #    lma_details = st.selectbox(
-        #     "LMA Size Details:",
-        #      options = lma_details,
-        #      key = "lma_size_display",
-        #     index = 0
-        #    )
+        else: 
+            lma_details = st.selectbox(
+             "LMA Size Details:",
+              options = lma_details,
+              key = "lma_size_display",
+             index = 0
+            )
         
-        lma_details = st.selectbox("LMA Size Details:", options=lma_details, key="lma_size_display", index=lma_details.index(st.session_state['lma_details']) if st.session_state['lma_details'] in lma_details else 0)
+        #lma_details = st.selectbox("LMA Size Details:", options=lma_details, key="lma_size_display", index=lma_details.index(st.session_state['lma_details']) if st.session_state['lma_details'] in lma_details else 0)
         st.session_state['lma_details'] = lma_details
         
         glide_details = list(set(age_to_glide_mapping.values()))  # Get unique ETT sizes
         glide_details = ["Select a Glidescope Size"] + glide_details
         custom_order = ['Glidescope 1 or 2', 'Glidescope 2', 'Glidescope 3', 'Glidescope 3 or 4']
-        
+      
         glide_details = ["Select a Glidescope Size"] + [size for size in custom_order if size in glide_details]
         if 'glide_details' in st.session_state and st.session_state['glide_details'] in glide_details:
           glide_details = st.selectbox(
