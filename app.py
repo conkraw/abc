@@ -1104,21 +1104,25 @@ elif st.session_state.section == 3:
         custom_order = ["LMA Size 1", "LMA Size 1.5", "LMA Size 2", "LMA Size 3", "LMA Size 4", "LMA Size 5"]
       
         lma_details = ["Select an LMA Size"] + [size for size in custom_order if size in lma_details]
-
         if 'lma_details' in st.session_state and st.session_state['lma_details'] in lma_details:
-          lma_details =  st.selectbox(
-            "LMA Details:", 
-            options=lma_details, 
-            key="lma_display", 
-            index=lma_details.index(st.session_state['lma_details'])
-          )
+          index = lma_details.index(st.session_state['lma_details'])
         else:
-          lma_details = st.selectbox(
-            "LMA Details:",
-            options = lma_details,
-            key = "lma_display",
+          index = 0  # Default to the first option
+        
+        #if 'lma_details' in st.session_state and st.session_state['lma_details'] in lma_details:
+        lma_details =  st.selectbox(
+          "LMA Details:", 
+          options=lma_details, 
+          key="lma_display", 
+          index=lma_details.index(st.session_state['lma_details'])
+          
+        #else:
+        #  lma_details = st.selectbox(
+        #    "LMA Details:",
+        #    options = lma_details,
+        #    key = "lma_display",
             index=0
-          )
+        #  )
           
         st.session_state['lma_details'] = lma_details
         
