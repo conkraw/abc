@@ -1247,21 +1247,159 @@ elif st.session_state.section == 3:
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[1]:
         # Text Inputs with uneditable placeholders (details of each device)
-        atropine_dose = list(set(weight_to_atropine_mapping.values()))  # Get unique Atropine doses
-        atropine_dose = st.selectbox("Atropine Dose:", options=atropine_dose, key="atropine_dose_display",index=atropine_dose.index(st.session_state['atropine_dose']) if st.session_state['atropine_dose'] in atropine_dose else 0)
-        st.session_state['atropine_dose'] = atropine_dose
+        #atropine_dose = list(set(weight_to_atropine_mapping.values()))  # Get unique Atropine doses
+        #atropine_dose = st.selectbox("Atropine Dose:", options=atropine_dose, key="atropine_dose_display",index=atropine_dose.index(st.session_state['atropine_dose']) if st.session_state['atropine_dose'] in atropine_dose else 0)
+        #st.session_state['atropine_dose'] = atropine_dose
+      
+        atropine_dose = list(set(weight_to_atropine_mapping.values()))  
+        atropine_dose = ["Select an Atropine Dose"] + atropine_dose
+
+        custom_order_atropine = [
+            '0.1 mg', '0.11 mg', '0.12 mg', '0.13 mg', '0.14 mg', '0.15 mg',
+            '0.16 mg', '0.17 mg', '0.18 mg', '0.19 mg', '0.2 mg', '0.22 mg',
+            '0.24 mg', '0.26 mg', '0.28 mg', '0.3 mg', '0.32 mg', '0.34 mg',
+            '0.36 mg', '0.38 mg', '0.4 mg', '0.42 mg', '0.44 mg', '0.46 mg',
+            '0.48 mg', '0.5 mg', '0.52 mg', '0.54 mg', '0.56 mg', '0.58 mg',
+            '0.6 mg', '0.62 mg', '0.64 mg', '0.66 mg', '0.68 mg', '0.7 mg',
+            '0.72 mg', '0.74 mg', '0.76 mg', '0.78 mg', '0.8 mg', '0.82 mg',
+            '0.84 mg', '0.86 mg', '0.88 mg', '0.9 mg', '0.92 mg', '0.94 mg',
+            '0.96 mg', '0.98 mg', '1.0 mg'
+        ]
+
+print(unique_doses)
+
         
-        glycopyrrolate_dose = list(set(weight_to_glycopyrrolate_mapping.values()))  # Get unique Glycopyrrolate doses
-        glycopyrrolate_dose = st.selectbox("Glycopyrrolate Dose:",options=glycopyrrolate_dose, key="glycopyrrolate_dose_display",index=glycopyrrolate_dose.index(st.session_state['glycopyrrolate_dose']) if st.session_state['glycopyrrolate_dose'] in glycopyrrolate_dose else 0)
+        # Ensure custom order is respected
+        atropine_dose = ["Select an Atropine Dose"] + [dose for dose in custom_order_atropine if dose in atropine_dose]
+        
+        # Check session state for existing atropine_dose
+        if 'atropine_dose' in st.session_state and st.session_state['atropine_dose'] in atropine_dose:
+            atropine_dose = st.selectbox(
+                "Atropine Dose:",
+                options=atropine_dose,
+                key="atropine_dose_display",
+                index=atropine_dose.index(st.session_state['atropine_dose'])
+            )
+        else: 
+            atropine_dose = st.selectbox(
+                "Atropine Dose:",
+                options=atropine_dose,
+                key="atropine_dose_display",
+                index=0
+            )
+        
+        # Update session state with selected atropine_dose
+        st.session_state['atropine_dose'] = atropine_dose
+
+        
+        #glycopyrrolate_dose = list(set(weight_to_glycopyrrolate_mapping.values()))  # Get unique Glycopyrrolate doses
+        #glycopyrrolate_dose = st.selectbox("Glycopyrrolate Dose:",options=glycopyrrolate_dose, key="glycopyrrolate_dose_display",index=glycopyrrolate_dose.index(st.session_state['glycopyrrolate_dose']) if st.session_state['glycopyrrolate_dose'] in glycopyrrolate_dose else 0)
+        #st.session_state['glycopyrrolate_dose'] = glycopyrrolate_dose
+        
+# Get unique Glycopyrrolate doses
+        glycopyrrolate_dose = list(set(weight_to_glycopyrrolate_mapping.values()))  
+        glycopyrrolate_dose = ["Select a Glycopyrrolate Dose"] + glycopyrrolate_dose
+        custom_order_glycopyrrolate = [
+            '0.008 mg', '0.012 mg', '0.016 mg', '0.02 mg', '0.024 mg', '0.028 mg',
+            '0.032 mg', '0.036 mg', '0.04 mg', '0.048 mg', '0.056 mg', '0.064 mg',
+            '0.072 mg', '0.08 mg', '0.1 mg'
+        ]
+
+        # Ensure custom order is respected
+        glycopyrrolate_dose = ["Select a Glycopyrrolate Dose"] + [dose for dose in custom_order_glycopyrrolate if dose in glycopyrrolate_dose]
+        
+        # Check session state for existing glycopyrrolate_dose
+        if 'glycopyrrolate_dose' in st.session_state and st.session_state['glycopyrrolate_dose'] in glycopyrrolate_dose:
+            glycopyrrolate_dose = st.selectbox(
+                "Glycopyrrolate Dose:",
+                options=glycopyrrolate_dose,
+                key="glycopyrrolate_dose_display",
+                index=glycopyrrolate_dose.index(st.session_state['glycopyrrolate_dose'])
+            )
+        else: 
+            glycopyrrolate_dose = st.selectbox(
+                "Glycopyrrolate Dose:",
+                options=glycopyrrolate_dose,
+                key="glycopyrrolate_dose_display",
+                index=0
+            )
+        
+        # Update session state with selected glycopyrrolate_dose
         st.session_state['glycopyrrolate_dose'] = glycopyrrolate_dose
 
-        fentanyl_dose = list(set(weight_to_fentanyl_mapping.values()))  # Get unique Fentanyl doses
-        fentanyl_dose = st.selectbox("Fentanyl Dose:", options=fentanyl_dose, key="fentanyl_dose_display",index=fentanyl_dose.index(st.session_state['fentanyl_dose']) if st.session_state['fentanyl_dose'] in fentanyl_dose else 0)
-        st.session_state['fentanyl_dose'] = fentanyl_dose
+        #fentanyl_dose = list(set(weight_to_fentanyl_mapping.values()))  # Get unique Fentanyl doses
+        #fentanyl_dose = st.selectbox("Fentanyl Dose:", options=fentanyl_dose, key="fentanyl_dose_display",index=fentanyl_dose.index(st.session_state['fentanyl_dose']) if st.session_state['fentanyl_dose'] in fentanyl_dose else 0)
+        #st.session_state['fentanyl_dose'] = fentanyl_dose
+
+        # Get unique Fentanyl doses
+
+        fentanyl_dose = list(set(weight_to_fentanyl_mapping.values()))  
+        fentanyl_dose = ["Select a Fentanyl Dose"] + fentanyl_dose
+        custom_order_fentanyl = [
+            '2.0 mcg', '3.0 mcg', '4.0 mcg', '5.0 mcg', '6.0 mcg', '7.0 mcg',
+            '8.0 mcg', '9.0 mcg', '10.0 mcg', '12.0 mcg', '14.0 mcg', '16.0 mcg',
+            '18.0 mcg', '20.0 mcg', '25.0 mcg', '30.0 mcg', '35.0 mcg', '40.0 mcg',
+            '45.0 mcg', '50.0 mcg'
+        ]
+
+print(unique_doses)
+
+        # Ensure custom order is respected
+        fentanyl_dose = ["Select a Fentanyl Dose"] + [dose for dose in custom_order_fentanyl if dose in fentanyl_dose]
         
-        midazolam_dose = list(set(weight_to_midaz_mapping.values()))  # Get unique Midazolam doses
-        midazolam_dose = st.selectbox("Midazolam Dose:", options=midazolam_dose, key="midazolam_dose_display",index=midazolam_dose.index(st.session_state['midazolam_dose']) if st.session_state['midazolam_dose'] in midazolam_dose else 0)
+        # Check session state for existing fentanyl_dose
+        if 'fentanyl_dose' in st.session_state and st.session_state['fentanyl_dose'] in fentanyl_dose:
+            fentanyl_dose = st.selectbox(
+                "Fentanyl Dose:",
+                options=fentanyl_dose,
+                key="fentanyl_dose_display",
+                index=fentanyl_dose.index(st.session_state['fentanyl_dose'])
+            )
+        else: 
+            fentanyl_dose = st.selectbox(
+                "Fentanyl Dose:",
+                options=fentanyl_dose,
+                key="fentanyl_dose_display",
+                index=0
+            )
+        
+        # Update session state with selected fentanyl_dose
+        st.session_state['fentanyl_dose'] = fentanyl_dose
+
+        
+        #midazolam_dose = list(set(weight_to_midaz_mapping.values()))  # Get unique Midazolam doses
+        #midazolam_dose = st.selectbox("Midazolam Dose:", options=midazolam_dose, key="midazolam_dose_display",index=midazolam_dose.index(st.session_state['midazolam_dose']) if st.session_state['midazolam_dose'] in midazolam_dose else 0)
+        #st.session_state['midazolam_dose'] = midazolam_dose
+
+        midazolam_dose = list(set(weight_to_midaz_mapping.values()))  
+        midazolam_dose = ["Select a Midazolam Dose"] + midazolam_dose
+        custom_order_midazolam = [
+            '0.1 mg', '0.15 mg', '0.2 mg', '0.25 mg', '0.3 mg', '0.35 mg',
+            '0.4 mg', '0.45 mg', '0.5 mg', '0.6 mg', '0.7 mg', '0.8 mg',
+            '0.9 mg', '1.0 mg', '1.25 mg', '1.5 mg', '1.75 mg', '2.0 mg'
+        ]
+        # Ensure custom order is respected
+        midazolam_dose = ["Select a Midazolam Dose"] + [dose for dose in custom_order_midazolam if dose in midazolam_dose]
+        
+        # Check session state for existing midazolam_dose
+        if 'midazolam_dose' in st.session_state and st.session_state['midazolam_dose'] in midazolam_dose:
+            midazolam_dose = st.selectbox(
+                "Midazolam Dose:",
+                options=midazolam_dose,
+                key="midazolam_dose_display",
+                index=midazolam_dose.index(st.session_state['midazolam_dose'])
+            )
+        else: 
+            midazolam_dose = st.selectbox(
+                "Midazolam Dose:",
+                options=midazolam_dose,
+                key="midazolam_dose_display",
+                index=0
+            )
+        
+        # Update session state with selected midazolam_dose
         st.session_state['midazolam_dose'] = midazolam_dose
+
         
         #ketamine_dose = list(set(weight_to_ketamine_mapping.values()))  # Get unique Ketamine doses
         #ketamine_dose = st.selectbox("Ketamine Dose:", options=ketamine_dose, key="ketamine_dose_display",index=ketamine_dose.index(st.session_state['ketamine_dose']) if st.session_state['ketamine_dose'] in ketamine_dose else 0)
@@ -1274,13 +1412,79 @@ elif st.session_state.section == 3:
         propofol_dose = st.text_input("Propofol Dose:", disabled=False, value=st.session_state['propofol_dose'])
         st.session_state['propofol_dose'] = propofol_dose
         
-        roc_dose = list(set(weight_to_roc_mapping.values()))  # Get unique Rocuronium doses
-        roc_dose = st.selectbox("Rocuronium Dose:", options=roc_dose, key="roc_dose_display",index=roc_dose.index(st.session_state['roc_dose']) if st.session_state['roc_dose'] in roc_dose else 0)
-        st.session_state['roc_dose'] = roc_dose
+        #roc_dose = list(set(weight_to_roc_mapping.values()))  # Get unique Rocuronium doses
+        #roc_dose = st.selectbox("Rocuronium Dose:", options=roc_dose, key="roc_dose_display",index=roc_dose.index(st.session_state['roc_dose']) if st.session_state['roc_dose'] in roc_dose else 0)
+        #st.session_state['roc_dose'] = roc_dose
+
+        # Get unique Rocuronium doses
+        roc_dose = list(set(weight_to_roc_mapping.values()))  
+        roc_dose = ["Select a Rocuronium Dose"] + roc_dose
+        custom_order_roc = [
+            '2.0 mg', '2.5 mg', '3.0 mg', '3.5 mg', '4.0 mg', '4.5 mg',
+            '5.0 mg', '5.5 mg', '6.0 mg', '6.5 mg', '7.0 mg', '7.5 mg',
+            '8.0 mg', '8.5 mg', '9.0 mg', '9.5 mg', '10.0 mg', '11.0 mg',
+            '12.0 mg', '13.0 mg', '14.0 mg', '15.0 mg', '16.0 mg', '17.0 mg',
+            '18.0 mg', '19.0 mg', '20.0 mg', '21.0 mg', '22.0 mg', '23.0 mg',
+            '24.0 mg', '25.0 mg', '26.0 mg', '27.0 mg', '28.0 mg', '29.0 mg',
+            '30.0 mg', '31.0 mg', '32.0 mg', '33.0 mg', '34.0 mg', '35.0 mg',
+            '36.0 mg', '37.0 mg', '38.0 mg', '39.0 mg', '40.0 mg', '41.0 mg',
+            '42.0 mg', '43.0 mg', '44.0 mg', '45.0 mg', '46.0 mg', '47.0 mg',
+            '48.0 mg', '49.0 mg', '50.0 mg'
+        ]
+        # Ensure custom order is respected
+        roc_dose = ["Select a Rocuronium Dose"] + [dose for dose in custom_order_roc if dose in roc_dose]
         
-        vec_dose = list(set(weight_to_vec_mapping.values()))  # Get unique Vecuronium doses
-        vec_dose = st.selectbox("Vecuronium Dose:", options=vec_dose, key="vec_dose_display",index=vec_dose.index(st.session_state['vec_dose']) if st.session_state['vec_dose'] in vec_dose else 0)
+        # Check session state for existing roc_dose
+        if 'roc_dose' in st.session_state and st.session_state['roc_dose'] in roc_dose:
+            roc_dose = st.selectbox(
+                "Rocuronium Dose:",
+                options=roc_dose,
+                key="roc_dose_display",
+                index=roc_dose.index(st.session_state['roc_dose'])
+            )
+        else: 
+            roc_dose = st.selectbox(
+                "Rocuronium Dose:",
+                options=roc_dose,
+                key="roc_dose_display",
+                index=0
+            )
+        
+        # Update session state with selected roc_dose
+        st.session_state['roc_dose'] = roc_dose
+
+        
+        # Get unique Vecuronium doses
+        vec_dose = list(set(weight_to_vec_mapping.values()))  
+        vec_dose = ["Select a Vecuronium Dose"] + vec_dose
+        custom_order_vec = [
+            '0.2 mg', '0.3 mg', '0.4 mg', '0.5 mg', '0.6 mg', '0.7 mg',
+            '0.8 mg', '0.9 mg', '1.0 mg', '1.2 mg', '1.4 mg', '1.6 mg',
+            '1.8 mg', '2.0 mg', '2.5 mg', '3.0 mg', '3.5 mg', '4.0 mg',
+            '4.5 mg', '10.0 mg'
+        ]
+        # Ensure custom order is respected
+        vec_dose = ["Select a Vecuronium Dose"] + [dose for dose in custom_order_vec if dose in vec_dose]
+        
+        # Check session state for existing vec_dose
+        if 'vec_dose' in st.session_state and st.session_state['vec_dose'] in vec_dose:
+            vec_dose = st.selectbox(
+                "Vecuronium Dose:",
+                options=vec_dose,
+                key="vec_dose_display",
+                index=vec_dose.index(st.session_state['vec_dose'])
+            )
+        else: 
+            vec_dose = st.selectbox(
+                "Vecuronium Dose:",
+                options=vec_dose,
+                key="vec_dose_display",
+                index=0
+            )
+        
+        # Update session state with selected vec_dose
         st.session_state['vec_dose'] = vec_dose
+
 
     st.write("Apneic Oxygenation:")
     
