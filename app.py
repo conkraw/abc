@@ -1169,11 +1169,48 @@ elif st.session_state.section == 3:
     # Column 3: Additional details for each device (uneditable placeholders)
     with cols[1]:
         mac_details = list(set(age_to_mac_mapping.values()))  # Get unique ETT sizes
-        mac_details = st.selectbox("Mac Details:", options=mac_details, key="mac_size_display", index=mac_details.index(st.session_state['mac_details']) if st.session_state['mac_details'] in mac_details else 0)
+        mac_details = ["Select a Mac Size"] + mac_details
+        custom_order_mac = ['Mac Blade Size 1', 'Mac Blade Size 2', 'Mac Blade Size 3', 'Mac Blade Size 4']
+        mac_details = ["Select a Mac Size"] + [size for size in custom_order_mac if size in mac_details]
+        
+        if 'mac_details' in st.session_state and st.session_state['mac_details'] in mac_details:
+          mac_details = st.selectbox(
+              "Mac Details:",
+              options=mac_details,
+              key="mac_size_display",
+              index=mac_details.index(st.session_state['mac_details'])
+          )
+        else: 
+            mac_details = st.selectbox(
+                "Mac Details:",
+                options=mac_details,
+                key="mac_size_display",
+                index=0
+            )
+
+        #mac_details = st.selectbox("Mac Details:", options=mac_details, key="mac_size_display", index=mac_details.index(st.session_state['mac_details']) if st.session_state['mac_details'] in mac_details else 0)
         st.session_state['mac_details'] = mac_details
 
         miller_details = list(set(age_to_miller_mapping.values()))  # Get unique ETT sizes
-        miller_details = st.selectbox("Miller Details:", options=miller_details, key="miller_size_display", index=miller_details.index(st.session_state['miller_details']) if st.session_state['miller_details'] in miller_details else 0)
+        miller_details = ["Select a Miller Size"] + miller_details
+        custom_order_miller = ['Miller Blade Size 0', 'Miller Blade Size 1', 'Miller Blade Size 2', 'Miller Blade Size 3', 'Miller Blade Size 4']
+        miller_details = ["Select a Miller Size"] + [size for size in custom_order_miller if size in miller_details]
+        if 'miller_details' in st.session_state and st.session_state['miller_details'] in miller_details:
+          miller_details = st.selectbox(
+            "Miller Details:",
+            options=miller_details,
+            key="miller_size_display",
+            index=miller_details.index(st.session_state['miller_details'])
+            )
+        else: 
+            miller_details = st.selectbox(
+                "Miller Details:",
+                options=miller_details,
+                key="miller_size_display",
+                index=0
+            )
+
+        #miller_details = st.selectbox("Miller Details:", options=miller_details, key="miller_size_display", index=miller_details.index(st.session_state['miller_details']) if st.session_state['miller_details'] in miller_details else 0)
         st.session_state['miller_details'] = miller_details
 
         wis_hipple_details = st.text_input("Wis-Hipple Details:", disabled=False, value=st.session_state['wis_hipple_details'])
