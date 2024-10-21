@@ -1339,10 +1339,8 @@ elif st.session_state.section == 3:
             '45.0 mcg', '50.0 mcg'
         ]
 
-print(unique_doses)
-
         # Ensure custom order is respected
-        fentanyl_dose = ["Select a Fentanyl Dose"] + [dose for dose in custom_order_fentanyl if dose in fentanyl_dose]
+      fentanyl_dose = ["Select a Fentanyl Dose"] + [dose for dose in custom_order_fentanyl if dose in fentanyl_dose]
         
         # Check session state for existing fentanyl_dose
         if 'fentanyl_dose' in st.session_state and st.session_state['fentanyl_dose'] in fentanyl_dose:
