@@ -1100,10 +1100,6 @@ elif st.session_state.section == 3:
         lma_details = list(set(lma_size_mapping.values()))  # Get unique ETT sizes
         lma_details = st.selectbox("LMA Details:", options=lma_details, key="lma_display", index=lma_details.index(st.session_state['lma_details']) if st.session_state['lma_details'] in lma_details else 0)
         
-        custom_order = ["LMA Size 1", "LMA Size 1.5", "LMA Size 2.0", "LMA Size 3.0", "LMA Size 4.0", "LMA Size 5.0"] #new line
-
-        lma_details = size for size in custom_order if size in lma_details #new line
-      
         st.session_state['lma_details'] = lma_details
         
         glide_details = list(set(age_to_glide_mapping.values()))  # Get unique ETT sizes
