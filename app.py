@@ -1052,6 +1052,8 @@ elif st.session_state.section == 3:
 
         ett_sizes = sorted(ett_sizes[1:], key=extract_size) #new line
         ett_sizes = ["Select an ETT Size"] + ett_sizes #newline 
+
+        default_index = 0 #newline
       
         # Check if 'ett_size' exists and is valid in session state
         if 'ett_size' in st.session_state and st.session_state['ett_size'] in ett_sizes:
