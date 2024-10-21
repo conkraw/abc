@@ -1121,7 +1121,27 @@ elif st.session_state.section == 3:
         st.session_state['lma_details'] = lma_details
         
         glide_details = list(set(age_to_glide_mapping.values()))  # Get unique ETT sizes
-        glide_details = st.selectbox("Glidescope Details:", options=glide_details, key="glide_size_display", index=glide_details.index(st.session_state['glide_details']) if st.session_state['glide_details'] in glide_details else 0)
+        glide_details = ["Select a Glidescope Size"] + glide_details
+        custom_order = ['Glidescope 1 or 2', 'Glidescope 2', 'Glidescope 3', 'Glidescope 3 or 4']
+        
+        lma_details = ["Select a Glidescope Size"] + [size for size in custom_order if size in glide_details]
+        if 'glide_details' in st.session_state and st.session_state['glide_details'] in glide_details:
+          glide_details = st.selectbox(
+            "Glidescope Size Details:",
+            options = glide_details,
+            key="glide_size_display",
+            index=glide_details.index(st.session_state['glide_details'])
+          )
+
+        else: 
+            glide_details = st.selectbox(
+              "Glidescope Size Details:",
+              options = glide_details,
+              key = "glide_size_display",
+              index = 0
+            )
+        
+        #glide_details = st.selectbox("Glidescope Details:", options=glide_details, key="glide_size_display", index=glide_details.index(st.session_state['glide_details']) if st.session_state['glide_details'] in glide_details else 0)
         st.session_state['glide_details'] = glide_details
 
         other_device_details = "" 
