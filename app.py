@@ -1047,7 +1047,10 @@ elif st.session_state.section == 3:
         # Add a blank option (e.g., "Select an ETT Size" or "")
         ett_sizes = ["Select an ETT Size"] + ett_sizes  # Prepend a "Select" option
 
-      
+        custom_order = ["2.5 mm", "3.0 mm", "3.5 mm", "4.0 mm", "4.5 mm", "5.0 mm", "5.5 mm", "6.0 mm", "6.5 mm", "7.0 mm", "7.5 mm", "8.0 mm"] #new line
+
+        ett_sizes = ["Select an ETT Size"] + [size for size in custom_order if size in ett_sizes] #new line
+
         # Check if 'ett_size' exists and is valid in session state
         if 'ett_size' in st.session_state and st.session_state['ett_size'] in ett_sizes:
             ett_size = st.selectbox(
