@@ -815,7 +815,7 @@ elif st.session_state.section == 1:
     
     # If the weight is selected, update the drug doses accordingly (based on mappings)
     if selected_weight:
-        st.session_state['lma_details'] = lma_size_mapping.get(selected_age, '')
+        st.session_state['lma_details'] = lma_size_mapping.get(selected_weight, '')
         st.session_state['atropine_dose'] = weight_to_atropine_mapping.get(selected_weight, '')
         st.session_state['glycopyrrolate_dose'] = weight_to_glycopyrrolate_mapping.get(selected_weight, '')
         st.session_state['fentanyl_dose'] = weight_to_fentanyl_mapping.get(selected_weight, '')
