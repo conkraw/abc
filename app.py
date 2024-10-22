@@ -1620,6 +1620,7 @@ if st.session_state.section == 4:
     #            st.rerun()  # Force a rerun to reflect changes immediately
     #        else:
     #            st.warning("Please select an option.")
+
     with col3:
         if st.button("Next"):
             # Check for valid selections
@@ -1634,9 +1635,9 @@ if st.session_state.section == 4:
                 st.session_state.when_intubate = when_intubate
                 st.session_state.section += 1  # Increment the section
                 st.success("Proceeding to the next section...")
-                st.rerun()  # Force a rerun to reflect changes immediately
+                st.rerun() 
               
-  if st.session_state.section == 5:
+if st.session_state.section == 5:
     st.title("Advanced Airway Provider and Procedure")
 
     advance_airway_provider = st.multiselect(
