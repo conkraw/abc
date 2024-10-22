@@ -1555,12 +1555,47 @@ elif st.session_state.section == 3:
 if st.session_state.section == 4:
     st.title("Timing of Intubation")
 
+    #when_intubate = st.multiselect(
+    #"When will we intubate? (Describe timing of airway management", 
+    #options = ['Prior to procedure', 'Mental Status Changes', 'Hypoxemia Refractory to CPAP: SPO2 < 92%','Hypoxemia Refractory to CPAP: SPO2 < 90%','Hypoxemia Refractory to CPAP: SPO2 < 88%','Hypoxemia Refractory to CPAP: SPO2 < 85%','Hypoxemia Refractory to CPAP: SPO2 < 80%','Hypoxemia Refractory to CPAP: SPO2 < 75%''Ventilation failure refractory to NIV', 'Loss of Airway Protection'],
+    #default=st.session_state.get('when_intubate', [])
+    #)
+
+    # Define all hypoxemia options
+    hypoxemia_options = [
+        'Hypoxemia Refractory to CPAP: SPO2 < 92%',
+        'Hypoxemia Refractory to CPAP: SPO2 < 90%',
+        'Hypoxemia Refractory to CPAP: SPO2 < 88%',
+        'Hypoxemia Refractory to CPAP: SPO2 < 85%',
+        'Hypoxemia Refractory to CPAP: SPO2 < 80%',
+        'Hypoxemia Refractory to CPAP: SPO2 < 75%'
+    ]
+    
+    # Full options including non-hypoxemia options
+    options = ['Prior to procedure', 'Mental Status Changes'] + hypoxemia_options + ['Ventilation failure refractory to NIV', 'Loss of Airway Protection']
+    
+    # Get the current selection from session state
+    selected_options = st.session_state.get('when_intubate', [])
+    
+    # Create a new options list to enforce single selection for hypoxemia
+    if any(option in selected_options for option in hypoxemia_options):
+        # If any hypoxemia option is selected, remove the others
+        remaining_hypoxemia = [option for option in hypoxemia_options if option in selected_options]
+        available_hypoxemia = remaining_hypoxemia if remaining_hypoxemia else hypoxemia_options[:1]
+        available_options = [opt for opt in options if opt not in hypoxemia_options] + available_hypoxemia
+    else:
+        available_options = options
+    
+    # Use multiselect with the filtered available options
     when_intubate = st.multiselect(
-    "When will we intubate? (Describe timing of airway management", 
-    options = ['Prior to procedure', 'Mental Status Changes', 'Hypoxemia Refractory to CPAP','Ventilation failure refractory to NIV', 'Loss of Airway Protection'],
-    default=st.session_state.get('when_intubate', [])
+        "When will we intubate? (Describe timing of airway management)", 
+        options=available_options,
+        default=selected_options
     )
     
+    # Update session state with the current selection
+    st.session_state.when_intubate = when_intubate
+  
 
     # Single Next and Previous Buttons
     col1, col2, col3 = st.columns(3)
