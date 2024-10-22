@@ -1561,7 +1561,6 @@ if st.session_state.section == 4:
     #default=st.session_state.get('when_intubate', [])
     #)
 
-    # Define all hypoxemia options
     hypoxemia_options = [
         'Hypoxemia Refractory to CPAP: SPO2 < 92%',
         'Hypoxemia Refractory to CPAP: SPO2 < 90%',
@@ -1577,24 +1576,31 @@ if st.session_state.section == 4:
     # Get the current selection from session state
     selected_options = st.session_state.get('when_intubate', [])
     
-    # Create a new options list to enforce single selection for hypoxemia
-    if any(option in selected_options for option in hypoxemia_options):
-        # If any hypoxemia option is selected, remove the others
-        remaining_hypoxemia = [option for option in hypoxemia_options if option in selected_options]
-        available_hypoxemia = remaining_hypoxemia if remaining_hypoxemia else hypoxemia_options[:1]
-        available_options = [opt for opt in options if opt not in hypoxemia_options] + available_hypoxemia
-    else:
-        available_options = options
+    # Initialize an empty message
+    error_message = ""
     
-    # Use multiselect with the filtered available options
+    # Check for hypoxemia selection logic
+    hypoxemia_selected = [opt for opt in selected_options if opt in hypoxemia_options]
+    
+    if len(hypoxemia_selected) > 1:
+        # If more than one hypoxemia option is selected, show an error message
+        error_message = "Please select only one 'Hypoxemia Refractory to CPAP' option. Your selections will be cleared."
+        # Clear hypoxemia selections
+        selected_options = [opt for opt in selected_options if opt not in hypoxemia_options]
+        
+    # Update session state with current selections
+    st.session_state.when_intubate = selected_options
+    
+    # Use multiselect with all options
     when_intubate = st.multiselect(
         "When will we intubate? (Describe timing of airway management)", 
-        options=available_options,
+        options=options,
         default=selected_options
     )
     
-    # Update session state with the current selection
-    st.session_state.when_intubate = when_intubate
+    # Display error message if applicable
+    if error_message:
+        st.warning(error_message)
   
 
     # Single Next and Previous Buttons
