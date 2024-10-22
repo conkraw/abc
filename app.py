@@ -1595,7 +1595,8 @@ if st.session_state.section == 4:
     when_intubate = st.multiselect(
         "When will we intubate? (Describe timing of airway management)", 
         options=options,
-        default=selected_options
+        default=selected_options,
+        height=200
     )
     
     # Display error message if applicable
