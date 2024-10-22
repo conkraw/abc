@@ -1612,16 +1612,31 @@ if st.session_state.section == 4:
             pass
     
     # Add the 'Next' button to the second column
+    #with col3:
+    #    if st.button("Next"):
+    #        if when_intubate:
+    #            st.session_state.when_intubate = when_intubate
+    #            st.session_state.section += 1  # Increment the section
+    #            st.rerun()  # Force a rerun to reflect changes immediately
+    #        else:
+    #            st.warning("Please select an option.")
     with col3:
         if st.button("Next"):
-            if when_intubate:
+            # Check for valid selections
+            hypoxemia_selected = [opt for opt in when_intubate if opt in hypoxemia_options]
+    
+            if len(hypoxemia_selected) > 1:
+                st.warning("Please select only one 'Hypoxemia Refractory to CPAP' option.")
+            elif not when_intubate:
+                st.warning("Please select an option.")
+            else:
+                # Valid selection, proceed to the next section
                 st.session_state.when_intubate = when_intubate
                 st.session_state.section += 1  # Increment the section
+                st.success("Proceeding to the next section...")
                 st.rerun()  # Force a rerun to reflect changes immediately
-            else:
-                st.warning("Please select an option.")
-
-if st.session_state.section == 5:
+              
+  if st.session_state.section == 5:
     st.title("Advanced Airway Provider and Procedure")
 
     advance_airway_provider = st.multiselect(
